@@ -88,6 +88,28 @@ class UserController extends Controller{
         ));
     }
 
+    public function delete($id){
+
+        $user = $this->userRepository->findById($id);
+
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('delete');
+        $config['method'] = 'delete';
+        return view('backend.user.user.delete', compact(
+            'config',
+            'user'
+        ));
+    }
+
+    public function destroy($id){
+        if($this->userService->delete($id)){
+            flash()->success('Delete Successfully.');
+            return redirect()->route('user.index');
+        }
+        flash()->error('An issue occurred, Please try again');
+        return  redirect()->route('user.index');
+    }
+
     private function breadcrumb($key){
         $breadcrumb = [
             'index' => [
@@ -101,6 +123,10 @@ class UserController extends Controller{
             'update' => [
                 'name' => 'Update User',
                 'list' => ['User', 'Update User']
+            ],
+            'delete' => [
+                'name' => 'Delete User',
+                'list' => ['User', 'Delete User']
             ]
         ];
         return $breadcrumb[$key];

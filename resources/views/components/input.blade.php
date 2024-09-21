@@ -1,4 +1,4 @@
-@props(['label', 'name', 'value', 'require', 'type'])
+@props(['label', 'name', 'value', 'require', 'type', 'readonly'])
 <div class="form-row">
     <label for="{{ $name }}" class="control-label text-left">{{ $label }} {!! (isset($require) && $require) ? '<span class="text-danger">*</span>' : '' !!} </label>
     <input 
@@ -9,6 +9,7 @@
         placeholder=""
         value="{{ old($name, $value ?? '') }}"
         id="{{ $name }}"
+        readonly={{ $readonly }}
     >
 </div>
 

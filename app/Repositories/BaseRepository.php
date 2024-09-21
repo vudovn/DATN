@@ -29,4 +29,8 @@ class BaseRepository {
         return $this->model->select($select)->with($relation)->find($id);
     }
 
+    public function delete(int $id){
+        return $this->findById($id)->delete();
+    }
+
 }

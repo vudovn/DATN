@@ -20,7 +20,8 @@ Route::group(['middleware' => 'authenticated'], function(){
     Route::post('/user/store', [UserController::class, 'store'])->name('user.store'); 
     Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit'); 
     Route::put('/user/update/{id}', [UserController::class, 'update'])->name('user.update'); 
-
+    Route::get('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete'); 
+    Route::delete('/user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy'); 
 
 });
 

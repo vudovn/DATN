@@ -1,10 +1,10 @@
-@props(['name', 'options', 'root', 'class', 'label'])
+@props(['name', 'options', 'root', 'class', 'label', 'value'])
 
 <label for="{{ $name }}" class="control-label">{{ $label }}</label>
 <select id="{{ $name }}" name="{{ $name }}"  class="form-control {{ $class ?? '' }}">
     <option value="0">{{ $root }}</option>
     @foreach($options as $key => $val)
-    <option {{ $val['id'] == old($name) ? 'selected' : '' }} value="{{ $val['id'] }}">{{ $val['name'] }}</option>
+    <option {{ $val['id'] == old($name, $value) ? 'selected' : '' }} value="{{ $val['id'] }}">{{ $val['name'] }}</option>
     @endforeach
 </select>
 

@@ -37,4 +37,23 @@ class UserService extends BaseService {
         }
     }
 
+    public function update($request, $id){
+        DB::beginTransaction();
+        try {
+            $payload = $request->except(['_token', 'send', '_method']);
+            $user = $this->userRepository->update($id, $payload);
+
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+           DB::rollback();
+            // echo $e->getMessage();die();
+            $this->log($e);
+            return false;
+        }
+    }
+
+
+
+
 }

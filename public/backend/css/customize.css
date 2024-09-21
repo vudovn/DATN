@@ -123,3 +123,7 @@ h2{
 #page-wrapper{
     padding-bottom:35px;
 }
+
+.form-control{
+    font-size:13px !important;
+}

@@ -1,9 +1,8 @@
 @extends('backend.layout')
 
 @section('template')
-    <x-breadcrumb :breadcrumb="$breadcrumb" />
-    <form action="{{ route('user.store') }}" method="post">
-        @csrf
+    <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
+    <x-form :config="$config" :model="$user ?? null">
         <div class="mt-20">
             <div class="row">
                 <div class="col-lg-5">
@@ -18,20 +17,21 @@
                         <div class="ibox-content">
                             <div class="row mb-15">
                                 <div class="col-lg-6">
-                                    <x-input :label="'Email'" :name="'email'" :value="''" :require="true" />
+                                    <x-input :label="'Email'" :name="'email'" :value="$user->email ?? ''" :require="true" />
                                 </div>
                                 <div class="col-lg-6">
-                                    <x-input :label="'Fullname'" :name="'name'" :value="''" :require="true" />
+                                    <x-input :label="'Fullname'" :name="'name'" :value="$user->name ?? ''" :require="true" />
                                 </div>
                             </div>
                             <div class="row mb-15">
                                 <div class="col-lg-6">
-                                    <x-select :name="'user_catalogue_id'" :options="$userCatalogues" :root="'Select User Group'" :label="'User Group'" />
+                                    <x-select :name="'user_catalogue_id'" :options="$userCatalogues" :root="'Select User Group'" :label="'User Group'" :value="$user->user_catalogue_id ?? 0" />
                                 </div>
                                 <div class="col-lg-6">
-                                    <x-input :label="'Phone'" :name="'phone'" :value="''" :require="true" />
+                                    <x-input :label="'Phone'" :name="'phone'" :value="$user->phone ?? ''" :require="true" />
                                 </div>
                             </div>
+                            @if(isset($config['method']) && $config['method'] !== 'edit' )
                             <div class="row mb-15">
                                 <div class="col-lg-6">
                                     <x-input :label="'Password'" :name="'password'" :value="''" :require="true" :type="'password'" />
@@ -41,14 +41,15 @@
                                 </div>
                               
                             </div>
+                            @endif
                             <div class="row mb-15">
                                 <div class="col-lg-12">
-                                    <x-input :label="'Address'" :name="'address'" :value="''" />
+                                    <x-input :label="'Address'" :name="'address'" :value="$user->address ?? ''"/>
                                 </div>
                             </div>
                             <div class="row mb-15">
                                 <div class="col-lg-12">
-                                    <x-input :label="'Image'" :name="'image'" :value="''" />
+                                    <x-input :label="'Image'" :name="'image'" :value="$user->image ?? ''" />
                                 </div>
                             </div>
                         </div>
@@ -61,7 +62,7 @@
                 </div>
             </div>
         </div>
-    </form>
+    </x-form>
 
 
 @endsection

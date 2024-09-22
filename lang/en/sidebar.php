@@ -3,7 +3,8 @@
         'function' => [
             [
                 'name' => 'User Management',
-                'icon' => 'fa fa-user',
+                'icon' => '<i data-feather="users"></i>',
+                'route' => ['user'],
                 'module' => [
                     [
                         'name' => 'User',

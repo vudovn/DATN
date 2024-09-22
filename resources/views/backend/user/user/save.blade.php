@@ -55,9 +55,10 @@
                         </div>
                     </div>
                     <div class="text-left mb-15">
-                        <button type="submit" name="send" value="send" class="btn btn-success text-13">
-                            Save
-                        </button>
+                        <x-button 
+                            :label="'Save'" 
+                            :class="'btn-success'" 
+                        />
                     </div>
                 </div>
             </div>

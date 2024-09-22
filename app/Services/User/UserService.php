@@ -15,9 +15,28 @@ class UserService extends BaseService {
         $this->userRepository = $userRepository;
     }
 
-    public function paginate(){
-       $users = $this->userRepository->pagination();
-       return $users;
+
+    private function paginateAgrument($request){
+        return [
+            'keyword' => [
+                'search' => $request->input('keyword'),
+                'field' => ['name', 'email', 'phone', 'address']
+            ],
+            'condition' => [
+                'publish' => $request->integer('publish'),
+                'user_catalogue_id' => $request->integer('user_catalogue_id'),
+            ],
+            'sort' => $request->input('sort') 
+                ? array_map('trim', explode(',', $request->input('sort')))  
+                : ['id', 'desc'],
+            'perpage' => $request->input('perpage') ?? 20,
+        ];
+    }
+
+    public function paginate($request){
+        $agruments = $this->paginateAgrument($request);
+        $users = $this->userRepository->pagination([...$agruments]);
+        return $users;
     }
 
 

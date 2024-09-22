@@ -9,7 +9,7 @@
         placeholder=""
         value="{{ old($name, $value ?? '') }}"
         id="{{ $name }}"
-        readonly={{ $readonly }}
+        {{ (isset($readonly) && $readonly === true ) ? 'readonly' : '' }}
     >
 </div>
 

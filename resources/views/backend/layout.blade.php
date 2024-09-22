@@ -4,11 +4,14 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
         <title>INSPINIA | Dashboard v.4</title>
 
         <link href="{{ asset('backend/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('backend/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+        
 
         <link href="{{ asset('backend/css/animate.css') }}" rel="stylesheet">
         <link href="{{ asset('backend/css/style.css') }}" rel="stylesheet">
@@ -24,10 +27,10 @@
     <body>
         <div id="wrapper">
             @include('backend.components.sidebar')
-
+            @include('backend.components.nav')
             <div id="page-wrapper" class="gray-bg">
                 <div class="row border-bottom">
-                    @include('backend.components.nav')
+                   
                 </div>
 
                 @yield('template')
@@ -46,8 +49,9 @@
         <!-- Custom and plugin javascript -->
         <script src="{{ asset('backend/js/inspinia.js') }}"></script>
         {{-- <script src="{{ asset('backend/js/plugins/pace/pace.min.js') }}"></script> --}}
-
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
         <script src="{{ asset('backend/library/library.js') }}"></script>
+        
 
         @if(isset($config['js']) &&  count($config['js']))
             @foreach($config['js'] as $key => $val)

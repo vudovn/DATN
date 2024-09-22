@@ -12,8 +12,12 @@ class BaseRepository {
         $this->model = $model;
     }
 
-    public function pagination(){
-        return $this->model->paginate(20);
+    public function pagination(array $params = []){
+        return $this->model
+                    ->condition($params['condition'] ?? [])
+                    ->keyword($params['keyword'] ?? [])
+                    ->orderBy($params['sort'][0], $params['sort'][1])
+                    ->paginate($params['perpage']);
     }
 
     
@@ -31,6 +35,14 @@ class BaseRepository {
 
     public function delete(int $id){
         return $this->findById($id)->delete();
+    }
+
+    public function updateByWhereIn(string $whereInField = '', array $whereIn = [], array $payload = []){
+        return $this->model->whereIn($whereInField, $whereIn)->update($payload);
+    }
+
+    public function deleteByWhereIn(string $whereInField, array $whereIn = []){
+        return $this->model->whereIn($whereInField, $whereIn)->delete();
     }
 
 }

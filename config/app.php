@@ -123,4 +123,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+
+    'name' => env('CMS_NAME', 'CMS V.1')
+
 ];

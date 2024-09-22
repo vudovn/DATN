@@ -1,15 +1,19 @@
 <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
-        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-        <form role="search" class="navbar-form-custom" action="search_results.html">
-            <div class="form-group">
-                <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
-            </div>
-        </form>
+        <a class="navbar-minimalize minimalize-styl-2 navbar-icon flex flex-between" href="#">
+            <svg class="icon  svg-icon-ti-ti-menu-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"  stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M4 6l16 0"></path>
+                <path d="M4 12l16 0"></path>
+                <path d="M4 18l16 0"></path>
+            </svg>
+            <span class="cms-name">{{ config('app.name') }}</span>
+        </a>
     </div>
     <ul class="nav navbar-top-links navbar-right">
         <li>
-            <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
+            
+            <span class="m-r-sm text-muted welcome-message">Welcome: chandanv1010</span>
         </li>
         <li class="dropdown">
             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -41,6 +45,7 @@
                         </div>
                     </div>
                 </li>
+                
                 <li class="divider"></li>
                 <li>
                     <div class="dropdown-messages-box">
@@ -109,15 +114,13 @@
 
 
         <li>
-            <a href="{{ route('auth.logout') }}">
+            <a href="{{ route('auth.logout') }}" class="text-light">
                 <i class="fa fa-sign-out"></i> Log out 
             </a>
         </li>
-        <li>
-            <a class="right-sidebar-toggle">
-                <i class="fa fa-tasks"></i>
-            </a>
-        </li>
+        
     </ul>
-
+    <a class="right-sidebar-toggle">
+        <i data-feather="settings"></i>
+    </a>
 </nav>

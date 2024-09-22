@@ -43,41 +43,43 @@
 
             </div>
             <div class="col-md-6">
-                <div class="ibox-content">
-                    <form class="m-t" role="form" action="{{ route('auth.login') }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                            <input 
-                                type="text" 
-                                class="form-control" 
-                                placeholder="Email" 
-                                name="email" 
-                                value="{{ old('email') }}"
-                            >
-                            @if($errors->has('email'))
-                                <div class="error">{{ $errors->first('email') }}</div>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <input 
-                                type="password" 
-                                class="form-control" 
-                                placeholder="Password" 
-                                name="password"
-                            >
-                            @if($errors->has('password'))
-                                <div class="error">{{ $errors->first('password') }}</div>
-                            @endif
-                        </div>
-                        <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-
-                        <a href="#">
-                            <small>Forgot password?</small>
-                        </a>
-                    </form>
-                    <p class="m-t">
-                        <small>Laravel Admin System</small>
-                    </p>
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <form class="m-t" role="form" action="{{ route('auth.login') }}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    placeholder="Email" 
+                                    name="email" 
+                                    value="{{ old('email') }}"
+                                >
+                                @if($errors->has('email'))
+                                    <div class="error">{{ $errors->first('email') }}</div>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <input 
+                                    type="password" 
+                                    class="form-control" 
+                                    placeholder="Password" 
+                                    name="password"
+                                >
+                                @if($errors->has('password'))
+                                    <div class="error">{{ $errors->first('password') }}</div>
+                                @endif
+                            </div>
+                            <button type="submit" class="btn btn-success block full-width m-b" style="margin-bottom:10px;">Login</button>
+    
+                            <a href="#">
+                                <small>Forgot password?</small>
+                            </a>
+                        </form>
+                        <p class="m-t">
+                            <small>Laravel Admin System</small>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

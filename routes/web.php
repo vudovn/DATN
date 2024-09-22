@@ -5,6 +5,8 @@ use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\UserController;
 
+use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -22,6 +24,13 @@ Route::group(['middleware' => 'authenticated'], function(){
     Route::put('/user/update/{id}', [UserController::class, 'update'])->name('user.update'); 
     Route::get('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete'); 
     Route::delete('/user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy'); 
+
+
+    /* AJAX ROUTE */
+    Route::put('/change/status', [AjaxDashboardController::class, 'changeStatus'])->name('ajax.dashboard.changeStatus'); 
+    Route::put('/actions', [AjaxDashboardController::class, 'changeStatusMultiple'])->name('ajax.dashboard.changeStatusMultiple'); 
+    Route::delete('/actions', [AjaxDashboardController::class, 'deleteMultiple'])->name('ajax.dashboard.deleteMultiple'); 
+
 
 });
 

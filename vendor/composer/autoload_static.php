@@ -41,6 +41,7 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
         'ce9671a430e4846b44e1c68c7611f9f5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'a1cfe24d14977df6878b9bf804af2d1c' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Phpunit/Autoload.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
+        'c01203beecb6ad4ab68387093161dc71' => __DIR__ . '/../..' . '/app/Helpers/MyHelper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -527,14 +528,26 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
     );
 
     public static $classMap = array (
+        'App\\Http\\Controllers\\Ajax\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Ajax/DashboardController.php',
         'App\\Http\\Controllers\\Backend\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/AuthController.php',
         'App\\Http\\Controllers\\Backend\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/DashboardController.php',
+        'App\\Http\\Controllers\\Backend\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/UserController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Middleware\\CheckAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckAuthenticated.php',
         'App\\Http\\Middleware\\UnAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/UnAuthenticated.php',
         'App\\Http\\Requests\\AuthRequest' => __DIR__ . '/../..' . '/app/Http/Requests/AuthRequest.php',
+        'App\\Http\\Requests\\User\\StoreUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/User/StoreUserRequest.php',
+        'App\\Http\\Requests\\User\\UpdateUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/User/UpdateUserRequest.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
+        'App\\Repositories\\BaseRepository' => __DIR__ . '/../..' . '/app/Repositories/BaseRepository.php',
+        'App\\Repositories\\User\\UserRepository' => __DIR__ . '/../..' . '/app/Repositories/User/UserRepository.php',
+        'App\\Services\\BaseService' => __DIR__ . '/../..' . '/app/Services/BaseService.php',
+        'App\\Services\\User\\UserService' => __DIR__ . '/../..' . '/app/Services/User/UserService.php',
+        'App\\View\\Components\\Input' => __DIR__ . '/../..' . '/app/View/Components/Input.php',
+        'App\\View\\Components\\breadcrumb' => __DIR__ . '/../..' . '/app/View/Components/breadcrumb.php',
+        'App\\View\\Components\\form' => __DIR__ . '/../..' . '/app/View/Components/form.php',
+        'App\\View\\Components\\select' => __DIR__ . '/../..' . '/app/View/Components/select.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
         'Brick\\Math\\BigInteger' => __DIR__ . '/..' . '/brick/math/src/BigInteger.php',
@@ -654,6 +667,7 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
+        'Database\\Seeders\\UserSeeder' => __DIR__ . '/../..' . '/database/seeders/UserSeeder.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
         'DateException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
         'DateInvalidOperationException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateInvalidOperationException.php',

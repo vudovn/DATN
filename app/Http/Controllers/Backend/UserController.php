@@ -6,39 +6,44 @@ use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Services\User\UserService;
 use App\Repositories\User\UserRepository;
+use App\Repositories\User\UserCatalogueRepository;
 
 
 class UserController extends Controller{
 
     protected $userService;
     protected $userRepository;
+    protected $userCatalogueRepository;
 
     public function __construct(
         UserService $userService,
         UserRepository $userRepository,
+        UserCatalogueRepository $userCatalogueRepository,
     ){
         $this->userService = $userService;
         $this->userRepository = $userRepository;
+        $this->userCatalogueRepository = $userCatalogueRepository;
     }
 
 
-    public function index(){
+    public function index(Request $request){
 
-        $users = $this->userService->paginate();
+        $users = $this->userService->paginate($request);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
+        $userCatalogues = $this->userCatalogueRepository->getAll();
+    
+
         return view('backend.user.user.index', compact(
             'config',
-            'users'
+            'userCatalogues',
+            'users',
         ));
     }
 
     public function create(){
 
-        $userCatalogues = [
-            ['id' => 1, 'name' => 'Administrator'],
-            ['id' => 2, 'name' => 'Collaborator'],
-        ];
+        $userCatalogues = $this->userCatalogueRepository->getAll();
        
 
         $config = $this->config();
@@ -74,10 +79,7 @@ class UserController extends Controller{
        
         $user  = $this->userRepository->findById($id);       
 
-        $userCatalogues = [
-            ['id' => 1, 'name' => 'Administrator'],
-            ['id' => 2, 'name' => 'Collaborator'],
-        ];
+        $userCatalogues = $this->userCatalogueRepository->getAll();
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('update');
         $config['method'] = 'edit';
@@ -135,10 +137,12 @@ class UserController extends Controller{
     private function config(){
         return [
             'css' => [
-                'backend/css/plugins/switchery/switchery.css'
+                'backend/css/plugins/switchery/switchery.css',
+                'backend/css/plugins/sweetalert/sweetalert.css'
             ],
             'js' => [
-                'backend/js/plugins/switchery/switchery.js'
+                'backend/js/plugins/switchery/switchery.js',
+                'backend/js/plugins/sweetalert/sweetalert.min.js'
             ],
             'model' => 'user'
         ];

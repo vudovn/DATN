@@ -32,10 +32,8 @@ class UserController extends Controller{
 
 
     public function index(Request $request){
-
+        
         $users = $this->userService->paginate($request);
-
-        // dd($users);
 
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');

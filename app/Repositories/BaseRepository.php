@@ -3,6 +3,7 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Redis;
 
+
 class BaseRepository {
     
     protected $model;
@@ -14,6 +15,7 @@ class BaseRepository {
     }
 
     public function pagination(array $params = []){
+
 
         return $this->model
                     ->condition($params['condition'] ?? [])

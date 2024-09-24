@@ -125,5 +125,6 @@ return [
 
 
     'name' => env('CMS_NAME', 'CMS V.1'),
+    'enable_cache' => env('CMS_ENABLE_CACHE', 0)
 
 ];

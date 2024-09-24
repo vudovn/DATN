@@ -3,6 +3,8 @@ namespace App\Services\User;
 use App\Services\BaseService;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+
 
 
 class UserService extends BaseService {
@@ -35,6 +37,8 @@ class UserService extends BaseService {
 
     public function paginate($request){
         $agruments = $this->paginateAgrument($request);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+
         $users = $this->userRepository->pagination($agruments);
         return $users;
     }

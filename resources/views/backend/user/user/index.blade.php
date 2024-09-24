@@ -5,11 +5,7 @@
     <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
 
     <div class="ibox float-e-margins mt-20">
-        <div class="ibox-title">
-            <h5>USER LIST </h5>
-        </div>
         <div class="ibox-content">
-
             <x-filter 
                 :createButton="[
                     'label' => 'Add New User',
@@ -36,8 +32,7 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Phone</th>
-                        <th>Address</th>
+                        <th>Created at</th>
                         <th class="text-center">Role</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Actions</th>
@@ -55,8 +50,7 @@
                                 <span class="row-name">{{ $user->name }}</span>
                             </td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->phone }}</td>
-                            <td>{{ $user->address }}</td>
+                            <td>{{ changeDateFormat($user->created_at) }}</td>
                             <td class="text-center">-</td>
                             <td class="text-center js-switch-{{ $user->id }}">
                                 <input 

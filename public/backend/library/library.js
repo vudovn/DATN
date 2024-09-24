@@ -136,7 +136,7 @@
                                 let cssMain = isActive ? styles.active.main : styles.inactive.main
                                 let cssSmall = isActive ? styles.active.small : styles.inactive.small
                                 for(let i = 0; i < ids.length; i++){
-                                    $('.js-switch-' + ids[i]).find('span.switchery').attr('style', cssMain).find('small').attr('style', cssSmall).find('.js-switch')
+                                    $('.js-switch-' + ids[i]).find('span.switchery').attr('style', cssMain).find('small').attr('style', cssSmall)
                                     $('.js-switch-' + ids[i]).find('.js-switch').attr('data-value', option[1])
                                 }
                             }else{

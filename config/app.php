@@ -124,6 +124,6 @@ return [
     ],
 
 
-    'name' => env('CMS_NAME', 'CMS V.1')
+    'name' => env('CMS_NAME', 'CMS V.1'),
 
 ];

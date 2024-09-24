@@ -8,6 +8,11 @@ use App\Services\User\UserService;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserCatalogueRepository;
 
+use Illuminate\Support\Facades\Redis;
+
+
+
+
 
 class UserController extends Controller{
 
@@ -29,6 +34,9 @@ class UserController extends Controller{
     public function index(Request $request){
 
         $users = $this->userService->paginate($request);
+
+        // dd($users);
+
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
         $userCatalogues = $this->userCatalogueRepository->getAll();

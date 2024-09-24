@@ -29,13 +29,13 @@ class UserService extends BaseService {
             'sort' => $request->input('sort') 
                 ? array_map('trim', explode(',', $request->input('sort')))  
                 : ['id', 'desc'],
-            'perpage' => $request->input('perpage') ?? 20,
+            'perpage' => $request->integer('perpage') ?? 20,
         ];
     }
 
     public function paginate($request){
         $agruments = $this->paginateAgrument($request);
-        $users = $this->userRepository->pagination([...$agruments]);
+        $users = $this->userRepository->pagination($agruments);
         return $users;
     }
 

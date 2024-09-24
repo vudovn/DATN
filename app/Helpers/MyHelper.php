@@ -1,5 +1,5 @@
 <?php   
-    
+use Illuminate\Support\Carbon;
 if(!function_exists('loadClass')){
     function loadClass($modelName = '', $classType = '', $isSubFolter = true){
         $type = [
@@ -38,5 +38,11 @@ if(!function_exists('generateSelect')){
             }
         }          
         return $select;
+    }
+}
+
+if(!function_exists('changeDateFormat')){
+    function changeDateFormat($date, $format = 'Y-m-d'){
+       return Carbon::parse($date)->format($format);
     }
 }

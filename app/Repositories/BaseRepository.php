@@ -1,6 +1,7 @@
 <?php  
 namespace App\Repositories;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
 
 class BaseRepository {
     
@@ -13,11 +14,13 @@ class BaseRepository {
     }
 
     public function pagination(array $params = []){
+
         return $this->model
                     ->condition($params['condition'] ?? [])
                     ->keyword($params['keyword'] ?? [])
                     ->orderBy($params['sort'][0], $params['sort'][1])
                     ->paginate($params['perpage']);
+        
     }
 
     

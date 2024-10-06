@@ -7,6 +7,7 @@ use App\Http\Requests\Attribute\StoreAttributeRequest;
 use Illuminate\Http\Request;
 use App\Models\Attribute;
 
+
 class AttributeController extends Controller
 {
     public function index () {
@@ -52,7 +53,7 @@ class AttributeController extends Controller
             ],
             'create' => [
                 'name' => 'Tạo thuộc tính',
-                'list' => ['QL thuộc tính', 'Tạo thuộc tính']
+                'list' => ['QL thuộc tính', 'Tạo thuộc tính chi đó']
             ],
             'update' => [
                 'name' => 'Cập nhật thuộc tính',

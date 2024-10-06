@@ -51,6 +51,7 @@ class UserService extends BaseService {
             $payload = $request->except(['_token', 'send', 're_password']);
             $payload['password'] = Hash::make($request->password);
             $user = $this->userRepository->create($payload);
+            //lỗi ở đây
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -62,11 +63,23 @@ class UserService extends BaseService {
     }
 
     public function update($request, $id){
+        
+        // thêm nhiều dữ liệu vào nhiều bảng khác nhau
+        // ví dụ : tạo mới user và gắn quyền cho hắn 
+        // tạo user xong rồi mà gắn quyền hắn lỗi trất
+                // User::create($data); chạy oke
+                // Role::create($user); chạy lỗi mọe trất
+        // Là thằn user nó được tạo trong databsae rồi nhưng trong bảng role thì chưa có quyền của thằn user đó 
+        // => lỗi :v, mất dữ liệu
+        // => giải pháp : dùng transaction
+        // đang chạy trong 1 transaction, nếu có lỗi thì rollback lại hết (reset lại như chưa từng chạy)
+        
         DB::beginTransaction();
         try {
             $payload = $request->except(['_token', 'send', '_method']);
             $user = $this->userRepository->update($id, $payload);
-
+            // User::create($data); chạy oke
+            // Role::create($user); chạy lỗi mọe trất
             DB::commit();
             return true;
         } catch (\Exception $e) {

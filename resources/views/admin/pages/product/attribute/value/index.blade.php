@@ -27,10 +27,8 @@
         <div class="col-12 col-xl-8">
             <div class="card">
                 <div class="card-header pb-0">
-                    <x-filter :createButton="[
-                        'label' => 'Tạo mới',
-                        'route' => 'product.' . $config['model'] . '.create',
-                    ]" :options="[
+                    <x-filter
+                     :options="[
                         'actions' => generateSelect('Hành động', __('general.actions')),
                         'publish' => generateSelect('Trạng thái', __('general.publish')),
                     ]" />

@@ -14,8 +14,6 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-
-
 Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
@@ -41,7 +39,7 @@ Route::group(['middleware' => 'authenticated'], function () {
         Route::delete('/destroy/{id}', [ProductController::class, 'destroy'])->name('destroy');
     });
 
-    /* PRODUCT ROUTE */
+    /* ATTRIBUTE ROUTE */
     Route::prefix('product/attribute')->name('product.attribute.')->group(function () {
         Route::get('/index', [AttributeController::class, 'index'])->name('index');
         Route::get('/create', [AttributeController::class, 'create'])->name('create');
@@ -52,7 +50,7 @@ Route::group(['middleware' => 'authenticated'], function () {
         Route::delete('/destroy/{id}', [AttributeController::class, 'destroy'])->name('destroy');
     });
 
-    /* PRODUCT ROUTE */
+    /* ATTRIBUTE VALUE ROUTE */
     Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
         Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
         Route::get('/create', [AttributeValueController::class, 'create'])->name('create');
@@ -63,12 +61,10 @@ Route::group(['middleware' => 'authenticated'], function () {
         Route::delete('/destroy/{id}', [AttributeValueController::class, 'destroy'])->name('destroy');
     });
 
-
     /* AJAX ROUTE */
     Route::put('/change/status', [AjaxDashboardController::class, 'changeStatus'])->name('ajax.dashboard.changeStatus');
     Route::put('/actions', [AjaxDashboardController::class, 'changeStatusMultiple'])->name('ajax.dashboard.changeStatusMultiple');
     Route::delete('/actions', [AjaxDashboardController::class, 'deleteMultiple'])->name('ajax.dashboard.deleteMultiple');
-
     Route::delete('/deleteItem', [AjaxDashboardController::class, 'deleteItem'])->name('ajax.dashboard.deleteItem');
 
 });

@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
 
 			$table->integer('quantity');
+            $table->string('thumbnail')->default('https://img.muji.net/img/item/4550583440404_1260.jpg');
+            $table->json('albums')->nullable();
+            $table->string('slug')->nullable();
             $table->decimal('price')->nullable();
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

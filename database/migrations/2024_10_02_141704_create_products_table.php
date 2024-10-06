@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->unsignedInteger('quantity')->default(0);
             $table->decimal('price', 12, 2);
             $table->decimal('discount', 12, 2);
-            $table->string('thumbnail')->nullable();
+            $table->string('thumbnail')->default('https://img.muji.net/img/item/4550583440404_1260.jpg');
             $table->json('albums')->nullable(); 
             $table->boolean('publish')->default(true);
             $table->boolean('is_featured')->default(false);

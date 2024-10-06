@@ -1,5 +1,4 @@
 class CusSweetAlert{
-
     success(message,time = 2000) {
         Swal.fire({
             icon: 'success',

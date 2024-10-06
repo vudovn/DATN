@@ -64,10 +64,10 @@
                                 <td class="text-center js-switch-{{ $product->id }}">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input js-switch status"
-                                            id="customSwitch1" data-field="publish" data-value="{{ $product->publish }}"
+                                            id="customSwitch{{ $product->id }}" data-field="publish" data-value="{{ $product->publish }}"
                                             data-model="{{ ucfirst($config['model']) }}" data-id="{{ $product->id }}"
                                             {{ $product->publish === 2 ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="customSwitch1"></label>
+                                        <label class="custom-control-label" for="customSwitch{{ $product->id }}"></label>
                                     </div>
                                 </td>
                                 <td class="text-center">

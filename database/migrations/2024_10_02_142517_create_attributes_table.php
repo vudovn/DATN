@@ -16,6 +16,8 @@ return new class extends Migration {
             $table->string('name');
             $table->boolean('is_required')->default(false);
             $table->boolean('is_filterable')->default(false);
+            $table->boolean('publish')->default(true);
+
 			$table->timestamps();
             $table->softDeletes();
         });

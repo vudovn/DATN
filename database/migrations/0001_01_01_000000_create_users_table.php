@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('address');
             $table->string('province_id',20)->charset('utf8mb4')->collation('utf8mb4_general_ci')->nullable();
             $table->string('district_id',20)->charset('utf8mb4')->collation('utf8mb4_general_ci')->nullable();
             $table->string('ward_id',20)->charset('utf8mb4')->collation('utf8mb4_general_ci')->nullable();

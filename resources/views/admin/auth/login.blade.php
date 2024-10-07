@@ -8,12 +8,12 @@
 
     <title>Login admin</title>
 
-    <link rel="stylesheet" href="{{ asset('backend/css/customize.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin_asset/css/customize.css') }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
-    <link rel="stylesheet" href="{{ asset('backend/plugins/fontawesome-free/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('backend/css/adminlte.min2167.css?v=3.2.0') }}">
+    <link rel="stylesheet" href="{{ asset('admin_asset/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin_asset/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin_asset/css/adminlte.min2167.css?v=3.2.0') }}">
 </head>
 
 <body class="hold-transition login-page">
@@ -87,9 +87,9 @@
     </div>
 
 
-    <script src="{{ asset('backend/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('backend/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('backend/js/adminlte.min2167.js?v=3.2.0') }}"></script>
+    <script src="{{ asset('admin_asset/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin_asset/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('admin_asset/js/adminlte.min2167.js?v=3.2.0') }}"></script>
 </body>
 
 </html>

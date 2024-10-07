@@ -1,0 +1,19 @@
+.img_albums_tgnt {
+    position: relative !important;
+}
+.img_albums_tgnt .btn_delete_albums_tgnt {
+    position: absolute !important;
+    top: 3% !important;
+    right: 3% !important;
+}
+
+.ui-sortable {
+    transition: 0.5s ease-in-out;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: unset !important;
+    background:unset !important;
+    font-weight: unset !important;
+    color: unset !important;
+}

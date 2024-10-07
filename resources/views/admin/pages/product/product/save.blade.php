@@ -2,65 +2,49 @@
 
 @section('template')
     <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
-    <x-form :config="$config" :model="$user ?? null">
-        <div class="mt-20">
-            <div class="row">
-                <div class="col-lg-5">
-                    <div class="panel-body">
-                        <h2>General Information</h2>
-                        <p class="text-14">- Enter the general information of the user</p>
-                        <p class="text-14">- Note: Field marked with <span class="text-danger">(*)</span> are required </p>
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="ibox">
-                        <div class="ibox-content">
-                            <div class="row mb-15">
-                                <div class="col-lg-6">
-                                    <x-input :label="'Email'" :name="'email'" :value="$user->email ?? ''" :require="true" />
-                                </div>
-                                <div class="col-lg-6">
-                                    <x-input :label="'Fullname'" :name="'name'" :value="$user->name ?? ''" :require="true" />
-                                </div>
-                            </div>
-                            <div class="row mb-15">
-                                <div class="col-lg-6">
-                                    <x-select :name="'user_catalogue_id'" :options="$userCatalogues" :root="'Select User Group'" :label="'User Group'" :value="$user->user_catalogue_id ?? 0" />
-                                </div>
-                                <div class="col-lg-6">
-                                    <x-input :label="'Phone'" :name="'phone'" :value="$user->phone ?? ''" :require="true" />
-                                </div>
-                            </div>
-                            @if(isset($config['method']) && $config['method'] !== 'edit' )
-                            <div class="row mb-15">
-                                <div class="col-lg-6">
-                                    <x-input :label="'Password'" :name="'password'" :value="''" :require="true" :type="'password'" />
-                                </div>
-                                <div class="col-lg-6">
-                                    <x-input :label="'Re Password'" :name="'re_password'" :value="''" :require="true" :type="'password'" />
-                                </div>
-                            </div>
-                            @endif
-                            <div class="row mb-15">
-                                <div class="col-lg-12">
-                                    <x-input :label="'Address'" :name="'address'" :value="$user->address ?? ''"/>
-                                </div>
-                            </div>
-                            <div class="row mb-15">
-                                <div class="col-lg-12">
-                                    <x-input :label="'Image'" :name="'image'" :value="$user->image ?? ''" />
-                                </div>
-                            </div>
+    <x-form :config="$config" :model="$product ?? null">
+        <div class="row">
+            <!-- Cột bên trái chứa các thông tin cơ bản -->
+            <div class="col-lg-8 col-md-12 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        Thông tin sản phẩm
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse"
+                                title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
                         </div>
                     </div>
-                    <div class="text-left mb-15">
-                        <x-button 
-                            :label="'Save'" 
-                            :class="'btn-success'" 
-                        />
+                    <div class="card-body">
+                        <x-album :label="'Hình ảnh sản phẩm'" :name="'albums'" :value="$product->album ?? ''" />
+
+                        <x-editor :label="'Mô tả sản phẩm'" :name="'description'" :value="$product->description ?? ''" class="form-control" />
                     </div>
                 </div>
             </div>
+
+            <!-- Cột bên phải chứa các thông tin bổ sung -->
+            <div class="col-lg-4 col-md-12 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-secondary text-white">
+                        Thông tin bổ sung
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-secondary btn-sm" data-card-widget="collapse"
+                                title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <x-thumbnail :label="'Ảnh sản phẩm'" :name="'thumbnail'" :value="$product->thumbnail ?? '/uploads/system/no_img.jpg'" />
+                    </div>
+                </div>
+            </div>
+
+            {{-- SEO --}}
+            <x-seo :value_meta_title="$product->meta_title ?? ''" :value_meta_description="$product->meta_description ?? ''" :value_meta_keywords="$product->meta_keywords ?? ''" />
         </div>
+        <x-button :label="'Lưu'" :class="'btn-success'" />
     </x-form>
 @endsection

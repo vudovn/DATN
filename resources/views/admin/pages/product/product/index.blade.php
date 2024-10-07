@@ -61,21 +61,13 @@
                                 <td>{{ number_format($product->price) }}</td>
                                 <td>{{ changeDateFormat($product->created_at) }}</td>
                                 <td class="text-center">-</td>
-                                <td class="text-center js-switch-{{ $product->id }}">
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input js-switch status"
-                                            id="customSwitch{{ $product->id }}" data-field="publish" data-value="{{ $product->publish }}"
-                                            data-model="{{ ucfirst($config['model']) }}" data-id="{{ $product->id }}"
-                                            {{ $product->publish === 2 ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="customSwitch{{ $product->id }}"></label>
-                                    </div>
+                                <td class="text-center">
+                                    <x-switchvip :value="$product" :model="ucfirst($config['model'])"/>
                                 </td>
                                 <td class="text-center">
                                     <a href="{{ route('product.edit', ['id' => $product->id]) }}" class="btn btn-sm btn-success">
                                         <i class="bi bi-pen"></i></a>
-                                    <x-delete :id="$product->id" />
-                                    {{-- <a href="{{ route('product.delete', ['id' => $product->id]) }}" class="btn btn-danger">
-                                        <i class="bi bi-trash"></i></a> --}}
+                                    <x-delete :id="$product->id" :model="ucfirst($config['model'])"/>
                                 </td>
                             </tr>
                         @endforeach

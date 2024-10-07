@@ -13,7 +13,7 @@
                         <ul id="sortable"
                             class="row align-items-center list-unstyled clearfix data-album sortui ui-sortable"
                             style="margin-bottom:0 !important">
-                            <li class="col-xl-3 mb-3 d-flex justify-content-center align-items-center">
+                            <li class="col-xl-3 col-md-3 col-sm-6 mb-3 d-flex justify-content-center align-items-center">
                                 <a href="" style="font-size: 50px" class="upload-picture"
                                     data-name="{{ $name }}">
                                     <i class="fa-duotone fa-solid fa-cloud-arrow-up"></i>
@@ -22,7 +22,7 @@
 
                             @if (isset($gallery) && $gallery != '')
                                 @foreach ($gallery as $key => $val)
-                                    <li class="ui-state-default col-xl-3 mb-3">
+                                    <li class="ui-state-default col-xl-3 col-md-3 col-sm-6 mb-3">
                                         <div class="thumb img_albums_tgnt">
                                             <span class="span image img-scaledown">
                                                 <a href="{{ $val }}" data-fancybox="gallery" data-caption="" >

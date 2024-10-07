@@ -19,7 +19,7 @@ class BaseService {
         DB::beginTransaction();
         try {
             $repositoryClass = loadClass($data['model'], 'Repository');
-            $payload[$data['field']] = ((int)$data['value'] === 2) ? 1 : 2;
+            $payload[$data['field']] = ((int)$data['value'] === 1) ? 2 : 1;
             $repositoryClass->update((int)$data['id'], $payload);
 
             DB::commit();
@@ -36,8 +36,8 @@ class BaseService {
         DB::beginTransaction();
         try {
             $repositoryClass = loadClass($data['model'], 'Repository');
-
             $option = explode('-', $data['option']);
+            // dd($option);
             $payload[$option[0]] = (int)$option[1];
             $agruments = [
                 'whereInField' => 'id',
@@ -49,7 +49,7 @@ class BaseService {
             DB::commit();
             return true;
         } catch (\Exception $e) {
-           DB::rollback();
+            DB::rollback();
             echo $e->getMessage();die();
             // $this->log($e);
             return false;

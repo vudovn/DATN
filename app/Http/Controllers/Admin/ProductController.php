@@ -38,10 +38,10 @@ class ProductController extends Controller
     }
 
     public function store(Request $request){
-        $request->validate([
-            'content'=> 'required',
-        ]);
-        // dd($request->all());
+        // $request->validate([
+        //     'content'=> 'required',
+        // ]);
+        dd($request->all());
     }
 
     private function breadcrumb($key){

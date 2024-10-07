@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('district _id')->nullable();
             $table->string('ward_id')->nullable();
             $table->string('image')->nullable();
-            $table->tinyInteger('publish')->default(2);
+            $table->boolean('publish')->default(false);
             $table->unsignedBigInteger('user_catalogue_id');
             $table->rememberToken();
             $table->timestamps();

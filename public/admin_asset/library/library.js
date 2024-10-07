@@ -92,10 +92,8 @@
 
                 Swal.fire({
                     title: "Bạn có chắc không?",
-                    // text: "You will not be able to recover this action!",
                     icon: "warning",
                     showCancelButton: true,
-                    // confirmButtonColor: "#DD6B55",
                     confirmButtonText: "Confirm!",
                     cancelButtonText: "Cancel",
                     reverseButtons: true
@@ -183,7 +181,7 @@
                         type: 'DELETE',
                         data: {
                             _token: $('meta[name="csrf-token"]').attr('content'),
-                            model: $('#model').val(),
+                            model: _this.attr('data-model'),
                             id: _this.attr('data-id')
                         },
                         dataType: "JSON",
@@ -208,10 +206,16 @@
         });
     };
     
+    TGNT.tagify = () => {
+		var tagify_tgnt = document.querySelector('.tagify_tgnt');
+		new Tagify(tagify_tgnt);
+    }
     
     TGNT.select2 = () => {
-        if($('.setupSelect2').length){
-            $('.setupSelect2').select2();
+        if($('.select2').length){
+            $('.select2').select2({
+                theme: 'bootstrap4'
+              })
         }  
     }
 
@@ -229,8 +233,8 @@
         TGNT.action()
         TGNT.delete_item()
         TGNT.select2()
+        TGNT.tagify()
         TGNT.sortui()
-
     })
 
 

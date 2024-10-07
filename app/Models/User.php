@@ -22,7 +22,7 @@ class User extends Authenticatable
         'email',
         'phone',
         'user_catalogue_id',
-        'address',
+        // 'address',
         'password',
         'image',
         'publish'

@@ -126,7 +126,7 @@
             let html = '';
             for(var i = 0; i < allFiles.length; i++){
                 var image = allFiles[i].url
-                html += '<li class="ui-state-default col-xl-3 col-md-6 mb-3">'
+                html += '<li class="ui-state-default col-xl-3 col-md-3 col-sm-6 mb-3">'
                    html += ' <div class="thumb img_albums_tgnt">'
                        html += ' <span class="span image img-scaledown">'
                             html += '<a href="'+image+'" data-fancybox="gallery" data-caption="">'

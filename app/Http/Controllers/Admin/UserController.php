@@ -35,8 +35,9 @@ class UserController extends Controller{
         $users = $this->userService->paginate($request);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
+
         $userCatalogues = $this->userCatalogueRepository->getAll();
-    
+        
         return view('admin.pages.user.user.index', compact(
             'config',
             'userCatalogues',

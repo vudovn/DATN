@@ -38,7 +38,8 @@
                     </div>
                     <div class="card-body">
                         <x-thumbnail :label="'Ảnh sản phẩm'" :name="'thumbnail'" :value="$product->thumbnail ?? '/uploads/system/no_img.jpg'" />
-                    </div>
+                        <x-publish :label="'Trạng thái'" :name="'publish'" :required="true" :value="$product->publish ?? ''"/>
+                     </div>
                 </div>
             </div>
 

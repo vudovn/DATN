@@ -38,6 +38,7 @@ class UserService extends BaseService {
 
     public function paginate($request){
         $agruments = $this->paginateAgrument($request);
+        // dd($agruments);
         $cacheKey = 'pagination: ' . md5(json_encode($agruments));
         
         $users = $this->userRepository->pagination($agruments);
@@ -55,9 +56,9 @@ class UserService extends BaseService {
             DB::commit();
             return true;
         } catch (\Exception $e) {
-           DB::rollback();
-            // echo $e->getMessage();die();
-            $this->log($e);
+            DB::rollback();
+            echo $e->getMessage();die();
+            // $this->log($e);
             return false;
         }
     }

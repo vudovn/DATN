@@ -1,0 +1,25 @@
+-Hồi trước là mình làm cái chi cũng viết hết ở controller => hố đen vũ trụ :v ,
+chừ mình tách ra, dùng "Repository Design Pattern"
+
+    - Vai trò của các tầng:
+            Repository: Tương tác với cơ sở dữ liệu, thực hiện các thao tác 
+                        CRUD(Lấy - Thêm - Sửa - Xóa) và các truy vấn khác.
+            Service: Xử lý logic (ví dụ như tính toán cái chi đó rồi mới thêm vào cơ sở dữ liệu (tạo slug , định dạng lại ngày,... thêm role hay thêm sản phẩm cho nhiều danh mục chi đó)) 
+                    hoặc kết hợp dữ liệu từ các repository khác và thực hiện mấy các tính phức tạp hơn.
+            Controller: Tiếp nhận yêu cầu từ người dùng (ví dụ như họ gọi vào cái route mô đó :v )
+                        rồi gọi tầng Service hoặc Repository để xử lý và trả kết quả về cho người dùng.
+
+    - Đường đi: route -> controller -> service -> repository (Những dữ liệu cần xử lý thì ta mới vào tần service thôi, không thì vào trực tiếp tần repository)
+                            ví dụ như đoạn $users = $this->userService->paginate($request);
+                                            trong UserController.php -> function index(), lấy dữ liệu nhưng phải xử lý cái $request
+                                      đoạn $this->userService->create($request);
+                                            trong UserController.php -> function store(),đẩy dữ liệu qua service xử lý
+
+                hoặc là:  route -> controller -> repository  (Cái ni thường dùng khi lấy dữ liệu mà không cần xử lí :v )
+                            ví dụ như đoạn ni $userCatalogues = $this->userCatalogueRepository->getAll();
+                                            trong UserController.php -> function index() , chỉ lấy dữ liệu thôi chớ không xử lý
+
+
+
+                            
+            

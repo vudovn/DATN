@@ -4,11 +4,11 @@
         'publish' => [
             0 => [
                 'id' => 1,
-                'name' => 'Chưa xuất bản'
+                'name' => 'Đã xuất bản'
             ],
             1 => [
                 'id' => 2,
-                'name' => 'Đã xuất bản'
+                'name' => 'Chưa xuất bản'
             ]
         ],
         'perpage' => array_map(function($item){
@@ -42,12 +42,12 @@
                 'name' => 'Xóa'
             ],
             1 => [
-                'id' => 'publish-2',
+                'id' => 'publish-1',
                 'name' => 'Xuất bản'
             ],
             2 => [
-                'id' => 'publish-1',
-                'name' => 'Chưa xuất bản'
+                'id' => 'publish-2',
+                'name' => 'Không xuất bản'
             ],
         ],
 

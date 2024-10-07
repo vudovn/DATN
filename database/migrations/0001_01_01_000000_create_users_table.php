@@ -17,14 +17,15 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('province_id')->nullable();
-            $table->string('district _id')->nullable();
-            $table->string('ward_id')->nullable();
+            $table->string('province_id',20)->charset('utf8mb4')->collation('utf8mb4_general_ci')->nullable();
+            $table->string('district_id',20)->charset('utf8mb4')->collation('utf8mb4_general_ci')->nullable();
+            $table->string('ward_id',20)->charset('utf8mb4')->collation('utf8mb4_general_ci')->nullable();
             $table->string('image')->nullable();
-            $table->tinyInteger('publish')->default(2);
+            $table->boolean('publish')->default(false);
             $table->unsignedBigInteger('user_catalogue_id');
             $table->rememberToken();
             $table->timestamps();
+            
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

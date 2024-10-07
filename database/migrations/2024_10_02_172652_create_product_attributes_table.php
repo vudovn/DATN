@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('product_attributes', function (Blueprint $table) {
             $table->id();
-
 			$table->integer('quantity');
             $table->string('thumbnail')->default('https://img.muji.net/img/item/4550583440404_1260.jpg');
             $table->json('albums')->nullable();
             $table->string('slug')->nullable();
             $table->decimal('price')->nullable();
+            $table->decimal('discount')->nullable();
             $table->unsignedBigInteger('product_id');
 			$table->timestamps();
 

@@ -1,24 +1,32 @@
--Hồi trước là mình làm cái chi cũng viết hết ở controller => hố đen vũ trụ :v ,
-chừ mình tách ra, dùng "Repository Design Pattern"
+👉 Hồi trước là mình làm cái chi cũng viết hết ở controller => rối, quá rủi ro :v,
+chừ mình tách ra, dùng "Repository Design Pattern" (dễ sửa , không rối,... base t build hết rồi , còn lại chỉ Ctr C , Ctr V ra rồi sửa 1 xíu thôi , để ý xíu là thấy liền :v)
 
-    - Vai trò của các tầng:
+    👉 Vai trò của các tầng:
             Repository: Tương tác với cơ sở dữ liệu, thực hiện các thao tác 
-                        CRUD(Lấy - Thêm - Sửa - Xóa) và các truy vấn khác.
+                        CRUD và các truy vấn khác.
             Service: Xử lý logic (ví dụ như tính toán cái chi đó rồi mới thêm vào cơ sở dữ liệu (tạo slug , định dạng lại ngày,... thêm role hay thêm sản phẩm cho nhiều danh mục chi đó)) 
                     hoặc kết hợp dữ liệu từ các repository khác và thực hiện mấy các tính phức tạp hơn.
-            Controller: Tiếp nhận yêu cầu từ người dùng (ví dụ như họ gọi vào cái route mô đó :v )
-                        rồi gọi tầng Service hoặc Repository để xử lý và trả kết quả về cho người dùng.
+            Controller: Nhận request từ người dùng (ví dụ như mình truy vào cái route user/index :v )
+                        rồi gọi tầng Service hoặc Repository để xử lý và trả kết quả về cho người dùng (trả ra view hay api tùy you :v).
 
-    - Đường đi: route -> controller -> service -> repository (Những dữ liệu cần xử lý thì ta mới vào tần service thôi, không thì vào trực tiếp tần repository)
-                            ví dụ như đoạn $users = $this->userService->paginate($request);
+    👉 Đường đi: Controller ➡️ Service ➡️ Repository (Những dữ liệu cần xử lý thì ta mới vào tần service thôi, không thì vào trực tiếp tần repository)
+                            ví dụ như đoạn code: $users = $this->userService->paginate($request);
                                             trong UserController.php -> function index(), lấy dữ liệu nhưng phải xử lý cái $request
-                                      đoạn $this->userService->create($request);
-                                            trong UserController.php -> function store(),đẩy dữ liệu qua service xử lý
+                                thêm đoạn code ni: $this->userService->create($request);
+                                            trong UserController.php -> function store(), đẩy dữ liệu qua cho service xử lý .... :v
 
-                hoặc là:  route -> controller -> repository  (Cái ni thường dùng khi lấy dữ liệu mà không cần xử lí :v )
+                hoặc là:  Controller ➡️ Repository  ("không phải lúc nào cũng cần đến tầng Service". Nếu logic đơn giản, chỉ cần lấy dữ liệu từ database, thì có thể gọi trực tiếp Repository từ Controller. )
                             ví dụ như đoạn ni $userCatalogues = $this->userCatalogueRepository->getAll();
-                                            trong UserController.php -> function index() , chỉ lấy dữ liệu thôi chớ không xử lý
+                                            trong UserController.php -> function index(), chỉ lấy dữ liệu thôi chớ không xử lý :v
 
+
+    👉 trong cái Repository có file BaseRepository nó là file chứa các phương thức dùng chung ,tránh lặp code,
+            viết 1 lần nhưng dùng được cho nhiều Repository khác như ProductRepository, UserRespository, ... kế thừa lại ( Còn nhớ chi không :v )
+            phải mở thử các file ProductRepository, UserRespository, ... ra xem để thấy nó khác nhau cái chi nghe ( * Nhìn từ cái <?php xuống hết :v ) 
+
+..........
+
+RỨA THÂU :v
 
 
                             

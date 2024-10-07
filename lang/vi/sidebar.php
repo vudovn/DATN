@@ -19,6 +19,10 @@ return [
                         'name' => 'Danh sách thành viên',
                         'path' => route('user.index')
                     ],
+                    [
+                        'name' => 'Quản lý quyền',
+                        'path' => route('user.create')
+                    ]
                     
                 ]
             ],

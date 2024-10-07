@@ -17,12 +17,11 @@ return new class extends Migration
             $table->string('slug');
             $table->string('thumbnail');
             $table->integer('parent_id')->nullable();
-            $table->boolean('is_room')->default(false);
-            $table->boolean('publish')->default(true);
+            $table->boolean('is_room')->default(2); //2: not room, 1: room
+            $table->boolean('publish')->default(2); // 2: not publish, 1: publish
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();
             $table->string('meta_keyword')->nullable();
-
             $table->timestamps();
         });
     }

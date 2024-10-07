@@ -23,6 +23,9 @@ return new class extends Migration {
             $table->json('albums')->nullable(); 
             $table->boolean('publish')->default(true);
             $table->boolean('is_featured')->default(false);
+            $table->string('meta_title')->nullable();
+            $table->string('meta_description')->nullable();
+            $table->string('meta_keyword')->nullable();
             $table->softDeletes();
 			$table->timestamps();
         });

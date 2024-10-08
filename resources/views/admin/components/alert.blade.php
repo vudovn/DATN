@@ -1,45 +1,62 @@
-{{-- return with('success','oke') --}}
+
 @if (session('success'))
     <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Thành công!',
-            text: '{{ session('success') }}',
-            timer: 3000,
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
         });
+        Toast.fire({
+            icon: 'success',
+            title: "{{ session('success') }}"
+        })
     </script>
 @endif
 
 @if (session('error'))
     <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Không thành công!',
-            text: '{{ session('error') }}',
-            timer: 3000,
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
         });
+        Toast.fire({
+            icon: 'error',
+            title: "{{ session('error') }}"
+        })
     </script>
 @endif
 
 @if (session('warning'))
     <script>
-        Swal.fire({
-            icon: 'warning',
-            title: 'Cảnh báo!',
-            text: '{{ session('warning') }}',
-            timer: 3000,
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
         });
+        Toast.fire({
+            icon: 'warning',
+            title: "{{ session('warning') }}"
+        })
     </script>
 @endif
 
-{{-- @if ($errors->any())
+@if (session('info'))
     <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Lỗi!',
-            text: 'Vui lòng kiểm tra lại thông tin điền vào!',
-            timer: 3000,
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
         });
+        Toast.fire({
+            icon: 'info',
+            title: "{{ session('info') }}"
+        })
     </script>
-@endif --}}
+@endif
+
 

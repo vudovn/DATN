@@ -32,7 +32,6 @@
                         </p>
                     </a>
                 </li>
-
                 @foreach (__('sidebar.function') as $key => $val)
                     <li class="nav-item {{ (in_array($segment, $val['route'])) ? 'menu-open active' : '' }}">
                         <a href="#" class="nav-link {{ (in_array($segment, $val['route'])) ? 'active' : '' }}">

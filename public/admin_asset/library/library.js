@@ -2,8 +2,28 @@
     "use strict"
     var TGNT = {}
 
+    TGNT.requestUrl = () => {
+        $(document).on('change', '.select_action', function () {
+          let _this = $(this);
+          console.log(_this.attr('name')); 
+          let url = new URL(window.location.href);
+          let search_params = url.searchParams;
+          search_params.set(_this.attr('name'), _this.val());
+          url.search = search_params.toString();
+          console.log(url);
+          
+          window.location.href = url.href; 
+        });
+      }
+
     TGNT.changeStatusByField = () => {
         $(document).on('change', '.status', function (e) {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
             let _this = $(this)
             let attributes = {
                 field: _this.attr('data-field'),
@@ -20,9 +40,16 @@
                 success: function (response) {
                     console.log(response);
 
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Cập nhật trạng thái thành công"
+                    })
                 },
                 error: function (error) {
-                    console.error(error)
+                    Toast.fire({
+                        icon: 'error',
+                        title: "Cập nhật trạng thái thất bại"
+                    })
                 }
             })
 
@@ -36,7 +63,6 @@
             }
         })
     }
-
 
     TGNT.checkBoxItem = () => {
         if ($('.checkbox-item').length) {
@@ -85,7 +111,7 @@
                 let ids = TGNT.getIds()
 
                 if (ids.length === 0) {
-                    alert('You must select at least one record to perform this action!');
+                    alert('Adu hacker!');
                     return false
                 }
 
@@ -111,27 +137,13 @@
                             success: function (response) {
                                 let option = _this.val().split('-');
                                 if (option[0] != 'delete') {
-                                    let styles = {
-                                        active: {
-                                            main: 'background-color: rgb(26, 179, 148); border-color: rgb(26, 179, 148); box-shadow: rgb(26, 179, 148) 0px 0px 0px 11px inset; transition: border 0.4s, box-shadow 0.4s, background-color 1.2s;',
-                                            small: 'left: 13px; background-color: rgb(255, 255, 255); transition: background-color 0.4s, left 0.2s;'
-                                        },
-                                        inactive: {
-                                            main: 'box-shadow: rgb(223, 223, 223) 0px 0px 0px 0px inset; border-color: rgb(223, 223, 223); background-color: rgb(255, 255, 255); transition: border 0.4s, box-shadow 0.4s;',
-                                            small: 'left: 0px; transition: background-color 0.4s, left 0.2s;'
-                                        }
-                                    };
-
-                                    let isActive = option[1] == 2;
-                                    let cssMain = isActive ? styles.active.main : styles.inactive.main;
-                                    let cssSmall = isActive ? styles.active.small : styles.inactive.small;
+                                    let isActive = option[1] == 1 ? true : false;
                                     for (let i = 0; i < ids.length; i++) {
-                                        $('.js-switch-' + ids[i]).find('span.switchery').attr('style', cssMain).find('small').attr('style', cssSmall);
-                                        $('.js-switch-' + ids[i]).find('.js-switch').attr('data-value', option[1]);
+                                        $('.js-switch-' + ids[i]).find('.js-switch').attr('checked', isActive );
                                     }
                                 } else {
                                     for (let i = 0; i < ids.length; i++) {
-                                        $('.js-switch-' + ids[i]).parents('tr').remove();
+                                        $('#customCheckbox' + ids[i]).parents('tr').remove();
                                     }
                                 }
 
@@ -140,10 +152,16 @@
                                 TGNT.hideActions();
                                 $('.table').find('tr').removeClass('active-bg');
 
-                                Swal.fire("Thành công!", "Thực hiện thành công hành động.", "success");
-                                setTimeout(function () {
-                                    location.reload();
-                                }, 1000);
+                                var Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                });
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: "Thực hiện thành công hành động"
+                                })
                             },
                             error: function (error) {
                                 console.error(error);
@@ -164,6 +182,13 @@
 
     TGNT.delete_item = () => {
         $(document).on('click', '#delete_tgnt', function () {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            
             let _this = $(this); 
             // console.log(_this.attr('data-id'));
             Swal.fire({
@@ -186,19 +211,17 @@
                         },
                         dataType: "JSON",
                         success: function (response) {
-                            _this.closest('tr').remove();
-                            Swal.fire(
-                                'Đã xóa!',
-                                'Mục đã được xóa thành công.',
-                                'success'
-                            );
+                        _this.closest('tr').remove();
+                            Toast.fire({
+                                icon: 'success',
+                                title: "Xóa thành công"
+                            })
                         },
                         error: function (error) {
-                            Swal.fire(
-                                'Lỗi!',
-                                'Đã xảy ra lỗi khi xóa mục.',
-                                'error'
-                            );
+                            Toast.fire({
+                                icon: 'success',
+                                title: "Xóa không thành thành công"
+                            })
                         }
                     });
                 }
@@ -235,6 +258,7 @@
         TGNT.select2()
         TGNT.tagify()
         TGNT.sortui()
+        TGNT.requestUrl()
     })
 
 

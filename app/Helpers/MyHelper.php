@@ -8,6 +8,7 @@ if (!function_exists('loadClass')) {
             'Service' => 'Services',
             'Repository' => 'Repositories'
         ];
+        
         $modelParts = preg_split('/(?=[A-Z])/', $modelName);
         $baseModel = $modelParts[1];
 

@@ -1,12 +1,16 @@
-@props(['label', 'name', 'value', 'require'])
-<div class="form-group">
-    <label for="{{ $name }}" class="control-label text-left">{{ $label }} {!! isset($require) && $require ? '<span class="text-danger">*</span>' : '' !!} </label>
-    <select name="{{ $name }} " class="select2 form-control " id="{{ $name }}">
-        <option value="">Chọn trạng thái</option>
-        @foreach (__('general.publish') as $key => $option)
-            <option value="{{ $option['id'] }}" {{ $value == $option['id'] ? 'selected' : '' }}>{{ $option['name'] }}</option>
-        @endforeach
-    </select>
+@props(['label', 'name', 'value', 'required'])
+<div class="card">
+    <div class="card-header">
+        {{ $label }} @if ($required ?? '') <span class="text-danger">*</span> @endif
+    </div>
+    <div class="card-body">
+        <select name="{{ $name }} " class="select2 form-control " id="{{ $name }}">
+            <option value="">Chọn trạng thái</option>
+            @foreach (__('general.publish') as $key => $option)
+                <option value="{{ $option['id'] }}" {{ $value == $option['id'] ? 'selected' : '' }}>{{ $option['name'] }}</option>
+            @endforeach
+        </select>
+    </div>
 </div>
 
 @error($name)

@@ -1,16 +1,25 @@
 tr.active-bg {
     background-color: rgba(42, 114, 202, 0.275) !important;
 }
-.img_albums_tgnt {
-    position: relative !important;
+.sidebar-dark-primary {
+    background-color: #344150 !important;
 }
 .img_albums_tgnt {
     position: relative !important;
 }
+.img_albums_tgnt {
+    position: relative !important;
+}
+
 .img_albums_tgnt .btn_delete_albums_tgnt {
     position: absolute !important;
     top: 3% !important;
-    right: 3% !important;
+    right: 4% !important;
+    display: none ;
+    transition: .3s ease-in-out;
+}
+.img_li_tgnt:hover .btn_delete_albums_tgnt {
+    display: block ;
 }
 
 .ui-sortable {
@@ -23,7 +32,10 @@ tr.active-bg {
     font-weight: unset !important;
     color: unset !important;
 }
-
+.card-header {
+    background-color: #e9ecef ;
+    color: black;
+}
 /* box seo */
 .box_seo {
 

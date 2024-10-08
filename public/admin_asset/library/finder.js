@@ -126,7 +126,7 @@
             let html = '';
             for(var i = 0; i < allFiles.length; i++){
                 var image = allFiles[i].url
-                html += '<li class="ui-state-default col-xl-3 col-md-3 col-sm-6 mb-3">'
+                html += '<li class="ui-state-default img_li_tgnt col-xl-2 col-md-3 col-sm-6 mb-3">'
                    html += ' <div class="thumb img_albums_tgnt">'
                        html += ' <span class="span image img-scaledown">'
                             html += '<a href="'+image+'" data-fancybox="gallery" data-caption="">'
@@ -135,7 +135,7 @@
                             html += '<input type="hidden" name="'+data_name+'[]" value="'+image+'">'
                         html += '</span>'
                         html += '<div class="btn_delete_albums_tgnt">'
-                            html += '<button class="delete-image btn btn-sm btn-danger"><i class="fa-duotone fa-solid fa-trash-can"></i></button>'
+                            html += '<button class="delete-image btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>'
                         html += '</div>'
                     html += '</div>'
                 html += '</li>'

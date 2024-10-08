@@ -4,7 +4,7 @@
         'publish' => [
             0 => [
                 'id' => 1,
-                'name' => 'Đã xuất bản'
+                'name' => 'Xuất bản'
             ],
             1 => [
                 'id' => 2,

@@ -1,15 +1,18 @@
-@props(['label', 'name', 'value'])
+@props(['label', 'name', 'value', 'required'])
 
-<div class="form-group">
-    <label for="{{ $name }}" class="control-label text-left">{{ $label }}</label>
-    
-    <div class="{{ $name }} img-cover image-target">
-        <img 
-            src="{{ old($name, $value ?? '/uploads/system/no_img.jpg') }}" 
-            width="100%" 
-            class="img-thumbnail img-fluid" 
-            alt="Hình ảnh">
+<div class="card">
+    <div class="card-header">
+        {{ $label }} @if ($required ?? '') <span class="text-danger">*</span> @endif
     </div>
-
-    <input type="hidden" name="{{ $name }}" value="{{ old($name, $value ?? '') }}">
+    <div class="card-body">
+        <div class="{{ $name }} img-cover image-target">
+            <img 
+                src="{{ old($name, $value ?? '/uploads/system/no_img.jpg') }}" 
+                width="100%" 
+                class="img-thumbnail img-fluid" 
+                alt="Hình ảnh">
+        </div>
+        <input type="hidden" name="{{ $name }}" value="{{ old($name, $value ?? '') }}">
+    </div>
 </div>
+

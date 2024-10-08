@@ -7,7 +7,7 @@ chừ mình tách ra, dùng "Repository Design Pattern" (dễ sửa , không r�
             Service: Xử lý logic (ví dụ như tính toán cái chi đó rồi mới thêm vào cơ sở dữ liệu (tạo slug , định dạng lại ngày,... thêm role hay thêm sản phẩm cho nhiều danh mục chi đó)) 
                     hoặc kết hợp dữ liệu từ các repository khác và thực hiện mấy các tính phức tạp hơn.
             Controller: Nhận request từ người dùng (ví dụ như mình truy vào cái route user/index :v )
-                        rồi gọi tầng Service hoặc Repository để xử lý và trả kết quả về cho người dùng (trả ra view hay api tùy you :v).
+                        rồi gọi tầng Service hoặc Repository để xử lý và trả kết quả về cho người dùng (trả ra view hay api thì tùy :v).
 
     👉 Đường đi: Controller ➡️ Service ➡️ Repository 
                             ví dụ như đoạn code: $users = $this->userService->paginate($request);

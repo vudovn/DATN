@@ -61,27 +61,25 @@
                                 <td>{{ number_format($product->price) }}</td>
                                 <td>{{ changeDateFormat($product->created_at) }}</td>
                                 <td class="text-center">-</td>
-                                <td class="text-center js-switch-{{ $product->id }}">
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input js-switch status"
-                                            id="customSwitch{{ $product->id }}" data-field="publish" data-value="{{ $product->publish }}"
-                                            data-model="{{ ucfirst($config['model']) }}" data-id="{{ $product->id }}"
-                                            {{ $product->publish === 2 ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="customSwitch{{ $product->id }}"></label>
-                                    </div>
-                                </td>
                                 <td class="text-center">
-                                    <a href="{{ route('product.edit', ['id' => $product->id]) }}" class="btn btn-sm btn-success">
-                                        <i class="bi bi-pen"></i></a>
-                                    <x-delete :id="$product->id" />
-                                    {{-- <a href="{{ route('product.delete', ['id' => $product->id]) }}" class="btn btn-danger">
-                                        <i class="bi bi-trash"></i></a> --}}
+                                    <x-switchvip :value="$product" :model="ucfirst($config['model'])"/>
+                                </td>
+                                <td class="text-center table-actions">
+                                    <a href="{{ route('product.edit', ['id' => $product->id]) }}" class="btn btn-sm btn-icon btn-primary">
+                                        <svg class="icon  svg-icon-ti-ti-edit" data-bs-toggle="tooltip" data-bs-title="Edit" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
+                                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
+                                            <path d="M16 5l3 3"></path>
+                                        </svg>
+                                    </a>
+                                    <x-delete :id="$product->id" :model="ucfirst($config['model'])"/>
                                 </td>
                             </tr>
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="8" class="text-center">Không có dữ liệu</td>
+                            <td colspan="9" class="text-center">Không có dữ liệu</td>
                         </tr>
                     @endif
                 </tbody>

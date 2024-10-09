@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->text('content');
+            $table->integer('rating');
+            $table->boolean('albums');
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

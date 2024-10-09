@@ -14,10 +14,7 @@ return new class extends Migration {
 			$table->id();
             $table->string('code')->unique();
             $table->string('name');
-            $table->boolean('is_required')->default(false);
-            $table->boolean('is_filterable')->default(false);
-            $table->boolean('publish')->default(true);
-
+            $table->boolean('publish')->default(2);
 			$table->timestamps();
             $table->softDeletes();
         });

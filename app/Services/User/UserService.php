@@ -38,6 +38,7 @@ class UserService extends BaseService {
 
     public function paginate($request){
         $agruments = $this->paginateAgrument($request);
+        // dd($agruments);
         $cacheKey = 'pagination: ' . md5(json_encode($agruments));
         
         $users = $this->userRepository->pagination($agruments);
@@ -55,9 +56,9 @@ class UserService extends BaseService {
             DB::commit();
             return true;
         } catch (\Exception $e) {
-           DB::rollback();
-            // echo $e->getMessage();die();
-            $this->log($e);
+            DB::rollback();
+            echo $e->getMessage();die();
+            // $this->log($e);
             return false;
         }
     }
@@ -69,12 +70,13 @@ class UserService extends BaseService {
         // tạo user xong rồi mà gắn quyền hắn lỗi trất
                 // User::create($data); chạy oke
                 // Role::create($user); chạy lỗi mọe trất
-        // Là thằn user nó được tạo trong databsae rồi nhưng trong bảng role thì chưa có quyền của thằn user đó 
+        // Là thằn user nó được tạo trong bảng Users rồi nhưng trong bảng Roles thì chưa có quyền của thằn user đó 
         // => lỗi :v, mất dữ liệu
-        // => giải pháp : dùng transaction
+        // => giải pháp : dùng transaction => Đảm bảo toàn vẹn dữ liệu
         // đang chạy trong 1 transaction, nếu có lỗi thì rollback lại hết (reset lại như chưa từng chạy)
-        
-        DB::beginTransaction();
+        // Try Catch để bắt lỗi
+            // Bất kể lỗi gì xảy ra trong try thì nó sẽ tự động chạy vào catch
+        DB::beginTransaction();  
         try {
             $payload = $request->except(['_token', 'send', '_method']);
             $user = $this->userRepository->update($id, $payload);

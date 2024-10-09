@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->text('short_content')->nullable();
             $table->longText('description')->nullable();
             $table->string('thumbnail');
             $table->boolean('publish')->default(true);
-            $table->longText('blog_content')->nullable();
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();
             $table->string('meta_keyword')->nullable();

@@ -11,7 +11,7 @@
                             @php
                                 $selected = request($key) ?: old($key);
                             @endphp
-                            <select name="{{ $key }}" id="{{ $key }}" class="form-control">
+                            <select name="{{ $key }}" id="{{ $key }}" class="form-control select2">
                                 @foreach($option as $keyItem => $valItem)
                                     <option {{ ($keyItem == $selected) ? 'selected' : '' }} value="{{ $keyItem }}">{{ $valItem }}</option>
                                 @endforeach
@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="form-group col-auto">
-                    <button type="submit" name="filter" class="btn btn-success"><i class="fas fa-search"></i></button>
+                    <button type="submit" name="filter" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </div>
             </div>
         </form>

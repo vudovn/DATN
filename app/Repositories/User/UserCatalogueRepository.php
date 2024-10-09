@@ -15,8 +15,9 @@ class UserCatalogueRepository{
 
     public function getAll(){
         return [
-            ['id' => 1, 'name' => 'Administrator'],
-            ['id' => 2, 'name' => 'Collaborator'],
+            ['id' => 1, 'name' => 'Quản trị viên'],
+            ['id' => 2, 'name' => 'Khách hàng'],
+            ['id' => 3, 'name' => 'Nhân viên']
         ];
     }
 

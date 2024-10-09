@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
-    /* USER ROUTE */
+    /* USER ROUTE */ 
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('/index', [UserController::class, 'index'])->name('index');
         Route::get('/create', [UserController::class, 'create'])->name('create');

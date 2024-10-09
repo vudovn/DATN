@@ -1,6 +1,16 @@
 <!--  -->
 <?php  
     return [
+        'active' => [
+            0 => [
+                'id' => 1,
+                'name' => 'Kích hoạt'
+            ],
+            1 => [
+                'id' => 2,
+                'name' => 'Không kích hoạt'
+            ]
+        ],
         'publish' => [
             0 => [
                 'id' => 1,
@@ -35,7 +45,6 @@
                 'name' => 'Tên Z - A'
             ]
         ],
-
         'actions' => [
             0 => [
                 'id' => 'delete',

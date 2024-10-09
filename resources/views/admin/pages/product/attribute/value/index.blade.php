@@ -64,9 +64,8 @@
                                             {{ $attribute->value }}
                                         </td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModal">
-                                                <i class="bi bi-pen"></i>
-                                            </button>
+                                            <a href="{{ route('product.attributeValue.edit', $attribute->id) }}" class="text-primary mr-4">
+                                                <i class="fa fa-edit"></i></a>
                                             <x-delete :id="$attribute->id"  :model="ucfirst($config['model'])"/>
                                         </td>
                                     </tr>

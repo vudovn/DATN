@@ -24,6 +24,7 @@
     @include('admin.components.alert')
     {{-- end sweetalert --}}
     @include('admin.components.script')
+    <script src="https://cdn.jsdelivr.net/gh/LieutenantPeacock/SmoothScroll@1.2.0/src/smoothscroll.min.js" integrity="sha384-UdJHYJK9eDBy7vML0TvJGlCpvrJhCuOPGTc7tHbA+jHEgCgjWpPbmMvmd/2bzdXU" crossorigin="anonymous"></script>
 </body>
 
 </html>

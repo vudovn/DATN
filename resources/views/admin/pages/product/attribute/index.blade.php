@@ -56,7 +56,7 @@
                                 <td class="text-center">
                                     <a href="{{ route('product.attribute.edit', $attribute->id) }}" class="btn btn-sm btn-success">
                                         <i class="bi bi-pen"></i></a>
-                                    <x-delete  :id="$attribute->id" />
+                                    <x-delete :id="$attribute->id" :model="ucfirst($config['model'])" />
                                 </td>
                             </tr>
                         @endforeach
@@ -73,6 +73,6 @@
             {{ $attributes->links('pagination::bootstrap-4') }}
         </div>
     </div>
+    
     <input type="hidden" name="model" id="model" value="{{ ucfirst($config['model']) }}">
-
 @endsection

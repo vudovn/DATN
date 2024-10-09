@@ -10,19 +10,9 @@ class Product extends Model
     use HasFactory, QueryScope;
 
     protected $fillable = [
-        'name',
-        'sku',
-        'slug',
-        'description',
-        'quantity',
-        'price',
-        'discount',
-        'thumbnail',
-        'albums',
-        'publish',
-        'is_featured',
-        'deleted_at',
-        'created_at',
-        'updated_at'
+        'sku', 'name', 'slug', 'description', 'quantity', 'price', 
+        'discount', 'thumbnail', 'albums', 'publish', 'is_featured', 
+        'deleted_at', 'created_at', 'updated_at'
     ];
+
 }

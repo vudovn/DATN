@@ -26,13 +26,12 @@
                 data-accordion="false">             
                 <li class="nav-item">
                     <a href="{{ route('dashboard.index') }}" class="nav-link {{ $segment == cutUrl(route('dashboard.index')) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fa-solid fa-grid-horizontal"></i>
                         <p>
                             Dashboard
                         </p>
                     </a>
                 </li>
-
                 @foreach (__('sidebar.function') as $key => $val)
                     <li class="nav-item {{ (in_array($segment, $val['route'])) ? 'menu-open active' : '' }}">
                         <a href="#" class="nav-link {{ (in_array($segment, $val['route'])) ? 'active' : '' }}">

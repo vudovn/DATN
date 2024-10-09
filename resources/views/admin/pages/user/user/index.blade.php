@@ -54,21 +54,13 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ changeDateFormat($user->created_at) }}</td>
                                 <td class="text-center">-</td>
-                                <td class="text-center js-switch-{{ $user->id }}">
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input js-switch status"
-                                            id="customSwitch1" data-field="publish" data-value="{{ $user->publish }}"
-                                            data-model="{{ ucfirst($config['model']) }}" data-id="{{ $user->id }}"
-                                            {{ $user->publish === 2 ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="customSwitch1"></label>
-                                    </div>
+                                <td class="text-center">
+                                    <x-switchvip :value="$user" :model="ucfirst($config['model'])"/>
                                 </td>
                                 <td class="text-center">
                                     <a href="{{ route('user.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-success">
                                         <i class="bi bi-pen"></i></a>
-                                    <x-delete :id="$user->id" />
-                                    {{-- <a href="{{ route('user.delete', ['id' => $user->id]) }}" class="btn btn-danger">
-                                        <i class="bi bi-trash"></i></a> --}}
+                                    <x-delete :id="$user->id" :model="ucfirst($config['model'])" />
                                 </td>
                             </tr>
                         @endforeach

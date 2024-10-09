@@ -22,7 +22,6 @@ class BaseRepository {
                     ->keyword($params['keyword'] ?? [])
                     ->orderBy($params['sort'][0], $params['sort'][1])
                     ->paginate($params['perpage']);
-        
     }
 
     

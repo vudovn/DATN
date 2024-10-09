@@ -1,13 +1,24 @@
+<!--  -->
 <?php  
     return [
-        'publish' => [
+        'active' => [
             0 => [
                 'id' => 1,
-                'name' => 'Chưa xuất bản'
+                'name' => 'Kích hoạt'
             ],
             1 => [
                 'id' => 2,
-                'name' => 'Đã xuất bản'
+                'name' => 'Không kích hoạt'
+            ]
+        ],
+        'publish' => [
+            0 => [
+                'id' => 1,
+                'name' => 'Xuất bản'
+            ],
+            1 => [
+                'id' => 2,
+                'name' => 'Chưa xuất bản'
             ]
         ],
         'perpage' => array_map(function($item){
@@ -34,19 +45,18 @@
                 'name' => 'Tên Z - A'
             ]
         ],
-
         'actions' => [
             0 => [
                 'id' => 'delete',
                 'name' => 'Xóa'
             ],
             1 => [
-                'id' => 'publish-2',
+                'id' => 'publish-1',
                 'name' => 'Xuất bản'
             ],
             2 => [
-                'id' => 'publish-1',
-                'name' => 'Chưa xuất bản'
+                'id' => 'publish-2',
+                'name' => 'Không xuất bản'
             ],
         ],
 

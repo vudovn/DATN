@@ -1,5 +1,6 @@
 <?php   
 use Illuminate\Support\Carbon;
+
 if (!function_exists('loadClass')) {
     function loadClass($modelName = '', $classType = '', $isSubFolder = true) {
         
@@ -7,6 +8,7 @@ if (!function_exists('loadClass')) {
             'Service' => 'Services',
             'Repository' => 'Repositories'
         ];
+        
         $modelParts = preg_split('/(?=[A-Z])/', $modelName);
         $baseModel = $modelParts[1];
 
@@ -43,7 +45,6 @@ if (!function_exists('loadClass')) {
     }
 }
 
-
 if(!function_exists('generateSelect')){
     function generateSelect($root = 'Choose', $options = null, $keyName = 'id', $valueName = 'name'){
         $select[0] = $root;
@@ -71,5 +72,11 @@ if(!function_exists('cutUrl')){
     function cutUrl($url, $host = "http://127.0.0.1:8000/"){
         // dd(str_replace($host, '', $url));
        return str_replace($host, '', $url);
+    }
+}
+
+if(!function_exists('getSlug')){
+    function getSlug($string){
+        return \Illuminate\Support\Str::slug($string);
     }
 }

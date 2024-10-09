@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     @include('admin.components.head')
+    <link rel="stylesheet" href="https://atugatran.github.io/FontAwesome6Pro/css/all.min.css" >
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">

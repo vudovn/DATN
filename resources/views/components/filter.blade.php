@@ -11,7 +11,7 @@
                             @php
                                 $selected = request($key) ?: old($key);
                             @endphp
-                            <select name="{{ $key }}" id="{{ $key }}" class="form-control">
+                            <select name="{{ $key }}" id="{{ $key }}" class="form-control select2">
                                 @foreach($option as $keyItem => $valItem)
                                     <option {{ ($keyItem == $selected) ? 'selected' : '' }} value="{{ $keyItem }}">{{ $valItem }}</option>
                                 @endforeach
@@ -38,10 +38,12 @@
         </form>
     </div>
     
+    @if(isset($createButton) && $createButton)
     <div class="actions">
         <a href="{{ route($createButton['route']) }}" class="btn btn-danger">
             <i class="fa fa-plus"></i>
             {{ $createButton['label'] }}
         </a>
     </div>
+    @endif
 </div>

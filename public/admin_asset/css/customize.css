@@ -1,0 +1,61 @@
+tr.active-bg {
+    background-color: rgba(42, 114, 202, 0.275) !important;
+}
+.sidebar-dark-primary {
+    background-color: #344150 !important;
+}
+.img_albums_tgnt {
+    position: relative !important;
+}
+.img_albums_tgnt {
+    position: relative !important;
+}
+
+.img_albums_tgnt .btn_delete_albums_tgnt {
+    position: absolute !important;
+    top: 3% !important;
+    right: 4% !important;
+    display: none ;
+    transition: .3s ease-in-out;
+}
+.img_li_tgnt:hover .btn_delete_albums_tgnt {
+    display: block ;
+}
+
+.ui-sortable {
+    transition: 0.5s ease-in-out;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: unset !important;
+    background:unset !important;
+    font-weight: unset !important;
+    color: unset !important;
+}
+.card-header {
+    background-color: #e9ecef ;
+    color: black;
+}
+/* box seo */
+.box_seo {
+
+}
+.box_seo .top_box_seo {
+    gap: 5px;
+}
+.box_seo .top_box_seo_content {
+    display: flex;
+    flex-direction: column;
+    /* gap: 1px; */
+}
+.box_seo .top_box_seo_content span {
+    line-height: 1.2rem !important;
+}
+.box_seo .top_box_seo_content small {
+    line-height: 0% !important;
+}
+.box_seo .bottom_box_seo .value_seo_title {
+    font-size: 20px;
+    font-weight: 400;
+    color: #681da8;
+}

@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Redis;
 
 
 
-
 class UserController extends Controller{
 
     protected $userService;
@@ -31,15 +30,14 @@ class UserController extends Controller{
     }
 
 
-    public function index(Request $request){
-        
-        $users = $this->userService->paginate($request);
+    public function index(Request $request){ 
 
+        $users = $this->userService->paginate($request);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
-        $userCatalogues = $this->userCatalogueRepository->getAll();
-    
 
+        $userCatalogues = $this->userCatalogueRepository->getAll();
+        
         return view('admin.pages.user.user.index', compact(
             'config',
             'userCatalogues',
@@ -48,10 +46,7 @@ class UserController extends Controller{
     }
 
     public function create(){
-
         $userCatalogues = $this->userCatalogueRepository->getAll();
-       
-
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';
@@ -65,7 +60,6 @@ class UserController extends Controller{
         if($this->userService->create($request)){
             return redirect()->route('user.index')->with('success', 'Tạo người dùng mới thành công');
         }
-
         return  redirect()->route('user.index')->with('error', 'Tạo người dùng mới thất bại');
     }
 
@@ -73,7 +67,6 @@ class UserController extends Controller{
         if($this->userService->update($request, $id)){
             return redirect()->route('user.index')->with('success', 'Cập nhật người dùng thành công.');
         }
-
         return  redirect()->route('user.index')->with('error', 'Cập nhật người dùng thất bại');
     }
 
@@ -115,20 +108,20 @@ class UserController extends Controller{
     private function breadcrumb($key){
         $breadcrumb = [
             'index' => [
-                'name' => 'Quản lý người dùng',
-                'list' => ['Người dùng', 'Danh sách']
+                'name' => 'Danh sách người dùng',
+                'list' => ['Danh sách người dùng']
             ],
             'create' => [
                 'name' => 'Tạo người dùng',
-                'list' => ['User', 'Create User']
+                'list' => ['QL người dùng', 'Tạo người dùng'] 
             ],
             'update' => [
-                'name' => 'Update User',
-                'list' => ['User', 'Update User']
+                'name' => 'Cập nhật người dùng',
+                'list' => ['QL người dùng', 'Cập nhật người dùng']
             ],
             'delete' => [
-                'name' => 'Delete User',
-                'list' => ['User', 'Delete User']
+                'name' => 'Xóa người dùng',
+                'list' => ['QL người dùng', 'Xóa người dùng']
             ]
         ];
         return $breadcrumb[$key];

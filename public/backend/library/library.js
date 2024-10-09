@@ -2,12 +2,6 @@
     "use strict"
     var TGNT = {}
 
-    // TGNT.Switchery = () => {
-    //     $('.js-switch').each(function(){
-    //         var switchery = new Switchery(this, { color: '#1AB394', size: 'small' })
-    //     })
-    // }
-
     TGNT.changeStatusByField = () => {
         $(document).on('change', '.status', function (e) {
             let _this = $(this)
@@ -43,9 +37,6 @@
         })
     }
 
-    // TGNT.featherIcon = () => {
-    //     feather.replace();
-    // }
 
     TGNT.checkBoxItem = () => {
         if ($('.checkbox-item').length) {

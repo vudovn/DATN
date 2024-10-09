@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Attribute\StoreAttributeRequest;
 use Illuminate\Http\Request;
 use App\Models\Attribute;
+
 
 class AttributeController extends Controller
 {
@@ -29,16 +31,9 @@ class AttributeController extends Controller
         ));
     }
 
-    public function store (Request $request) {
-        $request->validate([
-            'name' => 'required:unique:attributes'
-        ],[
-            'name.required' => 'Tên thuộc tính không được để trống',
-            'name.unique' => 'Tên thuộc tính đã tồn tại'
-        ]);
-        $code = substr(str_shuffle(str_repeat('0123456789abcdefghijklmnopqrstuvwxyz', 5)), 0, 5);
+    public function store (StoreAttributeRequest $request) {
         Attribute::create([
-            'code' => $code,
+            'code' => '789abcdefghi',
             'name' => $request->name
         ]);
         return redirect()->route('product.attribute.index')->with('success', 'Tạo mới thuộc tính thành công');
@@ -58,7 +53,7 @@ class AttributeController extends Controller
             ],
             'create' => [
                 'name' => 'Tạo thuộc tính',
-                'list' => ['QL thuộc tính', 'Tạo thuộc tính']
+                'list' => ['QL thuộc tính', 'Tạo thuộc tính chi đó']
             ],
             'update' => [
                 'name' => 'Cập nhật thuộc tính',

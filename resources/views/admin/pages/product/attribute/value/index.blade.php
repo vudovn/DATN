@@ -27,10 +27,8 @@
         <div class="col-12 col-xl-8">
             <div class="card">
                 <div class="card-header pb-0">
-                    <x-filter :createButton="[
-                        'label' => 'Tạo mới',
-                        'route' => 'product.' . $config['model'] . '.create',
-                    ]" :options="[
+                    <x-filter
+                     :options="[
                         'actions' => generateSelect('Hành động', __('general.actions')),
                         'publish' => generateSelect('Trạng thái', __('general.publish')),
                     ]" />
@@ -66,13 +64,10 @@
                                             {{ $attribute->value }}
                                         </td>
                                         <td class="text-center">
-                                            {{-- <a href="{{ route('product.attribute.edit', ['id' => $attribute->id]) }}"
-                                                class="btn btn-sm btn-success">
-                                                <i class="bi bi-pen"></i></a> --}}
                                             <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModal">
                                                 <i class="bi bi-pen"></i>
                                             </button>
-                                            <x-delete :id="$attribute->id" />
+                                            <x-delete :id="$attribute->id"  :model="ucfirst($config['model'])"/>
                                         </td>
                                     </tr>
                                 @endforeach

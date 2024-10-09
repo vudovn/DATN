@@ -28,23 +28,39 @@ class ProductController extends Controller
         ));
     }
 
+    public function create(){
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('create');
+        $config['method'] = 'create';
+        return view('admin.pages.product.product.save', compact(
+            'config'
+        ));
+    }
+
+    public function store(Request $request){
+        // $request->validate([
+        //     'content'=> 'required',
+        // ]);
+        dd($request->all());
+    }
+
     private function breadcrumb($key){
         $breadcrumb = [
             'index' => [
-                'name' => 'Quản lý người dùng',
-                'list' => ['Người dùng', 'Danh sách']
+                'name' => 'Danh sách sản phẩm',
+                'list' => ['Danh sách sản phẩm']
             ],
             'create' => [
-                'name' => 'Tạo người dùng',
-                'list' => ['User', 'Create User']
+                'name' => 'Tạo sản phẩm',
+                'list' => ['QL sản phẩm', 'Tạo sản phẩm'] 
             ],
             'update' => [
-                'name' => 'Update User',
-                'list' => ['User', 'Update User']
+                'name' => 'Cập nhật sản phẩm',
+                'list' => ['QL sản phẩm', 'Cập nhật sản phẩm']
             ],
             'delete' => [
-                'name' => 'Delete User',
-                'list' => ['User', 'Delete User']
+                'name' => 'Xóa sản phẩm',
+                'list' => ['QL sản phẩm', 'Xóa sản phẩm']
             ]
         ];
         return $breadcrumb[$key];

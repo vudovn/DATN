@@ -28,6 +28,7 @@
                             </div>
                         </th>
                         <th>ID</th>
+                        <th>Hỉnh ảnh</th>
                         <th>Tên</th>
                         <th>Email</th>
                         <th>Ngày tạo</th>
@@ -49,24 +50,38 @@
                                 </td>
                                 <td>{{ $user->id }}</td>
                                 <td>
-                                    <span class="row-name">{{ $user->name }}</span>
+                                    <a href="{{ $user->avatar }}" data-fancybox="gallery">
+                                        <img loading="lazy" width="50" class="rounded" src="{{ $user->avatar }}" alt="{{ $user->name }}">
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <span class="row-name text-primary">{{ $user->name }}</span>
                                 </td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ changeDateFormat($user->created_at) }}</td>
-                                <td class="text-center">-</td>
+                                <td class="text-center">
+                                    {{ $user->user_catalogue_id  == 1 ? 'Quản trị viên' : 'Khách hàng' }}
+                                </td>
                                 <td class="text-center">
                                     <x-switchvip :value="$user" :model="ucfirst($config['model'])"/>
                                 </td>
-                                <td class="text-center">
-                                    <a href="{{ route('user.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-success">
-                                        <i class="bi bi-pen"></i></a>
+                                <td class="text-center table-actions">
+                                    <a href="{{ route('user.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-icon btn-primary">
+                                        <svg class="icon  svg-icon-ti-ti-edit" data-bs-toggle="tooltip" data-bs-title="Edit" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
+                                            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
+                                            <path d="M16 5l3 3"></path>
+                                        </svg>
+                                    </a>
                                     <x-delete :id="$user->id" :model="ucfirst($config['model'])" />
                                 </td>
                             </tr>
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="8" class="text-center">Không có dữ liệu</td>
+                            <td colspan="100" class="text-center">Không có dữ liệu</td>
                         </tr>
                     @endif
                 </tbody>

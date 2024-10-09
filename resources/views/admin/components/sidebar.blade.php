@@ -26,7 +26,7 @@
                 data-accordion="false">             
                 <li class="nav-item">
                     <a href="{{ route('dashboard.index') }}" class="nav-link {{ $segment == cutUrl(route('dashboard.index')) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fa-solid fa-grid-horizontal"></i>
                         <p>
                             Dashboard
                         </p>

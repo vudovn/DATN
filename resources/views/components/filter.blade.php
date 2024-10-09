@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="form-group col-auto">
-                    <button type="submit" name="filter" class="btn btn-success"><i class="fas fa-search"></i></button>
+                    <button type="submit" name="filter" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </div>
             </div>
         </form>

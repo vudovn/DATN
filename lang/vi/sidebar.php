@@ -12,7 +12,7 @@ return [
     'function' => [
             [
                 'name' => 'Quản lý thành viên',
-                'icon' => '<i class="nav-icon fas fa-user"></i>',
+                'icon' => '<i class="nav-icon fa-solid fa-users"></i>',
                 'route' => ['user'],
                 'module' => [
                     [

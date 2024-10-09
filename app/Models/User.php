@@ -25,7 +25,10 @@ class User extends Authenticatable
         'user_catalogue_id',
         'address',
         'password',
-        'image',
+        'avatar',
+        'province_id',
+        'district_id',
+        'ward_id',
         'publish'
     ];
     public $timestamps = true;

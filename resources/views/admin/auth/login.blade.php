@@ -9,6 +9,7 @@
     <title>Login admin</title>
 
     <link rel="stylesheet" href="{{ asset('admin_asset/css/customize.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin_asset/css/color.css') }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
     <link rel="stylesheet" href="{{ asset('admin_asset/plugins/fontawesome-free/css/all.min.css') }}">

@@ -1,16 +1,50 @@
 tr.active-bg {
     background-color: rgba(42, 114, 202, 0.275) !important;
 }
+.sidebar-dark-primary {
+    background-color: #344150 !important;
+}
+
+/* btn icon */
+.table-actions .btn {
+    --bb-btn-padding-y: 0.25rem;
+    --bb-btn-padding-x: 0.5rem;
+    --bb-btn-border-radius: 0.25rem;
+    --bb-btn-icon-size: 1.25rem;
+    --bb-btn-font-size: 0.75rem;
+}
+.btn-sm {
+    --bb-btn-line-height: 1.5;
+    --bb-btn-icon-size: .75rem;
+}
+
+.btn-icon {
+    min-height: calc(var(--bb-btn-line-height)* var(--bb-btn-font-size) + var(--bb-btn-padding-y)* 2 + var(--bb-btn-border-width)* 2);
+    min-width: calc(var(--bb-btn-line-height)* var(--bb-btn-font-size) + var(--bb-btn-padding-y)* 2 + var(--bb-btn-border-width)* 2);
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+}
+
+
+/* end btn icon */
+
 .img_albums_tgnt {
     position: relative !important;
 }
 .img_albums_tgnt {
     position: relative !important;
 }
+
 .img_albums_tgnt .btn_delete_albums_tgnt {
     position: absolute !important;
     top: 3% !important;
-    right: 3% !important;
+    right: 4% !important;
+    display: none ;
+    transition: .3s ease-in-out;
+}
+.img_li_tgnt:hover .btn_delete_albums_tgnt {
+    display: block ;
 }
 
 .ui-sortable {
@@ -23,7 +57,10 @@ tr.active-bg {
     font-weight: unset !important;
     color: unset !important;
 }
-
+.card-header {
+    background-color: #e9ecef ;
+    color: black;
+}
 /* box seo */
 .box_seo {
 

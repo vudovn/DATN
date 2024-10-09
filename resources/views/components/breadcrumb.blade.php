@@ -4,7 +4,7 @@
         <h3>{{ $breadcrumb['name'] }}</h3>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="{{ route('dashboard.index') }}">Dashboard</a>
+                <a href="{{ route('dashboard.index') }}">Bảng điều khiển</a>
             </li>
             @foreach ($breadcrumb['list'] as $key => $val)
                 <li class="breadcrumb-item">

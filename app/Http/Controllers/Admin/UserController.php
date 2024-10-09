@@ -57,6 +57,7 @@ class UserController extends Controller{
     }
 
     public function store(StoreUserRequest $request){
+        
         if($this->userService->create($request)){
             return redirect()->route('user.index')->with('success', 'Tạo người dùng mới thành công');
         }
@@ -64,6 +65,7 @@ class UserController extends Controller{
     }
 
     public function update(UpdateUserRequest $request, $id){
+        // dd($request->all());
         if($this->userService->update($request, $id)){
             return redirect()->route('user.index')->with('success', 'Cập nhật người dùng thành công.');
         }

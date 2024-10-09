@@ -10,8 +10,8 @@
 
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('auth.logout') }}">
-          <i class="bi bi-arrow-right-square fw-bold"></i>
+        <a class="nav-link btn btn-sm btn-primary text-white" href="{{ route('auth.logout') }}">
+          <i class="fa-solid fa-right-from-bracket"></i>
         </a>
       </li>
     </ul>

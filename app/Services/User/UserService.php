@@ -23,7 +23,7 @@ class UserService extends BaseService {
         return [
             'keyword' => [
                 'search' => $request->input('keyword'),
-                'field' => ['name', 'email', 'phone', 'address']
+                'field' => ['name', 'email', 'phone', 'address','created_at'] //Muốn tìm kiếm thêm cột nào thì điền vào
             ],
             'condition' => [
                 'publish' => $request->integer('publish'),

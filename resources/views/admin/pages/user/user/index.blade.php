@@ -53,7 +53,7 @@
                                 </td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ changeDateFormat($user->created_at) }}</td>
-                                <td class="text-center">-</td>
+                                <td class="text-center">{{$user->user_catalogue_id}}</td>
                                 <td class="text-center">
                                     <x-switchvip :value="$user" :model="ucfirst($config['model'])"/>
                                 </td>

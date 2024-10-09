@@ -108,20 +108,20 @@ class UserController extends Controller{
     private function breadcrumb($key){
         $breadcrumb = [
             'index' => [
-                'name' => 'Quản lý người dùng',
-                'list' => ['Người dùng', 'Danh sách']
+                'name' => 'Danh sách người dùng',
+                'list' => ['Danh sách người dùng']
             ],
             'create' => [
                 'name' => 'Tạo người dùng',
-                'list' => ['User', 'Create User']
+                'list' => ['QL người dùng', 'Tạo người dùng'] 
             ],
             'update' => [
-                'name' => 'Update User',
-                'list' => ['User', 'Update User']
+                'name' => 'Cập nhật người dùng',
+                'list' => ['QL người dùng', 'Cập nhật người dùng']
             ],
             'delete' => [
-                'name' => 'Delete User',
-                'list' => ['User', 'Delete User']
+                'name' => 'Xóa người dùng',
+                'list' => ['QL người dùng', 'Xóa người dùng']
             ]
         ];
         return $breadcrumb[$key];

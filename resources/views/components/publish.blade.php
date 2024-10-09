@@ -4,7 +4,7 @@
         {{ $label }} @if ($required ?? '') <span class="text-danger">*</span> @endif
     </div>
     <div class="card-body">
-        <select name="{{ $name }} " class="select2 form-control " id="{{ $name }}">
+        <select name="{{ $name }}" class="select2 form-control " id="{{ $name }}">
             <option value="">Chọn trạng thái</option>
             @foreach ($option as $key => $items)
                 <option value="{{ $items['id'] }}" {{ $value == $items['id'] ? 'selected' : '' }}>{{ $items['name'] }}</option>

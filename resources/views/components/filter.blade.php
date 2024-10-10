@@ -1,6 +1,6 @@
 @props(['createButton', 'options', 'action'])
 
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between animate__animated animate__fadeIn">
     <div class="filter">
         <form action="">
             <div class="form-row">
@@ -42,7 +42,7 @@
     <div class="actions">
         <a href="{{ route($createButton['route']) }}" class="btn btn-danger">
             <i class="fa fa-plus"></i>
-            {{ $createButton['label'] }}
+            {{ $createButton['label'] ?? '' }}
         </a>
     </div>
     @endif

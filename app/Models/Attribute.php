@@ -4,14 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\QueryScope;
 
 class Attribute extends Model
 {
-    use HasFactory;
+    use HasFactory, QueryScope;
 
     protected $fillable = [
-        'code',
-        'name'
+        'name',
+        'publish',
+
     ];
 
     public function attribute_values()

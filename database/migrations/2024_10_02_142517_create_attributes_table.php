@@ -12,7 +12,6 @@ return new class extends Migration {
     {
         Schema::create('attributes', function (Blueprint $table) {
 			$table->id();
-            $table->string('code')->unique();
             $table->string('name');
             $table->boolean('publish')->default(2);
 			$table->timestamps();

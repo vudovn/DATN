@@ -65,4 +65,12 @@ class DashboardController extends Controller {
 
     }
 
+    public function getAttribute() {
+
+    }
+
+    public function getAttributeValue(Request $request) {
+
+    }
+
 }

@@ -40,7 +40,7 @@
                 <tbody>
                     @if (isset($products) && count($products))
                         @foreach ($products as $product)
-                            <tr>
+                            <tr class="animate__animated animate__fadeInDown animate__faster">
                                 <td class=""> 
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input input-checkbox checkbox-item" type="checkbox"

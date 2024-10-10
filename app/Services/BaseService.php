@@ -19,11 +19,13 @@ class BaseService {
         DB::beginTransaction();
         try {
             $repositoryClass = loadClass($data['model'], 'Repository');
-            $payload[$data['field']] = ((int)$data['value'] === 1) ? 2 : 1;
-            $repositoryClass->update((int)$data['id'], $payload);
+            // dd($repositoryClass);
+            $payload[$data['field']] = ($data['value'] == 1) ? 2 : 1;
+            // dd($payload);
 
+            $repositoryClass->update($data['id'], $payload);
             DB::commit();
-            return true;
+            // return true;
         } catch (\Exception $e) {
            DB::rollback();
             // echo $e->getMessage();die();

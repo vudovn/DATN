@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-header pb-0">
             <x-filter :createButton="[
-                'label' => 'Thêm thành viên',
+                'label' => '',
                 'route' => $config['model'] . '.create',
             ]" :options="[
                 'actions' => generateSelect('Hành động', __('general.actions')),

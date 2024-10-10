@@ -56,8 +56,12 @@ class AttributeService extends BaseService {
                 'publish' => $payload['publish'],
             ])->id;
             if($request->has('attribute_value')){
+                $newDataEdit = [];
+                foreach ($request->input('attribute_value') as $key => $values) {
+                    $newDataEdit[$key] = $values[0];
+                }
                 $attribute_values = [];
-                foreach ($payload['attribute_value'] as $key => $value) {
+                foreach ($newDataEdit as $key => $value) {
                     $attribute_values[] = [
                         'value' => $value,
                         'attribute_id' => $id_attribute,
@@ -72,7 +76,7 @@ class AttributeService extends BaseService {
             DB::rollback();
             echo $e->getMessage();
             // $this->log($e);
-            return false;
+            // return false;
         }
     }
 

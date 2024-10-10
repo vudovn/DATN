@@ -6,17 +6,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\Product\ProductRepository;
 use App\Services\Product\ProductService;
+use App\Repositories\Attribute\AttributeRepository;
 
 class ProductController extends Controller
 {
     protected $productRepository;
     protected $productService;
+    protected $attributeRepository;
     function __construct(
         ProductRepository $productRepository,
-        ProductService $productService
+        ProductService $productService,
+        AttributeRepository $attributeRepository
     ){
         $this->productRepository = $productRepository;
         $this->productService = $productService;
+        $this->attributeRepository = $attributeRepository;
     }
     public function index (Request $request) {
         $products = $this->productService->paginate($request);
@@ -33,7 +37,7 @@ class ProductController extends Controller
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';
         return view('admin.pages.product.product.save', compact(
-            'config'
+            'config',
         ));
     }
 

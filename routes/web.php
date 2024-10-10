@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\AttributeValueController;
-use App\Http\Controllers\Admin\OrderStatusController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 
@@ -69,12 +69,10 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::delete('/deleteItem', [AjaxDashboardController::class, 'deleteItem'])->name('ajax.dashboard.deleteItem');
 
     /* ORDER ROUTE */
-    Route::group(['prefix' => 'order'], function () {
-        Route::get('status', [OrderStatusController::class, 'index'])->name('order.status.index');
-        Route::get('status/{id}/edit', [OrderStatusController::class, 'edit'])->name('order.status.edit');
-        Route::put('status/{id}', [OrderStatusController::class, 'update'])->name('order.status.update');
-    });
-
+    Route::get('orders', [AdminOrderController::class, 'index'])->name('admin.pages.order.index');
+    Route::get('orders/edit/{id}', [AdminOrderController::class, 'edit'])->name('admin.pages.order.edit');
+    Route::put('orders/update/{id}', [AdminOrderController::class, 'update'])->name('admin.pages.order.update');
+    
 });
 
 

@@ -45,22 +45,38 @@ if (!function_exists('loadClass')) {
     }
 }
 
-if(!function_exists('generateSelect')){
-    function generateSelect($root = 'Choose', $options = null, $keyName = 'id', $valueName = 'name'){
+if (!function_exists('generateSelect')) {
+    function generateSelect($root = 'Choose', $options = null, $keyName = 'id', $valueName = 'name') {
+        $select = [];
+        
+        // Xử lý giá trị root
+        if (!is_string($root) || empty($root)) {
+            $root = 'Choose'; // Giá trị mặc định
+        }
+
         $select[0] = $root;
-        // dd($options);
-        if(isset($options) && !empty($options)){
-            foreach($options as $key => $option){
-                if(is_array($option)){
+
+        // Validate $options: kiểm tra xem $options có phải là iterable không
+        if (is_iterable($options)) {
+            foreach ($options as $option) {
+                // Kiểm tra nếu là mảng và có key tương ứng
+                if (is_array($option) && isset($option[$keyName], $option[$valueName])) {
                     $select[$option[$keyName]] = $option[$valueName];
-                }else if(is_object($option)){
+                }
+                // Kiểm tra nếu là object và có thuộc tính tương ứng
+                elseif (is_object($option) && isset($option->{$keyName}, $option->{$valueName})) {
                     $select[$option->{$keyName}] = $option->{$valueName};
+                } else {
+                    // Nếu không thỏa mãn điều kiện, bỏ qua phần tử đó
+                    continue;
                 }
             }
-        }          
+        }
+
         return $select;
     }
 }
+
 
 if(!function_exists('changeDateFormat')){
     function changeDateFormat($date, $format = 'Y-m-d'){

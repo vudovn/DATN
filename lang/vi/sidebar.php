@@ -41,7 +41,7 @@ return [
                 'module' => [
                     [
                         'name' => 'Quản lý tình trạng',
-                        'path' => route('order.status.index')
+                        'path' => route('admin.pages.order.index')
                     ]
                 ]
             ]

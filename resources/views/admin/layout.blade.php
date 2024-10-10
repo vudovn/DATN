@@ -10,7 +10,7 @@
         @include('admin.components.nav')
         @include('admin.components.sidebar')
         <div class="content-wrapper">
-            <section class="content">
+            <section class="content animate__animated animate__fadeIn">
                 <div class="container-fluid">
                     @yield('template')  {{-- dao diện sẽ được render ra đây --}}
                 </div>

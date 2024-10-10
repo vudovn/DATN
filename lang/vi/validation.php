@@ -2,17 +2,6 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Dòng thông báo xác thực
-    |--------------------------------------------------------------------------
-    |
-    | Những dòng thông báo sau đây được sử dụng trong quá trình xác thực cho
-    | các thông báo lỗi khác nhau. Bạn có thể chỉnh sửa những dòng này theo
-    | yêu cầu của ứng dụng của bạn.
-    |
-    */
-
     'accepted' => ':attribute phải được chấp nhận.',
     'accepted_if' => ':attribute phải được chấp nhận khi :other là :value.',
     'active_url' => ':attribute không phải là một URL hợp lệ.',

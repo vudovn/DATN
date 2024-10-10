@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-header pb-0">
             <x-filter :createButton="[
-                'label' => 'Thêm thành viên',
+                'label' => '',
                 'route' => $config['model'] . '.create',
             ]" :options="[
                 'actions' => generateSelect('Hành động', __('general.actions')),
@@ -40,7 +40,7 @@
                 <tbody>
                     @if (isset($users) && count($users))
                         @foreach ($users as $user)
-                            <tr>
+                            <tr class="animate__animated animate__fadeInDown animate__faster">
                                 <td class=""> 
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input input-checkbox checkbox-item" type="checkbox"

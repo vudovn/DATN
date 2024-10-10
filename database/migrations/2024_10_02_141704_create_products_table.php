@@ -26,7 +26,6 @@ return new class extends Migration {
             $table->boolean('is_featured')->default(2);
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();
-            $table->string('meta_keyword')->nullable();
             $table->softDeletes();
 			$table->timestamps();
         });

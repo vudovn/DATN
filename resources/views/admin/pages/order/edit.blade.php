@@ -1,6 +1,7 @@
 @extends('admin.layout')
 
 @section('template')
+<x-breadcrumb :breadcrumb="$config['breadcrumb']" />
     <div class="card">
         <div class="card-header">
             <h4>Chỉnh sửa Đơn Hàng #{{ $order->id }}</h4>
@@ -25,14 +26,17 @@
 
                 <div class="form-group">
                     <label for="status">Trạng Thái</label>
-                    <select name="status" id="status" class="form-control">
-                        <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Đang chờ duyệt</option>
+                    <select name="status" id="status" class="form-control select2">
+                        @foreach (__('order.status') as $key => $value)
+                            <option value="{{ $key }}" {{ $order->status == $key ? 'selected' : '' }}>{{ $value }}</option>
+                        @endforeach
+                        {{-- <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Đang chờ duyệt</option>
                         <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Đang xử lý
                         </option>
                         <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Đã giao cho đơn vị vận chuyển</option>
                         <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Đã giao xong
                         </option>
-                        <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Đã hủy</option>
+                        <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Đã hủy</option> --}}
 
                     </select>
                 </div>
@@ -62,8 +66,10 @@
                 </table>
 
                 <div class="text-right">
-                    <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
-                    <a href="{{ route('admin.pages.order.index') }}" class="btn btn-secondary">Hủy</a>
+                    <a href="{{ route('admin.pages.order.index') }}" class="btn btn-danger">Quay lại</a>
+                    <button type="submit" class="btn btn-primary">
+                        Cập nhật
+                    </button>
                 </div>
             </form>
         </div>

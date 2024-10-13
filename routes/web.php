@@ -69,9 +69,9 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::delete('/deleteItem', [AjaxDashboardController::class, 'deleteItem'])->name('ajax.dashboard.deleteItem');
 
     /* ORDER ROUTE */
-    Route::get('orders', [AdminOrderController::class, 'index'])->name('admin.pages.order.index');
-    Route::get('orders/edit/{id}', [AdminOrderController::class, 'edit'])->name('admin.pages.order.edit');
-    Route::put('orders/update/{id}', [AdminOrderController::class, 'update'])->name('admin.pages.order.update');
+    Route::get('order/index', [AdminOrderController::class, 'index'])->name('admin.pages.order.index');
+    Route::get('order/edit/{id}', [AdminOrderController::class, 'edit'])->name('admin.pages.order.edit');
+    Route::put('order/update/{id}', [AdminOrderController::class, 'update'])->name('admin.pages.order.update');
     
 });
 

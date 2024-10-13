@@ -96,3 +96,13 @@ if(!function_exists('getSlug')){
         return \Illuminate\Support\Str::slug($string);
     }
 }
+
+if (!function_exists('statusToVietnamese')) {
+    function statusToVietnamese($status) {
+        $status = strtolower($status);
+        $statusList = __('order.status');
+        return $statusList[$status] ?? 'Không xác định';
+    }
+}
+
+

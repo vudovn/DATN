@@ -1,10 +1,8 @@
 @extends('admin.layout')
 
 @section('template')
-
-
+    <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
     <div class="card">
-
         <div class="card-body">
             <table class="table table-striped">
                 <thead>
@@ -24,7 +22,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (isset($orders))
+                    @if (isset($orders) && count($orders))
                         @foreach ($orders as $order)
                             <tr class="animate__animated animate__fadeInDown animate__faster">
                                 <td>
@@ -37,7 +35,7 @@
                                 <td>{{ $order->id }}</td>
                                 <td>{{ number_format($order->total_amount, 0, ',', '.') }} VND</td>
                                 <td>{{ $order->payment_method }}</td>
-                                <td>{{ ucfirst($order->status) }}</td>
+                                <td>{{ statusToVietnamese($order->status) }}</td>
                                 <td>{{ changeDateFormat($order->created_at) }}</td>
                                 <td class="text-center table-actions">
                                     <a href="{{ route('admin.pages.order.edit', ['id' => $order->id]) }}" class="btn btn-sm btn-icon btn-primary">

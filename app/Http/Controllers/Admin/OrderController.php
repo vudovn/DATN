@@ -30,7 +30,13 @@ class OrderController extends Controller
     public function edit(string $id){
         $order = Order::findOrFail($id);
         $order_details = OrderDetails::where('order_id', $id)->get();
-        return view('admin.pages.order.edit', compact('order', 'order_details'));
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('update');
+        return view('admin.pages.order.edit', compact(
+            'order', 
+            'order_details',
+            'config'
+        ));
     }
     public function update(Request $request, $id)
     {

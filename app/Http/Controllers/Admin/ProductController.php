@@ -36,15 +36,15 @@ class ProductController extends Controller
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';
+        $attributes = $this->attributeRepository->getAll();
+        // dd($attributes);
         return view('admin.pages.product.product.save', compact(
             'config',
+            'attributes'
         ));
     }
 
     public function store(Request $request){
-        // $request->validate([
-        //     'content'=> 'required',
-        // ]);
         dd($request->all());
     }
 
@@ -73,8 +73,14 @@ class ProductController extends Controller
     private function config(){
         return [
             'css' => [
+                'admin_asset\plugins\nice-select\css\nice-select.css',
+                'https://unpkg.com/slim-select@latest/dist/slimselect.css'
             ],
             'js' => [
+                'admin_asset/library/attribute.js',
+                'admin_asset/library/variant.js',
+                'admin_asset\plugins\nice-select\js\jquery.nice-select.min.js',
+                'https://unpkg.com/slim-select@latest/dist/slimselect.min.js'
             ],
             'model' => 'product'
         ];

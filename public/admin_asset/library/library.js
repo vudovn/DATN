@@ -278,6 +278,8 @@
     TGNT.sortui = () => {
         $("#sortable").sortable();
         $("#sortable").disableSelection();
+        $('#sortableVariant').sortable();
+        $('#sortableVariant').disableSelection();
     };
 
     $(document).ready(function () {

@@ -13,6 +13,14 @@ class AttributeValueRepository extends BaseRepository{
         $this->model = $model;
     }
 
+    public function searchValue($attribute_id, $value){
+        return $this->model
+            ->where('attribute_id', $attribute_id)
+            ->where('value', 'like', '%' . $value . '%')
+            ->get();
+    }
+    
+
     
 
 

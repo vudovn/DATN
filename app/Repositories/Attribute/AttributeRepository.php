@@ -17,6 +17,7 @@ class AttributeRepository extends BaseRepository{
         return $this->model->all();
     }
 
+
    
     
 

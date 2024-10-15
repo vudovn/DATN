@@ -34,8 +34,8 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="mb-3 position-relative">
-                                            <label class="form-label" for="sku">Số lượng <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" name="sku" id="sku" value="">
+                                            <label class="form-label" for="quantity">Số lượng <span class="text-danger">*</span></label>
+                                            <input class="form-control int" value="0" type="text" name="quantity" id="quantity" value="">
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
@@ -46,7 +46,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">$</span>
                                                 </div>
-                                                <input type="text" name="price" class="form-control" placeholder="">
+                                                <input type="text" name="price" value="0" class="form-control int" placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -60,7 +60,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">$</span>
                                                 </div>
-                                                <input type="number" max="100" name="discount" class="form-control"
+                                                <input type="number" max="100" name="discount" class="form-control "
                                                     placeholder="">
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">%</span>

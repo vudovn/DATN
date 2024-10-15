@@ -45,4 +45,9 @@
             </div>
         </div>
     </x-form>
+
+    <script>
+        let attribute_values = @json(old('attribute_value', []));
+        console.log(attribute_values);
+    </script>
 @endsection

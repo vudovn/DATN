@@ -11,7 +11,7 @@
             </label>
         </div>
         <div class="card-body">
-            <div class="form-group">
+            <div class="form-group mb-0">
                 <div class="attribute_container_product">
                     <div class="form-group">
                         <div class="alert alert-primary">
@@ -66,7 +66,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table variantTable ">
+                <table class="table variantTable">
 
                     {{-- <thead>
                         <tr class="bg-dark">
@@ -92,128 +92,7 @@
                     </tbody> --}}
                 </table>
             </div>
-            <td colspan="10">
-                <div class="updateVariant card">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span>Cập nhật thông tin phiên bản</span>
-                            <div>
-                                <button type="button" class="btn btn-danger cancleUpdate">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                                <button type="button" class="btn btn-primary saveUpdate">
-                                    <i class="fa fa-save"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="" class="control-label text-left">Hình ảnh sản phẩm</label>
-                            <div class="card">
-                                <div class="card-body pb-2">
-                                    @php
-                                        // $gallery = old($name, $value ?? '');
-                                    @endphp
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="upload-list mt-2">
-                                                <ul id="sortableVariant"
-                                                    class="albums-variant row align-items-center list-unstyled clearfix data-album sortui ui-sortable"
-                                                    style="margin-bottom:0 !important">
-                                                    <li
-                                                        class="col-xl-2 col-md-3 col-sm-6 mb-3 d-flex justify-content-center align-items-center">
-                                                        <a style="font-size: 50px" class="upload-picture-variant"
-                                                            data-name="albumsVariant">
-                                                            <i class="fa-duotone fa-solid fa-cloud-arrow-up"></i>
-                                                        </a>
-                                                    </li>
-
-                                                    @if (isset($gallery) && $gallery != '')
-                                                        @foreach ($gallery as $key => $val)
-                                                            <li
-                                                                class="ui-state-default img_li_tgnt col-xl-2 col-md-3 col-sm-6 mb-3">
-                                                                <div class="thumb img_albums_tgnt">
-                                                                    <span class="span image img-scaledown">
-                                                                        <a href="{{ $val }}"
-                                                                            data-fancybox="gallery" data-caption="">
-                                                                            <img width="100%" class="img-thumbnail"
-                                                                                src="{{ $val }}"
-                                                                                alt="">
-                                                                        </a>
-                                                                        <input type="hidden"
-                                                                            name="{{ $name }}[]"
-                                                                            value="{{ $val }}">
-                                                                    </span>
-                                                                    <div class="text-center btn_delete_albums_tgnt">
-                                                                        <a class="delete-image btn btn-sm btn-danger">
-                                                                            <i class="fa-solid fa-trash"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        @endforeach
-                                                    @endif
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row price-group">
-                            <div class="col-lg-3">
-                                <div class="mb-3 position-relative">
-                                    <label class="form-label" for="sku">SKU <span
-                                            class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="sku" id="sku"
-                                        value="">
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="mb-3 position-relative">
-                                    <label class="form-label" for="sku">Số lượng <span
-                                            class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="sku" id="sku"
-                                        value="">
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="mb-3 position-relative">
-                                    <label class="form-label" for="price"> Giá tiền <span
-                                            class="text-danger">*</span></label>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">$</span>
-                                        </div>
-                                        <input type="text" name="price" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="mb-3 position-relative">
-                                    <label class="form-label" for="sale_price">
-                                        Giảm giá
-                                    </label>
-
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">$</span>
-                                        </div>
-                                        <input type="number" max="100" name="discount" class="form-control"
-                                            placeholder="">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </td>
+            
         </div>
     </div>
 </div>

@@ -15,8 +15,6 @@ class BaseRepository {
     }
 
     public function pagination(array $params = []){
-
-
         return $this->model
                     ->condition($params['condition'] ?? [])
                     ->keyword($params['keyword'] ?? [])
@@ -29,12 +27,26 @@ class BaseRepository {
         return $this->model->create($payload);
     }
 
+    public function insert(array $payload = []){
+        return $this->model->insert($payload);
+    }
+
     public function update(int $id, array $payload = []){
         return $this->findById($id)->fill($payload)->save();
+    }
+
+    public function updateOrCreate(array $where = [], array $payload = []){
+        return $this->model->updateOrCreate($where, $payload);
     }
    
     public function findById(int $id, array $relation = [], array $select = ['*']){
         return $this->model->select($select)->with($relation)->find($id);
+    }
+
+
+
+    public function findByField(string $field, $value, array $select = ['*']){
+        return $this->model->select($select)->where($field, $value);
     }
 
     public function delete(int $id){

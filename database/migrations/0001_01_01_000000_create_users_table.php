@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('image')->nullable();
+            $table->string('avatar')->nullable();
             $table->boolean('publish')->default(2);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('province_id',20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();

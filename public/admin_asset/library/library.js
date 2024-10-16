@@ -38,8 +38,13 @@
                 data: attributes,
                 dataType: "JSON",
                 success: function (response) {
-                    console.log(response);
-
+                    // console.log(response);
+                    _this.attr("data-value") == 1
+                        ? _this.attr("data-value", 2)
+                        : _this.attr("data-value", 1);
+                    _this.attr("data-publish") == 1
+                        ? _this.attr("data-publish", 2)
+                        : _this.attr("data-publish", 1);
                     Toast.fire({
                         icon: "success",
                         title: "Cập nhật trạng thái thành công",
@@ -149,6 +154,18 @@
                                     for (let i = 0; i < ids.length; i++) {
                                         $(".js-switch-" + ids[i])
                                             .find(".js-switch")
+                                            .attr(
+                                                "data-value",
+                                                option[1] == 1 ? 1 : 2
+                                            );
+                                        $(".js-switch-" + ids[i])
+                                            .find(".js-switch")
+                                            .attr(
+                                                "data-publish",
+                                                option[1] == 1 ? 1 : 2
+                                            );
+                                        $(".js-switch-" + ids[i])
+                                            .find(".js-switch")
                                             .attr("checked", isActive);
                                     }
                                 } else {
@@ -245,8 +262,9 @@
     };
 
     TGNT.tagify = () => {
-        var tagify_tgnt = document.querySelector(".tagify_tgnt");
-        new Tagify(tagify_tgnt);
+        if ($(".tagify_tgnt").length) {
+            new Tagify($(".tagify_tgnt"));
+        }
     };
 
     TGNT.select2 = () => {

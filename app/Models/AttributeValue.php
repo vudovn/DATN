@@ -11,7 +11,8 @@ class AttributeValue extends Model
     protected $table = 'attribute_values';
     protected $fillable = [
         'attribute_id',
-        'value'
+        'value',
+        'publish',
     ];
 
 

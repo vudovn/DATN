@@ -100,6 +100,7 @@ html .ui-button.ui-state-disabled:active {
     flex-direction: column;
     /* gap: 1px; */
 }
+
 .box_seo .top_box_seo_content span {
     line-height: 1.2rem !important;
 }

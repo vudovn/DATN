@@ -5,7 +5,8 @@
                 Sản phẩm có nhiều phiên bản
                 <div class="custom-control custom-switch">
                     <input type="checkbox" value="1" name="has_attribute" class="custom-control-input turnOnVariant"
-                        id="customSwitch">
+                        id="customSwitch"
+                        {{ old('has_attribute') == 1 ? 'checked' : '' }} >
                     <label class="custom-control-label" for="customSwitch"></label>
                 </div>
             </label>
@@ -18,7 +19,7 @@
                             <strong class="text-danger">*</strong> Cho phép bạn tạo nhiều phiên bản sản phẩm với các
                             thuộc tính khác nhau
                         </div>
-                        <div class="variant-wrapper hidden">
+                        <div class="variant-wrapper {{ old('has_attribute') == 1 ? '' : 'hidden' }}">
                             <div class="variant-container row">
                                 {{-- <div class="col-3">
                                 <p class="mb-2 text-primary">Chọn thuộc tính</p>
@@ -28,24 +29,37 @@
                             </div> --}}
                             </div>
                             <div class="variant-body mb-3">
-                                {{-- <div class="row variant-item">
-                                <div class="col-3">
-                                    <select class="form-control niceSelect" id="attribute_product_1"
-                                        name="attribute_product_1">
-                                        <option value="">Chọn thuộc tính</option>
-                                        <option value="1">Màu sắc</option>
-                                        <option value="1">Chất liệu</option>
-                                    </select>
-                                </div>
-                                <div class="col-8">
-                                    <input type="text" name="" disabled class="fake-variant form-control custom_input">
-                                </div>
-                                <div class="col-1">
-                                    <button type="button" class="btn btn-danger custom_btn">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                            </div> --}}
+                                @if (old('attributeCatalogue'))
+                                    @foreach (old('attributeCatalogue') as $keyAttr => $valAttr)
+                                    <div class="row mb-3 variant-item">
+                                        <div class="col-lg-3">
+                                            <div class="attribute-catalogue">
+                                                <select name="attributeCatalogue[]" id="" class="choose-attribute niceSelect">
+                                                    <option value="">Chọn Nhóm thuộc tính</option>
+                                                    @foreach ($attributes as $item)
+                                                        <option {{ $valAttr == $item->id ? 'selected' : ''}} value="{{ $item->id }}">{{ $item->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8">
+
+                                             <select 
+                                                class="selectVariant variant-{{$valAttr}} form-control" 
+                                                name="attributeValue[{{$valAttr}}][]" multiple 
+                                                data-catid="{{$valAttr}}">
+                                            </select> 
+
+                                           {{-- <input type="text" name="" disabled class="fake-variant h-100 form-control"> --}}
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <button type="button" class="h-100 w-100 remove-attribute btn btn-danger">
+                                                <i class="fa fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @endforeach 
+                                @endif
                             </div>
                             <div class="variant-foot">
                                 <div class="parent-add-variant">
@@ -67,7 +81,8 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table variantTable">
-
+                    <thead></thead>
+                    <tbody></tbody>
                     {{-- <thead>
                         <tr class="bg-dark">
                             <th scope="col">Hình ảnh</th>
@@ -104,4 +119,7 @@
                     'name' => $item->name,
                 ];
             })->values());
+
+    var attributeValue = `{{ base64_encode(json_encode(old('attributeValue'))) }}`;       
+    var variant = `{{ base64_encode(json_encode(old('variant'))) }}`; 
 </script>

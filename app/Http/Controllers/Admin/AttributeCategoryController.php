@@ -6,32 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Attribute\StoreAttributeRequest;
 use Illuminate\Http\Request;
 use App\Models\Attribute;
-use App\Services\Attribute\AttributeService;
-use App\Repositories\Attribute\AttributeRepository;
+use App\Services\Attribute\AttributeCategoryService;
+use App\Repositories\Attribute\AttributeCategoryRepository;
 use App\Http\Requests\Attribute\UpdateAttributeRequest;
 
-
-class AttributeController extends Controller
+class AttributeCategoryController extends Controller
 {
-    protected $attributeService;
-    protected $attributeRepository;
+    protected $attributeCategoryService;
+    protected $attributeCategoryRepository;
     function __construct(
-        AttributeService $attributeService,
-        AttributeRepository $attributeRepository
+        AttributeCategoryService $attributeCategoryService,
+        AttributeCategoryRepository $attributeCategoryRepository
     ) {
-        $this->attributeService = $attributeService;
-        $this->attributeRepository = $attributeRepository;
-        // $this->middleware('permission:attribute-list|attribute-create|attribute-edit|attribute-delete', ['only' => ['index', 'store']]);
-        // $this->middleware('permission:attribute-create', ['only' => ['create', 'store']]);
-        // $this->middleware('permission:attribute-edit', ['only' => ['edit', 'update']]);
-        // $this->middleware('permission:attribute-delete', ['only' => ['destroy']]);
+        $this->attributeCategoryService = $attributeCategoryService;
+        $this->attributeCategoryRepository = $attributeCategoryRepository;
     }
 
     public function index(Request $request)
     {
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
-        $attributes = $this->attributeService->paginate($request);
+        $attributes = $this->attributeCategoryService->paginate($request);
         return view('admin.pages.product.attribute.attribute.index', compact(
             'config',
             'attributes'
@@ -43,16 +38,16 @@ class AttributeController extends Controller
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';
-        $config['model'] = 'product.attribute';
         return view('admin.pages.product.attribute.attribute.save', compact(
             'config'
         ));
     }
 
     public function store(StoreAttributeRequest $request)
-    {
-        if ($this->attributeService->create($request)) {
-            return redirect()->route('product.attribute.index')->with('success', 'Tạo mới thuộc tính thành công');
+    {   
+      
+        if ($this->attributeCategoryService->create($request)) {
+            return redirect()->route('attributeCategory.index')->with('success', 'Tạo mới thuộc tính thành công');
         }
         return redirect()->back()->with('error', 'Tạo mới thuộc tính thất bại');
     }
@@ -62,8 +57,7 @@ class AttributeController extends Controller
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('update');
         $config['method'] = 'edit';
-        $config['model'] = 'product.attribute';
-        $attribute = $this->attributeRepository->findById($id);
+        $attribute = $this->attributeCategoryRepository->findById($id);
         return view('admin.pages.product.attribute.attribute.save', compact(
             'config',
             'attribute'
@@ -72,9 +66,9 @@ class AttributeController extends Controller
 
     public function update(UpdateAttributeRequest $request, $id)
     {
-        // $this->attributeService->update($request, $id);
-        if ($this->attributeService->update($request, $id)) {
-            return redirect()->back()->with('success', 'Cập nhật thuộc tính thành công');
+        // $this->attributeCategoryService->update($request, $id);
+        if ($this->attributeCategoryService->update($request, $id)) {
+            return redirect()->route('attributeCategory.index')->with('success', 'Cập nhật thuộc tính thành công');
         }
         return redirect()->back()->with('error', 'Cập nhật thuộc tính thất bại');
     }
@@ -117,7 +111,7 @@ class AttributeController extends Controller
             'js' => [
                 'admin_asset/library/attribute.js'
             ],
-            'model' => 'attribute'
+            'model' => 'attributeCategory',
         ];
     }
 }

@@ -1,29 +1,31 @@
-<?php 
+<?php
 namespace App\Http\Controllers\Ajax;
 use App\Http\Controllers\Controller;
+use App\Repositories\Attribute\AttributeCategoryRepository;
 use App\Repositories\Attribute\AttributeRepository;
-use App\Repositories\Attribute\AttributeValueRepository;
 
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller {
+class DashboardController extends Controller
+{
 
 
+    protected $attributeCategoryRepository;
     protected $attributeRepository;
-    protected $attributeValueRepository;
     public function __construct(
-        AttributeRepository $attributeRepository,
-        AttributeValueRepository $attributeValueRepository
-    ){
+        AttributeCategoryRepository $attributeCategoryRepository,
+        AttributeRepository $attributeRepository
+    ) {
+        $this->attributeCategoryRepository = $attributeCategoryRepository;
         $this->attributeRepository = $attributeRepository;
-        $this->attributeValueRepository = $attributeValueRepository;
     }
 
 
-    public function changeStatus(Request $request){
+    public function changeStatus(Request $request)
+    {
         $data = $request->input();
         $serviceClass = loadClass($data['model'], 'Service');
-        if($serviceClass->changeStatusByField($data)){
+        if ($serviceClass->changeStatusByField($data)) {
             return response()->json([
                 'message' => 'Update Successfully',
                 'code' => 10
@@ -35,10 +37,11 @@ class DashboardController extends Controller {
         ]);
     }
 
-    public function changeStatusMultiple(Request $request){
+    public function changeStatusMultiple(Request $request)
+    {
         $data = $request->input();
         $serviceClass = loadClass($data['model'], 'Service');
-        if($serviceClass->bulkChangeStatus($data)){
+        if ($serviceClass->bulkChangeStatus($data)) {
             return response()->json([
                 'message' => 'Update Successfully',
                 'code' => 10
@@ -50,10 +53,11 @@ class DashboardController extends Controller {
         ]);
     }
 
-    public function deleteMultiple(Request $request){
+    public function deleteMultiple(Request $request)
+    {
         $data = $request->input();
         $serviceClass = loadClass($data['model'], 'Service');
-        if($serviceClass->bulkDelete($data)){
+        if ($serviceClass->bulkDelete($data)) {
             return response()->json([
                 'message' => 'Update Successfully',
                 'code' => 10
@@ -65,34 +69,32 @@ class DashboardController extends Controller {
         ]);
     }
 
-    public function deleteItem(Request $request) {
+    public function deleteItem(Request $request)
+    {
         $data = $request->all();
+        // dd($data['model']);
         $serviceClass = loadClass($data['model'], 'Service');
-        if($serviceClass->delete($data['id'])) {
+        if ($serviceClass->delete($data['id'])) {
             return successResponse();
         }
         return errorResponse();
 
     }
 
-    public function getAttribute() {
-        $attributes = $this->attributeRepository->getAll();
+    public function getAttribute()
+    {
+        $attributes = $this->attributeCategoryRepository->getAll();
         return successResponse($attributes);
     }
 
-    // public function getAttributeValue(Request $request) {
-    //     $attribute_id = $request->attribute_id;
-    //     $attribute = $this->attributeRepository->findById($attribute_id);
-    //     $attribute_values = $attribute->attribute_values;
-    //     return successResponse($attribute_values);
-    // }
 
-    public function getAttributeValue(Request $request) {
+    public function getAttributeValue(Request $request)
+    {
         $payload = $request->all();
         // dd($payload);
-        $attribute = $this->attributeValueRepository->searchValue($payload['attribute_id'], $payload['search']);
+        $attribute = $this->attributeRepository->searchValue($payload['attribute_id'], $payload['search']);
 
-        $attributeFormat =  $attribute->map(function($item){
+        $attributeFormat = $attribute->map(function ($item) {
             return [
                 'id' => $item->id,
                 'text' => $item->value
@@ -100,5 +102,29 @@ class DashboardController extends Controller {
         })->all();
         return successResponse($attributeFormat);
     }
+
+    public function loadAttributeValue(Request $request)
+{
+    $attributeValues = json_decode(base64_decode($request->attributeValue), true);
+    $attributeId = $request->attributeCatalogueId;
+    $result = [];
+
+    foreach ($attributeValues as $value_ids) {
+        $result = array_merge($result, $value_ids);
+    }
+
+    $attributeValueData = $this->attributeRepository
+        ->getByIds($result, $attributeId)
+        ->map(function ($attributeValue) {
+            return [
+                'id' => $attributeValue->id,
+                'text' => $attributeValue->value,
+            ];
+        })
+        ->all();
+
+    return successResponse($attributeValueData);
+}
+
 
 }

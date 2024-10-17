@@ -7,22 +7,36 @@
         showConfirmButton: false,
         timer: 3000,
     });
+    
     TGNT.setupProductVariant = () => {
         if ($(".turnOnVariant").length) {
             $(document).on("click", ".turnOnVariant", function () {
-                $(".variant-wrapper").toggleClass(
-                    "hidden",
-                    !$(this).is(":checked")
-                );
+                let _this = $(this);
+                let price = parseFloat($('input[name="price"]').val()) || 0;
+                let sku = $('input[name="sku"]').val().trim(); 
+    
+                if(price <= 0 || sku === ""){
+                    Toast.fire({
+                        icon: "warning",
+                        title: "Vui lòng nhập giá tiền sản phẩm và SKU cho sản phẩm để sử dụng tính năng này"
+                    });
+                    _this.prop("checked", false);
+                    return false;
+                }
+    
+                $(".variant-wrapper").toggleClass("hidden", !_this.is(":checked"));
             });
         }
     };
+    
 
     TGNT.addVariant = () => {
         if ($(".add-variant").length) {
             $(document).on("click", ".add-variant", function () {
                 let html = TGNT.renderVariantItem(attributeCatalogue);
                 $(".variant-body").append(html);
+                $(".variantTable thead").html("");
+                $(".variantTable tbody").html("");
                 TGNT.checkMaxAttributeGroup(attributeCatalogue);
                 TGNT.disabledAttributeCatalogueChoose();
             });
@@ -30,37 +44,32 @@
     };
 
     TGNT.renderVariantItem = (attributeCatalogue) => {
-        let html = "";
-        html += '<div class="row mb-3 variant-item ">';
-        html += '<div class="col-lg-3">';
-        html += '<div class="attribute-catalogue">';
-        html += '<select name="" id="" class="choose-attribute niceSelect">';
-        html += '<option value="">Chọn Nhóm thuộc tính</option>';
-        for (let i = 0; i < attributeCatalogue.length; i++) {
-            html +=
-                '<option value="' +
-                attributeCatalogue[i].id +
-                '">' +
-                attributeCatalogue[i].name +
-                "</option>";
-        }
-        html += "</select>";
-        html += "</div>";
-        html += "</div>";
-        html += '<div class="col-lg-8">';
-        html +=
-            '<input type="text" name=""disabled class="fake-variant h-100 form-control">';
-        html += "</div>";
-        html += '<div class="col-lg-1">';
-        html +=
-            '<button type="button" class="h-100 w-100 remove-attribute btn btn-danger">';
-        html += '<i class="fas fa-trash-alt"></i>';
-        html += "</button>";
-        html += "</div>";
-        html += "</div>";
+        let options = attributeCatalogue.map(attribute => 
+            `<option value="${attribute.id}">${attribute.name}</option>`
+        ).join("");
 
-        return html;
+        return `
+            <div class="row mb-3 variant-item">
+                <div class="col-lg-3">
+                    <div class="attribute-catalogue">
+                        <select name="attributeCatalogue[]" id="" class="choose-attribute niceSelect">
+                            <option value="">Chọn Nhóm thuộc tính</option>
+                            ${options}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <input type="text" name="" disabled class="fake-variant h-100 form-control">
+                </div>
+                <div class="col-lg-1">
+                    <button type="button" class="h-100 w-100 remove-attribute btn btn-danger">
+                        <i class="fa fa-trash-alt"></i>
+                    </button>
+                </div>
+            </div>
+        `;
     };
+    
 
     TGNT.chooseVariantGroup = () => {
         $(document).on("change", ".choose-attribute", function () {
@@ -79,7 +88,7 @@
                     .parents(".col-lg-3")
                     .siblings(".col-lg-8")
                     .html(
-                        '<input type="text" name="" disabled="" class="fake-variant form-control">'
+                        `<input type="text" name="attributeValue[${attributeCatalogueId}][]" disabled="" class="fake-variant form-control">`
                     );
             }
 
@@ -103,40 +112,138 @@
             let _this = $(this);
             let attr = [];
             let attrVariant = [];
-
+    
             const attributeCatalogueId = _this.find(".choose-attribute").val();
-            const optionText = _this
-                .find(".choose-attribute option:selected")
-                .text();
-            const attribute = $(".variant-" + attributeCatalogueId).select2(
-                "data"
-            );
-
-            for (let i = 0; i < attribute.length; i++) {
+            const optionText = _this.find(".choose-attribute option:selected").text();
+            const attribute = $(".variant-" + attributeCatalogueId).select2("data");
+    
+            attribute.forEach(attrItem => {
                 let item = {};
                 let itemVariant = {};
-
-                item[optionText] = attribute[i].text;
-                itemVariant[attributeCatalogueId] = attribute[i].id;
-
+    
+                item[optionText] = attrItem.text;
+                itemVariant[attributeCatalogueId] = attrItem.id;
+    
                 attr.push(item);
                 attrVariant.push(itemVariant);
-            }
-            attributeTitle.push(optionText);
-            attributes.push(attr);
-            variants.push(attrVariant);
+            });
+    
+            attributeTitle.push(optionText); 
+            attributes.push(attr);         
+            variants.push(attrVariant); 
         });
-
+    
         let attributesNew = TGNT.generateVariants(attributes);
         let variantsNew = TGNT.generateVariants(variants);
+    
+        TGNT.createTableHeader(attributeTitle);
+    
+        let trClass = [];
+        attributesNew.forEach((attribute, index) => {
+            let $row = TGNT.createVariantRow(attribute, variantsNew[index]);
+            let classModified = "tr-variant-" + Object.values(variantsNew[index]).join(", ").replace(/, /g, "-");
+    
+            trClass.push(classModified);
+            if (!$(`table.variantTable tbody tr.${classModified}`).length) {
+                $("table.variantTable tbody").append($row);
+            }
+        });
+    
+        $('table.variantTable tbody tr').each(function () {
+            const $row = $(this);
+            const rowClasses = $row.attr('class');
+            
+            if (rowClasses) {
+                const rowClassArray = rowClasses.split(' ');
+                let shouldRemove = true;
+                rowClassArray.forEach((item) => {
+                    if (trClass.includes(item)) {
+                        shouldRemove = false;
+                    }
+                });
 
-        let html = TGNT.renderTableHtml(
-            attributeTitle,
-            attributesNew,
-            variantsNew
-        );
-        $(".table.variantTable").html(html);
+                if (shouldRemove) {
+                    $row.remove();
+                }
+            }
+        });
     };
+    
+
+    TGNT.createVariantRow = (attributeItem, variantItem) => {
+        let attributeString = Object.values(attributeItem).join(", ");
+        let attributeId = Object.values(variantItem).join(", ");
+        let classModified = attributeId.replace(/, /g, "-");
+        let $row = $("<tr>").addClass("variant-row tr-variant-" + classModified);
+        let $td;
+        $td = $("<td>").append(
+            $("<span>").addClass("img img-cover").append(
+                $("<a>").attr("href", "https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That").addClass("td-thumbnai-pre").attr("data-fancybox", "gallery").attr("data-caption", "").append(
+                    $("<img>").attr("width", "50").addClass("td-thumbnail rounded").attr("src", "https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That").attr("alt", "")
+                )
+            )
+        );
+        $row.append($td);
+        Object.values(attributeItem).forEach((value) => {
+            $td = $("<td>").text(value);
+            $row.append($td);
+        });
+
+        $td = $("<td>").addClass("hidden td-variant");
+        let mainPrice = $('input[name="price"]').val();
+        let mainSku = $('input[name="sku"]').val();
+        let inputHiddenFields = [
+            { name: "variant[sku][]", class: "variant_sku", value: mainSku + '-' + classModified  },
+            { name: "variant[quantity][]", class: "variant_quantity" },
+            { name: "variant[price][]", class: "variant_price" , value: mainPrice},
+            { name: "variant[albums][]", class: "variant_albums" },
+            { name: "productVariantValue[name][]", value: attributeString },
+            { name: "productVariantValue[id][]", value: attributeId },
+        ]
+        $.each(inputHiddenFields, function (_, field) {
+            let $input = $("<input>").attr("type", "text").attr("name", field.name).addClass(field.class);
+            if(field.value){
+                $input.val(field.value);
+            }
+            $td.append($input);
+        });
+
+        $row.append($("<td>").addClass("td-quantity").text("-"))
+            .append($("<td>").addClass("td-price").text(mainPrice))
+            .append($("<td>").addClass("td-sku").text(mainSku + '-' + classModified))
+            .append($('<td>').addClass('table-actions text-center').append(
+                $('<button>').addClass('btn btn-sm btn-primary btnUpdateVariant mr-2').attr('type', 'button').append(
+                    $('<i>').addClass('fa fa-edit')
+                ),
+                $('<button>').addClass('btn btn-sm btn-danger btnDeleteVariant').attr('type', 'button').append(
+                    $('<i>').addClass('fa fa-trash')
+                )
+            ))
+            .append($td);
+        return $row;
+    }
+
+    TGNT.createTableHeader = (attributeTitle) => {
+        let $thead = $("table.variantTable thead");
+        $thead.addClass("animate__animated animate__fadeIn");
+    
+        let $row = $("<tr>").addClass('table-pri');
+        $row.append($("<th>").text("Hình ảnh").attr("scope", "col"));
+    
+        attributeTitle.forEach((element) => {
+            $row.append($("<th>").text(element));
+        });
+    
+        $row.append($("<th>").text("Số lượng").attr("scope", "col"));
+        $row.append($("<th>").text("Giá tiền").attr("scope", "col"));
+        $row.append($("<th>").text("SKU").attr("scope", "col"));
+        $row.append($("<th>").text("Hành động").attr("scope", "col").addClass("text-center"));
+    
+        $thead.html($row);
+    
+        return $thead;
+    }
+    
 
     TGNT.generateVariants = (attributes) => {
         let results = [];
@@ -151,88 +258,6 @@
         }
         helper({}, 0);
         return results;
-    };
-
-    TGNT.renderTableHtml = (attributeTitle, attributes, variantsNew) => {
-        let html = `
-            <thead class="animate__animated animate__fadeIn">
-                <tr class="table-pri">
-                    <th scope="col">Hình ảnh</th>`;
-            
-                attributeTitle.forEach((element) => {
-                    html += `<th scope="col">${element}</th>`;
-                });
-            
-                html += `
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Giá tiền</th>
-                    <th scope="col">SKU</th>
-                    <th scope="col" class="text-center">Hành động</th>
-                </tr>
-            </thead>
-            <tbody class="animate__animated animate__fadeIn">`;
-    
-        attributes.forEach((attribute, index) => {
-            let attributeArray = [], variantArray = [];
-    
-            attributeArray = Object.values(attribute);
-            variantArray = Object.values(variantsNew[index]);
-    
-            let attributeString = attributeArray.join(", ");
-            let variantString = variantArray.join(", ");
-    
-            html += `
-                <tr class="variant-row">
-                    <td>
-                        <span class="img img-cover">
-                            <a href="https://placehold.co/600x600?text=The%20Gioi\nNoi%20That" class="td-thumbnai-pre" data-fancybox="gallery" data-caption="">
-                                <img width="50" class="td-thumbnail rounded" src="https://placehold.co/600x600?text=The%20Gioi\nNoi%20That" alt="">
-                            </a>
-                        </span>
-                    </td>`;
-            
-            attributeArray.forEach((value) => {
-                html += `<td>${value}</td>`;
-            });
-    
-            html += `
-                    <td class="td-quantity">-</td>
-                    <td class="td-price">-</td>
-                    <td class="td-sku">-</td>
-                    <td class="hidden td-variant">
-                        <input type="text" name="variant[sku][]" value="" class="variant_sku">
-                        <input type="text" name="variant[quantity][]" value="" class="variant_quantity">
-                        <input type="text" name="variant[price][]" value="" class="variant_price">
-                        <input type="text" name="variant[discount][]" value="" class="variant_discount">
-                        <input type="text" name="variant[albums][]" value="" class="variant_albums">
-                        <input type="text" name="attribute[name][]" value="${attributeString}">
-                        <input type="text" name="attribute[id][]" value="${variantString}">
-                    </td>
-                    <td class="table-actions text-center">
-                        <button type="button" class="btn btn-sm btn-primary btnUpdateVariant">
-                                <svg class="icon  svg-icon-ti-ti-edit" data-bs-toggle="tooltip" data-bs-title="Edit" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
-                                    <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path>
-                                    <path d="M16 5l3 3"></path>
-                                </svg>
-                        </button>
-                        <button type="button" class="btn btn-sm btn-danger btnDeleteVariant">
-                            <svg class="icon  svg-icon-ti-ti-trash" data-bs-toggle="tooltip" data-bs-title="Delete" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M4 7l16 0"></path>
-                                <path d="M10 11l0 6"></path>
-                                <path d="M14 11l0 6"></path>
-                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
-                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-                            </svg>
-                        </button>
-                    </td>
-                </tr>`;
-        });
-    
-        html += `</tbody>`;
-        return html;
     };
     
     TGNT.updateVariant = () => {
@@ -299,34 +324,24 @@
                                 </div>
                             </div>
                             <div class="row price-group">
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <div class="mb-3 position-relative">
                                         <label class="form-label" for="sku">SKU <span class="text-danger">*</span></label>
                                         <input class="form-control" type="text" name="variant_sku" id="sku" value="${variantData.variant_sku}">
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <div class="mb-3 position-relative">
                                         <label class="form-label" for="quantity">Số lượng <span class="text-danger">*</span></label>
                                         <input class="form-control int" type="text" name="variant_quantity" id="quantity" value="${TGNT.addCommas(variantData.variant_quantity)}">
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <div class="mb-3 position-relative">
                                         <label class="form-label" for="variant_price">Giá tiền <span class="text-danger">*</span></label>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend"><span class="input-group-text">$</span></div>
                                             <input type="text" name="variant_price" value="${TGNT.addCommas(variantData.variant_price)}" id="variant_price" class="form-control int">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="mb-3 position-relative">
-                                        <label class="form-label" for="variant_discount">Giảm giá</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend"><span class="input-group-text">$</span></div>
-                                            <input type="text" name="variant_discount" value="${variantData.variant_discount}" max="100" class="form-control int">
-                                            <div class="input-group-append"><span class="input-group-text">%</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -338,7 +353,6 @@
     
         return html;
     };
-    
 
     TGNT.variantAlbumList = (album) => {
         let html = "";
@@ -416,13 +430,14 @@
         str = str.slice(0, str.length - 1);
         return str;
     };
+
     TGNT.getSelect2 = (object) => {
         $(object).select2({
             minimumInputLength: 1,
             placeholder:
                 "Nhập tối thiểu 1 kí tự để tìm kiếm giá trị thuộc tính",
             ajax: {
-                url: "/getAttributeValue",
+                url: "/ajax/getAttributeValue",
                 type: "GET",
                 dataType: "json",
                 deley: 250,
@@ -494,14 +509,12 @@
     };
 
     TGNT.select2Variant = (attributeCatalogueId) => {
-        let html =
-            '<select class="selectVariant variant-' +
-            attributeCatalogueId +
-            ' form-control" name="attribute[' +
-            attributeCatalogueId +
-            '][]" multiple data-catid="' +
-            attributeCatalogueId +
-            '"></select>';
+        let html = `
+            <select 
+                class="selectVariant variant-${attributeCatalogueId} form-control" 
+                name="attributeValue[${attributeCatalogueId}][]" multiple 
+                data-catid="${attributeCatalogueId}">
+            </select>`;
         return html;
     };
 
@@ -544,6 +557,61 @@
         finder.popup();
     };
     
+    TGNT.setupSelectMultiple = (callback) => {
+        if($('.selectVariant').length) {
+            let count = $('.selectVariant').length;
+
+            $('.selectVariant').each(function() {
+                let _this = $(this);
+                let attributeCatalogueId = _this.attr('data-catid');
+                if(attributeValue != []) {
+                    $.get('/ajax/loadAttributeValue', {
+                        attributeValue: attributeValue,
+                        attributeCatalogueId: attributeCatalogueId
+                    }, function(data) {
+                        data.data.forEach(function(item) {
+                            var option = new Option(item.text, item.id, true, true);
+                            _this.append(option).trigger('change');
+                        });
+                        if(--count == 0 && callback) {
+                            callback();
+                        }
+                    } );
+                }
+                TGNT.getSelect2(_this)
+            });
+        }
+    }
+
+    TGNT.productVariant = () => {
+       variant = JSON.parse(atob(variant));
+        console.log(variant);
+
+        $(".variant-row").each(function (index,value) {
+            let _this = $(this);
+            let inputHiddenFields = [
+                { name: "variant[sku][]", class: "variant_sku", value: variant.sku[index] },
+                { name: "variant[quantity][]", class: "variant_quantity", value: variant.quantity[index] },
+                { name: "variant[price][]", class: "variant_price", value: variant.price[index] },
+                { name: "variant[albums][]", class: "variant_albums", value: variant.albums[index] },
+                // { name: "productVariantValue[name][]", value: variant[index].name },
+                // { name: "productVariantValue[id][]", value: variant[index].id },
+            ]
+            inputHiddenFields.forEach(element => {
+                _this.find(`input[name="${element.name}"]`).val(element.value ? element.value : 0);
+            });
+
+            let album = variant.albums[index];
+            let variantImage = (album) ? album.split(",")[0] : 'https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That' ;
+            console.log(variantImage);
+            _this.find(".td-quantity").text(variant.quantity[index]);
+            _this.find(".td-price").text(variant.price[index]);
+            _this.find(".td-sku").text(variant.sku[index]);
+            _this.find(".td-thumbnail").attr("src",variantImage);
+            _this.find(".td-thumbnai-pre").attr("href",variantImage);
+
+        });
+    };
 
     $(document).ready(function () {
         TGNT.setupProductVariant();
@@ -556,5 +624,8 @@
         TGNT.updateVariant();
         TGNT.cancleVariantUpdate();
         TGNT.saveVariantUpdate();
+        TGNT.setupSelectMultiple(
+            () => TGNT.productVariant()
+        );
     });
 })(jQuery);

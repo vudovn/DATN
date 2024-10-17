@@ -11,18 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_attributes', function (Blueprint $table) {
+        Schema::create('product_variants', function (Blueprint $table) {
             $table->id();
-			$table->integer('quantity');
+            $table->string('sku')->unique();
+            $table->string('code')->nullable();
+            $table->string('title')->nullable();
+            $table->decimal('price')->nullable();
+            $table->integer('quantity')->default(0);
             $table->string('thumbnail')->default('https://img.muji.net/img/item/4550583440404_1260.jpg');
             $table->json('albums')->nullable();
-            $table->string('slug')->nullable();
-            $table->decimal('price')->nullable();
-            $table->decimal('discount')->nullable();
+            $table->integer('publish')->default(1);
             $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 			$table->timestamps();
 
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            
         });
     }
 

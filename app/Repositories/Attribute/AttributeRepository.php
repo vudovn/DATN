@@ -13,12 +13,21 @@ class AttributeRepository extends BaseRepository{
         $this->model = $model;
     }
 
-    public function getAll(){
-        return $this->model->all();
+    public function searchValue($attribute_id, $value){
+        return $this->model
+            ->where('attribute_category_id', $attribute_id)
+            ->where('value', 'like', '%' . $value . '%')
+            ->get();
     }
 
+    public function getByIds(array $ids,  int $attribute_id){
+        return $this->model
+            ->whereIn('id', $ids)
+            ->where('attribute_category_id', $attribute_id)
+            ->get();
+    }
+    
 
-   
     
 
 

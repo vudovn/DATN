@@ -43,8 +43,6 @@ class BaseRepository {
         return $this->model->select($select)->with($relation)->find($id);
     }
 
-
-
     public function findByField(string $field, $value, array $select = ['*']){
         return $this->model->select($select)->where($field, $value);
     }

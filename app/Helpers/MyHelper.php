@@ -97,8 +97,8 @@ if(!function_exists('getSlug')){
     }
 }
 
-if (!function_exists('statusToVietnamese')) {
-    function statusToVietnamese($status) {
+if (!function_exists('statusOrder')) {
+    function statusOrder($status) {
         $status = strtolower($status);
         $statusList = __('order.status');
         return $statusList[$status] ?? 'Không xác định';

@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\QueryScope;
 
 class Order extends Model
 {
-    use HasFactory;
+    use HasFactory, QueryScope;
+
     protected $table = 'orders';
+
     protected $fillable = [
         'id',
         'user_id',
@@ -26,5 +29,8 @@ class Order extends Model
     }
     public function shipping(){
         return $this->belongsTo(Shipping::class, 'shipping_id');
+    }
+    public function orderDetails() {
+        return $this->hasMany(OrderDetail::class, 'order_id');
     }
 }

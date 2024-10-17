@@ -72,6 +72,7 @@ Route::group(['middleware' => 'authenticated'], function () {
     Route::get('order/index', [AdminOrderController::class, 'index'])->name('admin.pages.order.index');
     Route::get('order/edit/{id}', [AdminOrderController::class, 'edit'])->name('admin.pages.order.edit');
     Route::put('order/update/{id}', [AdminOrderController::class, 'update'])->name('admin.pages.order.update');
+    Route::delete('order/delete/{id}', [AdminOrderController::class, 'delete'])->name('admin.pages.order.delete');
     
 });
 

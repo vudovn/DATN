@@ -12,11 +12,15 @@
                 @csrf
                 @method('PUT') <!-- Hoặc PUT nếu bạn sử dụng phương thức PUT trong route -->
                 <p>Tên khách hàng: {{$order->user->name}}</p>
+                @php
+                    $total = 0;
+                    foreach ($order_details as $value) {
+                        $total += $value->product->price * $value->quantity;
+                    }
+                @endphp
                 <div class="form-group">
                     <label for="total_amount">Tổng Tiền: {{ number_format($order->total_amount, 0, ',', '.') }} VND</label>
-                    
                 </div>
-
                 <div class="form-group">
                     <label for="payment_method">Phương Thức Thanh Toán: <span class="text-danger"> {{ $order->payment_method ?? 'Đợi có dữ liệu bảng phương thức thanh toán' }} </span></label>
                 </div>
@@ -28,16 +32,9 @@
                     <label for="status">Trạng Thái</label>
                     <select name="status" id="status" class="form-control select2">
                         @foreach (__('order.status') as $key => $value)
-                            <option value="{{ $key }}" {{ $order->status == $key ? 'selected' : '' }}>{{ $value }}</option>
+                            <option value="{{ $key }}" {{ $order->status == $key ? 'selected' : '' }}>
+                                {{ $value }}</option>
                         @endforeach
-                        {{-- <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Đang chờ duyệt</option>
-                        <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Đang xử lý
-                        </option>
-                        <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Đã giao cho đơn vị vận chuyển</option>
-                        <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Đã giao xong
-                        </option>
-                        <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Đã hủy</option> --}}
-
                     </select>
                 </div>
 
@@ -48,6 +45,7 @@
                             <th>ID</th>
                             <th>Tên Sản Phẩm</th>
                             <th>Số Lượng</th>
+                            <th>Giá Tiền</th>
                             <th>Tổng Tiền</th>
                             <th>Ngày Tạo</th>
                         </tr>
@@ -58,6 +56,7 @@
                                 <td>{{ $detail->id }}</td>
                                 <td>{{ $detail->product->name }}</td>
                                 <td>{{ $detail->quantity }}</td>
+                                <td>{{ number_format($detail->product->price) }} VND</td>
                                 <td>{{ number_format($detail->product->price * $detail->quantity) }} VND</td>
                                 <td>{{ changeDateFormat($detail->created_at) }}</td>
                             </tr>

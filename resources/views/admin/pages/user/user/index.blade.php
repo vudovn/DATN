@@ -12,7 +12,7 @@
             ]" :options="[
                 'actions' => generateSelect('Hành động', __('general.actions')),
                 'perpage' => generateSelect('Mỗi trang', __('general.perpage')),
-                'user_catalogue_id' => generateSelect('Vai trò', $userCatalogues),
+                // 'roles' => generateSelect('Vai trò', $roles),
                 'publish' => generateSelect('Trạng thái', __('general.publish')),
                 'sort' => generateSelect('Sắp xếp', __('general.sort')),
             ]" />
@@ -61,7 +61,7 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ changeDateFormat($user->created_at) }}</td>
                                 <td class="text-center">
-                                    {{ $user->user_catalogue_id  == 1 ? 'Quản trị viên' : 'Khách hàng' }}
+                                    {{ $user->getRoleNames()->join(', ') }}
                                 </td>
                                 <td class="text-center">
                                     <x-switchvip :value="$user" :model="ucfirst($config['model'])"/>

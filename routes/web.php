@@ -7,10 +7,8 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\AttributeController;
-use App\Http\Controllers\Admin\AttributeValueController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
-// use App\Http\Controllers\Admin\AttributeValueController;
+use App\Http\Controllers\Admin\AttributeCategoryController;
 
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -19,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::middleware(['authenticated','preventBackHistory',/*'checkPermission'*/])->group(function () {
+Route::middleware(['authenticated', 'preventBackHistory',/*'checkPermission'*/])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
     /* USER ROUTE */
@@ -32,7 +30,7 @@ Route::middleware(['authenticated','preventBackHistory',/*'checkPermission'*/])-
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
         Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
         // Route::get('/api/wards/{district_code}', [UserController::class, 'getWards'])->name('wards');
-
+    });
     /* PRODUCT ROUTE */
     Route::prefix('product')->name('product.')->group(function () {
         Route::get('/index', [ProductController::class, 'index'])->name('index');
@@ -45,25 +43,14 @@ Route::middleware(['authenticated','preventBackHistory',/*'checkPermission'*/])-
     });
 
     /* ATTRIBUTE ROUTE */
-    Route::prefix('product/attribute')->name('product.attribute.')->group(function () {
-        Route::get('/index', [AttributeController::class, 'index'])->name('index');
-        Route::get('/create', [AttributeController::class, 'create'])->name('create');
-        Route::post('/store', [AttributeController::class, 'store'])->name('store');
-        Route::get('/edit/{id}', [AttributeController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [AttributeController::class, 'update'])->name('update');
-        // Route::get('/delete/{id}', [AttributeController::class, 'delete'])->name('delete');
-        // Route::delete('/destroy/{id}', [AttributeController::class, 'destroy'])->name('destroy');
-    });
-
-    /* ATTRIBUTE VALUE ROUTE */
-    Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
-        Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
-        Route::get('/create', [AttributeValueController::class, 'create'])->name('create');
-        Route::post('/store', [AttributeValueController::class, 'store'])->name('store');
-        Route::get('/edit/{id}', [AttributeValueController::class, 'edit'])->name('edit');
-        Route::put('/update', [AttributeValueController::class, 'update'])->name('update');
-        // Route::get('/delete/{id}', [AttributeValueController::class, 'delete'])->name('delete');
-        // Route::delete('/destroy/{id}', [AttributeValueController::class, 'destroy'])->name('destroy');
+    Route::prefix('product/attribute-category')->name('attributeCategory.')->group(function () {
+        Route::get('/index', [AttributeCategoryController::class, 'index'])->name('index');
+        Route::get('/create', [AttributeCategoryController::class, 'create'])->name('create');
+        Route::post('/store', [AttributeCategoryController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [AttributeCategoryController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [AttributeCategoryController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [AttributeCategoryController::class, 'delete'])->name('delete');
+        Route::delete('/destroy/{id}', [AttributeCategoryController::class, 'destroy'])->name('destroy');
     });
     /* PERMISSION ROUTE */
     Route::prefix('user/permission')->name('user.permission.')->group(function () {
@@ -73,22 +60,13 @@ Route::middleware(['authenticated','preventBackHistory',/*'checkPermission'*/])-
         Route::get('/edit/{id}', [PermissionController::class, 'edit'])->name('edit');
         Route::put('/update', [PermissionController::class, 'update'])->name('update');
     });
-        /* ROLE ROUTE */
-        Route::prefix('user/role')->name('user.role.')->group(function () {
-            Route::get('/index', [RoleController::class, 'index'])->name('index');
-            Route::get('/create', [RoleController::class, 'create'])->name('create');
-            Route::post('/store', [RoleController::class, 'store'])->name('store');
-            Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit');
-            Route::put('/update/{id}', [RoleController::class, 'update'])->name('update');
-        });
-    Route::prefix('product/attribute-category')->name('attributeCategory.')->group(function () {
-        Route::get('/index', [AttributeCategoryController::class, 'index'])->name('index');
-        Route::get('/create', [AttributeCategoryController::class, 'create'])->name('create');
-        Route::post('/store', [AttributeCategoryController::class, 'store'])->name('store');
-        Route::get('/edit/{id}', [AttributeCategoryController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [AttributeCategoryController::class, 'update'])->name('update');
-        Route::get('/delete/{id}', [AttributeCategoryController::class, 'delete'])->name('delete');
-        Route::delete('/destroy/{id}', [AttributeCategoryController::class, 'destroy'])->name('destroy');
+    /* ROLE ROUTE */
+    Route::prefix('user/role')->name('user.role.')->group(function () {
+        Route::get('/index', [RoleController::class, 'index'])->name('index');
+        Route::get('/create', [RoleController::class, 'create'])->name('create');
+        Route::post('/store', [RoleController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [RoleController::class, 'update'])->name('update');
     });
 
     // /* ATTRIBUTE VALUE ROUTE */
@@ -101,7 +79,6 @@ Route::middleware(['authenticated','preventBackHistory',/*'checkPermission'*/])-
     //     Route::get('/delete/{id}', [AttributeValueController::class, 'delete'])->name('delete');
     //     Route::delete('/destroy/{id}', [AttributeValueController::class, 'destroy'])->name('destroy');
     // });
-
 
 
     /* AJAX ROUTE */
@@ -117,14 +94,12 @@ Route::middleware(['authenticated','preventBackHistory',/*'checkPermission'*/])-
     Route::get('order/edit/{id}', [AdminOrderController::class, 'edit'])->name('admin.pages.order.edit');
     Route::put('order/update/{id}', [AdminOrderController::class, 'update'])->name('admin.pages.order.update');
     Route::delete('order/delete/{id}', [AdminOrderController::class, 'delete'])->name('admin.pages.order.delete');
-    
+
     // get attribute value
     Route::get('/getAttribute', [AjaxDashboardController::class, 'getAttribute'])->name('ajax.dashboard.getAttribute');
     Route::get('ajax/getAttributeValue', [AjaxDashboardController::class, 'getAttributeValue'])->name('ajax.dashboard.getAttributeValue');
     Route::get('ajax/loadAttributeValue', [AjaxDashboardController::class, 'loadAttributeValue'])->name('ajax.dashboard.loadAttributeValue');
 });
-
-
 
 Route::get('/admin', [AuthController::class, 'index'])->name('auth.index')->middleware('unauthenticated');
 Route::post('/admin', [AuthController::class, 'login'])->name('auth.login');

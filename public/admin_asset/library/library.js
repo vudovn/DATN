@@ -230,8 +230,6 @@
                 showConfirmButton: false,
                 timer: 3000,
             });
-
-            let _this = $(this);
             // console.log(_this.attr('data-id'));
             Swal.fire({
                 title: "Bạn có chắc không?",

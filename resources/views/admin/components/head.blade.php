@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="{{ asset('admin_asset/css/customize.css') }}">
 
 <script src="{{ asset('admin_asset/js/jquery-3.1.1.min.js') }}"></script>
+
 <script src="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('/admin_asset/library/cusSweetAlert.js') }}"></script>
 
@@ -51,3 +52,6 @@
         vertical-align: middle !important;
     }
 </style>
+
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+{{-- <script src="{{ asset('admin_asset/js/location.js')}}"></script> --}}

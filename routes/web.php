@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\AttributeValueController;
 
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
+use App\Http\Controllers\Ajax\LocationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,7 +18,7 @@ Route::get('/', function () {
 Route::group(['middleware' => 'authenticated'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
-    /* USER ROUTE */ 
+    /* USER ROUTE */
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('/index', [UserController::class, 'index'])->name('index');
         Route::get('/create', [UserController::class, 'create'])->name('create');
@@ -26,6 +27,9 @@ Route::group(['middleware' => 'authenticated'], function () {
         Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
         Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
+        
+        // Route::get('/api/districts/{province_code}', [UserController::class, 'getDistricts'])->name('districts');
+        // Route::get('/api/wards/{district_code}', [UserController::class, 'getWards'])->name('wards');
     });
 
     /* PRODUCT ROUTE */
@@ -61,12 +65,14 @@ Route::group(['middleware' => 'authenticated'], function () {
         Route::delete('/destroy/{id}', [AttributeValueController::class, 'destroy'])->name('destroy');
     });
 
+
+
     /* AJAX ROUTE */
     Route::put('/change/status', [AjaxDashboardController::class, 'changeStatus'])->name('ajax.dashboard.changeStatus');
     Route::put('/actions', [AjaxDashboardController::class, 'changeStatusMultiple'])->name('ajax.dashboard.changeStatusMultiple');
     Route::delete('/actions', [AjaxDashboardController::class, 'deleteMultiple'])->name('ajax.dashboard.deleteMultiple');
     Route::delete('/deleteItem', [AjaxDashboardController::class, 'deleteItem'])->name('ajax.dashboard.deleteItem');
-
+    Route::get('/ajax/getLocation', [LocationController::class, 'getLocation'])->name('ajax.getLocation');
 });
 
 

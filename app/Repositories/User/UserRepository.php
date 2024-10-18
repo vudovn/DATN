@@ -13,4 +13,5 @@ class UserRepository extends BaseRepository{
         $this->model = $model;
     }
 
+
 }

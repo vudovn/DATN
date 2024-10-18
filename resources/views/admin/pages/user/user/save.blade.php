@@ -20,8 +20,20 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-6">
-                                <x-select :name="'user_catalogue_id'" :options="$userCatalogues" :root="'Chọn vai trò'" :required="true" :label="'Vai trò'"
-                                    :value="$user->user_catalogue_id ?? 0" />
+                                <label for="roles[]">Chọn vai trò</label>
+                                <select class="form-control select2" name="roles[]" multiple="multiple" data-placeholder="Chọn vai trò">
+                                    <option value="">Chọn vai trò</option>
+                                    @foreach ($roles as $key => $role)
+                                        <option value="{{ $role->name }}"
+                                            {{ isset($user) && $user->roles->contains('name', $role->name) ? 'selected' : '' }}
+                                            {{ in_array($role->name, old('roles') ?? []) ? 'selected' : '' }}>
+                                            {{ $role->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('roles')
+                                    <small class="error text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="col-lg-6">
                                 <x-input :label="'Số điện thoại'" :name="'phone'" :value="$user->phone ?? ''" :require="true" />
@@ -39,33 +51,11 @@
                                 </div>
                             </div>
                         @endif
-                        <div class="row mb-3">
-                            <div class="col-4 form-group">
-                                <label for="province" class="control-label">Tỉnh/Thành Phố</label>
-                                <select name="province" id="province" class="form-control select2">
-                                    <option value="" disabled selected>Chọn tỉnh/thành phố</option>
-                                    <option value="HaNoi">Hà Nội</option>
-                                    <option value="HoChiMinh">Hồ Chí Minh</option>
-                                </select>
-                            </div>
-                            <div class="col-4 form-group">
-                                <label for="district" class="control-label">Quận/Huyện</label>
-                                <select name="district" id="district" class="form-control select2">
-                                    <option value="" disabled selected>Chọn quận/huyện</option>
-                                    <option value="HaNoi">Hà Nội</option>
-                                    <option value="HoChiMinh">Hồ Chí Minh</option>
-                                </select>
-                            </div>
-                            <div class="col-4 form-group">
-                                <label for="ward" class="control-label">Phường/Xã</label>
-                                <select name="ward" id="ward" class="form-control select2">
-                                    <option value="" disabled selected>Chọn phường/xã</option>
-                                    <option value="HaNoi">Hà Nội</option>
-                                    <option value="HoChiMinh">Hồ Chí Minh</option>
-                                </select>
-                            </div>
+
+                        @include('admin.pages.user.user.components.location')
+                        <div class="col-lg-12">
+                            <x-input :label="'Địa chỉ cụ thể'" :name="'address'" :value="$user->address ?? ''" :require="false" />
                         </div>
-                        
                     </div>
                 </div>
             </div>

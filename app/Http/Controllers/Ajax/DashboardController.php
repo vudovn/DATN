@@ -5,7 +5,6 @@ use App\Repositories\Attribute\AttributeCategoryRepository;
 use App\Repositories\Attribute\AttributeRepository;
 
 use Illuminate\Http\Request;
-
 class DashboardController extends Controller
 {
 
@@ -19,7 +18,6 @@ class DashboardController extends Controller
         $this->attributeCategoryRepository = $attributeCategoryRepository;
         $this->attributeRepository = $attributeRepository;
     }
-
 
     public function changeStatus(Request $request)
     {
@@ -80,13 +78,33 @@ class DashboardController extends Controller
         return errorResponse();
 
     }
+    public function quickUpdate(Request $request)
+    {
+        $data = $request->all();
+        $className = "\\App\\Http\\Requests\\" . ucfirst($data['model']) . "\\Update" . ucfirst($data['model']) . "Request";
+        if (class_exists($className)) {
+            $rules = (new $className())->rules();
+            if (isset($rules[$data['name']])) {
+                $request->validate(
+                    ['value' => $rules[$data['name']]]
+                );
+            }
+        }
+        $serviceClass = loadClass($data['model'], 'Repository');
+        $item = $serviceClass->findById($data['id']);
+        $item->{$data['name']} = $data['value'];
+        $item->save();
+
+        return successResponse(null, $item['message']);
+    }
+
+
 
     public function getAttribute()
     {
         $attributes = $this->attributeCategoryRepository->getAll();
         return successResponse($attributes);
     }
-
 
     public function getAttributeValue(Request $request)
     {
@@ -108,7 +126,6 @@ class DashboardController extends Controller
     $attributeValues = json_decode(base64_decode($request->attributeValue), true);
     $attributeId = $request->attributeCatalogueId;
     $result = [];
-
     foreach ($attributeValues as $value_ids) {
         $result = array_merge($result, $value_ids);
     }

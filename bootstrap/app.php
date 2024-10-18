@@ -16,6 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'authenticated' => CheckAuthenticated::class,
             'unauthenticated' => UnAuthenticated::class,
+            'checkPermission' => App\Http\Middleware\CheckPermission::class,
+            'preventBackHistory' => App\Http\Middleware\RevalidateBackHistory::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

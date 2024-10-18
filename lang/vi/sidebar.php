@@ -12,8 +12,8 @@ return [
                         'path' => route('user.index')
                     ],
                     [
-                        'name' => 'Quản lý quyền',
-                        'path' => route('user.create')
+                        'name' => 'Quản lý phân quyền',
+                        'path' => route('user.permission.index')
                     ]
                     
                 ]

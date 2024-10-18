@@ -29,7 +29,7 @@ return [
                     ],
                     [
                         'name' => 'Danh sách thuộc tính',
-                        'path' => route('product.attribute.index')
+                        'path' => route('attributeCategory.index')
                     ]
                     
                 ]

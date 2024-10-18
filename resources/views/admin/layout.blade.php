@@ -1,8 +1,19 @@
+<!-- 
+     ----------------------------------------------
+    |         Đừng Bao Giờ Đi Ăn Một Mình !        |
+     ----------------------------------------------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+======V=====V=V=========V===========VV=V=======V========= 
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     @include('admin.components.head')
-    <link rel="stylesheet" href="https://atugatran.github.io/FontAwesome6Pro/css/all.min.css" >
+    {{-- <link rel="stylesheet" href="https://atugatran.github.io/FontAwesome6Pro/css/all.min.css" > --}}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">

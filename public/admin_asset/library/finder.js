@@ -1,35 +1,35 @@
 (function($) {
 	"use strict";
-	var HT = {}; 
+	var TGNT = {}; 
 
-    HT.setupCkeditor = () => {
+    TGNT.setupCkeditor = () => {
         if($('.ck-editor')){
             $('.ck-editor').each(function(){
                 let editor = $(this)
                 let elementId = editor.attr('id')
                 let elementHeight = editor.attr('data-height')
-                HT.ckeditor4(elementId, elementHeight)
+                TGNT.ckeditor4(elementId, elementHeight)
             })
         }
     }
 
-    HT.uploadAlbum = () => {
+    TGNT.uploadAlbum = () => {
         $(document).on('click', '.upload-picture', function(e){
-            HT.browseServerAlbum($(this).attr('data-name'));
+            TGNT.browseServerAlbum($(this).attr('data-name'));
             e.preventDefault();
         })
     }
 
-    HT.multipleUploadImageCkeditor = () => {
+    TGNT.multipleUploadImageCkeditor = () => {
         $(document).on('click', '.multipleUploadImageCkeditor', function(e){
             let object = $(this)
             let target = object.attr('data-target')
-            HT.browseServerCkeditor(object, 'Images', target);
+            TGNT.browseServerCkeditor(object, 'Images', target);
             e.preventDefault()
         })
     }
 
-    HT.ckeditor4 = (elementId, elementHeight) => {
+    TGNT.ckeditor4 = (elementId, elementHeight) => {
         if(typeof(elementHeight) == 'undefined'){
             elementHeight = 500;
         }
@@ -55,23 +55,23 @@
         });
     }
 
-    HT.uploadImageToInput = () => {
+    TGNT.uploadImageToInput = () => {
         $('.upload-image').click(function(){
             let input = $(this)
             let type = input.attr('data-type')
-            HT.setupCkFinder2(input, type);
+            TGNT.setupCkFinder2(input, type);
         })
     }
 
-    HT.uploadImageAvatar = () => {
+    TGNT.uploadImageAvatar = () => {
         $('.image-target').click(function(){
             let input = $(this)
             let type = 'Images';
-            HT.browseServerAvatar(input, type); 
+            TGNT.browseServerAvatar(input, type); 
         })
     }
 
-    HT.setupCkFinder2 = (object, type) => {
+    TGNT.setupCkFinder2 = (object, type) => {
         if(typeof(type) == 'undefined'){
             type = 'Images';
         }
@@ -83,7 +83,7 @@
         finder.popup();
     }
 
-    HT.browseServerAvatar = (object, type) => {
+    TGNT.browseServerAvatar = (object, type) => {
         if(typeof(type) == 'undefined'){
             type = 'Images';
         }
@@ -96,7 +96,7 @@
         finder.popup();
     }
 
-    HT.browseServerCkeditor = (object, type, target) => {
+    TGNT.browseServerCkeditor = (object, type, target) => {
         if(typeof(type) == 'undefined'){
             type = 'Images';
         }
@@ -117,7 +117,7 @@
         finder.popup();
     }
 
-    HT.browseServerAlbum = (data_name) => {
+    TGNT.browseServerAlbum = (data_name) => {
         var type = 'Images';
         var finder = new CKFinder();
         
@@ -140,32 +140,31 @@
                     html += '</div>'
                 html += '</li>'
             }
-           
-            $('.click-to-upload').addClass('hidden')
             $('#sortable').append(html)
-            $('.upload-list').removeClass('hidden')
         }
         finder.popup();
     }
 
-    HT.deletePicture = () => {
+    TGNT.deletePicture = () => {
         $(document).on('click', '.delete-image', function(){
             let _this = $(this)
             _this.parents('.ui-state-default').remove()
             if($('.ui-state-default').length == 0){
-                $('.click-to-upload').removeClass('hidden')
-                $('.upload-list').addClass('hidden')
+                console.log('không còn ảnh nào');
+                
+                // $('.click-to-upload').removeClass('hidden')
+                // $('.upload-list').addClass('hidden')
             }
         })
     }
    
 	$(document).ready(function(){
-        HT.uploadImageToInput();
-        HT.setupCkeditor();
-        HT.uploadImageAvatar();
-        HT.multipleUploadImageCkeditor();
-        HT.uploadAlbum();
-        HT.deletePicture();
+        TGNT.uploadImageToInput();
+        TGNT.setupCkeditor();
+        TGNT.uploadImageAvatar();
+        TGNT.multipleUploadImageCkeditor();
+        TGNT.uploadAlbum();
+        TGNT.deletePicture();
 	});
 
     

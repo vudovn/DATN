@@ -11,6 +11,7 @@ class StoreAttributeRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        dd($this->all());
         return true;
     }
 
@@ -21,15 +22,21 @@ class StoreAttributeRequest extends FormRequest
      */
     public function rules(): array
     {
+       
         return [
-            'name' => 'required|unique:attributes'
+            'name' => 'required|unique:attribute_category',
+            // category_id[]: mảng các id danh mục
+            'category' => 'required|array|min:1',
+
         ];
     }
 
     public function messages(): array {
         return [
             'name.required' => 'Tên thuộc tính không được để trống',
-            'name.unique' => 'Tên thuộc tính đã tồn tại'
+            'name.unique' => 'Tên thuộc tính đã tồn tại',
+            'category.required' => 'Danh mục không được để trống',
+            'category.min' => 'Danh mục không hợp lệ',
         ];
     }
 }

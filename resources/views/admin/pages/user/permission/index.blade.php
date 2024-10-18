@@ -22,8 +22,8 @@
                         <th>Mô tả</th>
                         <th>Quyền hạn</th>
                         @foreach ($roles as $role)
-                            <th class="text-center position-relative">
-                                <div class="delete-custom" data-axis="{{ $role->id }}" {{-- data-toggle="tooltip" data-placement="bottom" title="Nhấn để chỉnh sửa" --}}>
+                            <th class="text-center position-relative"  data-axis="{{ $role->id }}">
+                                <div class="delete-custom" {{-- data-toggle="tooltip" data-placement="bottom" title="Nhấn để chỉnh sửa" --}}>
                                     <a href="{{ route('user.role.edit', $role->id) }}">{{ $role->name }}</i></a>
                                     <div class="delete-button">
                                         <x-delete :id="$role->id" :model="'Role'" :deleteAxis="'column'" />

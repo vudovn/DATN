@@ -7,7 +7,9 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\AttributeCategoryController;
+use App\Http\Controllers\Admin\AttributeController;
+use App\Http\Controllers\Admin\AttributeValueController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 // use App\Http\Controllers\Admin\AttributeValueController;
 
 use App\Http\Controllers\Ajax\DashboardController as AjaxDashboardController;
@@ -110,6 +112,12 @@ Route::middleware(['authenticated','preventBackHistory',/*'checkPermission'*/])-
     Route::get('/ajax/getLocation', [LocationController::class, 'getLocation'])->name('ajax.getLocation');
     Route::put('/quickUpdate', [AjaxDashboardController::class, 'quickUpdate'])->name('ajax.dashboard.quickUpdate');
 
+    /* ORDER ROUTE */
+    Route::get('order/index', [AdminOrderController::class, 'index'])->name('admin.pages.order.index');
+    Route::get('order/edit/{id}', [AdminOrderController::class, 'edit'])->name('admin.pages.order.edit');
+    Route::put('order/update/{id}', [AdminOrderController::class, 'update'])->name('admin.pages.order.update');
+    Route::delete('order/delete/{id}', [AdminOrderController::class, 'delete'])->name('admin.pages.order.delete');
+    
     // get attribute value
     Route::get('/getAttribute', [AjaxDashboardController::class, 'getAttribute'])->name('ajax.dashboard.getAttribute');
     Route::get('ajax/getAttributeValue', [AjaxDashboardController::class, 'getAttributeValue'])->name('ajax.dashboard.getAttributeValue');

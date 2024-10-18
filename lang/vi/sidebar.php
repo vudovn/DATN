@@ -33,6 +33,17 @@ return [
                     ]
                     
                 ]
+            ],
+            [
+                'name' => 'Quản lý đơn hàng',
+                'icon' => '<i class="nav-icon fas fa-box"></i>',
+                'route' => ['order'],
+                'module' => [
+                    [
+                        'name' => 'Quản lý tình trạng',
+                        'path' => route('admin.pages.order.index')
+                    ]
+                ]
             ]
             
     ]

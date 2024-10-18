@@ -10,7 +10,11 @@
     $.widget.bridge('uibutton', $.ui.button)
     const BASE_URL = '{{ url('/') }}';
 </script>
-
+<script>
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>
 <script src="/admin_asset/plugins_tgnt/ckeditor/ckeditor.js"></script>
 <script src="/admin_asset/plugins_tgnt/ckfinder/ckfinder.js"></script>
 <script src="/admin_asset/library/finder.js"></script>

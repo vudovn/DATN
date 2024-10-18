@@ -28,7 +28,7 @@ class BaseRepository {
     }
 
     public function insert(array $payload = []){
-        return $this->model->insert($payload);
+        return $this->model->insert($payload) ;
     }
 
     public function update(int $id, array $payload = []){

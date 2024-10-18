@@ -1,5 +1,4 @@
-👉 Hồi trước là mình làm cái chi cũng viết hết ở controller => rối, khó sửa, khó mở rộng(Chat GPT) :v,
-chừ mình tách ra, dùng "Repository Design Pattern" (dễ sửa , không rối,... base t build hết rồi , còn lại chỉ Ctr C , Ctr V ra rồi sửa 1 xíu thôi , để ý xíu là thấy liền :v)
+dùng "Repository Design Pattern" (dễ sửa , không rối,... base t build hết rồi , còn lại chỉ Ctr C , Ctr V ra rồi sửa 1 xíu thôi , để ý xíu là thấy liền :v)
 
     👉 Vai trò của các tầng:
             Repository: Tương tác :v với cơ sở dữ liệu, thực hiện các thao tác 
@@ -28,7 +27,6 @@ chừ mình tách ra, dùng "Repository Design Pattern" (dễ sửa , không r�
                         ví dụ:  class UserRespository extends BaseRepository {} 
                         => mình có thể gọi trực tiếp các function của BaseRepository từ các Repository mà extends nó vào
                                 $this->UserRespository->create($data);
-                
                           Xem file userService, ProductService, ... 
                 )
 ..........

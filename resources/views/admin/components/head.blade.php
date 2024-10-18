@@ -22,9 +22,9 @@
 <link rel="stylesheet" href="{{ asset('admin_asset/css/customize.css') }}">
 
 <script src="{{ asset('admin_asset/js/jquery-3.1.1.min.js') }}"></script>
-
+{{-- <script src="{{ asset('admin_asset\plugins\jquery\jquery.min.js') }}"></script> --}}
 <script src="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-<script src="{{ asset('/admin_asset/library/cusSweetAlert.js') }}"></script>
+<script src="{{ asset('admin_asset/library/cusSweetAlert.js') }}"></script>
 
 <script src="{{ asset('admin_asset/plugins/fancybox/fancybox.umd.js') }}"></script>
 

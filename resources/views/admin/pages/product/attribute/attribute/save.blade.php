@@ -19,16 +19,16 @@
                         {{-- thêm value biến thể --}}
                         <Label class="form-label">Giá trị của thuộc tính</Label>
                         <div class="attribute_value_container">
-                            @isset($attribute->attribute_values)
-                            @foreach ($attribute->attribute_values as $item)
-                            <div class="input-group animate__animated animate__fadeInDown animate__faster mb-3">
-                                <input type="text" value="{{ $item->value }}" name="attribute_value[{{ $item->id }}][]" class="form-control attribute_input">
-                                <div class="input-group-append">
-                                    <span class="input-group-text bg-danger remove_attribute_value"
-                                        style="cursor: pointer"><i class="fas fa-trash"></i></span>
-                                </div>
-                            </div>
-                        @endforeach
+                            @isset($attribute->attributes)
+                                @foreach ($attribute->attributes as $item)
+                                    <div class="input-group animate__animated animate__fadeInDown animate__faster mb-3">
+                                        <input type="text" value="{{ $item->value }}" name="attribute_value[{{ $item->id }}][]" class="form-control attribute_input">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text bg-danger remove_attribute_value"
+                                                style="cursor: pointer"><i class="fas fa-trash"></i></span>
+                                        </div>
+                                    </div>
+                                @endforeach
                             @endisset
                         </div>
                         <button class="btn btn-primary add_attribute_value mb-3" type="button">
@@ -41,8 +41,12 @@
 
             <div class="col-xl-3">
                 <x-save_back :model="$config['model']" />
-                <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.publish')" :value="$attribute->publish ?? ''" />
+                <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.publish')" :value="$attribute->publish ?? old('publish')" />
             </div>
         </div>
     </x-form>
+
+    <script>
+        let attribute_values = @json(old('attribute_value', []));
+    </script>
 @endsection

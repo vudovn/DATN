@@ -358,12 +358,12 @@
                         _this.attr("disabled", false);
                     }, 1000);
 
-                    timeout = setTimeout(() => {
+                    // timeout = setTimeout(() => {
                         Toast.fire({
                             icon: "success",
                             title: "Cập nhật quyền thành công",
                         });
-                    }, 2000);
+                    // }, 500);
                 },
                 error: function () {
                     Toast.fire({

@@ -10,17 +10,20 @@
                         Thông tin chung
                     </div>
                     <div class="card-body">
+                        <div class="alert alert-primary" role="alert">
+                            <strong>Lưu ý:</strong> <span class="text-danger">(*)</span> là trường bắt buộc nhập
+                        </div>
                         <div class="row mb-3">
                             <div class="col-lg-6">
-                                <x-input :label="'Email'" :name="'email'" :value="$user->email ?? ''" :require="true" />
+                                <x-input :label="'Email'" :name="'email'" :value="$user->email ?? ''" :required="true" />
                             </div>
                             <div class="col-lg-6">
-                                <x-input :label="'Tên đầy đủ'" :name="'name'" :value="$user->name ?? ''" :require="true" />
+                                <x-input :label="'Tên đầy đủ'" :name="'name'" :value="$user->name ?? ''" :required="true" />
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-6">
-                                <label for="roles[]">Chọn vai trò</label>
+                                <label for="roles[]">Chọn vai trò <span class="text-danger">*</span></label>
                                 <select class="form-control select2" name="roles[]" multiple="multiple" data-placeholder="Chọn vai trò">
                                     <option value="">Chọn vai trò</option>
                                     @foreach ($roles as $key => $role)
@@ -36,17 +39,17 @@
                                 @enderror
                             </div>
                             <div class="col-lg-6">
-                                <x-input :label="'Số điện thoại'" :name="'phone'" :value="$user->phone ?? ''" :require="true" />
+                                <x-input :label="'Số điện thoại'" :name="'phone'" :value="$user->phone ?? ''" :required="true" />
                             </div>
                         </div>
                         @if (isset($config['method']) && $config['method'] !== 'edit')
                             <div class="row mb-3">
                                 <div class="col-lg-6">
-                                    <x-input :label="'Mật khẩu'" :name="'password'" :value="''" :require="true"
+                                    <x-input :label="'Mật khẩu'" :name="'password'" :value="''" :required="true"
                                         :type="'password'" />
                                 </div>
                                 <div class="col-lg-6">
-                                    <x-input :label="'Mật khẩu xác nhận'" :name="'re_password'" :value="''" :require="true"
+                                    <x-input :label="'Mật khẩu xác nhận'" :name="'re_password'"  :required="true"
                                         :type="'password'" />
                                 </div>
                             </div>
@@ -54,7 +57,7 @@
 
                         @include('admin.pages.user.user.components.location')
                         <div class="col-lg-12">
-                            <x-input :label="'Địa chỉ cụ thể'" :name="'address'" :value="$user->address ?? ''" :require="false" />
+                            <x-input :label="'Địa chỉ cụ thể'" :name="'address'" :value="$user->address ?? ''" :required="false" />
                         </div>
                     </div>
                 </div>

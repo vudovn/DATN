@@ -47,9 +47,10 @@ if (!function_exists('loadClass')) {
 }
 
 if (!function_exists('generateSelect')) {
-    function generateSelect($root = 'Choose', $options = null, $keyName = 'id', $valueName = 'name') {
+    function generateSelect($root = 'Choose', $options = null, $keyName = 'id', $valueName = 'name')
+    {
         $select = [];
-        
+
         // Xử lý giá trị root
         if (!is_string($root) || empty($root)) {
             $root = 'Choose'; // Giá trị mặc định
@@ -77,9 +78,10 @@ if (!function_exists('generateSelect')) {
     }
 }
 
-if(!function_exists('changeDateFormat')){
-    function changeDateFormat($date, $format = 'Y-m-d'){
-       return Carbon::parse($date)->format($format);
+if (!function_exists('changeDateFormat')) {
+    function changeDateFormat($date, $format = 'Y-m-d')
+    {
+        return Carbon::parse($date)->format($format);
 
     }
 }
@@ -100,35 +102,42 @@ if (!function_exists('getSlug')) {
 }
 
 if (!function_exists('statusOrder')) {
-    function statusOrder($status) {
+    function statusOrder($status)
+    {
         $status = strtolower($status);
         $statusList = __('order.status');
         return $statusList[$status] ?? 'Không xác định';
     }
 }
 
-
 if (!function_exists('getActionRoute')) {
-function getActionRoute()
-{
-    $allRoutes = Route::getRoutes();  
-    $permissionAll = [];         
-    foreach ($allRoutes as $route) {
-        if (in_array('GET', $route->methods())) {
-            if (in_array('authenticated', $route->middleware())) {
-                $actionName = $route->getActionName();
-                if (strpos($actionName, '@') !== false) {
-                    list($controller, $action) = explode('@', $actionName);
-                    $controller = class_basename($controller); 
-                    $controller = str_replace('Controller', '', $controller); 
-                    $permissionAll[] = "$controller $action";
-                } else {
-                    $permissionAll[] = $actionName; 
+    function getActionRoute()
+    {
+        $allRoutes = Route::getRoutes();
+        $permissionAll = [];
+        foreach ($allRoutes as $route) {
+            if (in_array('GET', $route->methods())) {
+                if (in_array('authenticated', $route->middleware())) {
+                    $actionName = $route->getActionName();
+                    if (strpos($actionName, '@') !== false) {
+                        list($controller, $action) = explode('@', $actionName);
+                        $controller = class_basename($controller);
+                        $controller = str_replace('Controller', '', $controller);
+                        $permissionAll[] = "$controller $action";
+                    } else {
+                        $permissionAll[] = $actionName;
+                    }
                 }
             }
         }
+        return $permissionAll;
     }
-    return $permissionAll;
+
 }
 
+if (!function_exists('orderCode')) {
+    function orderCode($id)
+    {
+        return 'TGNT' . str_pad($id, 7, '0', STR_PAD_LEFT);
+    }
 }

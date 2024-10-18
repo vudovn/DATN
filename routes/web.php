@@ -103,3 +103,7 @@ Route::middleware(['authenticated', 'preventBackHistory',/*'checkPermission'*/])
 Route::get('/admin', [AuthController::class, 'index'])->name('auth.index')->middleware('unauthenticated');
 Route::post('/admin', [AuthController::class, 'login'])->name('auth.login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+Route::get('/order-code' , function () {
+    return orderCode(7);
+});

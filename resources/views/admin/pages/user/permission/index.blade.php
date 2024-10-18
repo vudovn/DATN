@@ -23,8 +23,8 @@
                         <th>Quyền hạn</th>
                         @foreach ($roles as $role)
                             <th class="text-center position-relative" data-axis="{{ $role->id }}">
-                                <div class="delete-custom" {{-- data-toggle="tooltip" data-placement="bottom" title="Nhấn để chỉnh sửa" --}}>
-                                    <a href="{{ route('user.role.edit', $role->id) }}">{{ $role->name }}</i></a>
+                                <div class="delete-custom">
+                                    <a class="text-primary" href="#">{{ $role->name }}</i></a>
                                     <div class="delete-button">
                                         <a href="{{ route('user.role.edit', $role->id) }}"
                                             class="btn btn-sm btn-primary mr-1">

@@ -1,13 +1,12 @@
 $(document).ready(function() {
-    
-    var Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000
-    });
 
     function showSuccessToast(message) {
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
         Toast.fire({
             icon: 'success',
             title: message
@@ -15,6 +14,12 @@ $(document).ready(function() {
     }
 
     function showErrorToast(message) {
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
         Toast.fire({
             icon: 'error',
             title: message
@@ -22,6 +27,12 @@ $(document).ready(function() {
     }
 
     function showWarningToast(message) {
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
         Toast.fire({
             icon: 'warning',
             title: message
@@ -29,6 +40,12 @@ $(document).ready(function() {
     }
 
     function showInfoToast(message) {
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
         Toast.fire({
             icon: 'info',
             title: message

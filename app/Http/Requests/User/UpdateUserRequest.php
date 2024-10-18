@@ -22,16 +22,27 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|unique:users,email, '.$this->id.'',
+            'email' => 'required|email|unique:users,email, ' . $this->id . '',
             'name' => 'required',
-            'phone' => 'required|unique:users,phone, '.$this->id.'',
-            'user_catalogue_id' => 'gt:0'
+            'phone' => 'required|unique:users,phone, ' . $this->id . '',
+            'roles' => 'required|array|min:1',
+            'roles.*' => 'required',
+
         ];
     }
 
-    public function messages():array {
+    public function messages(): array
+    {
         return [
-            'user_catalogue_id.gt' => 'You have not selected a user group'
+            'email.required' => 'Không được để trống email',
+            'email.email' => 'Email không đúng định dạng',
+            'email.unique' => 'Email đã tồn tại',
+            'name.required' => 'Không được để trống tên',
+            'phone.required' => 'Không được để trống số điện thoại',
+            'phone.unique' => 'Số điện thoại đã tồn tại ',
+            'roles.required' => 'Không được để trống vai trò',
+            'roles.array' => 'Vai trò phải là một mảng',
+            'roles.*.exists' => 'Vai trò không hợp lệ',
         ];
     }
 }

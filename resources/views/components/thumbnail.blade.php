@@ -7,7 +7,7 @@
     <div class="card-body">
         <div class="{{ $name }} img-cover image-target">
             <img 
-                src="{{ old($name, $value ?? '/uploads/system/no_img.jpg') }}" 
+                src="{{ old($name, $value ?? 'https://placehold.co/600x600?text=The Gioi\nNoi That') }}" 
                 width="100%" 
                 class="img-thumbnail img-fluid" 
                 alt="Hình ảnh">

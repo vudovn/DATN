@@ -1,15 +1,22 @@
 <?php
 namespace App\Http\Controllers\Ajax;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Repositories\Attribute\AttributeCategoryRepository;
+use App\Repositories\Attribute\AttributeRepository;
 
+use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
 
 
-    public function __construct()
-    {
-
+    protected $attributeCategoryRepository;
+    protected $attributeRepository;
+    public function __construct(
+        AttributeCategoryRepository $attributeCategoryRepository,
+        AttributeRepository $attributeRepository
+    ) {
+        $this->attributeCategoryRepository = $attributeCategoryRepository;
+        $this->attributeRepository = $attributeRepository;
     }
 
     public function changeStatus(Request $request)
@@ -63,6 +70,7 @@ class DashboardController extends Controller
     public function deleteItem(Request $request)
     {
         $data = $request->all();
+        // dd($data['model']);
         $serviceClass = loadClass($data['model'], 'Service');
         if ($serviceClass->delete($data['id'])) {
             return successResponse();
@@ -94,12 +102,46 @@ class DashboardController extends Controller
 
     public function getAttribute()
     {
-
+        $attributes = $this->attributeCategoryRepository->getAll();
+        return successResponse($attributes);
     }
 
     public function getAttributeValue(Request $request)
     {
+        $payload = $request->all();
+        // dd($payload);
+        $attribute = $this->attributeRepository->searchValue($payload['attribute_id'], $payload['search']);
 
+        $attributeFormat = $attribute->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'text' => $item->value
+            ];
+        })->all();
+        return successResponse($attributeFormat);
     }
+
+    public function loadAttributeValue(Request $request)
+{
+    $attributeValues = json_decode(base64_decode($request->attributeValue), true);
+    $attributeId = $request->attributeCatalogueId;
+    $result = [];
+    foreach ($attributeValues as $value_ids) {
+        $result = array_merge($result, $value_ids);
+    }
+
+    $attributeValueData = $this->attributeRepository
+        ->getByIds($result, $attributeId)
+        ->map(function ($attributeValue) {
+            return [
+                'id' => $attributeValue->id,
+                'text' => $attributeValue->value,
+            ];
+        })
+        ->all();
+
+    return successResponse($attributeValueData);
+}
+
 
 }

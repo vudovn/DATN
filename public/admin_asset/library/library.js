@@ -1,6 +1,12 @@
 (function ($) {
     "use strict";
     var TGNT = {};
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+    });
 
     TGNT.requestUrl = () => {
         $(document).on("change", ".select_action", function () {
@@ -225,6 +231,8 @@
                 timer: 3000,
             });
 
+            let _this = $(this);
+            // console.log(_this.attr('data-id'));
             Swal.fire({
                 title: "Bạn có chắc không?",
                 text: "Khi xóa sẽ không thể hoàn tác được!",
@@ -451,7 +459,47 @@
     TGNT.sortui = () => {
         $("#sortable").sortable();
         $("#sortable").disableSelection();
+        $('#sortableVariant').sortable();
+        $('#sortableVariant').disableSelection();
     };
+
+    TGNT.int = () => {
+        $(document).on('change keyup blur', '.int', function(){
+            let _this = $(this)
+            let value = _this.val()
+            if(value === ''){
+                $(this).val('0')
+            }
+            value = value.replace(/\./gi, "")
+            _this.val(TGNT.addCommas(value))
+            if(isNaN(value)){
+                _this.val('0')
+            }
+        })
+
+        $(document).on('keydown', '.int', function(e){
+            let _this = $(this)
+            let data = _this.val()
+            if(data == 0){
+                let unicode = e.keyCode || e.which;
+                if(unicode != 190){
+                    _this.val('')
+                }
+            }
+        })
+    }
+
+    TGNT.addCommas = (nStr) => { 
+        nStr = String(nStr);
+        nStr = nStr.replace(/\./gi, "");
+        let str ='';
+        for (let i = nStr.length; i > 0; i -= 3){
+            let a = ( (i-3) < 0 ) ? 0 : (i-3);
+            str= nStr.slice(a,i) + '.' + str;
+        }
+        str= str.slice(0,str.length-1);
+        return str;
+    }
 
     $(document).ready(function () {
         TGNT.setupAjaxHeader();
@@ -467,5 +515,6 @@
         TGNT.requestUrl();
         TGNT.permission_to_role();
         TGNT.quick_update();
+        TGNT.int();
     });
 })(jQuery);

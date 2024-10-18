@@ -9,7 +9,7 @@
             @endphp
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="upload-list mt-2 {{ isset($gallery) && $gallery != '' ? '' : 'hidden' }}">
+                    <div class="upload-list mt-2">
                         <ul id="sortable"
                             class="row align-items-center list-unstyled clearfix data-album sortui ui-sortable"
                             style="margin-bottom:0 !important">

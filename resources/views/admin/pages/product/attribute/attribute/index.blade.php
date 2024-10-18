@@ -8,11 +8,11 @@
         <div class="card-header pb-0">
             <x-filter :createButton="[
                 'label' => '',
-                'route' => 'product.' . $config['model'] . '.create',
+                'route' => $config['model'] . '.create',
             ]" :options="[
                 'actions' => generateSelect('Hành động', __('general.actions')),
                 'perpage' => generateSelect('Mỗi trang', __('general.perpage')),
-                'publish' => generateSelect('Trạng thái', __('general.publish')),
+                // 'publish' => generateSelect('Trạng thái', __('general.publish')),
                 'sort' => generateSelect('Sắp xếp', __('general.sort')),
             ]" />
         </div>
@@ -28,7 +28,7 @@
                         </th>
                         <th>Tên</th>
                         <th class="text-center">Giá trị </th>
-                        <th class="text-center">Trạng thái</th>
+                        {{-- <th class="text-center">Trạng thái</th> --}}
                         <th class="text-center">Hành động</th>
                     </tr>
                 </thead>
@@ -48,15 +48,15 @@
                                     {{ $attribute->name }}
                                 </td>
                                 <td class="text-center">
-                                    @foreach ($attribute->attribute_values as $item)
+                                    @foreach ($attribute->attributes as $item)
                                         <span class="badge badge-primary">{{ $item->value }}</span>
                                     @endforeach
                                 </td>
-                                <td class="text-center">
+                                {{-- <td class="text-center">
                                     <x-switchvip :value="$attribute" :model="ucfirst($config['model'])" />
-                                </td>
+                                </td> --}}
                                 <td class="text-center table-actions">
-                                    <a href="{{ route('product.attribute.edit', $attribute->id) }}"
+                                    <a href="{{ route('attributeCategory.edit', $attribute->id) }}"
                                         class="btn btn-sm btn-icon btn-primary">
                                         <svg class="icon  svg-icon-ti-ti-edit" data-bs-toggle="tooltip" data-bs-title="Edit"
                                             xmlns="http://www.w3.org/2000/svg" width="19" height="19"

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
 
@@ -111,6 +112,15 @@ Route::get('/admin', [AuthController::class, 'index'])->name('auth.index')->midd
 Route::post('/admin', [AuthController::class, 'login'])->name('auth.login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
+    /* CATEGORY ROUTE */
+    Route::prefix('category')->name('category.')->group(function () {
+        Route::get('/index', [CategoryController::class, 'index'])->name('index');
+        Route::get('/create', [CategoryController::class, 'create'])->name('create');
+        Route::post('/store', [CategoryController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
+        Route::delete('/destroy/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+    });
 Route::get('/order-code', function () {
-    return orderCode(7);
-});
+    return orderCode(7);});

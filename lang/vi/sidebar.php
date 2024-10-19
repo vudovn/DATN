@@ -40,6 +40,17 @@ return [
                     
                 ]
             ],
+               [
+                 'name' => 'Quản lý danh mục',
+                'icon' => '<i class="bi bi-list"></i>',
+                'route' => ['category'],
+                'module' => [
+                    [
+                        'name' => 'Danh sách danh mục',
+                        'path' => route('category.index')
+                    ]       
+                ]
+            ],
             [
                 'name' => 'Quản lý đơn hàng',
                 'icon' => '<i class="nav-icon fas fa-box"></i>',

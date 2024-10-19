@@ -31,6 +31,8 @@
                         <th>Hình ảnh</th>
                         <th>Tên sản phảm</th>
                         <th>Giá tiền</th>
+                        <th>Số lượng</th>
+                        <th>SKU</th>
                         <th>Ngày tạo</th>
                         <th class="text-center">Danh mục</th>
                         <th class="text-center">Trạng thái</th>
@@ -59,6 +61,8 @@
                                     <span class="row-name">{{ $product->name }}</span>
                                 </td>
                                 <td>{{ number_format($product->price) }}</td>
+                                <td>{{ number_format($product->quantity)   }}</td>
+                                <td>{{ $product->sku }}</td>
                                 <td>{{ changeDateFormat($product->created_at) }}</td>
                                 <td class="text-center">-</td>
                                 <td class="text-center">

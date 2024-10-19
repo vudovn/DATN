@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('district_id',20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
             $table->string('ward_id',20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
             $table->string('address')->nullable();
-            $table->unsignedBigInteger('user_catalogue_id');
             $table->rememberToken();
             $table->timestamps();
             

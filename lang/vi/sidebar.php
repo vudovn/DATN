@@ -11,9 +11,14 @@ return [
                         'name' => 'Danh sách thành viên',
                         'path' => route('user.index')
                     ],
+                    // [
+                    //     'name' => 'Quản trị viên',
+                    //     'path' => route('user.admin.index')
+                    // ],
                     [
                         'name' => 'Quản lý phân quyền',
                         'path' => route('permission.index')
+
                     ]
                     
                 ]
@@ -24,11 +29,11 @@ return [
                 'route' => ['product'],
                 'module' => [
                     [
-                        'name' => 'Danh sách sản phẩm',
+                        'name' => 'Sản phẩm',
                         'path' => route('product.index')
                     ],
                     [
-                        'name' => 'Danh sách thuộc tính',
+                        'name' => 'Thuộc tính',
                         'path' => route('attributeCategory.index')
                     ]
                     

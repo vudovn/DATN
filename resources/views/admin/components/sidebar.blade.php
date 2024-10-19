@@ -13,11 +13,11 @@
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="https://adminlte.io/themes/v3/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
+                <img src="{{ Auth::user()->avatar }}" class="img-circle elevation-2"
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Adu Hacker!</a>
+                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -58,40 +58,16 @@
                     </li>
                 @endforeach
 
-                {{-- <li class="nav-item menu-open"> 
-                    <a href="#" class="nav-link active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            User
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('user.index') }}" class="nav-link active">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Danh sách </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="index2.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v2</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li> --}}
 
-
-                {{-- <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Widgets
+                            EXAMPLES   
                             <span class="right badge badge-danger">New</span>
                         </p>
                     </a>
-                </li> --}}
+                </li>
                 <li class="nav-header">EXAMPLES</li>
 
             </ul>

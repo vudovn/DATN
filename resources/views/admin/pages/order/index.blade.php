@@ -22,6 +22,7 @@
                             </div>
                         </th>
                         <th>ID</th>
+                        <th>Mã đơn hàng</th>
                         <th>Tổng Tiền</th>
                         <th>Phương Thức Thanh Toán</th>
                         <th>Trạng Thái</th>
@@ -41,6 +42,7 @@
                                     </div>
                                 </td>
                                 <td>{{ $order->id }}</td>
+                                <td>{{ $order->code }}</td>
                                 <td>{{ number_format($order->total_amount, 0, ',', '.') }} VND</td>
                                 <td>{{ $order->payment_method }}</td>
                                 <td>{{ statusOrder($order->status) }}</td>

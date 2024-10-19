@@ -22,7 +22,6 @@ class User extends Authenticatable
         'name',
         'email',
         'phone',
-        'user_catalogue_id',
         'address',
         'password',
         'avatar',

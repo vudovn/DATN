@@ -28,7 +28,7 @@ class BaseRepository {
     }
 
     public function insert(array $payload = []){
-        return $this->model->insert($payload);
+        return $this->model->insert($payload) ;
     }
 
     public function update(int $id, array $payload = []){
@@ -42,8 +42,6 @@ class BaseRepository {
     public function findById(int $id, array $relation = [], array $select = ['*']){
         return $this->model->select($select)->with($relation)->find($id);
     }
-
-
 
     public function findByField(string $field, $value, array $select = ['*']){
         return $this->model->select($select)->where($field, $value);
@@ -60,5 +58,13 @@ class BaseRepository {
     public function deleteByWhereIn(string $whereInField, array $whereIn = []){
         return $this->model->whereIn($whereInField, $whereIn)->delete();
     }
+
+    // public function findByIdLocation(
+    //     int $modelId,
+    //     array $column = ['*'],
+    //     array $relation = []
+    // ){
+    //     return $this->model->select($column)->with($relation)->findOrFail($modelId);
+    // }  cái ni t tạo hôm qua , chừ không dùng nữa !
 
 }

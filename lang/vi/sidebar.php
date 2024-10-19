@@ -11,11 +11,17 @@ return [
                         'name' => 'Danh sách thành viên',
                         'path' => route('user.index')
                     ],
+                ]
+            ],
+            [
+                'name' => 'Quản lý phân quyền',
+                'icon' => '<i class="nav-icon fa-solid fa-shield-check"></i>',
+                'route' => ['permission'],
+                'module' => [
                     [
-                        'name' => 'Quản lý quyền',
-                        'path' => route('user.create')
+                        'name' => 'Danh sách quyền',
+                        'path' => route('permission.index')
                     ]
-                    
                 ]
             ],
             [
@@ -24,25 +30,36 @@ return [
                 'route' => ['product'],
                 'module' => [
                     [
-                        'name' => 'Danh sách sản phẩm',
+                        'name' => 'Sản phẩm',
                         'path' => route('product.index')
                     ],
                     [
-                        'name' => 'Danh sách thuộc tính',
-                        'path' => route('product.attribute.index')
+                        'name' => 'Thuộc tính',
+                        'path' => route('attributeCategory.index')
                     ]
                     
                 ]
             ],
-            [
-                'name' => 'Quản lý danh mục',
+               [
+                 'name' => 'Quản lý danh mục',
                 'icon' => '<i class="bi bi-list"></i>',
                 'route' => ['category'],
                 'module' => [
                     [
                         'name' => 'Danh sách danh mục',
                         'path' => route('category.index')
-                    ]                    
+                    ]       
+                ]
+            ],
+            [
+                'name' => 'Quản lý đơn hàng',
+                'icon' => '<i class="nav-icon fas fa-box"></i>',
+                'route' => ['order'],
+                'module' => [
+                    [
+                        'name' => 'Quản lý tình trạng',
+                        'path' => route('admin.pages.order.index')
+                    ]
                 ]
             ]
             

@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone');
             $table->string('note')->nullable();
-            $table->string('province_id', 20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci');
-            $table->string('district_id', 20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci');
-            $table->string('ward_id', 20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci');
+            $table->string('province_id', 20)->charset('utf8mb4')->collation('utf8mb4_general_ci');
+            $table->string('district_id', 20)->charset('utf8mb4')->collation('utf8mb4_general_ci');
+            $table->string('ward_id', 20)->charset('utf8mb4')->collation('utf8mb4_general_ci');
             $table->timestamps();
 
             $table->foreign('province_id')->references('code')->on('provinces')->onDelete('cascade');

@@ -1,6 +1,12 @@
 (function ($) {
     "use strict";
     var TGNT = {};
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+    });
 
     TGNT.requestUrl = () => {
         $(document).on("change", ".select_action", function () {
@@ -33,7 +39,7 @@
             };
 
             $.ajax({
-                url: "/change/status",
+                url: "/"+_this.attr("data-model") + "/change/status",
                 type: "PUT",
                 data: attributes,
                 dataType: "JSON",
@@ -138,7 +144,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: "/actions",
+                            url: "/"+$("#model").val()+"/actions",
                             type: method,
                             data: {
                                 option: _this.val(),
@@ -212,14 +218,19 @@
 
     TGNT.delete_item = () => {
         $(document).on("click", "#delete_tgnt", function () {
-            var Toast = Swal.mixin({
+            const _this = $(this);
+            const id = _this.data("id");
+            const model = _this.data("model");
+            const deleteAxis = _this.data("axis");
+            const url = "/" + model + "/deleteItem";
+            console.log(url);
+            
+            const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
                 showConfirmButton: false,
                 timer: 3000,
             });
-
-            let _this = $(this);
             // console.log(_this.attr('data-id'));
             Swal.fire({
                 title: "Bạn có chắc không?",
@@ -232,31 +243,202 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/deleteItem",
+                        url: url,
                         type: "DELETE",
                         data: {
                             _token: $('meta[name="csrf-token"]').attr(
                                 "content"
                             ),
-                            model: _this.attr("data-model"),
-                            id: _this.attr("data-id"),
+                            model,
+                            id,
                         },
                         dataType: "JSON",
-                        success: function (response) {
-                            _this.closest("tr").remove();
+                        success: function () {
+                            deleteAxis === "column"
+                                ? $(
+                                      `th[data-axis="${id}"], td[data-axis="${id}"]`
+                                  ).remove()
+                                : _this.closest("tr").remove();
                             Toast.fire({
                                 icon: "success",
                                 title: "Xóa thành công",
                             });
                         },
-                        error: function (error) {
+                        error: function () {
                             Toast.fire({
-                                icon: "success",
-                                title: "Xóa không thành thành công",
+                                icon: "error",
+                                title: "Xóa không thành công",
                             });
                         },
                     });
                 }
+            });
+        });
+    };
+
+    //     $(document).on("click", "#delete_tgnt", function () {
+    //         var Toast = Swal.mixin({
+    //             toast: true,
+    //             position: "top-end",
+    //             showConfirmButton: false,
+    //             timer: 3000,
+    //         });
+
+    //         let _this = $(this);
+
+    //         // console.log(_this.attr('data-id'));
+    //         Swal.fire({
+    //             title: "Bạn có chắc không?",
+    //             text: "Khi xóa sẽ không thể hoàn tác được!",
+    //             icon: "warning",
+    //             showCancelButton: true,
+    //             confirmButtonText: "Xóa!",
+    //             cancelButtonText: "Hủy",
+    //             reverseButtons: true,
+    //         }).then((result) => {
+    //             if (result.isConfirmed) {
+    //                 $.ajax({
+    //                     url: "/deleteItem",
+    //                     type: "DELETE",
+    //                     data: {
+    //                         _token: $('meta[name="csrf-token"]').attr(
+    //                             "content"
+    //                         ),
+    //                         model: _this.attr("data-model"),
+    //                         id: _this.attr("data-id"),
+    //                     },
+    //                     dataType: "JSON",
+    //                     success: function (response) {
+    //                         _this.closest("tr").remove();
+    //                         Toast.fire({
+    //                             icon: "success",
+    //                             title: "Xóa thành công",
+    //                         });
+    //                     },
+    //                     error: function (error) {
+    //                         Toast.fire({
+    //                             icon: "success",
+    //                             title: "Xóa không thành thành công",
+    //                         });
+    //                     },
+    //                 });
+    //             }
+    //         });
+    //     });
+    // };
+    TGNT.permission_to_role = () => {
+        let timeout = "";
+        $(document).on("click", ".permission_to_role", function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+            });
+            const _this = $(this);
+            _this.attr("disabled", true);
+            const permissionName = _this.attr("data-permissionName");
+            const roleId = _this.attr("data-roleId");
+            const isChecked = _this.is(":checked") ? "checked" : "nochecked";
+            $.ajax({
+                url: "/permission/edit",
+                type: "PUT",
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr("content"),
+                    permissionName: permissionName,
+                    roleId: roleId,
+                    is_checked: isChecked,
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    _this.attr("is_checked", isChecked);
+                    clearTimeout(timeout);
+
+                    setTimeout(() => {
+                        _this.attr("disabled", false);
+                    }, 1000);
+                    // timeout = setTimeout(() => {
+                        Toast.fire({
+                            icon: "success",
+                            title: "Cập nhật quyền thành công",
+                        });
+                    // }, 500);
+                },
+                error: (xhr) => {
+                    Toast.fire({
+                        icon: "error",
+                        title: xhr.responseJSON.message,
+                    });
+                },
+            });
+        });
+    };
+    TGNT.quick_update = () => {
+        $(document).ready(function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+            });
+
+            $(".quick_update").on("dblclick", function () {
+                let inputUpdate = $("#" + $(this).data("input-id"));
+                inputUpdate.removeClass("hidden").focus();
+                $(this).addClass("hidden");
+            });
+
+            $(document).on("click", function (event) {
+                $(".quick_update").each(function () {
+                    const _this = $(this);
+                    let inputUpdate = $("#" + _this.data("input-id"));
+
+                    if (
+                        !_this.is(event.target) &&
+                        !inputUpdate.is(event.target) &&
+                        !inputUpdate.hasClass("hidden")
+                    ) {
+                        inputUpdate.addClass("hidden");
+                        _this.removeClass("hidden");
+
+                        const value = inputUpdate.val().trim();
+                        const model = _this.data("model");
+                        const name = _this.attr("name");
+                        const id = _this.data("id");
+                        const url = "/" + model + "/quickUpdate"
+                        console.log(url);
+                        
+                        $.ajax({
+                            url: url,
+                            type: "PUT",
+                            headers: {
+                                "X-CSRF-TOKEN": $(
+                                    'meta[name="csrf-token"]'
+                                ).attr("content"),
+                            },
+                            data: {
+                                model,
+                                name,
+                                id,
+                                value,
+                            },
+                            dataType: "JSON",
+                            success: () => {
+                                _this.text(value || "...");
+                                Toast.fire({
+                                    icon: "success",
+                                    title: "Cập nhật thành công!",
+                                });
+                            },
+                            error: (xhr) => {
+                                Toast.fire({
+                                    icon: "error",
+                                    title: xhr.responseJSON.message,
+                                });
+                            },
+                        });
+                    }
+                });
             });
         });
     };
@@ -278,6 +460,46 @@
     TGNT.sortui = () => {
         $("#sortable").sortable();
         $("#sortable").disableSelection();
+        $("#sortableVariant").sortable();
+        $("#sortableVariant").disableSelection();
+    };
+
+    TGNT.int = () => {
+        $(document).on("change keyup blur", ".int", function () {
+            let _this = $(this);
+            let value = _this.val();
+            if (value === "") {
+                $(this).val("0");
+            }
+            value = value.replace(/\./gi, "");
+            _this.val(TGNT.addCommas(value));
+            if (isNaN(value)) {
+                _this.val("0");
+            }
+        });
+
+        $(document).on("keydown", ".int", function (e) {
+            let _this = $(this);
+            let data = _this.val();
+            if (data == 0) {
+                let unicode = e.keyCode || e.which;
+                if (unicode != 190) {
+                    _this.val("");
+                }
+            }
+        });
+    };
+
+    TGNT.addCommas = (nStr) => {
+        nStr = String(nStr);
+        nStr = nStr.replace(/\./gi, "");
+        let str = "";
+        for (let i = nStr.length; i > 0; i -= 3) {
+            let a = i - 3 < 0 ? 0 : i - 3;
+            str = nStr.slice(a, i) + "." + str;
+        }
+        str = str.slice(0, str.length - 1);
+        return str;
     };
 
     $(document).ready(function () {
@@ -292,5 +514,8 @@
         TGNT.tagify();
         TGNT.sortui();
         TGNT.requestUrl();
+        TGNT.permission_to_role();
+        TGNT.quick_update();
+        TGNT.int();
     });
 })(jQuery);

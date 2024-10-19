@@ -9,7 +9,7 @@
             <x-filter :createButton="[
                 'label' => 'Cập nhật quyền',
                 'method' => 'post',
-                'route' => 'user.' . $config['model'] . '.store',
+                'route' => $config['model'] . '.store',
             ]" :options="[
                 'perpage' => generateSelect('Mỗi trang', __('general.perpage')),
                 'sort' => generateSelect('Sắp xếp', __('general.sort')),
@@ -24,7 +24,7 @@
                         @foreach ($roles as $role)
                             <th class="text-center position-relative"  data-axis="{{ $role->id }}">
                                 <div class="delete-custom" {{-- data-toggle="tooltip" data-placement="bottom" title="Nhấn để chỉnh sửa" --}}>
-                                    <a href="{{ route('user.role.edit', $role->id) }}">{{ $role->name }}</i></a>
+                                    <a href="{{ route('role.edit', $role->id) }}">{{ $role->name }}</i></a>
                                     <div class="delete-button">
                                         <x-delete :id="$role->id" :model="'Role'" :deleteAxis="'column'" />
                                     </div>
@@ -34,7 +34,7 @@
                         {{-- <th class="text-center">Hành động</th> --}}
                         @if ($roles->count() < 5)
                             <th>
-                                <a href="{{ route('user.role.create') }}"><i class="fa fa-plus"></i></a>
+                                <a href="{{ route('role.create') }}"><i class="fa fa-plus"></i></a>
                             </th>
                         @endif
                     </tr>
@@ -47,7 +47,7 @@
                                     <x-quickUpdate :id="$permission->id" :value="$permission->description" :model="ucfirst($config['model'])"
                                         :name="'description'" />
                                 </td>
-                                <td>
+                                <td>    
                                     <span class="row-name">{{ $permission->name }}</span>
                                 </td>
                                 @foreach ($roles as $role)

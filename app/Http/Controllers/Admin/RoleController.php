@@ -46,7 +46,7 @@ class RoleController extends Controller
         $config['breadcrumb'] = $this->breadcrumb('create');
         $permissions = Permission::all();
         $config['method'] = 'create';
-        $config['model'] = 'user.role';
+        $config['model'] = 'role';
         return view('admin.pages.user.permission.role.save', compact(
             'config',
             'permissions',
@@ -57,7 +57,7 @@ class RoleController extends Controller
     {
         $role = $this->roleService->create($request);
         $this->roleService->givePermissionTo($request);
-        return to_route('user.permission.index')->with('success', 'Tạo vai trò mới thành công');
+        return to_route('permission.index')->with('success', 'Tạo vai trò mới thành công');
     }
 
     public function edit($id)
@@ -67,7 +67,6 @@ class RoleController extends Controller
         $permissions = Permission::all();
         $config['breadcrumb'] = $this->breadcrumb('update');
         $config['method'] = 'edit';
-        $config['model'] = 'user.role';
         return view('admin.pages.user.permission.role.save', compact(
             'config',
             'role',

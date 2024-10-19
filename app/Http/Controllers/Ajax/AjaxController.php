@@ -5,7 +5,7 @@ use App\Repositories\Attribute\AttributeCategoryRepository;
 use App\Repositories\Attribute\AttributeRepository;
 
 use Illuminate\Http\Request;
-class DashboardController extends Controller
+class AjaxController extends Controller
 {
 
 
@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $this->attributeRepository = $attributeRepository;
     }
 
-    public function changeStatus(Request $request)
+    public function updateStatus(Request $request)
     {
         $data = $request->input();
         $serviceClass = loadClass($data['model'], 'Service');
@@ -78,7 +78,7 @@ class DashboardController extends Controller
         return errorResponse();
 
     }
-    public function quickUpdate(Request $request)
+    public function updateQuick(Request $request)
     {
         $data = $request->all();
         $className = "\\App\\Http\\Requests\\" . ucfirst($data['model']) . "\\Update" . ucfirst($data['model']) . "Request";

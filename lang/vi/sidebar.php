@@ -13,7 +13,7 @@ return [
                     ],
                     [
                         'name' => 'Quản lý phân quyền',
-                        'path' => route('user.permission.index')
+                        'path' => route('permission.index')
                     ]
                     
                 ]

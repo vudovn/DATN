@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="col-xl-3">
-                <x-save_back :model="'user.permission'" />
+                <x-save_back :model="'permission'" />
             </div>
         </div>
     </x-form>

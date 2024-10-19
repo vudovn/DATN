@@ -222,7 +222,8 @@
             const id = _this.data("id");
             const model = _this.data("model");
             const deleteAxis = _this.data("axis");
-            console.log(deleteAxis);
+            const url = "/" + model + "/delete";
+            console.log(url);
             
             const Toast = Swal.mixin({
                 toast: true,
@@ -242,7 +243,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/deleteItem",
+                        url: url,
                         type: "DELETE",
                         data: {
                             _token: $('meta[name="csrf-token"]').attr(
@@ -275,7 +276,6 @@
         });
     };
 
-    // TGNT.delete_item = () => {
     //     $(document).on("click", "#delete_tgnt", function () {
     //         var Toast = Swal.mixin({
     //             toast: true,
@@ -403,9 +403,14 @@
                         _this.removeClass("hidden");
 
                         const value = inputUpdate.val().trim();
-
+                        const model = _this.data("model");
+                        const name = _this.attr("name");
+                        const id = _this.data("id");
+                        const url = "/" + model + "/update"
+                        console.log(url);
+                        
                         $.ajax({
-                            url: "/quickUpdate",
+                            url: url,
                             type: "PUT",
                             headers: {
                                 "X-CSRF-TOKEN": $(
@@ -413,10 +418,9 @@
                                 ).attr("content"),
                             },
                             data: {
-                                model: _this.data("model"),
-                                name: _this.attr("name"),
-                                is_required: _this.attr("is_required"),
-                                id: _this.data("id"),
+                                model,
+                                name,
+                                id,
                                 value,
                             },
                             dataType: "JSON",
@@ -457,47 +461,47 @@
     TGNT.sortui = () => {
         $("#sortable").sortable();
         $("#sortable").disableSelection();
-        $('#sortableVariant').sortable();
-        $('#sortableVariant').disableSelection();
+        $("#sortableVariant").sortable();
+        $("#sortableVariant").disableSelection();
     };
 
     TGNT.int = () => {
-        $(document).on('change keyup blur', '.int', function(){
-            let _this = $(this)
-            let value = _this.val()
-            if(value === ''){
-                $(this).val('0')
+        $(document).on("change keyup blur", ".int", function () {
+            let _this = $(this);
+            let value = _this.val();
+            if (value === "") {
+                $(this).val("0");
             }
-            value = value.replace(/\./gi, "")
-            _this.val(TGNT.addCommas(value))
-            if(isNaN(value)){
-                _this.val('0')
+            value = value.replace(/\./gi, "");
+            _this.val(TGNT.addCommas(value));
+            if (isNaN(value)) {
+                _this.val("0");
             }
-        })
+        });
 
-        $(document).on('keydown', '.int', function(e){
-            let _this = $(this)
-            let data = _this.val()
-            if(data == 0){
+        $(document).on("keydown", ".int", function (e) {
+            let _this = $(this);
+            let data = _this.val();
+            if (data == 0) {
                 let unicode = e.keyCode || e.which;
-                if(unicode != 190){
-                    _this.val('')
+                if (unicode != 190) {
+                    _this.val("");
                 }
             }
-        })
-    }
+        });
+    };
 
-    TGNT.addCommas = (nStr) => { 
+    TGNT.addCommas = (nStr) => {
         nStr = String(nStr);
         nStr = nStr.replace(/\./gi, "");
-        let str ='';
-        for (let i = nStr.length; i > 0; i -= 3){
-            let a = ( (i-3) < 0 ) ? 0 : (i-3);
-            str= nStr.slice(a,i) + '.' + str;
+        let str = "";
+        for (let i = nStr.length; i > 0; i -= 3) {
+            let a = i - 3 < 0 ? 0 : i - 3;
+            str = nStr.slice(a, i) + "." + str;
         }
-        str= str.slice(0,str.length-1);
+        str = str.slice(0, str.length - 1);
         return str;
-    }
+    };
 
     $(document).ready(function () {
         TGNT.setupAjaxHeader();

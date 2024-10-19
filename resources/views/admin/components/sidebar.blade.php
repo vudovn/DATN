@@ -41,6 +41,7 @@
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        @can('Dashboard index')
                         @if (count($val['module']))
                             <ul class="nav nav-treeview">
                                 @foreach ($val['module'] as $module)
@@ -53,6 +54,7 @@
                                 @endforeach
                             </ul>
                         @endif
+                        @endcan
                     </li>
                 @endforeach
 

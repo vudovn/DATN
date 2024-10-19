@@ -9,8 +9,16 @@ use App\Models\OrderDetails;
 use App\Repositories\Order\OrderRepository;
 use App\Services\Order\OrderService;
 
-class OrderController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
+
+class OrderController extends Controller  implements HasMiddleware
 {
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('Order'); 
+    }
     protected $order;
 
     protected $orderService;

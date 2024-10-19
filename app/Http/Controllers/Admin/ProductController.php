@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 use App\Repositories\Product\ProductRepository;
 use App\Services\Product\ProductService;
 use App\Repositories\Attribute\AttributeCategoryRepository;
-
-class ProductController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
+class ProductController extends Controller implements HasMiddleware
 {
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('Product'); 
+    }
     protected $productRepository;
     protected $productService;
     protected $attributeCategoryRepository;

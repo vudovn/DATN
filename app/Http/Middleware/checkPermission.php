@@ -24,6 +24,9 @@ class checkPermission
         $method = preg_split('/(?=[A-Z])/', $currentAction[1]);
         $action = $method[0] === 'store' ? 'create' : ($method[0] === 'update' ? 'edit' : $method[0]);
         $permission = $model != null ? $permission = $model . ' ' . $action : $permission = $currentAction[0] . ' ' . $action;
+        if (Auth::user()->hasRole('Super Admin')) {
+            return $next($request);
+        }
         if (!Auth::user()->hasPermissionTo($permission)) {
             abort(403, 'Đủ trình không ʕ•ᴥ•ʔ | Không có quyền: ' . $permission);
         }

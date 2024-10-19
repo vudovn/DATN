@@ -10,9 +10,15 @@ use App\Http\Requests\Permission\StorePermissionRequest;
 use App\Http\Requests\Permission\UpdatePermissionRequest;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-
-class PermissionController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
+class PermissionController extends Controller implements HasMiddleware
 {
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('Permission'); 
+    }
     protected $permissionService;
     protected $permissionRepository;
     function __construct(
@@ -33,7 +39,7 @@ class PermissionController extends Controller
         $config['breadcrumb'] = $this->breadcrumb('index');
         $permissions = $this->permissionService->paginate($request);
         $roles = Role::all();
-        return view('admin.pages.user.permission.index', compact(
+        return view('admin.pages.permission.index', compact(
             'config',
             'permissions',
             'roles'
@@ -45,8 +51,7 @@ class PermissionController extends Controller
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';
-        $config['model'] = 'user.permission';
-        return view('admin.pages.user.permission.save', compact(
+        return view('admin.pages.permission.save', compact(
             'config'
         ));
     }
@@ -72,20 +77,19 @@ class PermissionController extends Controller
         return redirect()->back();
     }
 
-    public function edit($id)
-    {
-        $config = $this->config();
-        $config['breadcrumb'] = $this->breadcrumb('update');
-        $config['method'] = 'edit';
-        $config['model'] = 'user.permission';
-        $permission = $this->permissionRepository->findById($id);
-        return view('admin.pages.user.permission.save', compact(
-            'config',
-            'permission'
-        ));
-    }
+    // public function edit($id)
+    // {
+    //     $config = $this->config();
+    //     $config['breadcrumb'] = $this->breadcrumb('update');
+    //     $config['method'] = 'edit';
+    //     $permission = $this->permissionRepository->findById($id);
+    //     return view('admin.pages.permission.save', compact(
+    //         'config',
+    //         'permission'
+    //     ));
+    // }
 
-    public function update(UpdatePermissionRequest $request)
+    public function edit(UpdatePermissionRequest $request)
     {
         $role = Role::find($request->roleId);
         $permission = $request->permissionName;

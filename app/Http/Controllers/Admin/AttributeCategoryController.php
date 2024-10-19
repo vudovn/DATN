@@ -10,8 +10,15 @@ use App\Services\Attribute\AttributeCategoryService;
 use App\Repositories\Attribute\AttributeCategoryRepository;
 use App\Http\Requests\Attribute\UpdateAttributeRequest;
 
-class AttributeCategoryController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
+class AttributeCategoryController extends Controller implements HasMiddleware
 {
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('Product'); 
+    }
     protected $attributeCategoryService;
     protected $attributeCategoryRepository;
     function __construct(

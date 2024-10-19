@@ -39,7 +39,7 @@
             };
 
             $.ajax({
-                url: "/change/status",
+                url: "/"+_this.attr("data-model") + "/change/status",
                 type: "PUT",
                 data: attributes,
                 dataType: "JSON",
@@ -144,7 +144,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: "/actions",
+                            url: "/"+$("#model").val()+"/actions",
                             type: method,
                             data: {
                                 option: _this.val(),
@@ -222,7 +222,7 @@
             const id = _this.data("id");
             const model = _this.data("model");
             const deleteAxis = _this.data("axis");
-            const url = "/" + model + "/delete";
+            const url = "/" + model + "/deleteItem";
             console.log(url);
             
             const Toast = Swal.mixin({
@@ -341,7 +341,7 @@
             const roleId = _this.attr("data-roleId");
             const isChecked = _this.is(":checked") ? "checked" : "nochecked";
             $.ajax({
-                url: "/user/permission/update",
+                url: "/permission/edit",
                 type: "PUT",
                 data: {
                     _token: $('meta[name="csrf-token"]').attr("content"),
@@ -357,7 +357,6 @@
                     setTimeout(() => {
                         _this.attr("disabled", false);
                     }, 1000);
-
                     // timeout = setTimeout(() => {
                         Toast.fire({
                             icon: "success",
@@ -365,10 +364,10 @@
                         });
                     // }, 500);
                 },
-                error: function () {
+                error: (xhr) => {
                     Toast.fire({
                         icon: "error",
-                        title: "Cập nhật quyền không thành công",
+                        title: xhr.responseJSON.message,
                     });
                 },
             });
@@ -406,7 +405,7 @@
                         const model = _this.data("model");
                         const name = _this.attr("name");
                         const id = _this.data("id");
-                        const url = "/" + model + "/update"
+                        const url = "/" + model + "/quickUpdate"
                         console.log(url);
                         
                         $.ajax({

@@ -35,7 +35,7 @@ class AjaxController extends Controller
         ]);
     }
 
-    public function changeStatusMultiple(Request $request)
+    public function updateMultiple(Request $request)
     {
         $data = $request->input();
         $serviceClass = loadClass($data['model'], 'Service');

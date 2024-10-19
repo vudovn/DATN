@@ -15,7 +15,6 @@
         <label for="district" class="control-label">Quận/Huyện</label>
         <select name="district_id" id="district" class="form-control select2 districts location" data-target="wards">
             {{-- <option value="" disabled selected>Chọn quận/huyện</option> --}}
-
         </select>
     </div>
     <div class="col-4 form-group">

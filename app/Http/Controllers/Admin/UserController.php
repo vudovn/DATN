@@ -8,13 +8,17 @@ use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Services\User\UserService;
 use App\Repositories\User\UserRepository;
-use App\Repositories\Location\ProvinceRepository; // Thêm ProvinceRepository
+use App\Repositories\Location\ProvinceRepository;
 use Spatie\Permission\Models\Role;
-
-
-class UserController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
+class UserController extends Controller implements HasMiddleware
 {
-
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('Order'); 
+    }
     protected $userService;
     protected $userRepository;
     protected $provinceRepository; 

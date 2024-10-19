@@ -27,7 +27,8 @@
                                 <div class="delete-custom">
                                     <a class="text-primary" href="#">{{ $role->name }}</i></a>
                                     <div class="delete-button">
-                                        <a href="{{ route('user.role.edit', $role->id) }}"
+                                        @can('Permission edit')
+                                        <a href="{{ route('role.edit', $role->id) }}"
                                             class="btn btn-sm btn-primary mr-1">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
                                                 xmlns="http://www.w3.org/2000/svg" class="icon-xl-heavy">
@@ -36,6 +37,7 @@
                                                     fill="currentColor"></path>
                                             </svg>
                                         </a>
+                                        @endcan
                                         <x-delete :id="$role->id" :model="'Role'" :deleteAxis="'column'" />
                                     </div>
                                 </div>

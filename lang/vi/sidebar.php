@@ -11,16 +11,17 @@ return [
                         'name' => 'Danh sách thành viên',
                         'path' => route('user.index')
                     ],
-                    // [
-                    //     'name' => 'Quản trị viên',
-                    //     'path' => route('user.admin.index')
-                    // ],
+                ]
+            ],
+            [
+                'name' => 'Quản lý phân quyền',
+                'icon' => '<i class="nav-icon fa-solid fa-shield-check"></i>',
+                'route' => ['permission'],
+                'module' => [
                     [
-                        'name' => 'Quản lý phân quyền',
+                        'name' => 'Danh sách quyền',
                         'path' => route('permission.index')
-
                     ]
-                    
                 ]
             ],
             [

@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->boolean('publish')->default(2);
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('province_id',20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
-            $table->string('district_id',20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
-            $table->string('ward_id',20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
+            $table->string('province_id',20)->charset('utf8mb4')->collation('utf8mb4_general_ci')->nullable();
+            $table->string('district_id',20)->charset('utf8mb4')->collation('utf8mb4_general_ci')->nullable();
+            $table->string('ward_id',20)->charset('utf8mb4')->collation('utf8mb4_general_ci')->nullable();
             $table->string('address')->nullable();
             $table->rememberToken();
             $table->timestamps();

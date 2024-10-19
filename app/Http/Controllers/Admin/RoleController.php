@@ -10,9 +10,15 @@ use App\Http\Requests\Role\StoreRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-
-class RoleController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
+class RoleController extends Controller implements HasMiddleware
 {
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('Order'); 
+    }
     protected $roleService;
     protected $roleRepository;
     function __construct(
@@ -21,10 +27,6 @@ class RoleController extends Controller
     ) {
         $this->roleService = $roleService;
         $this->roleRepository = $roleRepository;
-        // $this->middleware('permission:attribute-list|attribute-create|attribute-edit|attribute-delete', ['only' => ['index', 'store']]);
-        // $this->middleware('permission:attribute-create', ['only' => ['create', 'store']]);
-        // $this->middleware('permission:attribute-edit', ['only' => ['edit', 'update']]);
-        // $this->middleware('permission:attribute-delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
@@ -33,7 +35,7 @@ class RoleController extends Controller
         $config['breadcrumb'] = $this->breadcrumb('index');
         $roles = $this->roleService->paginate($request);
         $roles = Role::all();
-        return view('admin.pages.user.role.index', compact(
+        return view('admin.pages.role.index', compact(
             'config',
             'roles',
             'roles'
@@ -47,7 +49,7 @@ class RoleController extends Controller
         $permissions = Permission::all();
         $config['method'] = 'create';
         $config['model'] = 'role';
-        return view('admin.pages.user.permission.role.save', compact(
+        return view('admin.pages.permission.role.save', compact(
             'config',
             'permissions',
         ));
@@ -67,7 +69,7 @@ class RoleController extends Controller
         $permissions = Permission::all();
         $config['breadcrumb'] = $this->breadcrumb('update');
         $config['method'] = 'edit';
-        return view('admin.pages.user.permission.role.save', compact(
+        return view('admin.pages.permission.role.save', compact(
             'config',
             'role',
             'permissions'
@@ -78,7 +80,7 @@ class RoleController extends Controller
     {
         $role = $this->roleService->update($request, $id);
         $this->roleService->givePermissionTo($request);
-        return to_route('user.permission.index')->with('success', 'Cập nhật vai trò thành công');
+        return to_route('permission.index')->with('success', 'Cập nhật vai trò thành công');
     }
 
     private function breadcrumb($key)

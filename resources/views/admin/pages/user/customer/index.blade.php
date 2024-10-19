@@ -40,9 +40,9 @@
                 <tbody>
                     @if (isset($users) && count($users))
                         @foreach ($users as $user)
-                            {{-- @if ($user->hasRole(['customer']))
+                            @if (!$user->hasRole(['customer']))
                                 @continue
-                            @endif --}}
+                            @endif
                             <tr class="animate__animated animate__fadeInDown animate__faster">
                                 <td class="">
                                     @if ($user->id != auth()->id())
@@ -79,7 +79,7 @@
                                     @endif
                                 </td>
                                 <td class="text-center table-actions">
-                                    <a href="{{ route('user.edit', ['id' => $user->id, 'page' => request()->get('page', 1)]) }}"
+                                    <a href="{{ route('user.edit', ['id' => $user->id]) }}"
                                         class="btn btn-sm btn-icon btn-primary">
                                         <svg class="icon  svg-icon-ti-ti-edit" data-bs-toggle="tooltip" data-bs-title="Edit"
                                             xmlns="http://www.w3.org/2000/svg" width="19" height="19"
@@ -93,14 +93,9 @@
                                             <path d="M16 5l3 3"></path>
                                         </svg>
                                     </a>
-                                    @if (auth()->user()->can(['User delete']))
-                                        @if ($user->id != auth()->id())
-                                            <x-delete :id="$user->id" :model="ucfirst($config['model'])" />
-                                        @endif
-                                    @endif
-                                    {{-- @if ($user->id != auth()->id())
+                                    @if ($user->id != auth()->id())
                                         <x-delete :id="$user->id" :model="ucfirst($config['model'])" />
-                                    @endif --}}
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

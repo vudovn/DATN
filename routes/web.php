@@ -23,6 +23,7 @@ Route::middleware(['authenticated', 'preventBackHistory',/*'checkPermission'*/])
     /* USER ROUTE */
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('/index', [UserController::class, 'index'])->name('index');
+        Route::get('/index-admin', [UserController::class, 'admin'])->name('admin.index');
         Route::get('/create', [UserController::class, 'create'])->name('create');
         Route::post('/store', [UserController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');

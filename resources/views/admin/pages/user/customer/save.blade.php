@@ -68,6 +68,5 @@
                 <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.active')" :value="$user->publish ?? ''" />
             </div>
         </div>
-        <input type="hidden" name="page" value="{{ request()->get('page', 1) }}" />
     </x-form>
 @endsection

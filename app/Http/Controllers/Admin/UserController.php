@@ -40,6 +40,16 @@ class UserController extends Controller
             'users',
         ));
     }
+    public function admin(Request $request)
+    {
+        $users = $this->userService->paginate($request);
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('index');
+        return view('admin.pages.user.user.index', compact(
+            'config',
+            'users',
+        ));
+    }
 
     public function create()
     {
@@ -71,7 +81,7 @@ class UserController extends Controller
         // Cập nhật thông tin người dùng
         $user = $this->userService->update($request, $id);
         if ($user) {
-            return redirect()->route('user.index')->with('success', 'Cập nhật người dùng thành công.');
+            return redirect()->route('user.index', ['page' => $request->page])->with('success', 'Cập nhật người dùng thành công.');
         }
         return  redirect()->route('user.index')->with('error', 'Cập nhật người dùng thất bại');
     }

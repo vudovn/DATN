@@ -78,7 +78,15 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::put('update/{id}', [AdminOrderController::class, 'update'])->name('update');
         Route::get('delete/{id}', [AdminOrderController::class, 'delete'])->name('delete');
     });
-
+    /* CATEGORY ROUTE */
+    Route::prefix('category')->name('category.')->group(function () {
+        Route::get('/index', [CategoryController::class, 'index'])->name('index');
+        Route::get('/create', [CategoryController::class, 'create'])->name('create');
+        Route::post('/store', [CategoryController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
+    });
     // /* ATTRIBUTE VALUE ROUTE */
     // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
     //     Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
@@ -112,15 +120,6 @@ Route::get('/admin', [AuthController::class, 'index'])->name('auth.index')->midd
 Route::post('/admin', [AuthController::class, 'login'])->name('auth.login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
-    /* CATEGORY ROUTE */
-    Route::prefix('category')->name('category.')->group(function () {
-        Route::get('/index', [CategoryController::class, 'index'])->name('index');
-        Route::get('/create', [CategoryController::class, 'create'])->name('create');
-        Route::post('/store', [CategoryController::class, 'store'])->name('store');
-        Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
-        Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
-        Route::delete('/destroy/{id}', [CategoryController::class, 'destroy'])->name('destroy');
-    });
+
 Route::get('/order-code', function () {
     return orderCode(7);});

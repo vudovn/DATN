@@ -121,7 +121,29 @@
     TGNT.hideActions = () => {
         $("#actions").parent().hide();
     };
+TGNT.test = () => {
+    $(document).on("change", ".filter-option", function () {
+        let _this = $(this);
+        let option = _this.attr('name');
+        switch (option) {
+            case 'active':
+                console.log(123);
+                break;
 
+            case 'publish':
+                console.log(1234);
+                break;
+
+            case 'perpage':
+                console.log(12345);
+                break;
+
+            case 'sort':
+                console.log(123456);
+                break;
+        }
+    });
+}
     TGNT.action = () => {
         if ($("#actions").length) {
             $(document).on("change", "#actions", function () {
@@ -517,5 +539,6 @@
         TGNT.permission_to_role();
         TGNT.quick_update();
         TGNT.int();
+        TGNT.test();
     });
 })(jQuery);

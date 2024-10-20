@@ -11,7 +11,7 @@
                                 @php
                                     $selected = request($key) ?: old($key);
                                 @endphp
-                                <select name="{{ $key }}" id="{{ $key }}" class="form-control select2">
+                                <select name="{{ $key }}" id="{{ $key }}" class="form-control select2 filter-option">
                                     @foreach ($option as $keyItem => $valItem)
                                         <option {{ $keyItem == $selected ? 'selected' : '' }}
                                             value="{{ $keyItem }}">{{ $valItem }}</option>

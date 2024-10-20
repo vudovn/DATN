@@ -48,7 +48,7 @@
                                         <li class="nav-item">
                                             <a href="{{ $module['path'] }}"
                                                 class="nav-link {{ $segmentUrl == $module['path'] ? 'active' : '' }}">
-                                                <i class="far fa-minus nav-icon"></i>
+                                                <i class="far fa-minus nav-icon "></i>
                                                 <p>{{ $module['name'] }}</p>
                                             </a>
                                         </li>

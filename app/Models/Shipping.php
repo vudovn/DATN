@@ -12,9 +12,9 @@ class Shipping extends Model
         return $this->belongsTo(Province::class, 'province_id', 'code');
     }
     public function district(){
-        return $this->belongsTo(Districts::class, 'district_id', 'code');
+        return $this->belongsTo(District::class, 'district_id', 'code');
     }
     public function ward(){
-        return $this->belongsTo(Wards::class, 'ward_id', 'code');
+        return $this->belongsTo(Ward::class, 'ward_id', 'code');
     }
 }

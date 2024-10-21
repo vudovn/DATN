@@ -145,10 +145,10 @@ class AjaxController extends Controller
 }
 
     function test() {
-        $users = \App\Models\User::all();
+        $users = \App\Models\User::paginate(10);
         $title = 'List User';
         return successResponse(
-            view('admin.pages.user.user.components.table', compact('users','title'))->render()
+            $users
         );
     }
 

@@ -24,8 +24,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-6">
                                 <label for="roles[]">Chọn vai trò <span class="text-danger">*</span></label>
-                                <select class="form-control js-choice-multiple" name="roles[]" multiple="multiple" data-placeholder="Chọn vai trò">
-                                    <option value="">Chọn vai trò</option>
+                                <select class="form-control js-choice-multiple" name="roles[]" multiple="multiple">
                                     @foreach ($roles as $key => $role)
                                         <option value="{{ $role->name }}"
                                             {{ isset($user) && $user->roles->contains('name', $role->name) ? 'selected' : '' }}

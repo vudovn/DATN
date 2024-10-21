@@ -1,96 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 
 <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Login admin</title>
-
-    <link rel="stylesheet" href="{{ asset('admin_asset/css/customize.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin_asset/css/color.css') }}">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
-    <link rel="stylesheet" href="{{ asset('admin_asset/plugins/fontawesome-free/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin_asset/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin_asset/css/adminlte.min2167.css?v=3.2.0') }}">
+    <title>Đăng nhập</title>
+    <!-- [Meta] -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="icon" href="{{ asset('admin_asset/images/favicon.svg') }}" type="image/x-icon" />
+    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/inter/inter.css') }}" id="main-font-link" />
+    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/phosphor/duotone/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/tabler-icons.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/feather.css') }}" />
+    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/fontawesome.css') }}" />
+    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/material.css') }}" />
+    <link rel="stylesheet" href="{{ asset('admin_asset/css/style.css') }}" id="main-style-link" />
+    <script src="{{ asset('admin_asset/js/tech-stack.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('admin_asset/css/style-preset.css') }}" />
 </head>
 
-<body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="login-logo">
-            <a href=""><b>Thế Giới Nội Thất</b></a>
-        </div>
-
-        <div class="card">
-            <div class="card-body login-card-body">
-                <p class="login-box-msg">Đăng nhập để sử dụng</p>
-                <form action="{{ route('auth.login') }}" method="post">
-                    @csrf
-                    <div class="form-gruop mb-3">
-                        <div class="input-group">
-                            <input type="email" class="form-control" placeholder="Email" name="email"
-                                value="{{ old('email') }}">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-envelope"></span>
-                                </div>
-                            </div>
-                        </div>
-                        @if ($errors->has('email'))
-                            <small class="error text-danger">{{ $errors->first('email') }}</small>
-                        @endif
-                    </div>
-                    <div class="form-gruop mb-3">
-                        <div class="input-group">
-                            <input type="password" class="form-control" class="form-control" placeholder="Password"
-                                name="password">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
-                                </div>
-                            </div>
-                        </div>
-                        @if ($errors->has('password'))
-                            <small class="error text-danger">{{ $errors->first('password') }}</small>
-                        @endif
-                    </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">
-                                    Nhớ tôi
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">login</button>
-                        </div>
-
-                    </div>
-                </form>
-                <div class="social-auth-links text-center mb-3">
-                    <p>- Hoặc -</p>
-                    <a href="#" class="btn btn-block btn-danger">
-                        <i class="fab fa-google mr-2"></i> Đăng nhập bằng Google 
-                    </a>
-                </div>
-
-                <p class="mb-1">
-                    <a href="forgot-password.html">Quên mật khẩu</a>
-                </p>
-            </div>
-
+<body data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="ltr"
+    data-pc-theme_contrast="" data-pc-theme="light">
+    <div class="loader-bg">
+        <div class="loader-track">
+            <div class="loader-fill"></div>
         </div>
     </div>
+    <!-- [ Pre-loader ] End -->
+    <div class="auth-main">
+        <div class="auth-wrapper v2">
+            <div class="auth-sidecontent">
+                <img src="{{ asset('admin_asset/images/authentication/img-auth-sideimg.jpg') }}" alt="images"
+                    class="img-fluid img-auth-side" />
+            </div>
+            <div class="auth-form">
+                <div class="card my-5">
+                    <form action="{{ route('auth.login') }}" method="POST" class="card-body">
+                        @csrf
+                        <div class="text-center">
+                            <a href="#">
+                                <img src="{{ asset('admin_asset/images/logo-dark.svg') }}" alt="img" />
+                            </a>
+                            <div class="d-grid my-3">
+                                <button type="button" class="btn mt-2 btn-light-primary bg-light text-muted">
+                                    <img src="{{ asset('admin_asset/images/authentication/facebook.svg') }}"
+                                        alt="img" />
+                                    <span>Đăng nhập bằng Facebook</span>
+                                </button>
+                                <button type="button" class="btn mt-2 btn-light-primary bg-light text-muted">
+                                    <img src="{{ asset('admin_asset/images/authentication/twitter.svg') }}"
+                                        alt="img" />
+                                    <span>Đăng nhập bằng Twitter</span>
+                                </button>
+                                <button type="button" class="btn mt-2 btn-light-primary bg-light text-muted">
+                                    <img src="{{ asset('admin_asset/images/authentication/google.svg') }}"
+                                        alt="img" />
+                                    <span>Đăng nhập bằng Google</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="saprator my-3">
+                            <span>HOẶC</span>
+                        </div>
+                        <h4 class="text-center f-w-500 mb-3">Đăng nhập bằng email của bạn</h4>
+                        <div class="mb-3">
+                            <input type="text" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror"
+                                id="floatingInput" placeholder="Địa chỉ email" />
+                            @error('email')
+                                <small class="text-danger">*{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" name="password" class="form-control" id="floatingInput1" placeholder="Mật khẩu" />
+                        </div>
+                        <div class="d-flex mt-1 justify-content-between align-items-center">
+                            <div class="form-check">
+                                <input class="form-check-input input-primary" type="checkbox" id="customCheckc1"
+                                    checked="" />
+                                <label class="form-check-label text-muted" for="customCheckc1">Nhớ tôi?</label>
+                            </div>
+                            <h6 class="text-secondary f-w-400 mb-0">
+                                <a href="#">Quên mật khẩu?</a>
+                            </h6>
+                        </div>
+                        <div class="d-grid mt-4">
+                            <button type="submit" name="send" class="btn btn-primary">Đăng nhập</button>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-end mt-4">
+                            <h6 class="f-w-500 mb-0">Bạn chưa có tài khoản?</h6>
+                            <a href="#" class="link-primary">Tạo tài khoản</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+    <!-- Required Js -->
+    <script src="{{ asset('admin_asset/js/plugins/popper.min.js') }}"></script>
+    <script src="{{ asset('admin_asset/js/plugins/simplebar.min.js') }}"></script>
+    <script src="{{ asset('admin_asset/js/plugins/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin_asset/js/fonts/custom-font.js') }}"></script>
+    <script src="{{ asset('admin_asset/js/pcoded.js') }}"></script>
+    <script src="{{ asset('admin_asset/js/plugins/feather.min.js') }}"></script>
 
+    <script>
+        layout_change("light");
+    </script>
+    <script>
+        change_box_container("false");
+    </script>
+    <script>
+        layout_caption_change("true");
+    </script>
+    <script>
+        layout_rtl_change("false");
+    </script>
+    <script>
+        preset_change("preset-9");
+    </script>
+    <script>
+        main_layout_change("vertical");
+    </script>
 
-    <script src="{{ asset('admin_asset/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('admin_asset/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('admin_asset/js/adminlte.min2167.js?v=3.2.0') }}"></script>
 </body>
+<!-- [Body] end -->
 
 </html>

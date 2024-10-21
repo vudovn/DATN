@@ -1,5 +1,5 @@
 @props(['value', 'model'])
-<div class="form-check form-switch d-flex justify-content-center custom-switch-v1-{{ $value->id }}">
+<div class="form-check form-switch d-flex justify-content-center custom-switch-v1-{{ $value->id }} js-switch-{{ $value->id }}">
     <input type="checkbox"
         class="form-check-input js-switch status"  id="customSwitch{{ $value->id }}" 
         data-field="publish" data-value="{{ $value->publish }}" data-model="{{ $model }}"

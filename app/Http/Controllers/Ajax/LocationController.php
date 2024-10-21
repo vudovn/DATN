@@ -18,7 +18,6 @@ class LocationController extends Controller {
     public function __construct(
         ProvinceRepository $provinceRepository,
         DistrictRepository $districtRepository,
-        // WardRepository $wardRepository
     ){
         $this->provinceRepository = $provinceRepository;
         $this->districtRepository = $districtRepository;
@@ -29,15 +28,14 @@ class LocationController extends Controller {
         $get = $request->input();
         $html = '';
         if ($get['target'] == 'districts') {
-            // $province = $this->provinceRepository->findByIdLocation($get['data']['location_id'], ['code', 'name'], ['districts']); cái cũ
-            $province = $this->provinceRepository->findById($get['data']['location_id'],['districts'], ['code', 'name'] ); //cái mới 
-            // dd($province)
-            $html = $this->renderHtml($province->districts); //Gọi cái hàm renderHtml ở dưới
-            // dd($province);
+           
+            $province = $this->provinceRepository->findById($get['data']['location_id'],['districts'], ['code', 'name'] ); 
+            $html = $this->renderHtml($province->districts); 
         } else if ($get['target'] == 'wards') {
-            // $district = $this->districtRepository->findByIdLocation($get['data']['location_id'], ['code', 'name'], ['wards']); cái cũ
-            $district = $this->districtRepository->findById($get['data']['location_id'],  ['wards'],['code', 'name']); //cái mới 
-            $html = $this->renderHtml($district->wards, '[Chọn Phường/Xã]'); //Gọi cái hàm renderHtml ở dưới
+            
+           
+            $district = $this->districtRepository->findById($get['data']['location_id'],  ['wards'],['code', 'name']); 
+            $html = $this->renderHtml($district->wards, '[Chọn Phường/Xã]'); 
         }
         $response = [
             'html' => $html
@@ -46,10 +44,9 @@ class LocationController extends Controller {
     }
 
 
-     // tạo ra luôn html để trả về cho js in luôn ra giao diện 
     public function renderHtml($districts, $root = '[Chọn Quận/Huyện]')
     {
-        $html = '<option value="0">' . $root . '</option>';
+        $html = '<option value="" selected>' . $root . '</option>';
         foreach ($districts as $district) {
             $html .= '<option value="' . $district->code . '">' . $district->name . '</option>';
         }

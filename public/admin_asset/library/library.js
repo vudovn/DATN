@@ -135,7 +135,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: "/actions",
+                            url: `/${$("#model").val().toLowerCase()}/actions`,
                             type: method,
                             data: {
                                 option: _this.val(),
@@ -164,6 +164,8 @@
                                         $(".js-switch-" + ids[i])
                                             .find(".js-switch")
                                             .attr("checked", isActive);
+
+                                            TGNT.changeBackgroud($(".js-switch-" + ids[i]).parents("tr"));
                                     }
                                 } else {
                                     for (let i = 0; i < ids.length; i++) {
@@ -178,19 +180,11 @@
                                 TGNT.hideActions();
                                 $(".table").find("tr").removeClass("active-bg");
 
-                                var Toast = Swal.mixin({
-                                    toast: true,
-                                    position: "top-end",
-                                    showConfirmButton: false,
-                                    timer: 3000,
-                                });
-                                Toast.fire({
-                                    icon: "success",
-                                    title: "Thực hiện thành công hành động",
-                                });
+                                VDmessage.show("success", "Thực hiện thành công!");
                             },
                             error: function (error) {
                                 console.error(error);
+                                VDmessage.show("error", "Thực hiện thất bại!");
                             },
                         });
                     }
@@ -251,57 +245,6 @@
         });
     };
 
-    // TGNT.delete_item = () => {
-    //     $(document).on("click", "#delete_tgnt", function () {
-    //         var Toast = Swal.mixin({
-    //             toast: true,
-    //             position: "top-end",
-    //             showConfirmButton: false,
-    //             timer: 3000,
-    //         });
-
-    //         let _this = $(this);
-
-    //         // console.log(_this.attr('data-id'));
-    //         Swal.fire({
-    //             title: "Bạn có chắc không?",
-    //             text: "Khi xóa sẽ không thể hoàn tác được!",
-    //             icon: "warning",
-    //             showCancelButton: true,
-    //             confirmButtonText: "Xóa!",
-    //             cancelButtonText: "Hủy",
-    //             reverseButtons: true,
-    //         }).then((result) => {
-    //             if (result.isConfirmed) {
-    //                 $.ajax({
-    //                     url: "/deleteItem",
-    //                     type: "DELETE",
-    //                     data: {
-    //                         _token: $('meta[name="csrf-token"]').attr(
-    //                             "content"
-    //                         ),
-    //                         model: _this.attr("data-model"),
-    //                         id: _this.attr("data-id"),
-    //                     },
-    //                     dataType: "JSON",
-    //                     success: function (response) {
-    //                         _this.closest("tr").remove();
-    //                         Toast.fire({
-    //                             icon: "success",
-    //                             title: "Xóa thành công",
-    //                         });
-    //                     },
-    //                     error: function (error) {
-    //                         Toast.fire({
-    //                             icon: "success",
-    //                             title: "Xóa không thành thành công",
-    //                         });
-    //                     },
-    //                 });
-    //             }
-    //         });
-    //     });
-    // };
     TGNT.permission_to_role = () => {
         let timeout = "";
         $(document).on("click", ".permission_to_role", function () {

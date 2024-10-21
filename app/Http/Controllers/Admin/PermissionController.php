@@ -74,7 +74,7 @@ class PermissionController extends Controller implements HasMiddleware
             }
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Làm mới thành công');
     }
 
     // public function edit($id)

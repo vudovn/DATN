@@ -3,11 +3,6 @@
 <div class="card">
     <div class="card-header">
         Cấu hình SEO
-        <div class="card-tools">
-            <button type="button" class="btn btn-sm" data-card-widget="collapse" title="Collapse">
-                <i class="fas fa-minus"></i>
-            </button>
-        </div>
     </div>
     <div class="card-body">
         <div class="row justify-content-center">
@@ -42,7 +37,7 @@
             </div>
         </div>
 
-        <div class="form-group mt-3">
+        <div class="form-group mt-3 mb-3">
             <label for="meta_title" class="d-flex justify-content-between">
                 <div>Tiêu đề SEO</div>
                 <small> (<span class="count_meta_title">0</span>/60)</small>
@@ -50,7 +45,7 @@
             <input value="{{ old('meta_title', $value_meta_title) ?? '' }}" type="text" class="form-control"
                 id="meta_title" name="meta_title">
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="meta_description" class="d-flex justify-content-between">
                 <div>Mô tả SEO</div>
                 <small> (<span class="count_meta_description">0</span>/160)</small>
@@ -59,15 +54,15 @@
         </div>
 
 
-        <div class="form-group">
-            <label for="meta_description" class="form-label">
-                <div>Đường dẫn</div>
-            </label>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">{{ url('/url') }}/</span>
+        <div class="form-group mb-3">
+            <div class="mb-3">
+                <label class="form-label" for="meta_description">Đường dẫn</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"
+                        id="sieu-thi-noi-that">{{ url('/url') }}/</span> 
+                    <input type="text" name="slug" class="form-control"
+                        id="meta_description" aria-describedby="sieu-thi-noi-that">
                 </div>
-                <input type="text" name="slug" class="form-control" placeholder="sieu-thi-noi-that">
             </div>
         </div>
     </div>

@@ -1,12 +1,7 @@
 (function ($) {
     "use strict";
     var TGNT = {};
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-    });
+    const VDmessage = new VdMessage();
 
     TGNT.requestUrl = () => {
         $(document).on("change", ".select_action", function () {
@@ -39,28 +34,24 @@
             };
 
             $.ajax({
-                url: "/"+_this.attr("data-model") + "/change/status",
+                url: `/${_this.attr("data-model")}/change/status`,
                 type: "PUT",
                 data: attributes,
                 dataType: "JSON",
                 success: function (response) {
-                    // console.log(response);
                     _this.attr("data-value") == 1
                         ? _this.attr("data-value", 2)
                         : _this.attr("data-value", 1);
                     _this.attr("data-publish") == 1
                         ? _this.attr("data-publish", 2)
                         : _this.attr("data-publish", 1);
-                    Toast.fire({
-                        icon: "success",
-                        title: "Cập nhật trạng thái thành công",
-                    });
+                    VDmessage.show(
+                        "success",
+                        "Cập nhật trạng thái thành công!"
+                    );
                 },
                 error: function (error) {
-                    Toast.fire({
-                        icon: "error",
-                        title: "Cập nhật trạng thái thất bại",
-                    });
+                    VDmessage.show("error", "Cập nhật trạng thái thất bại!");
                 },
             });
         });
@@ -86,7 +77,7 @@
     };
 
     TGNT.changeBackgroud = (input) =>
-        input.closest("tr").toggleClass("active-bg", input.prop("checked"));
+        input.closest("tr").toggleClass("bg-teal-100", input.prop("checked"));
 
     TGNT.allChecked = () => {
         let checkBoxs = $(".checkbox-item");
@@ -121,29 +112,7 @@
     TGNT.hideActions = () => {
         $("#actions").parent().hide();
     };
-TGNT.test = () => {
-    $(document).on("change", ".filter-option", function () {
-        let _this = $(this);
-        let option = _this.attr('name');
-        switch (option) {
-            case 'active':
-                console.log(123);
-                break;
 
-            case 'publish':
-                console.log(1234);
-                break;
-
-            case 'perpage':
-                console.log(12345);
-                break;
-
-            case 'sort':
-                console.log(123456);
-                break;
-        }
-    });
-}
     TGNT.action = () => {
         if ($("#actions").length) {
             $(document).on("change", "#actions", function () {
@@ -166,7 +135,7 @@ TGNT.test = () => {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: "/"+$("#model").val()+"/actions",
+                            url: "/actions",
                             type: method,
                             data: {
                                 option: _this.val(),
@@ -244,28 +213,18 @@ TGNT.test = () => {
             const id = _this.data("id");
             const model = _this.data("model");
             const deleteAxis = _this.data("axis");
-            const url = "/" + model + "/deleteItem";
-            console.log(url);
-            
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-            });
-            // console.log(_this.attr('data-id'));
             Swal.fire({
                 title: "Bạn có chắc không?",
                 text: "Khi xóa sẽ không thể hoàn tác được!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "Xóa!",
                 cancelButtonText: "Hủy",
+                confirmButtonText: "Xóa",
                 reverseButtons: true,
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: url,
+                        url: `/${model}/deleteItem`,
                         type: "DELETE",
                         data: {
                             _token: $('meta[name="csrf-token"]').attr(
@@ -281,16 +240,10 @@ TGNT.test = () => {
                                       `th[data-axis="${id}"], td[data-axis="${id}"]`
                                   ).remove()
                                 : _this.closest("tr").remove();
-                            Toast.fire({
-                                icon: "success",
-                                title: "Xóa thành công",
-                            });
+                            VDmessage.show("success", "Xóa thành công!");
                         },
                         error: function () {
-                            Toast.fire({
-                                icon: "error",
-                                title: "Xóa không thành công",
-                            });
+                            VDmessage.show("error", "Xóa thất bại!");
                         },
                     });
                 }
@@ -298,6 +251,7 @@ TGNT.test = () => {
         });
     };
 
+    // TGNT.delete_item = () => {
     //     $(document).on("click", "#delete_tgnt", function () {
     //         var Toast = Swal.mixin({
     //             toast: true,
@@ -379,30 +333,20 @@ TGNT.test = () => {
                     setTimeout(() => {
                         _this.attr("disabled", false);
                     }, 1000);
+
                     // timeout = setTimeout(() => {
-                        Toast.fire({
-                            icon: "success",
-                            title: "Cập nhật quyền thành công",
-                        });
+                    VDmessage.show("success", "Cập nhật quyền thành công!");
                     // }, 500);
                 },
-                error: (xhr) => {
-                    Toast.fire({
-                        icon: "error",
-                        title: xhr.responseJSON.message,
-                    });
+                error: function () {
+                    VDmessage.show("error", "Cập nhật quyền thất bại!");
                 },
             });
         });
     };
+
     TGNT.quick_update = () => {
         $(document).ready(function () {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-            });
 
             $(".quick_update").on("dblclick", function () {
                 let inputUpdate = $("#" + $(this).data("input-id"));
@@ -424,14 +368,9 @@ TGNT.test = () => {
                         _this.removeClass("hidden");
 
                         const value = inputUpdate.val().trim();
-                        const model = _this.data("model");
-                        const name = _this.attr("name");
-                        const id = _this.data("id");
-                        const url = "/" + model + "/quickUpdate"
-                        console.log(url);
-                        
+
                         $.ajax({
-                            url: url,
+                            url: "/permission/quickUpdate",
                             type: "PUT",
                             headers: {
                                 "X-CSRF-TOKEN": $(
@@ -439,24 +378,19 @@ TGNT.test = () => {
                                 ).attr("content"),
                             },
                             data: {
-                                model,
-                                name,
-                                id,
+                                model: _this.data("model"),
+                                name: _this.attr("name"),
+                                is_required: _this.attr("is_required"),
+                                id: _this.data("id"),
                                 value,
                             },
                             dataType: "JSON",
                             success: () => {
                                 _this.text(value || "...");
-                                Toast.fire({
-                                    icon: "success",
-                                    title: "Cập nhật thành công!",
-                                });
+                                VDmessage.show("success", "Cập nhật thành công!");
                             },
                             error: (xhr) => {
-                                Toast.fire({
-                                    icon: "error",
-                                    title: xhr.responseJSON.message,
-                                });
+                                VDmessage.show("error", xhr.responseJSON.message);
                             },
                         });
                     }
@@ -539,6 +473,5 @@ TGNT.test = () => {
         TGNT.permission_to_role();
         TGNT.quick_update();
         TGNT.int();
-        TGNT.test();
     });
 })(jQuery);

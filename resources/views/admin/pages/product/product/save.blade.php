@@ -25,67 +25,60 @@
                                         </ul>
                                     </div>
                                 @endif --}}
-                                <x-input :label="'Tên sản phẩm'" :name="'name'" :class="'name-product'" :value="$product->name ?? old('name')"
-                                    :required="true" />
-        
-                                <div class="form-group">
+                                <div class="mb-3">
+                                    <x-input :label="'Tên sản phẩm'" :name="'name'" :class="'name-product'" :value="$product->name ?? old('name')"
+                                        :required="true" />
+                                </div>
+
+                                <div class="form-group mb-3">
                                     <label for="short_description">Mô tả ngắn</label>
-                                    <textarea class="form-control" name="short_description" id="short_description"
-                                        rows="3">{{ $product->short_description ?? old('short_description') }}</textarea>
+                                    <textarea class="form-control" name="short_description" id="short_description" rows="3">{{ $product->short_description ?? old('short_description') }}</textarea>
                                 </div>
                                 {{--  --}}
                                 <div class="row price-group">
                                     <div class="col-lg-3">
-                                        <div class="mb-3 position-relative">
-                                            <label class="form-label" for="sku">SKU <span class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" name="sku" id="sku" value="{{ $product->sku ?? old('sku') }}">
-                                            @error('sku')
-                                            <small class="error text-danger">{{ $message }}</small>
-                                        @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="mb-3 position-relative">
-                                            <label class="form-label" for="quantity">Số lượng <span class="text-danger">*</span></label>
-                                            <input class="form-control int" value="{{ $product->quantity ?? old('quantity') }}" type="text" name="quantity" id="quantity" value="">
-                                            @error('quantity')
-                                                <small class="error text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="mb-3 position-relative">
-                                            <label class="form-label" for="price"> Giá tiền <span
+                                        <div class="mb-3 form-group">
+                                            <label class="form-label" for="sku">SKU <span
                                                     class="text-danger">*</span></label>
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">$</span>
-                                                </div>
-                                                <input type="text" name="price" value="{{ $product->price ?? old('price') }}" class="form-control int" placeholder="">
-                                            </div>
-                                        </div>
-                                        @error('price')
-                                                <small class="error text-danger">{{ $message }}</small>
+                                            <input class="form-control" type="text" name="sku" id="sku"
+                                                value="{{ $product->sku ?? old('sku') }}">
+                                            @error('sku')
+                                                <small class="error text-danger">*{{ $message }}</small>
                                             @enderror
+                                        </div>
                                     </div>
                                     <div class="col-lg-3">
-                                        <div class="mb-3 position-relative">
-                                            <label class="form-label" for="sale_price">
-                                                Giảm giá
-                                            </label>
-        
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">$</span>
-                                                </div>
-                                                <input type="number" max="100" name="discount" value="{{ $product->discount ?? old('discount') }}" class="form-control "
-                                                    placeholder="">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">%</span>
-                                                </div>
-                                            </div>
+                                        <div class="mb-3 form-group">
+                                            <label class="form-label" for="quantity">Số lượng <span
+                                                    class="text-danger">*</span></label>
+                                            <input class="form-control int"
+                                                value="{{ $product->quantity ?? old('quantity') }}" type="text"
+                                                name="quantity" id="quantity" value="">
+                                            @error('quantity')
+                                                <small class="error text-danger">*{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3 form-group">
+                                            <label class="form-label" for="price">Giá tiền <span
+                                                    class="text-danger">*</span></label>
+                                            <input class="form-control int" value="{{ $product->price ?? old('price') }}"
+                                                type="text" name="price" id="price" value="">
+                                            @error('price')
+                                                <small class="error text-danger">*{{ $message }}</small>
+                                            @enderror
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3 form-group">
+                                            <label class="form-label" for="discount">Giảm giá </label>
+                                            <input class="form-control int" max="100"
+                                                value="{{ $product->discount ?? old('discount') }}" type="number"
+                                                name="discount" id="discount">
                                             @error('discount')
-                                                <small class="error text-danger">{{ $message }}</small>
+                                                <small class="error text-danger">*{{ $message }}</small>
                                             @enderror
                                         </div>
                                     </div>
@@ -100,7 +93,7 @@
                     @include('admin.pages.product.product.components.variant')
 
                     <div class="col-lg-12">
-                         <x-seo :value_meta_title="$product->meta_title ?? ''" :value_meta_description="$product->meta_description ?? ''" :value_meta_keywords="$product->meta_keywords ?? ''" />
+                        <x-seo :value_meta_title="$product->meta_title ?? ''" :value_meta_description="$product->meta_description ?? ''" :value_meta_keywords="$product->meta_keywords ?? ''" />
                     </div>
                 </div>
             </div>
@@ -117,20 +110,23 @@
                         @php
                             $oldCategory = old('category') ?? [];
                         @endphp
-                       <select name="category" class=" form-control @error('category')is-invalid @enderror" id="">
-                        <option value="">Chọn danh mục</option>
-                        @foreach ($categories as $category)
-                            @php
-                                if($category['is_room'] != 2) continue;
-                            @endphp
-                            <option value="{{ $category['id'] }}" {{ in_array($category['id'], (old('category') ?? [])) ? 'selected' : '' }}>
-                                {{ $category['name'] }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('category')
-                        <small class="error text-danger">{{ $message }}</small>
-                    @enderror
+                        <select name="category" class="js-choice form-control @error('category')is-invalid @enderror" id="">
+                            <option value="">Chọn danh mục</option>
+                            @foreach ($categories as $category)
+                                @php
+                                    if ($category['is_room'] != 2) {
+                                        continue;
+                                    }
+                                @endphp
+                                <option value="{{ $category['id'] }}"
+                                    {{ in_array($category['id'], old('category') ?? []) ? 'selected' : '' }}>
+                                    {{ $category['name'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('category')
+                            <small class="error text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                 </div>
                 <div class="card">
@@ -138,13 +134,18 @@
                         Chọn danh mục phòng
                     </div>
                     <div class="card-body">
-                        <select name="category_id[]" class="select2 form-control @error('category')is-invalid @enderror" multiple id="">
+                        <select name="category_id[]" multiple class="js-choice-multiple form-control @error('category')is-invalid @enderror"
+                            multiple id="">
                             <option value="" disabled>Chọn danh mục</option>
                             @foreach ($categories as $category)
                                 @php
-                                    if($category['is_room'] != 1 ) continue;
+                                    if ($category['is_room'] != 1) {
+                                        continue;
+                                    }
                                 @endphp
-                                <option value="{{ $category['id'] }}" {{ in_array($category['id'], (old('category') ?? [])) ? 'selected' : '' }}>{{ $category['name'] }}</option>
+                                <option value="{{ $category['id'] }}"
+                                    {{ in_array($category['id'], old('category') ?? []) ? 'selected' : '' }}>
+                                    {{ $category['name'] }}</option>
                             @endforeach
                         </select>
                         @error('category')
@@ -157,17 +158,21 @@
                         Sản phẩm nổi bật
                     </div>
                     <div class="card-body">
-                        <select name="is_featured" class="select2 form-control" id="">
-                            <option value="">Sản phẩm</option>
-                            <option value="1" {{ $product->discount ?? old('is_featured') == '1' ? 'selected' : ''}}>Nổi bật</option>
-                            <option value="2" {{ $product->discount ?? old('is_featured') == '2' ? 'selected' : ''}}>Không nổi bật</option>
-                        </select>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="is_featured" value="1"
+                                id="is_featured2" {{ $product->is_featured ?? old('is_featured') == 1 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="is_featured2">Sản phẩm nổi bật</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="is_featured" value="2"
+                                id="is_featured1" {{ $product->is_featured ?? old('is_featured') == 2 ? 'checked' : 'checked'  }}>
+                            <label class="form-check-label" for="is_featured1">Sản phẩm không nổi bật</label>
+                        </div>
                     </div>
                 </div>
-                <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.active')" :value="$product->publish ?? old('publish')" />
+                <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.publish')" :value="$product->publish ?? old('publish')" />
             </div>
 
         </div>
     </x-form>
-   
 @endsection

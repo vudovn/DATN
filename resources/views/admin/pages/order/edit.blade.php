@@ -10,7 +10,7 @@
         <div class="card-body">
             <form action="{{ route('admin.pages.order.update', ['id' => $order->id]) }}" method="POST">
                 @csrf
-                @method('PUT') <!-- Hoặc PUT nếu bạn sử dụng phương thức PUT trong route -->
+                @method('PUT')
                 <p>Tên khách hàng: {{$order->user->name}}</p>
                 @php
                     $total = 0;
@@ -18,19 +18,19 @@
                         $total += $value->product->price * $value->quantity;
                     }
                 @endphp
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="total_amount">Tổng Tiền: {{ number_format($order->total_amount, 0, ',', '.') }} VND</label>
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="payment_method">Phương Thức Thanh Toán: <span class="text-danger"> {{ $order->payment_method ?? 'Đợi có dữ liệu bảng phương thức thanh toán' }} </span></label>
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="payment_method">Địa chỉ giao hàng: <span class="text-success">{{ $order->shipping->ward->name }}, {{ $order->shipping->district->name }}, {{ $order->shipping->province->name }}</span></label>
                 </div>
 
                 <div class="form-group">
-                    <label for="status">Trạng Thái</label>
-                    <select name="status" id="status" class="form-control select2">
+                    <label for="status" class="form-label">Trạng Thái</label>
+                    <select name="status" id="status" class="form-control js-choice-order">
                         @foreach (__('order.status') as $key => $value)
                             <option value="{{ $key }}" {{ $order->status == $key ? 'selected' : '' }}>
                                 {{ $value }}</option>
@@ -73,4 +73,9 @@
             </form>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            new Choices('.js-choice-order');
+        });
+    </script>
 @endsection

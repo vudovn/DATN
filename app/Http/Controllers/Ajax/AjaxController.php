@@ -23,6 +23,7 @@ class AjaxController extends Controller
     {
         $data = $request->input();
         $serviceClass = loadClass($data['model'], 'Service');
+        // dd($serviceClass->changeStatusByField($data));
         if ($serviceClass->changeStatusByField($data)) {
             return response()->json([
                 'message' => 'Update Successfully',
@@ -143,5 +144,12 @@ class AjaxController extends Controller
     return successResponse($attributeValueData);
 }
 
+    function test() {
+        $users = \App\Models\User::all();
+        $title = 'List User';
+        return successResponse(
+            view('admin.pages.user.user.components.table', compact('users','title'))->render()
+        );
+    }
 
 }

@@ -1,17 +1,9 @@
 @props(['id', 'model', 'deleteAxis', 'route'])
-@can(ucfirst($model).' delete')
-    <a data-id="{{ $id }}" data-route="{{ $route ?? '' }}" data-model="{{ $model }}"
-        data-axis="{{ $deleteAxis ?? 'row' }}" id="delete_tgnt" class="btn btn-sm btn-icon btn-danger" href="#"
-        data-bs-toggle="tooltip" data-bs-title="Xóa">
-        <svg class="icon  svg-icon-ti-ti-trash" xmlns="http://www.w3.org/2000/svg" width="19" height="19"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <path d="M4 7l16 0"></path>
-            <path d="M10 11l0 6"></path>
-            <path d="M14 11l0 6"></path>
-            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
-            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-        </svg>
-    </a>
+@can(ucfirst($model) . ' delete')
+    <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Xóa">
+        <a data-id="{{ $id }}" data-route="{{ $route ?? '' }}"  data-model="{{ $model }}"
+        data-axis="{{ $deleteAxis ?? 'row' }}" id="delete_tgnt" href="#" class="avtar avtar-xs btn-link-danger btn-pc-default">
+            <i class="ti ti-trash f-18"></i>
+        </a>
+    </li>
 @endcan

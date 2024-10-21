@@ -7,9 +7,10 @@ tr.active-bg {
 }
 
 .select2-selection__choice {
-    color: #084298 !important;
-    background-color: #cfe2ff !important;
-    border-color: #b6d4fe !important;
+    background-color: #cce6e6 !important;
+    border-color: #b3d9d9 !important;
+    color: #004d4d !important;
+    
 }
 
 option[disabled] {
@@ -114,12 +115,14 @@ html .ui-button.ui-state-disabled:active {
 }
 
 /* alert */
-.alert-primary {
+/* .alert-primary {
     color: #084298;
     background-color: #cfe2ff;
     border-color: #b6d4fe;
+} */
+.table-striped tbody tr:nth-of-type(2n+1) {
+    background-color: unset !important;
 }
-
 .badge-primary {
     color: #084298;
     background-color: #cfe2ff;

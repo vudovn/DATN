@@ -4,18 +4,22 @@ return [
     'function' => [
         [
             'name' => 'Quản lý thành viên',
-            'icon' => '<i class="nav-icon fa-solid fa-users"></i>',
+            'icon' => '<svg class="pc-icon"><use xlink:href="#custom-user"></use></svg>',
             'route' => ['user'],
             'module' => [
                 [
-                    'name' => 'Danh sách thành viên',
+                    'name' => 'Danh sách khách hàng',
+                    'path' => route('user.index')
+                ],
+                [
+                    'name' => 'Danh sách nhân viên',
                     'path' => route('user.index')
                 ],
             ]
         ],
         [
             'name' => 'Quản lý phân quyền',
-            'icon' => '<i class="nav-icon fa-solid fa-shield-check"></i>',
+            'icon' => '<svg class="pc-icon"><use xlink:href="#custom-shield"></use></svg>',
             'route' => ['permission'],
             'module' => [
                 [
@@ -26,7 +30,7 @@ return [
         ],
         [
             'name' => 'Quản lý sản phẩm',
-            'icon' => '<i class="nav-icon fas fa-box"></i>',
+            'icon' => '<svg class="pc-icon"><use xlink:href="#custom-shopping-bag"></use></svg>',
             'route' => ['product'],
             'module' => [
                 [
@@ -42,7 +46,7 @@ return [
         ],
         [
             'name' => 'Quản lý danh mục',
-            'icon' => '<i class="nav-icon fa-solid fa-layer-group"></i>',
+            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-element-plus"></use> </svg>',
             'route' => ['category'],
             'module' => [
                 [
@@ -53,7 +57,7 @@ return [
         ],
         [
             'name' => 'Quản lý đơn hàng',
-            'icon' => '<i class="nav-icon fa-solid fa-cart-flatbed"></i>',
+            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-box-1"></use> </svg>',
             'route' => ['order'],
             'module' => [
                 [

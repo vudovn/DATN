@@ -17,7 +17,7 @@ class RoleController extends Controller implements HasMiddleware
     use HasDynamicMiddleware;
     public static function middleware(): array
     {
-        return self::getMiddleware('Order'); 
+        return self::getMiddleware('Role'); 
     }
     protected $roleService;
     protected $roleRepository;

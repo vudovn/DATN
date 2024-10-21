@@ -3,12 +3,14 @@
         <div class="card-header">
             <label for="" class="d-flex align-items-center mb-0" style="gap: 10px">
                 Sản phẩm có nhiều phiên bản
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" value="1" name="has_attribute" class="custom-control-input turnOnVariant"
+                <div class="form-check form-switch">
+                    <input type="checkbox"
+                        class="form-check-input js-switch turnOnVariant" value="1" name="has_attribute" 
                         id="customSwitch"
                         {{ old('has_attribute') == 1 ? 'checked' : '' }} >
-                    <label class="custom-control-label" for="customSwitch"></label>
+                    <label class="form-check-label" for="customSwitch"></label>
                 </div>
+
             </label>
         </div>
         <div class="card-body">
@@ -53,8 +55,8 @@
                                            {{-- <input type="text" name="" disabled class="fake-variant h-100 form-control"> --}}
                                         </div>
                                         <div class="col-lg-1">
-                                            <button type="button" class="h-100 w-100 remove-attribute btn btn-danger">
-                                                <i class="fa fa-trash-alt"></i>
+                                            <button type="button" class="h-100 w-100 remove-attribute btn btn-icon btn-danger">
+                                                <i class="ti ti-trash"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -83,28 +85,6 @@
                 <table class="table variantTable">
                     <thead></thead>
                     <tbody></tbody>
-                    {{-- <thead>
-                        <tr class="bg-dark">
-                            <th scope="col">Hình ảnh</th>
-                            <th scope="col">Màu sắc</th>
-                            <th scope="col">Số lượng</th>
-                            <th scope="col">Giá tiền</th>
-                            <th scope="col">SKU</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="variant-row">
-                            <td>
-                                <span class="img img-cover">
-                                    <img width="50" class="rounded" src="https://placehold.co/600x600?text=The%20Gioi\nNoi%20That" alt="">
-                                </span>
-                            </td>
-                            <td>Đỏ</td>
-                            <td>100</td>
-                            <td>100.000</td>
-                            <td>SKU-001</td>
-                        </tr>
-                    </tbody> --}}
                 </table>
             </div>
             
@@ -123,3 +103,11 @@
     var attributeValue = `{{ base64_encode(json_encode(old('attributeValue'))) }}`;       
     var variant = `{{ base64_encode(json_encode(old('variant'))) }}`; 
 </script>
+<style>
+    .select2.select2-container.select2-container--default{
+        height: 100% !important;
+    }
+    .select2-selection.select2-selection--multiple {
+        height: 100% !important;
+    }
+</style>

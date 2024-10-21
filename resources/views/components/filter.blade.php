@@ -3,7 +3,7 @@
 <div class="d-flex justify-content-between animate__animated animate__fadeIn">
     <div class="filter">
         <form action="">
-            <div class="form-row">
+            <div class="d-flex flex-wrap gap-2 align-items-center">
                 @if (isset($options) && count($options) && is_array($options))
                     @foreach ($options as $key => $option)
                         <div class="form-group col-auto filter-item {{ $key }}">
@@ -11,7 +11,7 @@
                                 @php
                                     $selected = request($key) ?: old($key);
                                 @endphp
-                                <select name="{{ $key }}" id="{{ $key }}" class="form-control select2 filter-option">
+                                <select name="{{ $key }}" id="{{ $key }}" class="form-control filter-option">
                                     @foreach ($option as $keyItem => $valItem)
                                         <option {{ $keyItem == $selected ? 'selected' : '' }}
                                             value="{{ $keyItem }}">{{ $valItem }}</option>
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="form-group col-auto">
-                    <button type="submit" name="filter" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    <button type="submit" name="filter" class="btn btn-primary"><i data-feather="search"></i></button>
                 </div>
             </div>
         </form>
@@ -40,15 +40,16 @@
                 <form action="{{ route($createButton['route']) }}" method="post">
                     @csrf
                     @method($createButton['method'] ?? 'POST')
-                    <button class="btn btn-danger" type="submit">
-                        <i class="fa fa-plus"></i>
+                    <button class="btn btn-danger d-inline-flex justify-content-center" type="submit">
+                        <i data-feather="refresh-cw" class="me-1"></i>
                         {{ $createButton['label'] ?? '' }}
                     </button>
                 </form>
             @else
-                <a href="{{ route($createButton['route']) }}" class="btn btn-danger">
-                    <i class="fa fa-plus"></i>
-                    {{ $createButton['label'] ?? '' }}
+                <a href="{{ route($createButton['route']) }}" class="btn btn-danger d-inline-flex justify-content-center">
+                    <i data-feather="plus-circle" class="me-1"></i>
+                    {{ $createButton['label']  ?? 'Thêm mới' }}
+                    Thêm mới
                 </a>
             @endif
 

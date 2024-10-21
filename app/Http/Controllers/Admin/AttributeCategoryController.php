@@ -17,7 +17,7 @@ class AttributeCategoryController extends Controller implements HasMiddleware
     use HasDynamicMiddleware;
     public static function middleware(): array
     {
-        return self::getMiddleware('Product'); 
+        return self::getMiddleware('AttributeCategory'); 
     }
     protected $attributeCategoryService;
     protected $attributeCategoryRepository;

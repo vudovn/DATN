@@ -1,34 +1,31 @@
 (function ($) {
     "use strict";
     var TGNT = {};
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-    });
-    
+    const VDmessage = new VdMessage();
+
     TGNT.setupProductVariant = () => {
         if ($(".turnOnVariant").length) {
             $(document).on("click", ".turnOnVariant", function () {
                 let _this = $(this);
                 let price = parseFloat($('input[name="price"]').val()) || 0;
-                let sku = $('input[name="sku"]').val().trim(); 
-    
-                if(price <= 0 || sku === ""){
-                    Toast.fire({
-                        icon: "warning",
-                        title: "Vui lòng nhập giá tiền sản phẩm và SKU cho sản phẩm để sử dụng tính năng này"
-                    });
+                let sku = $('input[name="sku"]').val().trim();
+
+                if (price <= 0 || sku === "") {
+                    VDmessage.show(
+                        "warning",
+                        "Vui lòng nhập giá tiền sản phẩm và SKU cho sản phẩm để sử dụng tính năng này"
+                    );
                     _this.prop("checked", false);
                     return false;
                 }
-    
-                $(".variant-wrapper").toggleClass("hidden", !_this.is(":checked"));
+
+                $(".variant-wrapper").toggleClass(
+                    "hidden",
+                    !_this.is(":checked")
+                );
             });
         }
     };
-    
 
     TGNT.addVariant = () => {
         if ($(".add-variant").length) {
@@ -44,9 +41,12 @@
     };
 
     TGNT.renderVariantItem = (attributeCatalogue) => {
-        let options = attributeCatalogue.map(attribute => 
-            `<option value="${attribute.id}">${attribute.name}</option>`
-        ).join("");
+        let options = attributeCatalogue
+            .map(
+                (attribute) =>
+                    `<option value="${attribute.id}">${attribute.name}</option>`
+            )
+            .join("");
 
         return `
             <div class="row mb-3 variant-item">
@@ -62,14 +62,13 @@
                     <input type="text" name="" disabled class="fake-variant h-100 form-control">
                 </div>
                 <div class="col-lg-1">
-                    <button type="button" class="h-100 w-100 remove-attribute btn btn-danger">
-                        <i class="fa fa-trash-alt"></i>
+                    <button type="button" class="h-100 w-100 remove-attribute btn btn-icon btn-danger">
+                        <i class="ti ti-trash"></i>
                     </button>
                 </div>
             </div>
         `;
     };
-    
 
     TGNT.chooseVariantGroup = () => {
         $(document).on("change", ".choose-attribute", function () {
@@ -112,49 +111,57 @@
             let _this = $(this);
             let attr = [];
             let attrVariant = [];
-    
+
             const attributeCatalogueId = _this.find(".choose-attribute").val();
-            const optionText = _this.find(".choose-attribute option:selected").text();
-            const attribute = $(".variant-" + attributeCatalogueId).select2("data");
-    
-            attribute.forEach(attrItem => {
+            const optionText = _this
+                .find(".choose-attribute option:selected")
+                .text();
+            const attribute = $(".variant-" + attributeCatalogueId).select2(
+                "data"
+            );
+
+            attribute.forEach((attrItem) => {
                 let item = {};
                 let itemVariant = {};
-    
+
                 item[optionText] = attrItem.text;
                 itemVariant[attributeCatalogueId] = attrItem.id;
-    
+
                 attr.push(item);
                 attrVariant.push(itemVariant);
             });
-    
-            attributeTitle.push(optionText); 
-            attributes.push(attr);         
-            variants.push(attrVariant); 
+
+            attributeTitle.push(optionText);
+            attributes.push(attr);
+            variants.push(attrVariant);
         });
-    
+
         let attributesNew = TGNT.generateVariants(attributes);
         let variantsNew = TGNT.generateVariants(variants);
-    
+
         TGNT.createTableHeader(attributeTitle);
-    
+
         let trClass = [];
         attributesNew.forEach((attribute, index) => {
             let $row = TGNT.createVariantRow(attribute, variantsNew[index]);
-            let classModified = "tr-variant-" + Object.values(variantsNew[index]).join(", ").replace(/, /g, "-");
-    
+            let classModified =
+                "tr-variant-" +
+                Object.values(variantsNew[index])
+                    .join(", ")
+                    .replace(/, /g, "-");
+
             trClass.push(classModified);
             if (!$(`table.variantTable tbody tr.${classModified}`).length) {
                 $("table.variantTable tbody").append($row);
             }
         });
-    
-        $('table.variantTable tbody tr').each(function () {
+
+        $("table.variantTable tbody tr").each(function () {
             const $row = $(this);
-            const rowClasses = $row.attr('class');
-            
+            const rowClasses = $row.attr("class");
+
             if (rowClasses) {
-                const rowClassArray = rowClasses.split(' ');
+                const rowClassArray = rowClasses.split(" ");
                 let shouldRemove = true;
                 rowClassArray.forEach((item) => {
                     if (trClass.includes(item)) {
@@ -168,20 +175,38 @@
             }
         });
     };
-    
 
     TGNT.createVariantRow = (attributeItem, variantItem) => {
         let attributeString = Object.values(attributeItem).join(", ");
         let attributeId = Object.values(variantItem).join(", ");
         let classModified = attributeId.replace(/, /g, "-");
-        let $row = $("<tr>").addClass("variant-row tr-variant-" + classModified);
+        let $row = $("<tr>").addClass(
+            "variant-row tr-variant-" + classModified
+        );
         let $td;
         $td = $("<td>").append(
-            $("<span>").addClass("img img-cover").append(
-                $("<a>").attr("href", "https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That").addClass("td-thumbnai-pre").attr("data-fancybox", "gallery").attr("data-caption", "").append(
-                    $("<img>").attr("width", "50").addClass("td-thumbnail rounded").attr("src", "https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That").attr("alt", "")
+            $("<span>")
+                .addClass("img img-cover")
+                .append(
+                    $("<a>")
+                        .attr(
+                            "href",
+                            "https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That"
+                        )
+                        .addClass("td-thumbnai-pre")
+                        .attr("data-fancybox", "gallery")
+                        .attr("data-caption", "")
+                        .append(
+                            $("<img>")
+                                .attr("width", "50")
+                                .addClass("td-thumbnail rounded")
+                                .attr(
+                                    "src",
+                                    "https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That"
+                                )
+                                .attr("alt", "")
+                        )
                 )
-            )
         );
         $row.append($td);
         Object.values(attributeItem).forEach((value) => {
@@ -193,16 +218,27 @@
         let mainPrice = $('input[name="price"]').val();
         let mainSku = $('input[name="sku"]').val();
         let inputHiddenFields = [
-            { name: "variant[sku][]", class: "variant_sku", value: mainSku + '-' + classModified  },
+            {
+                name: "variant[sku][]",
+                class: "variant_sku",
+                value: mainSku + "-" + classModified,
+            },
             { name: "variant[quantity][]", class: "variant_quantity" },
-            { name: "variant[price][]", class: "variant_price" , value: mainPrice},
+            {
+                name: "variant[price][]",
+                class: "variant_price",
+                value: mainPrice,
+            },
             { name: "variant[albums][]", class: "variant_albums" },
             { name: "productVariantValue[name][]", value: attributeString },
             { name: "productVariantValue[id][]", value: attributeId },
-        ]
+        ];
         $.each(inputHiddenFields, function (_, field) {
-            let $input = $("<input>").attr("type", "text").attr("name", field.name).addClass(field.class);
-            if(field.value){
+            let $input = $("<input>")
+                .attr("type", "text")
+                .attr("name", field.name)
+                .addClass(field.class);
+            if (field.value) {
                 $input.val(field.value);
             }
             $td.append($input);
@@ -210,40 +246,62 @@
 
         $row.append($("<td>").addClass("td-quantity").text("-"))
             .append($("<td>").addClass("td-price").text(mainPrice))
-            .append($("<td>").addClass("td-sku").text(mainSku + '-' + classModified))
-            .append($('<td>').addClass('table-actions text-center').append(
-                $('<button>').addClass('btn btn-sm btn-primary btnUpdateVariant mr-2').attr('type', 'button').append(
-                    $('<i>').addClass('fa fa-edit')
-                ),
-                $('<button>').addClass('btn btn-sm btn-danger btnDeleteVariant').attr('type', 'button').append(
-                    $('<i>').addClass('fa fa-trash')
-                )
-            ))
+            .append(
+                $("<td>")
+                    .addClass("td-sku")
+                    .text(mainSku + "-" + classModified)
+            )
+            .append(
+                $("<td>")
+                    .addClass("table-actions text-center")
+                    .append(
+                        $("<ul>")
+                            .addClass("list-inline me-auto mb-0")
+                            .append(
+                                $("<button>")
+                                    .addClass(
+                                        "btn btn-sm btn-primary btnUpdateVariant me-2"
+                                    )
+                                    .attr("type", "button")
+                                    .append($("<i>").addClass("ti ti-edit")),
+                                $("<button>")
+                                    .addClass(
+                                        "btn btn-sm btn-danger btnDeleteVariant"
+                                    )
+                                    .attr("type", "button")
+                                    .append($("<i>").addClass("ti ti-trash"))
+                            )
+                    )
+            )
             .append($td);
         return $row;
-    }
+    };
 
     TGNT.createTableHeader = (attributeTitle) => {
         let $thead = $("table.variantTable thead");
         $thead.addClass("animate__animated animate__fadeIn");
-    
-        let $row = $("<tr>").addClass('table-pri');
+
+        let $row = $("<tr>").addClass("table-pri");
         $row.append($("<th>").text("Hình ảnh").attr("scope", "col"));
-    
+
         attributeTitle.forEach((element) => {
             $row.append($("<th>").text(element));
         });
-    
+
         $row.append($("<th>").text("Số lượng").attr("scope", "col"));
         $row.append($("<th>").text("Giá tiền").attr("scope", "col"));
         $row.append($("<th>").text("SKU").attr("scope", "col"));
-        $row.append($("<th>").text("Hành động").attr("scope", "col").addClass("text-center"));
-    
+        $row.append(
+            $("<th>")
+                .text("Hành động")
+                .attr("scope", "col")
+                .addClass("text-center")
+        );
+
         $thead.html($row);
-    
+
         return $thead;
-    }
-    
+    };
 
     TGNT.generateVariants = (attributes) => {
         let results = [];
@@ -259,7 +317,7 @@
         helper({}, 0);
         return results;
     };
-    
+
     TGNT.updateVariant = () => {
         $(document).on("click", ".btnUpdateVariant", function () {
             let _this = $(this);
@@ -284,7 +342,7 @@
     TGNT.renderUpdateVariantHtml = (variantData) => {
         let variantAlbums = variantData.variant_albums.split(",");
         console.log(variantAlbums);
-    
+
         let html = `
             <tr class="updateVariantRow animate__animated animate__fadeIn">
                 <td colspan="10">
@@ -306,19 +364,16 @@
                                         <div class="upload-list mt-2">
                                             <ul id="sortableVariant" class="albums-variant row list-unstyled clearfix sortui ui-sortable" style="margin-bottom:0 !important">
                                                 <li class="col-xl-2 col-md-3 col-sm-6 mb-3 d-flex justify-content-center align-items-center">
-                                                    <a style="font-size: 50px" class="upload-picture-variant" data-name="variant_albums">
+                                                    <a style="font-size: 50px" class="upload-picture-variant text-primary" data-name="variant_albums">
                                                         <i class="fa-duotone fa-solid fa-cloud-arrow-up"></i>
                                                     </a>
                                                 </li>`;
-    
-        if (variantAlbums != "") {
-            variantAlbums.forEach((element) => {
-                html += TGNT.variantAlbumList(element);
-            });
-        }
-    
-        html += `
-                                            </ul>
+                                                if (variantAlbums != "") {
+                                                    variantAlbums.forEach((element) => {
+                                                        html += TGNT.variantAlbumList(element);
+                                                    });
+                                                }
+                                html += `</ul>
                                         </div>
                                     </div>
                                 </div>
@@ -327,13 +382,17 @@
                                 <div class="col-lg-4">
                                     <div class="mb-3 position-relative">
                                         <label class="form-label" for="sku">SKU <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="variant_sku" id="sku" value="${variantData.variant_sku}">
+                                        <input class="form-control" type="text" name="variant_sku" id="sku" value="${
+                                            variantData.variant_sku
+                                        }">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="mb-3 position-relative">
                                         <label class="form-label" for="quantity">Số lượng <span class="text-danger">*</span></label>
-                                        <input class="form-control int" type="text" name="variant_quantity" id="quantity" value="${TGNT.addCommas(variantData.variant_quantity)}">
+                                        <input class="form-control int" type="text" name="variant_quantity" id="quantity" value="${TGNT.addCommas(
+                                            variantData.variant_quantity
+                                        )}">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -341,7 +400,9 @@
                                         <label class="form-label" for="variant_price">Giá tiền <span class="text-danger">*</span></label>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend"><span class="input-group-text">$</span></div>
-                                            <input type="text" name="variant_price" value="${TGNT.addCommas(variantData.variant_price)}" id="variant_price" class="form-control int">
+                                            <input type="text" name="variant_price" value="${TGNT.addCommas(
+                                                variantData.variant_price
+                                            )}" id="variant_price" class="form-control int">
                                         </div>
                                     </div>
                                 </div>
@@ -350,7 +411,7 @@
                     </div>
                 </td>
             </tr>`;
-    
+
         return html;
     };
 
@@ -365,7 +426,7 @@
                             <input type="hidden" name="variant_albums[]" value="${album}">
                         </span>
                         <div class="btn_delete_albums_tgnt">
-                            <button class="delete-image btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            <button class="delete-image btn btn-icon btn-sm btn-danger"><i class="ti ti-trash"></i></button>
                         </div>
                     </div>
                 </li>`;
@@ -397,7 +458,10 @@
                     .get(),
             };
             $.each(variant, function (key, value) {
-                $(".updateVariantRow").prev().find(".variant_" + key).val(value);
+                $(".updateVariantRow")
+                    .prev()
+                    .find(".variant_" + key)
+                    .val(value);
             });
             TGNT.previewVariantTr(variant);
             TGNT.closeUpdateVariant();
@@ -406,18 +470,26 @@
 
     TGNT.previewVariantTr = (variant) => {
         let option = {
-            'quantity': variant.quantity,
-            'price': variant.price,
-            'sku': variant.sku,
-            'discount': variant.discount,
-        }
+            quantity: variant.quantity,
+            price: variant.price,
+            sku: variant.sku,
+            discount: variant.discount,
+        };
         $.each(option, function (key, value) {
-            $(".updateVariantRow").prev().find(".td-" + key).html(value);
+            $(".updateVariantRow")
+                .prev()
+                .find(".td-" + key)
+                .html(value);
         });
-        $(".updateVariantRow").prev().find(".td-thumbnail").attr("src", variant.albums[0]);
-        $(".updateVariantRow").prev().find(".td-thumbnai-pre").attr("href", variant.albums[0])
-
-    }
+        $(".updateVariantRow")
+            .prev()
+            .find(".td-thumbnail")
+            .attr("src", variant.albums[0]);
+        $(".updateVariantRow")
+            .prev()
+            .find(".td-thumbnai-pre")
+            .attr("href", variant.albums[0]);
+    };
 
     TGNT.addCommas = (nStr) => {
         nStr = String(nStr);
@@ -528,13 +600,13 @@
     TGNT.browseServerAlbumVariant = (data_name) => {
         var type = "Images";
         var finder = new CKFinder();
-    
+
         finder.resourceType = type;
         finder.selectActionFunction = function (fileUrl, data, allFiles) {
             let html = "";
             for (var i = 0; i < allFiles.length; i++) {
                 var image = allFiles[i].url;
-    
+
                 html += `
                     <li class="ui-state-default img_li_tgnt col-xl-2 col-md-3 col-sm-6 mb-3">
                         <div class="thumb img_albums_tgnt">
@@ -556,60 +628,88 @@
         };
         finder.popup();
     };
-    
-    TGNT.setupSelectMultiple = (callback) => {
-        if($('.selectVariant').length) {
-            let count = $('.selectVariant').length;
 
-            $('.selectVariant').each(function() {
+    TGNT.setupSelectMultiple = (callback) => {
+        if ($(".selectVariant").length) {
+            let count = $(".selectVariant").length;
+
+            $(".selectVariant").each(function () {
                 let _this = $(this);
-                let attributeCatalogueId = _this.attr('data-catid');
-                if(attributeValue != []) {
-                    $.get('/ajax/loadAttributeValue', {
-                        attributeValue: attributeValue,
-                        attributeCatalogueId: attributeCatalogueId
-                    }, function(data) {
-                        data.data.forEach(function(item) {
-                            var option = new Option(item.text, item.id, true, true);
-                            _this.append(option).trigger('change');
-                        });
-                        if(--count == 0 && callback) {
-                            callback();
+                let attributeCatalogueId = _this.attr("data-catid");
+                if (attributeValue != []) {
+                    $.get(
+                        "/ajax/loadAttributeValue",
+                        {
+                            attributeValue: attributeValue,
+                            attributeCatalogueId: attributeCatalogueId,
+                        },
+                        function (data) {
+                            data.data.forEach(function (item) {
+                                var option = new Option(
+                                    item.text,
+                                    item.id,
+                                    true,
+                                    true
+                                );
+                                _this.append(option).trigger("change");
+                            });
+                            if (--count == 0 && callback) {
+                                callback();
+                            }
                         }
-                    } );
+                    );
                 }
-                TGNT.getSelect2(_this)
+                TGNT.getSelect2(_this);
             });
         }
-    }
+    };
 
     TGNT.productVariant = () => {
-       variant = JSON.parse(atob(variant));
+        variant = JSON.parse(atob(variant));
         console.log(variant);
 
-        $(".variant-row").each(function (index,value) {
+        $(".variant-row").each(function (index, value) {
             let _this = $(this);
             let inputHiddenFields = [
-                { name: "variant[sku][]", class: "variant_sku", value: variant.sku[index] },
-                { name: "variant[quantity][]", class: "variant_quantity", value: variant.quantity[index] },
-                { name: "variant[price][]", class: "variant_price", value: variant.price[index] },
-                { name: "variant[albums][]", class: "variant_albums", value: variant.albums[index] },
+                {
+                    name: "variant[sku][]",
+                    class: "variant_sku",
+                    value: variant.sku[index],
+                },
+                {
+                    name: "variant[quantity][]",
+                    class: "variant_quantity",
+                    value: variant.quantity[index],
+                },
+                {
+                    name: "variant[price][]",
+                    class: "variant_price",
+                    value: variant.price[index],
+                },
+                {
+                    name: "variant[albums][]",
+                    class: "variant_albums",
+                    value: variant.albums[index],
+                },
                 // { name: "productVariantValue[name][]", value: variant[index].name },
                 // { name: "productVariantValue[id][]", value: variant[index].id },
-            ]
-            inputHiddenFields.forEach(element => {
-                _this.find(`input[name="${element.name}"]`).val(element.value ? element.value : 0);
+            ];
+            inputHiddenFields.forEach((element) => {
+                _this
+                    .find(`input[name="${element.name}"]`)
+                    .val(element.value ? element.value : 0);
             });
 
             let album = variant.albums[index];
-            let variantImage = (album) ? album.split(",")[0] : 'https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That' ;
+            let variantImage = album
+                ? album.split(",")[0]
+                : "https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That";
             console.log(variantImage);
             _this.find(".td-quantity").text(variant.quantity[index]);
             _this.find(".td-price").text(variant.price[index]);
             _this.find(".td-sku").text(variant.sku[index]);
-            _this.find(".td-thumbnail").attr("src",variantImage);
-            _this.find(".td-thumbnai-pre").attr("href",variantImage);
-
+            _this.find(".td-thumbnail").attr("src", variantImage);
+            _this.find(".td-thumbnai-pre").attr("href", variantImage);
         });
     };
 
@@ -624,8 +724,6 @@
         TGNT.updateVariant();
         TGNT.cancleVariantUpdate();
         TGNT.saveVariantUpdate();
-        TGNT.setupSelectMultiple(
-            () => TGNT.productVariant()
-        );
+        TGNT.setupSelectMultiple(() => TGNT.productVariant());
     });
 })(jQuery);

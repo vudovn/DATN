@@ -36,31 +36,26 @@
     };
 
     TGNT.checkOldValue = () => {
-        if(attribute_values != [] || attribute_values != null) {
-            attribute_values.forEach(value => {
+        if (attribute_values != [] || attribute_values != null) {
+            attribute_values.forEach((value) => {
                 $(".attribute_value_container").append(TGNT.renderHTML(value));
             });
         }
-    }
-    
+    };
+
     TGNT.renderHTML = (data = null) => {
         let html = "";
-        html +=`
-            <div class="input-group animate__animated animate__fadeInDown animate__faster mb-3">
-                <input type="text" name="attribute_value[][]" 
-                        class="form-control attribute_input" 
-                        placeholder="Nhập giá trị thuộc tính" 
-                        required
-                        value="${data ?? ''}"
-                        >
-                <div class="input-group-append">
-                    <button class="btn btn-danger remove_attribute_value" type="button">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </div>
-            </div>`;
+        html += `
+        <div class="input-group animate__animated animate__fadeInDown animate__faster mb-3">
+                                        <input type="text" class="form-control attribute_input"
+                                            placeholder="" name="attribute_value[][]"  value="${
+                                                data ?? ""
+                                            }"> 
+                                            <button class="btn btn-outline-danger remove_attribute_value" type="button"><i class="ti ti-trash"></i></button>
+                                    </div>
+           `;
         return html;
-    }
+    };
 
     $(document).ready(function () {
         TGNT.add_attribute_value();

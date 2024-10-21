@@ -17,7 +17,7 @@ class UserController extends Controller implements HasMiddleware
     use HasDynamicMiddleware;
     public static function middleware(): array
     {
-        return self::getMiddleware('Order'); 
+        return self::getMiddleware('User'); 
     }
     protected $userService;
     protected $userRepository;

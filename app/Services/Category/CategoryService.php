@@ -105,7 +105,6 @@ class CategoryService extends BaseService
     public function renderCategoryOptions($categories, $level = 0)
     {
         $html = '';
-
         foreach ($categories as $category) {
             $indent = str_repeat('&nbsp;', $level * 4);
             $html .= '<option value="' . $category->id . '">' . $indent . $category->name . '</option>';

@@ -21,12 +21,18 @@
                         <div class="attribute_value_container">
                             @isset($attribute->attributes)
                                 @foreach ($attribute->attributes as $item)
-                                    <div class="input-group animate__animated animate__fadeInDown animate__faster mb-3">
-                                        <input type="text" value="{{ $item->value }}" name="attribute_value[{{ $item->id }}][]" class="form-control attribute_input">
+                                    {{-- <div class="input-group animate__animated animate__fadeInDown animate__faster mb-3">
+                                        <input type="text" value="{{ $item->value }}"
+                                            name="attribute_value[{{ $item->id }}][]" class="form-control attribute_input">
                                         <div class="input-group-append">
                                             <span class="input-group-text bg-danger remove_attribute_value"
                                                 style="cursor: pointer"><i class="fas fa-trash"></i></span>
                                         </div>
+                                    </div> --}}
+                                    <div class="input-group animate__animated animate__fadeInDown animate__faster mb-3">
+                                        <input type="text" class="form-control attribute_input"
+                                            placeholder="Right Button" name="attribute_value[{{ $item->id }}][]" value="{{ $item->value }}"> 
+                                            <button class="btn btn-outline-danger remove_attribute_value" type="button"><i class="ti ti-trash"></i></button>
                                     </div>
                                 @endforeach
                             @endisset

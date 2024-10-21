@@ -31,7 +31,7 @@ class UserService extends BaseService {
             'sort' => $request->input('sort') 
                 ? array_map('trim', explode(',', $request->input('sort')))  
                 : ['id', 'desc'],
-            'perpage' => $request->integer('perpage') ?? 20,
+            'perpage' => $request->integer('perpage') ?? 10,
         ];
     }
 

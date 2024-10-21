@@ -123,3 +123,5 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 Route::get('/order-code', function () {
     return orderCode(7);});
+Route::get('/test', [AjaxDashboardController::class, 'test']);
+

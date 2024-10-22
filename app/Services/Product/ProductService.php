@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 
-
 class ProductService extends BaseService {
 
     protected $productRepository;
@@ -27,7 +26,6 @@ class ProductService extends BaseService {
             ],
             'condition' => [
                 'publish' => $request->integer('publish'),
-                // 'user_catalogue_id' => $request->integer('user_catalogue_id'),
             ],
             'sort' => $request->input('sort') 
                 ? array_map('trim', explode(',', $request->input('sort')))  
@@ -42,7 +40,6 @@ class ProductService extends BaseService {
         $users = $this->productRepository->pagination($agruments);
         return $users;
     }
-
 
     public function create($request){
         DB::beginTransaction();

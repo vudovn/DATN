@@ -1,61 +1,29 @@
 
 @if (session('success'))
     <script>
-        var Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        Toast.fire({
-            icon: 'success',
-            title: "{{ session('success') }}"
-        })
+        const VDmessage = new VdMessage();
+        VDmessage.show("success", "{{ session('success') }}")
     </script>
 @endif
 
 @if (session('error'))
     <script>
-        var Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        Toast.fire({
-            icon: 'error',
-            title: "{{ session('error') }}"
-        })
+        const VDmessage = new VdMessage();
+        VDmessage.show("error", "{{ session('error') }}")
     </script>
 @endif
 
 @if (session('warning'))
     <script>
-        var Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        Toast.fire({
-            icon: 'warning',
-            title: "{{ session('warning') }}"
-        })
+        const VDmessage = new VdMessage();
+         VDmessage.show("warning", "{{ session('warning') }}")
     </script>
 @endif
 
 @if (session('info'))
     <script>
-        var Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        Toast.fire({
-            icon: 'info',
-            title: "{{ session('info') }}"
-        })
+        const VDmessage = new VdMessage();
+        VDmessage.show("info", "{{ session('info') }}")
     </script>
 @endif
 

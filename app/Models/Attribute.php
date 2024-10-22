@@ -1,23 +1,21 @@
-<?php
-
+<?php 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\QueryScope;
 
 class Attribute extends Model
 {
-    use HasFactory, QueryScope;
+    use HasFactory;
 
     protected $fillable = [
-        'name',
+        'attribute_category_id',
+        'value',
         'publish',
-
     ];
 
-    public function attribute_values()
+    public function attribute_category()
     {
-        return $this->hasMany(AttributeValue::class);
+        return $this->belongsTo(AttributeCategory::class);
     }
 }

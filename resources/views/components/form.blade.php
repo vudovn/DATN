@@ -1,4 +1,5 @@
 @props(['config', 'model'])
+
 @php
     $action = ($config['method'] === 'edit') ? route( $config['model'].'.update', ['id' => $model->id]) : route($config['model'].'.store')
 @endphp

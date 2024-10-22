@@ -10,62 +10,54 @@
                         Thông tin chung
                     </div>
                     <div class="card-body">
+                        <div class="alert alert-primary" role="alert">
+                            <strong>Lưu ý:</strong> <span class="text-danger">(*)</span> là trường bắt buộc nhập
+                        </div>
                         <div class="row mb-3">
                             <div class="col-lg-6">
-                                <x-input :label="'Email'" :name="'email'" :value="$user->email ?? ''" :require="true" />
+                                <x-input :label="'Email'" :name="'email'" :value="$user->email ?? ''" :required="true" />
                             </div>
                             <div class="col-lg-6">
-                                <x-input :label="'Tên đầy đủ'" :name="'name'" :value="$user->name ?? ''" :require="true" />
+                                <x-input :label="'Tên đầy đủ'" :name="'name'" :value="$user->name ?? ''" :required="true" />
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-lg-6">
-                                <x-select :name="'user_catalogue_id'" :options="$userCatalogues" :root="'Chọn vai trò'" :required="true" :label="'Vai trò'"
-                                    :value="$user->user_catalogue_id ?? 0" />
+                                <label for="roles[]">Chọn vai trò <span class="text-danger">*</span></label>
+                                <select class="form-control js-choice-multiple" name="roles[]" multiple="multiple">
+                                    @foreach ($roles as $key => $role)
+                                        <option value="{{ $role->name }}"
+                                            {{ isset($user) && $user->roles->contains('name', $role->name) ? 'selected' : '' }}
+                                            {{ in_array($role->name, old('roles') ?? []) ? 'selected' : '' }}>
+                                            {{ $role->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('roles')
+                                    <small class="error text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="col-lg-6">
-                                <x-input :label="'Số điện thoại'" :name="'phone'" :value="$user->phone ?? ''" :require="true" />
+                                <x-input :label="'Số điện thoại'" :name="'phone'" :value="$user->phone ?? ''" :required="true" />
                             </div>
                         </div>
                         @if (isset($config['method']) && $config['method'] !== 'edit')
                             <div class="row mb-3">
                                 <div class="col-lg-6">
-                                    <x-input :label="'Mật khẩu'" :name="'password'" :value="''" :require="true"
+                                    <x-input :label="'Mật khẩu'" :name="'password'" :value="''" :required="true"
                                         :type="'password'" />
                                 </div>
                                 <div class="col-lg-6">
-                                    <x-input :label="'Mật khẩu xác nhận'" :name="'re_password'" :value="''" :require="true"
+                                    <x-input :label="'Mật khẩu xác nhận'" :name="'re_password'"  :required="true"
                                         :type="'password'" />
                                 </div>
                             </div>
                         @endif
-                        <div class="row mb-3">
-                            <div class="col-4 form-group">
-                                <label for="province" class="control-label">Tỉnh/Thành Phố</label>
-                                <select name="province" id="province" class="form-control select2">
-                                    <option value="" disabled selected>Chọn tỉnh/thành phố</option>
-                                    <option value="HaNoi">Hà Nội</option>
-                                    <option value="HoChiMinh">Hồ Chí Minh</option>
-                                </select>
-                            </div>
-                            <div class="col-4 form-group">
-                                <label for="district" class="control-label">Quận/Huyện</label>
-                                <select name="district" id="district" class="form-control select2">
-                                    <option value="" disabled selected>Chọn quận/huyện</option>
-                                    <option value="HaNoi">Hà Nội</option>
-                                    <option value="HoChiMinh">Hồ Chí Minh</option>
-                                </select>
-                            </div>
-                            <div class="col-4 form-group">
-                                <label for="ward" class="control-label">Phường/Xã</label>
-                                <select name="ward" id="ward" class="form-control select2">
-                                    <option value="" disabled selected>Chọn phường/xã</option>
-                                    <option value="HaNoi">Hà Nội</option>
-                                    <option value="HoChiMinh">Hồ Chí Minh</option>
-                                </select>
-                            </div>
+
+                        @include('admin.pages.user.user.components.location')
+                        <div class="col-lg-12">
+                            <x-input :label="'Địa chỉ cụ thể'" :name="'address'" :value="$user->address ?? ''" :required="false" />
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -75,5 +67,6 @@
                 <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.active')" :value="$user->publish ?? ''" />
             </div>
         </div>
+        <input type="hidden" name="page" value="{{ request()->get('page', 1) }}" />
     </x-form>
 @endsection

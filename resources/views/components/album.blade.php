@@ -9,12 +9,12 @@
             @endphp
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="upload-list mt-2 {{ isset($gallery) && $gallery != '' ? '' : 'hidden' }}">
+                    <div class="upload-list mt-2">
                         <ul id="sortable"
                             class="row align-items-center list-unstyled clearfix data-album sortui ui-sortable"
                             style="margin-bottom:0 !important">
                             <li class="col-xl-2 col-md-3 col-sm-6 mb-3 d-flex justify-content-center align-items-center">
-                                <a href="" style="font-size: 50px" class="upload-picture"
+                                <a href="#" style="font-size: 50px" class="upload-picture"
                                     data-name="{{ $name }}">
                                     <i class="fa-duotone fa-solid fa-cloud-arrow-up"></i>
                                 </a>
@@ -33,8 +33,8 @@
                                                     value="{{ $val }}">
                                             </span>
                                             <div class="text-center btn_delete_albums_tgnt">
-                                                <a class="delete-image btn btn-sm btn-danger">
-                                                    <i class="fa-solid fa-trash"></i>
+                                                <a class="delete-image btn btn-icon btn-sm btn-danger">
+                                                    <i class="ti ti-trash"></i>
                                                 </a>
                                             </div>
                                         </div>

@@ -23,16 +23,15 @@ class UserService extends BaseService {
         return [
             'keyword' => [
                 'search' => $request->input('keyword'),
-                'field' => ['name', 'email', 'phone', 'address']
+                'field' => ['name', 'email', 'phone', 'address','created_at'] //Muốn tìm kiếm thêm cột nào thì điền vào
             ],
             'condition' => [
                 'publish' => $request->integer('publish'),
-                'user_catalogue_id' => $request->integer('user_catalogue_id'),
             ],
             'sort' => $request->input('sort') 
                 ? array_map('trim', explode(',', $request->input('sort')))  
                 : ['id', 'desc'],
-            'perpage' => $request->integer('perpage') ?? 20,
+            'perpage' => $request->integer('perpage') ?? 10,
         ];
     }
 
@@ -40,8 +39,20 @@ class UserService extends BaseService {
         $agruments = $this->paginateAgrument($request);
         // dd($agruments);
         $cacheKey = 'pagination: ' . md5(json_encode($agruments));
-        
         $users = $this->userRepository->pagination($agruments);
+        return $users;
+    }
+
+    public function paginationCustomer($request){
+        $agruments = $this->paginateAgrument($request);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $users = $this->userRepository->paginationCustomer($agruments);
+        return $users;
+    }
+    public function paginationAdmin($request){
+        $agruments = $this->paginateAgrument($request);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $users = $this->userRepository->paginationAdmin($agruments);
         return $users;
     }
 
@@ -52,14 +63,19 @@ class UserService extends BaseService {
             $payload = $request->except(['_token', 'send', 're_password']);
             $payload['password'] = Hash::make($request->password);
             $user = $this->userRepository->create($payload);
-            //lỗi ở đây
+            // dd($user); //thử cái này xem nó có ra 1 cục không
+            // nó ra 1 cục rồi thì syncRoles luôn
+            if ($request->has('roles')) {
+                $user->syncRoles($request->input('roles')); // Đồng bộ vai trò
+            }
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
             echo $e->getMessage();die();
             // $this->log($e);
-            return false;
+            // return false;
         }
     }
 
@@ -79,16 +95,22 @@ class UserService extends BaseService {
         DB::beginTransaction();  
         try {
             $payload = $request->except(['_token', 'send', '_method']);
-            $user = $this->userRepository->update($id, $payload);
-            // User::create($data); chạy oke
-            // Role::create($user); chạy lỗi mọe trất
+            $user = $this->userRepository->update($id, $payload); //cái ni nó trả về true, false
+
+            // tìm user rồi add role cho hắn
+            $findUser = $this->userRepository->findById($id);
+
+            if ($request->has('roles')) {
+                $findUser->syncRoles($request->input('roles')); // Đồng bộ vai trò
+            }
+    
             DB::commit();
             return true;
         } catch (\Exception $e) {
            DB::rollback();
-            // echo $e->getMessage();die();
-            $this->log($e);
-            return false;
+            echo $e->getMessage();die();
+            // $this->log($e);
+            // return false;
         }
     }
 
@@ -105,7 +127,6 @@ class UserService extends BaseService {
             return false;
         }
     }
-
 
 
 }

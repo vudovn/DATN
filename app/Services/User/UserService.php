@@ -19,27 +19,31 @@ class UserService extends BaseService {
     }
 
 
-    private function paginateAgrument($request){
+    private function paginateAgrument($request)
+    {
+        // dd($request);
         return [
             'keyword' => [
-                'search' => $request->input('keyword'),
-                'field' => ['name', 'email', 'phone', 'address','created_at'] //Muốn tìm kiếm thêm cột nào thì điền vào
+                'search' => $request['keyword'] ?? '',
+                'field' => ['name', 'email', 'phone', 'address', 'created_at']
             ],
             'condition' => [
-                'publish' => $request->integer('publish'),
+                'publish' => isset($request['publish'])
+                    ? (int) $request['publish']
+                    : null,
             ],
-            'sort' => $request->input('sort') 
-                ? array_map('trim', explode(',', $request->input('sort')))  
-                : ['id', 'desc'],
-            'perpage' => $request->integer('perpage') ?? 10,
+            'sort' => isset($request['sort']) && $request['sort'] != 0
+                ? explode(',', $request['sort'])
+                : ['id', 'asc'],
+
+            'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
         ];
     }
 
-    public function paginate($request){
+    public function paginate($request)
+    {
         $agruments = $this->paginateAgrument($request);
-        // dd($agruments);
         $cacheKey = 'pagination: ' . md5(json_encode($agruments));
-        
         $users = $this->userRepository->pagination($agruments);
         return $users;
     }

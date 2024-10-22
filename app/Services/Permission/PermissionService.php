@@ -38,7 +38,6 @@ class PermissionService extends BaseService {
 
     public function paginate($request){
         $agruments = $this->paginateAgrument($request);
-        // dd($agruments);
         $cacheKey = 'pagination: ' . md5(json_encode($agruments));
         
         $users = $this->permissionRepository->pagination($agruments);

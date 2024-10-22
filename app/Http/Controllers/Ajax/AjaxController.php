@@ -18,7 +18,14 @@ class AjaxController extends Controller
         $this->attributeCategoryRepository = $attributeCategoryRepository;
         $this->attributeRepository = $attributeRepository;
     }
-
+    public function getData(Request $request)
+    {
+        $model = $request['model'];
+        // $request = json_decode(base64_decode($request->get('encodedParams')), true); // mã hoá :v
+        $Controller = "\\App\\Http\\Controllers\\admin\\" . ucfirst($model) . "Controller";
+        $data = app($Controller)->getData($request);
+        return $data;
+    }
     public function updateStatus(Request $request)
     {
         $data = $request->input();

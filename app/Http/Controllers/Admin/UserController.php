@@ -37,13 +37,18 @@ class UserController extends Controller implements HasMiddleware
     public function index(Request $request)
     {
         $users = $this->userService->paginate($request);
-        // dd(__('general.actions'));
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
         return view('admin.pages.user.user.index', compact(
             'config',
             'users',
         ));
+    }
+    public function getData($request)
+    {
+        $users = $this->userService->paginate($request);
+        $config = $this->config();
+        return view('admin.pages.user.user.components.table',compact('users','config'));
     }
     public function admin(Request $request)
     {

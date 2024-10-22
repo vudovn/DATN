@@ -1,8 +1,8 @@
 @if (isset($users) && count($users))
     @foreach ($users as $user)
-        {{-- @if (!$user->hasRole(['customer']))
+        @if (!$user->hasRole(['customer']))
             @continue
-        @endif --}}
+        @endif
         <tr class="animate__animated animate__fadeInDown animate__faster">
             <td class="">
                 @if ($user->id != auth()->id())
@@ -16,12 +16,11 @@
             <td>{{ $user->id }}</td>
             <td>
                 <a href="{{ $user->avatar }}" data-fancybox="gallery">
-                    <img loading="lazy" width="50" class="rounded" src=""
+                    <img loading="lazy" width="50" class="rounded" src="{{ $user->avatar }}"
                         alt="{{ $user->name }}">
-                    {{-- <img loading="lazy" width="50" class="rounded" src="{{ $user->avatar }}"
-                        alt="{{ $user->name }}"> --}}
                 </a>
             </td>
+
             <td>
                 <div class="row-name text-primary">{{ $user->name }}</div>
             </td>

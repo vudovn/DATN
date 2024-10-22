@@ -100,6 +100,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     /* AJAX ROUTE */
     Route::middleware(['checkPermission'])->group(function () {
         Route::prefix('{model}')->name('{model}.')->group(function () {
+            Route::get('/getData', [AjaxDashboardController::class, 'getData'])->name('ajax.dashboard.getData');
             Route::put('/actions', [AjaxDashboardController::class, 'updateMultiple'])->name('ajax.dashboard.changeStatusMultiple');
             Route::delete('/actions', [AjaxDashboardController::class, 'deleteMultiple'])->name('ajax.dashboard.deleteMultiple');
             Route::delete('/deleteItem', [AjaxDashboardController::class, 'deleteItem'])->name('ajax.dashboard.deleteItem');

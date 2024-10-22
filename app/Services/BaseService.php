@@ -51,7 +51,7 @@ class BaseService {
             DB::rollback();
             echo $e->getMessage();die();
             // $this->log($e);
-            return false;
+            // return false;
         }
     }
 
@@ -71,7 +71,7 @@ class BaseService {
            DB::rollback();
             echo $e->getMessage();die();
             // $this->log($e);
-            return false;
+            // return false;
         }
     }
 

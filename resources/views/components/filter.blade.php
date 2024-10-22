@@ -1,7 +1,7 @@
-@props(['createButton', 'options', 'action', 'method'])
+@props(['createButton', 'options', 'action', 'method', 'model'])
 
 <div class="d-flex justify-content-between animate__animated animate__fadeIn">
-    <div class="filter">
+    <div id="filter" data-model="{{$model ?? ''}}">
         <form action="">
             <div class="d-flex flex-wrap gap-2 align-items-center">
                 @if (isset($options) && count($options) && is_array($options))
@@ -23,13 +23,13 @@
                 @endif
 
                 <div class="form-group col-auto">
-                    <input type="text" name="keyword" value="{{ request('keyword') ?: old('keyword') }}"
+                    <input type="text" name="keyword" id="keyword"value="{{ request('keyword') ?: old('keyword') }}"
                         class="form-control" placeholder="Nhập từ khóa">
                 </div>
 
-                <div class="form-group col-auto">
-                    <button type="submit" name="filter" class="btn btn-primary"><i data-feather="search"></i></button>
-                </div>
+                {{-- <div class="form-group col-auto">
+                    <button type="submit" name="filter" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div> --}}
             </div>
         </form>
     </div>

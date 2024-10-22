@@ -83,9 +83,8 @@ class UserController extends Controller implements HasMiddleware
 
     public function update(UpdateUserRequest $request, $id)
     {
-        // Cập nhật thông tin người dùng
-        $user = $this->userService->update($request, $id);
-        if ($user) {
+        // $user = $this->userService->update($request, $id);
+        if ($this->userService->update($request, $id)) {
             return redirect()->route('user.index', ['page' => $request->page])->with('success', 'Cập nhật người dùng thành công.');
         }
         return  redirect()->route('user.index')->with('error', 'Cập nhật người dùng thất bại');

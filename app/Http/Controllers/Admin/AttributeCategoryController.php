@@ -34,7 +34,7 @@ class AttributeCategoryController extends Controller implements HasMiddleware
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
         $attributes = $this->attributeCategoryService->paginate($request);
-        return view('admin.pages.product.attribute.attribute.index', compact(
+        return view('admin.pages.product.attribute.index', compact(
             'config',
             'attributes'
         ));
@@ -45,7 +45,7 @@ class AttributeCategoryController extends Controller implements HasMiddleware
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';
-        return view('admin.pages.product.attribute.attribute.save', compact(
+        return view('admin.pages.product.attribute.save', compact(
             'config'
         ));
     }

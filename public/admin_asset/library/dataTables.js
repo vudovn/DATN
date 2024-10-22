@@ -8,7 +8,7 @@ $(document).ready(function () {
         keyword: null,
         filter: null,
     };
-    fetchData(); // render data default
+    fetchData();
     getModel();
     function getModel() {
         let _this = $("#filter");
@@ -16,8 +16,10 @@ $(document).ready(function () {
         return model;
     }
     function fetchData(params = {}) {
+        $("#tbody").html(
+            `<tr><td colspan="100%" class="text-center"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div></td></tr>`
+        );
         const model = getModel();
-        // const encodedParams = btoa(JSON.stringify({ ...array, ...params })); // mã hoá :v
         $.ajax({
             type: "GET",
             url: `/${model}/getData`,
@@ -27,7 +29,10 @@ $(document).ready(function () {
                 $("#tbody").html(data);
             },
             error: function (xhr, status, error) {
-                // console.log(error);
+                console.log(error);
+                $("#tbody").html(
+                    `<tr><td colspan="100%" class="text-center">Lỗi khi tải dữ liệu</td></tr>`
+                );
             },
         });
     }

@@ -13,7 +13,7 @@
 <html lang="en">
 
 <head>
-    @include('admin.components.head')
+    @include('admin.components.head_cdn')
 </head>
 
 <body data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="ltr"
@@ -30,7 +30,7 @@
     </div>
     @include('admin.components.footer')
     @include('admin.components.alert')
-    @include('admin.components.script')
+    @include('admin.components.script_cdn')
 </body>
 
 </html>

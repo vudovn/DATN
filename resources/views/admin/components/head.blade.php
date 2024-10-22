@@ -16,13 +16,11 @@
 <link rel="stylesheet" href="{{ asset('admin_asset/fonts/material.css') }}" />
 <link rel="stylesheet" href="{{ asset('admin_asset/css/plugins/animate.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('admin_asset/css/style.css') }}" id="main-style-link" />
-
 <script src="{{ asset('admin_asset/js/tech-stack.js') }}"></script>
-
 <link rel="stylesheet" href="{{ asset('admin_asset/css/style-preset.css') }}" />
 <link rel="stylesheet" href="{{ asset('admin_asset/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('admin_asset\plugins\select2\css\select2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('admin_asset/css/customize.css') }}"> 
+<link rel="stylesheet" href="{{ asset('admin_asset/css/customize.css') }}">
 
 <script src="{{ asset('admin_asset/js/jquery-3.1.1.min.js') }}"></script>
 
@@ -30,10 +28,10 @@
 <script src="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('admin_asset/library/cusSweetAlert.js') }}"></script>
 
-<link href="{{ asset('admin_asset/plugins/fancybox/fancybox.css') }}" rel="stylesheet" >
+<link href="{{ asset('admin_asset/plugins/fancybox/fancybox.css') }}" rel="stylesheet">
 <script src="{{ asset('admin_asset/plugins/fancybox/fancybox.umd.js') }}"></script>
 
-<link href="{{ asset('admin_asset/plugins/message/message.css') }}" rel="stylesheet" >
+<link href="{{ asset('admin_asset/plugins/message/message.css') }}" rel="stylesheet">
 <script src="{{ asset('admin_asset/plugins/message/message.js') }}"></script>
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">

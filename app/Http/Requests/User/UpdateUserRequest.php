@@ -25,8 +25,8 @@ class UpdateUserRequest extends FormRequest
             'email' => 'required|email|unique:users,email, ' . $this->id . '',
             'name' => 'required',
             'phone' => 'required|unique:users,phone, ' . $this->id . '',
-            'roles' => 'required|array|min:1',
-            'roles.*' => 'required',
+            // 'roles' => 'required|array|min:1',
+            // 'roles.*' => 'required',
 
         ];
     }
@@ -40,9 +40,9 @@ class UpdateUserRequest extends FormRequest
             'name.required' => 'Không được để trống tên',
             'phone.required' => 'Không được để trống số điện thoại',
             'phone.unique' => 'Số điện thoại đã tồn tại ',
-            'roles.required' => 'Không được để trống vai trò',
-            'roles.array' => 'Vai trò phải là một mảng',
-            'roles.*.exists' => 'Vai trò không hợp lệ',
+            // 'roles.required' => 'Không được để trống vai trò',
+            // 'roles.array' => 'Vai trò phải là một mảng',
+            // 'roles.*.exists' => 'Vai trò không hợp lệ',
         ];
     }
 }

@@ -1,28 +1,4 @@
-    
-    {{-- <meta charset="utf-8">
-<link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
-<link rel="stylesheet" href="{{ asset('admin_asset/css/color.css') }}">
-<link rel="stylesheet" href="{{ asset('admin_asset/plugins/fontawesome-pro/all.min.css') }}">
-<link rel="stylesheet" href="https://atugatran.github.io/FontAwesome6Pro/css/all.min.css" >
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-<link rel="stylesheet" href="{{ asset('admin_asset/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('admin_asset/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-<link rel="stylesheet" href="{{ asset('admin_asset/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-<link rel="stylesheet" href="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('admin_asset/plugins/tagify/tagify.css') }}">
-<link rel="stylesheet" href="{{ asset('admin_asset/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('admin_asset\plugins\select2\css\select2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('admin_asset/css/adminlte.min2167.css?v=3.2.0') }}">
-
-
---}}
-
-
-
 <title>ADMIN</title>
-
 <!-- [Meta] -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta charset="utf-8" />

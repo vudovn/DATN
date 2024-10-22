@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="{{ asset('admin_asset/css/style.css') }}" id="main-style-link" />
     <script src="{{ asset('admin_asset/js/tech-stack.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('admin_asset/css/style-preset.css') }}" />
+    <script src="{{ asset('admin_asset/js/jquery-3.1.1.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.css') }}">
+    <script src="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('admin_asset/library/cusSweetAlert.js') }}"></script>
 </head>
 
 <body data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="ltr"
@@ -80,7 +84,7 @@
                                 <label class="form-check-label text-muted" for="customCheckc1">Nhớ tôi?</label>
                             </div>
                             <h6 class="text-secondary f-w-400 mb-0">
-                                <a href="#">Quên mật khẩu?</a>
+                                <a href="{{ route('auth.admin.forget') }}">Quên mật khẩu?</a>
                             </h6>
                         </div>
                         <div class="d-grid mt-4">
@@ -95,6 +99,8 @@
             </div>
         </div>
     </div>
+
+    @include('admin.components.alert')
     <!-- [ Main Content ] end -->
     <!-- Required Js -->
     <script src="{{ asset('admin_asset/js/plugins/popper.min.js') }}"></script>

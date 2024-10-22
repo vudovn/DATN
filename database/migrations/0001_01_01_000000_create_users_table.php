@@ -17,15 +17,19 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('avatar')->nullable();
+            $table->string('phone')->nullable();
             $table->boolean('publish')->default(2);
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('province_id',20)->charset('utf8mb4')->collation('utf8mb4_general_ci')->nullable();
-            $table->string('district_id',20)->charset('utf8mb4')->collation('utf8mb4_general_ci')->nullable();
-            $table->string('ward_id',20)->charset('utf8mb4')->collation('utf8mb4_general_ci')->nullable();
+            $table->string('province_id',20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
+            $table->string('district_id',20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
+            $table->string('ward_id',20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
             $table->string('address')->nullable();
             $table->rememberToken();
             $table->timestamps();
             
+            $table->foreign('province_id')->references('code')->on( 'provinces')->onDelete('cascade');
+            $table->foreign('district_id')->references('code')->on('districts')->onDelete('cascade');
+            $table->foreign('ward_id')->references('code')->on('wards')->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

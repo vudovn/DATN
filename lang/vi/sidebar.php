@@ -13,7 +13,7 @@ return [
                 ],
                 [
                     'name' => 'Danh sách nhân viên',
-                    'path' => route('user.index')
+                    'path' => route('user.admin.index')
                 ],
             ]
         ],
@@ -62,7 +62,7 @@ return [
             'module' => [
                 [
                     'name' => 'Quản lý tình trạng',
-                    'path' => route('admin.pages.order.index')
+                    'path' => route('order.index')
                 ]
             ]
         ]

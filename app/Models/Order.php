@@ -27,10 +27,20 @@ class Order extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
-    public function shipping(){
-        return $this->belongsTo(Shipping::class, 'shipping_id');
-    }
+    // public function shipping(){
+    //     return $this->belongsTo(Shipping::class, 'shipping_id');
+    // }
     public function orderDetails() {
         return $this->hasMany(OrderDetail::class, 'order_id');
+    }
+
+    public function province(){
+        return $this->belongsTo(Province::class, 'province_id', 'code');
+    }
+    public function district(){
+        return $this->belongsTo(District::class, 'district_id', 'code');
+    }
+    public function ward(){
+        return $this->belongsTo(Ward::class, 'ward_id', 'code');
     }
 }

@@ -2,6 +2,7 @@
 namespace App\Repositories\User;
 use App\Repositories\BaseRepository;
 use App\Models\User;
+use Spatie\Permission\Traits\HasRoles;
 
 class UserRepository extends BaseRepository{
     
@@ -11,6 +12,30 @@ class UserRepository extends BaseRepository{
         User $model
     ){
         $this->model = $model;
+    }
+
+    public function paginationCustomer(array $params = []){
+        return $this->model
+                    ->condition($params['condition'] ?? [])
+                    ->keyword($params['keyword'] ?? [])
+                    ->orderBy($params['sort'][0], $params['sort'][1])
+                    ->whereHas('roles', function($q){
+                        $q->where('name', 'customer');
+                    })
+                    ->paginate($params['perpage']);
+                    
+    }
+
+    public function paginationAdmin(array $params = []){
+        return $this->model
+                    ->condition($params['condition'] ?? [])
+                    ->keyword($params['keyword'] ?? [])
+                    ->orderBy($params['sort'][0], $params['sort'][1])
+                    ->whereDoesntHave('roles', function($q){
+                        $q->where('name', 'customer');
+                    })
+                    ->paginate($params['perpage']);
+                    
     }
 
 

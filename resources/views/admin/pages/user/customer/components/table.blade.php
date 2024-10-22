@@ -1,14 +1,17 @@
 @if (isset($users) && count($users))
     @foreach ($users as $user)
+        @if (!$user->hasRole(['customer']))
+            @continue
+        @endif
         <tr class="animate__animated animate__fadeInDown animate__faster">
             <td class="">
-                <div class="form-check">
-                    <input class="form-check-input input-primary input-checkbox checkbox-item alotest"
-                        type="checkbox" id="customCheckbox{{ $user->id }}"
-                        value="{{ $user->id }}">
-                    <label class="form-check-label"
-                        for="ustomCheckbox{{ $user->id }}"></label>
-                </div>
+                @if ($user->id != auth()->id())
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input input-checkbox checkbox-item" type="checkbox"
+                            value="{{ $user->id }}" id="customCheckbox{{ $user->id }}">
+                        <label for="customCheckbox{{ $user->id }}" class="custom-control-label"></label>
+                    </div>
+                @endif
             </td>
             <td>{{ $user->id }}</td>
             <td>
@@ -17,6 +20,7 @@
                         alt="{{ $user->name }}">
                 </a>
             </td>
+
             <td>
                 <div class="row-name text-primary">{{ $user->name }}</div>
             </td>
@@ -51,13 +55,13 @@
             </td>
         </tr>
     @endforeach
-    <tr class="animate__animated animate__fadeInDown animate__faster">
+    <tr >
         <td colspan="100">
             {!! $users->links('pagination::bootstrap-4') !!}
         </td>
     </tr>
-    @else
+    {{-- @else
 <tr>
     <td colspan="100" class="text-center">Không có dữ liệu</td>
-</tr>
+</tr> --}}
 @endif

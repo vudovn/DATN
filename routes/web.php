@@ -44,7 +44,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     });
 
     /* ATTRIBUTE ROUTE */
-    Route::prefix('product/attribute-category')->name('attributeCategory.')->group(function () {
+    Route::prefix('attributeCategory')->name('attributeCategory.')->group(function () {
         Route::get('/index', [AttributeCategoryController::class, 'index'])->name('index');
         Route::get('/create', [AttributeCategoryController::class, 'create'])->name('create');
         Route::post('/store', [AttributeCategoryController::class, 'store'])->name('store');
@@ -100,6 +100,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     /* AJAX ROUTE */
     Route::middleware(['checkPermission'])->group(function () {
         Route::prefix('{model}')->name('{model}.')->group(function () {
+            Route::get('/getData', [AjaxDashboardController::class, 'getData'])->name('ajax.dashboard.getData');
             Route::put('/actions', [AjaxDashboardController::class, 'updateMultiple'])->name('ajax.dashboard.changeStatusMultiple');
             Route::delete('/actions', [AjaxDashboardController::class, 'deleteMultiple'])->name('ajax.dashboard.deleteMultiple');
             Route::delete('/deleteItem', [AjaxDashboardController::class, 'deleteItem'])->name('ajax.dashboard.deleteItem');
@@ -118,6 +119,8 @@ Route::get('ajax/loadAttributeValue', [AjaxDashboardController::class, 'loadAttr
 
 Route::get('/admin', [AuthController::class, 'index'])->name('auth.index')->middleware('unauthenticated');
 Route::post('/admin', [AuthController::class, 'login'])->name('auth.login');
+Route::get('/admin/forget-password', [AuthController::class, 'forget'])->name('auth.admin.forget');
+Route::get('/admin/change-password', [AuthController::class, 'change'])->name('auth.admin.change');
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 

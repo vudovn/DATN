@@ -14,7 +14,7 @@
 <script src="{{ asset('admin_asset/plugins/ckfinder/ckfinder.js') }}"></script>
 <script src="{{ asset('admin_asset/library/finder.js') }}"></script>
 <script src="{{ asset('admin_asset/library/seo.js') }}"></script>
-
+<script src="/admin_asset/library/dataTables.js"></script>
 <script src="{{ asset('admin_asset/library/library.js') }}"></script>
 @if (isset($config['js']) && count($config['js']))
     @foreach ($config['js'] as $key => $val)
@@ -52,12 +52,15 @@
 
 <script>
    $(document).ready(function() {
-        new Choices('.js-choice-multiple', {
-            removeItemButton: true,
+        if($('.js-choice-multiple').length || $('.js-choice').length){
+            new Choices('.js-choice-multiple', {
+                removeItemButton: true,
+                allowHTML: true,
+            });
+            new Choices('.js-choice',{
             allowHTML: true,
         });
-        new Choices('.js-choice',{
-            allowHTML: true,
-        });
+        }
+       
    });
 </script>

@@ -10,8 +10,8 @@
                 },
                 target: _this.attr("data-target"),
             };
-            $('.' + option.target).val(0);
-            TGNT.sendDataTogetLocation(option); 
+            $("." + option.target).val(0);
+            TGNT.sendDataTogetLocation(option);
         });
     };
 
@@ -27,7 +27,7 @@
                 if (district_id != "" && option.target == "districts") {
                     $(".districts").val(district_id).trigger("change");
                 }
-    
+
                 if (ward_id != "" && option.target == "wards") {
                     $(".wards").val(ward_id).trigger("change");
                 }
@@ -43,10 +43,9 @@
             },
         });
     };
-    
 
     TGNT.loadLocation = () => {
-        if (province_id != "") {
+        if (typeof province_id !== 'undefined' && province_id) {
             $(".province").val(province_id).trigger("change");
         }
     };

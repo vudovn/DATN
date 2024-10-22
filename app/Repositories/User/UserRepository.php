@@ -19,9 +19,7 @@ class UserRepository extends BaseRepository{
                     ->condition($params['condition'] ?? [])
                     ->keyword($params['keyword'] ?? [])
                     ->orderBy($params['sort'][0], $params['sort'][1])
-                    ->whereHas('roles', function($q){
-                        $q->where('name', 'customer');
-                    })
+                    ->whereDoesntHave('roles')
                     ->paginate($params['perpage']);
                     
     }
@@ -31,11 +29,8 @@ class UserRepository extends BaseRepository{
                     ->condition($params['condition'] ?? [])
                     ->keyword($params['keyword'] ?? [])
                     ->orderBy($params['sort'][0], $params['sort'][1])
-                    ->whereDoesntHave('roles', function($q){
-                        $q->where('name', 'customer');
-                    })
-                    ->paginate($params['perpage']);
-                    
+                    ->whereHas('roles')
+                    ->paginate($params['perpage']);       
     }
 
 

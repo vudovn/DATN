@@ -46,6 +46,12 @@ class OrderController extends Controller  implements HasMiddleware
             'config'
         ));
     }
+    public function getData($request)
+    {
+        $orders = $this->orderService->paginate($request);
+        $config = $this->config();
+        return view('admin.pages.order.components.table',compact('orders','config'));
+    }
     public function edit(string $id){
         $order = $this->orderRepository->findById($id, ['orderDetails']);
         $order_details = $order->orderDetails;

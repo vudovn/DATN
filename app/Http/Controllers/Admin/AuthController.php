@@ -33,6 +33,14 @@ class AuthController extends Controller{
         ])->onlyInput('email');
     }
 
+    public function forget() {
+        return view('admin.auth.forget');
+    }
+    public function change() {
+        return view('admin.auth.change');
+    }
+
+
     public function logout(Request $request){
         Auth::logout();
         $request->session()->invalidate();

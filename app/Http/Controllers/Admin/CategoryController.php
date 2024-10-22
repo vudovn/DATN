@@ -28,10 +28,16 @@ class CategoryController extends Controller
         $categories = $this->categoryService->paginate($request);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
-        return view('admin.pages.category.category.index', compact(
+        return view('admin.pages.category.index', compact(
             'config',
             'categories'
         ));
+    }
+    public function getData($request)
+    {
+        $categories = $this->categoryService->paginate($request);
+        $config = $this->config();
+        return view('admin.pages.category.components.table',compact('categories','config'));
     }
     public function create()
     {
@@ -41,7 +47,7 @@ class CategoryController extends Controller
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';
-        return view('admin.pages.category.category.save', compact(
+        return view('admin.pages.category.save', compact(
             'config',
             'categories',
             'categoryOptions'
@@ -95,7 +101,7 @@ class CategoryController extends Controller
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('update');
         $config['method'] = 'edit';
-        return view('admin.pages.category.category.save', compact(
+        return view('admin.pages.category.save', compact(
             'config',
             'category',
             'categories',
@@ -111,7 +117,7 @@ class CategoryController extends Controller
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('delete');
         $config['method'] = 'delete';
-        return view('admin.pages.category.category.delete', compact(
+        return view('admin.pages.category.delete', compact(
             'config',
             'category'
         ));

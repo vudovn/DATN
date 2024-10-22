@@ -36,14 +36,20 @@ class UserController extends Controller implements HasMiddleware
 
     public function index(Request $request)
     {
+        $users = $this->userService->paginate($request);
         $users = $this->userService->paginationCustomer($request);
-        // dd(__('general.actions'));
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
         return view('admin.pages.user.user.index', compact(
             'config',
             'users',
         ));
+    }
+    public function getData($request)
+    {
+        $users = $this->userService->paginate($request);
+        $config = $this->config();
+        return view('admin.pages.user.user.components.table',compact('users','config'));
     }
     public function admin(Request $request)
     {
@@ -83,9 +89,8 @@ class UserController extends Controller implements HasMiddleware
 
     public function update(UpdateUserRequest $request, $id)
     {
-        // Cập nhật thông tin người dùng
-        $user = $this->userService->update($request, $id);
-        if ($user) {
+        // $user = $this->userService->update($request, $id);
+        if ($this->userService->update($request, $id)) {
             return redirect()->route('user.index', ['page' => $request->page])->with('success', 'Cập nhật người dùng thành công.');
         }
         return  redirect()->route('user.index')->with('error', 'Cập nhật người dùng thất bại');
@@ -94,6 +99,7 @@ class UserController extends Controller implements HasMiddleware
     public function edit($id)
     {
         $user  = $this->userRepository->findById($id);
+        // $user  = $this->userRepository->findById($id, ['province', 'district', 'ward']);
         $provinces = $this->provinceRepository->getAllProvinces(); // Lấy danh sách tỉnh
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('update');

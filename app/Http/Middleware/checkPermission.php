@@ -22,7 +22,13 @@ class checkPermission
         $model = $request->route('model');
         $currentAction = explode('Controller@', class_basename(Route::currentRouteAction()));
         $method = preg_split('/(?=[A-Z])/', $currentAction[1]);
-        $action = $method[0] === 'store' ? 'create' : ($method[0] === 'update' ? 'edit' : $method[0]);
+        // $action = $method[0] === 'store' ? 'create' : ($method[0] === 'update' ? 'edit' : $method[0]);
+        $action = match ($method[0]) {
+            'store' => 'create',
+            'update' => 'edit',
+            'show', 'get' => 'index',
+            default => $method[0], 
+        };
         $permission = $model != null ? $permission = $model . ' ' . $action : $permission = $currentAction[0] . ' ' . $action;
         if (Auth::user()->hasRole('Super Admin')) {
             return $next($request);

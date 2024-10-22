@@ -37,7 +37,12 @@ class ProductController extends Controller implements HasMiddleware
             'products'
         ));
     }
-
+    public function getData($request)
+    {
+        $products = $this->productService->paginate($request);
+        $config = $this->config();
+        return view('admin.pages.product.product.components.table',compact('products','config'));
+    }
     public function create(){
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');

@@ -118,6 +118,8 @@ Route::get('ajax/loadAttributeValue', [AjaxDashboardController::class, 'loadAttr
 
 Route::get('/admin', [AuthController::class, 'index'])->name('auth.index')->middleware('unauthenticated');
 Route::post('/admin', [AuthController::class, 'login'])->name('auth.login');
+Route::get('/admin/forget-password', [AuthController::class, 'forget'])->name('auth.admin.forget');
+Route::get('/admin/change-password', [AuthController::class, 'change'])->name('auth.admin.change');
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 

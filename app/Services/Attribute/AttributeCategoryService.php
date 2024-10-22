@@ -26,17 +26,19 @@ class AttributeCategoryService extends BaseService {
     private function paginateAgrument($request){
         return [
             'keyword' => [
-                'search' => $request->input('keyword'),
-                'field' => ['name']
+                'search' => $request['keyword'] ?? '',
+                'field' => ['name','value'],
             ],
             'condition' => [
-                'publish' => $request->integer('publish'),
+                'publish' => isset($request['publish'])
+                    ? (int) $request['publish']
+                    : null,
             ],
-            'sort' => $request->input('sort') 
-                ? array_map('trim', explode(',', $request->input('sort')))  
-                : ['id', 'desc'],
-            'perpage' => $request->integer('perpage') ?? 10,
-        ];
+            'sort' => isset($request['sort']) && $request['sort'] != 0
+                ? explode(',', $request['sort'])
+                : ['id', 'asc'],
+                'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
+            ];
     }
 
     public function paginate($request){

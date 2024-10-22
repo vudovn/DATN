@@ -39,7 +39,7 @@ $(document).ready(function () {
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(function () {
             fetchData({ keyword });
-        }, 1000);
+        }, 500);
     });
 
     // Filter form

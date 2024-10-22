@@ -26,17 +26,18 @@ class CategoryService extends BaseService
     {
         return [
             'keyword' => [
-                'search' => $request->input('keyword'),
+                'search' => $request['keyword'] ?? '',
                 'field' => ['name']
             ],
             'condition' => [
-                'publish' => $request->integer('publish'),
-                // 'user_catalogue_id' => $request->integer('user_catalogue_id'),
+                'publish' => isset($request['publish'])
+                    ? (int) $request['publish']
+                    : null,
             ],
-            'sort' => $request->input('sort')
-                ? array_map('trim', explode(',', $request->input('sort')))
+            'sort' => isset($request['sort']) && $request['sort'] != 0
+                ? explode(',', $request['sort'])
                 : ['id', 'asc'],
-            'perpage' => $request->integer('perpage') ?? 20,
+            'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
         ];
     }
 

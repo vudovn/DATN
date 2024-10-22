@@ -5,21 +5,21 @@
         @endif --}}
         <tr class="animate__animated animate__fadeInDown animate__faster">
             <td class="">
-                @if ($user->id != auth()->id())
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input input-checkbox checkbox-item" type="checkbox"
-                            value="{{ $user->id }}" id="customCheckbox{{ $user->id }}">
-                        <label for="customCheckbox{{ $user->id }}" class="custom-control-label"></label>
-                    </div>
-                @endif
+                <div class="form-check">
+                    <input class="form-check-input input-primary input-checkbox checkbox-item alotest"
+                        type="checkbox" id="customCheckbox{{ $user->id }}"
+                        value="{{ $user->id }}">
+                    <label class="form-check-label"
+                        for="ustomCheckbox{{ $user->id }}"></label>
+                </div>
             </td>
             <td>{{ $user->id }}</td>
             <td>
                 <a href="{{ $user->avatar }}" data-fancybox="gallery">
-                    <img loading="lazy" width="50" class="rounded" src=""
-                        alt="{{ $user->name }}">
-                    {{-- <img loading="lazy" width="50" class="rounded" src="{{ $user->avatar }}"
+                    {{-- <img loading="lazy" width="50" class="rounded" src=""
                         alt="{{ $user->name }}"> --}}
+                    <img loading="lazy" width="50" class="rounded" src="{{ $user->avatar }}"
+                        alt="{{ $user->name }}">
                 </a>
             </td>
             <td>
@@ -56,13 +56,13 @@
             </td>
         </tr>
     @endforeach
-    <tr >
+    <tr class="animate__animated animate__fadeInDown animate__faster">
         <td colspan="100">
             {!! $users->links('pagination::bootstrap-4') !!}
         </td>
     </tr>
-    {{-- @else
+    @else
 <tr>
     <td colspan="100" class="text-center">Không có dữ liệu</td>
-</tr> --}}
+</tr>
 @endif

@@ -66,14 +66,13 @@
     };
 
     TGNT.checkBoxItem = () => {
-        if ($(".checkbox-item").length) {
-            $(document).on("click", ".checkbox-item", function () {
-                let _this = $(this);
-                TGNT.changeBackgroud(_this);
-                TGNT.allChecked();
-                TGNT.handleMultipleAction();
-            });
-        }
+        $(document).on("change", ".checkbox-item", function () {
+            let _this = $(this);
+            console.log("ádasd");
+            TGNT.changeBackgroud(_this);
+            TGNT.allChecked();
+            TGNT.handleMultipleAction();
+        });
     };
 
     TGNT.changeBackgroud = (input) =>
@@ -165,7 +164,11 @@
                                             .find(".js-switch")
                                             .attr("checked", isActive);
 
-                                            TGNT.changeBackgroud($(".js-switch-" + ids[i]).parents("tr"));
+                                        TGNT.changeBackgroud(
+                                            $(".js-switch-" + ids[i]).parents(
+                                                "tr"
+                                            )
+                                        );
                                     }
                                 } else {
                                     for (let i = 0; i < ids.length; i++) {
@@ -180,7 +183,10 @@
                                 TGNT.hideActions();
                                 $(".table").find("tr").removeClass("active-bg");
 
-                                VDmessage.show("success", "Thực hiện thành công!");
+                                VDmessage.show(
+                                    "success",
+                                    "Thực hiện thành công!"
+                                );
                             },
                             error: function (error) {
                                 console.error(error);
@@ -290,7 +296,6 @@
 
     TGNT.quick_update = () => {
         $(document).ready(function () {
-
             $(".quick_update").on("dblclick", function () {
                 let inputUpdate = $("#" + $(this).data("input-id"));
                 inputUpdate.removeClass("hidden").focus();
@@ -330,10 +335,16 @@
                             dataType: "JSON",
                             success: () => {
                                 _this.text(value || "...");
-                                VDmessage.show("success", "Cập nhật thành công!");
+                                VDmessage.show(
+                                    "success",
+                                    "Cập nhật thành công!"
+                                );
                             },
                             error: (xhr) => {
-                                VDmessage.show("error", xhr.responseJSON.message);
+                                VDmessage.show(
+                                    "error",
+                                    xhr.responseJSON.message
+                                );
                             },
                         });
                     }

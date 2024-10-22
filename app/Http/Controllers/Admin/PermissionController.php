@@ -45,7 +45,13 @@ class PermissionController extends Controller implements HasMiddleware
             'roles'
         ));
     }
-
+    public function getData($request)
+    {
+        $permissions = $this->permissionService->paginate($request);
+        $config = $this->config();
+        $roles = Role::all();
+        return view('admin.pages.permission.components.table',compact('permissions','config','roles'));
+    }
     public function create()
     {
         $config = $this->config();

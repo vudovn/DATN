@@ -44,7 +44,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     });
 
     /* ATTRIBUTE ROUTE */
-    Route::prefix('product/attribute-category')->name('attributeCategory.')->group(function () {
+    Route::prefix('attributeCategory')->name('attributeCategory.')->group(function () {
         Route::get('/index', [AttributeCategoryController::class, 'index'])->name('index');
         Route::get('/create', [AttributeCategoryController::class, 'create'])->name('create');
         Route::post('/store', [AttributeCategoryController::class, 'store'])->name('store');

@@ -35,7 +35,6 @@ class UserService extends BaseService {
             'sort' => isset($request['sort']) && $request['sort'] != 0
                 ? explode(',', $request['sort'])
                 : ['id', 'asc'],
-
             'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
         ];
     }

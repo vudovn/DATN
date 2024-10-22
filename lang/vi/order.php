@@ -11,11 +11,11 @@ return [
 
     'sort' => [
         0 => [
-            'id' => 'id, desc',
+            'id' => 'id,desc',
             'name' => 'Từ mới đến cũ'
         ],
         1 => [
-            'id' => 'id, asc',
+            'id' => 'id,asc',
             'name' => 'Từ cũ đến mới'
         ]
         ],

@@ -1,9 +1,6 @@
 @extends('admin.layout')
-
 @section('template')
-
     <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
-
     <div class="card">
         <div class="card-header pb-0">
             <x-filter
@@ -20,29 +17,31 @@
             ]" />
         </div>
         <div class="card-body">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input input-checkbox" type="checkbox" id="checkAll">
-                                <label for="checkAll" class="custom-control-label"></label>
-                            </div>
-                        </th>
-                        <th>ID</th>
-                        <th>Hỉnh ảnh</th>
-                        <th>Tên</th>
-                        <th>Email</th>
-                        <th>Ngày tạo</th>
-                        <th class="text-center">Vai trò</th>
-                        <th class="text-center">Trạng thái</th>
-                        <th class="text-center">Hành động</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody">
-                    @include('admin.pages.user.user.components.table')
-                </tbody>
-            </table>
+     <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="form-check">
+                            <input class="form-check-input input-primary" type="checkbox" id="checkAll">
+                            <label class="form-check-label" for="checkAll"></label>
+                        </div>
+                    </th>
+                    <th>ID</th>
+                    <th>Hỉnh ảnh</th>
+                    <th>Tên</th>
+                    <th>Email</th>
+                    <th>Ngày tạo</th>
+                    <th class="text-center">Vai trò</th>
+                    <th class="text-center">Trạng thái</th>
+                    <th class="text-center">Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                @include('admin.pages.user.user.components.table')
+            </tbody>
+        </table>
+     </div>
         </div>
     </div>
     <input type="hidden" name="model" id="model" value="{{ ucfirst($config['model']) }}">

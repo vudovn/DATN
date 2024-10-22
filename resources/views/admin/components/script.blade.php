@@ -52,12 +52,15 @@
 
 <script>
    $(document).ready(function() {
-        new Choices('.js-choice-multiple', {
-            removeItemButton: true,
+        if($('.js-choice-multiple').length || $('.js-choice').length){
+            new Choices('.js-choice-multiple', {
+                removeItemButton: true,
+                allowHTML: true,
+            });
+            new Choices('.js-choice',{
             allowHTML: true,
         });
-        new Choices('.js-choice',{
-            allowHTML: true,
-        });
+        }
+       
    });
 </script>

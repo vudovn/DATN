@@ -70,22 +70,10 @@ class OrderController extends Controller  implements HasMiddleware
         $result = $this->orderService->update($request, $id);
 
         if($result){
-            return redirect()->route('admin.pages.order.index')->with('success', 'Cập nhật đơn hàng thành công.');
+            return redirect()->route('order.index')->with('success', 'Cập nhật đơn hàng thành công.');
         }else{
-            return  redirect()->route('admin.pages.order.index')->with('error', 'Cập nhật đơn hàng thất bại');
+            return  redirect()->route('order.index')->with('error', 'Cập nhật đơn hàng thất bại');
         }
-        
-        // $order = Order::find($id);
-        
-        // if (!$order) {
-        //     return redirect()->back()->with('error', 'Đơn hàng không tồn tại.');
-        // }
-
-    
-        // $order->status = $request->status;
-        // $order->save(); 
-    
-        // return redirect()->route('admin.pages.order.index')->with('success', 'Cập nhật trạng thái đơn hàng thành công.');
     }
     
     private function breadcrumb($key)

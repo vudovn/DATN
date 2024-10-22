@@ -1,0 +1,36 @@
++ order
+    - id
+    - code 
+    - name
+    - phone 
+    - email
+    - province_id
+    - district_id
+    - ward_id
+    - address
+    - note
+    - cart => JSON
+    - total
+    - user_id
+    - status
+    - payment_status: 2:chưa thanh toán, 1:đã thanh toán
+    - fee_ship: phí ship
+
++ order_detail
+    - id
+    - order_id
+    - product_id
+    - sku 
+    - name
+    - quantity
+    - price
+    - discount
+    - options
+
++ order_payment 
+    - id
+    - order_id
+    - method_name: Momo or cod
+    - payment_id: MOMO_BANK
+    - payment_detail: JSON
+

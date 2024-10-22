@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('admin.pages.order.update', ['id' => $order->id]) }}" method="POST">
+            <form action="{{ route('order.update', ['id' => $order->id]) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <p>Tên khách hàng: {{$order->user->name}}</p>
@@ -25,7 +25,7 @@
                     <label for="payment_method">Phương Thức Thanh Toán: <span class="text-danger"> {{ $order->payment_method ?? 'Đợi có dữ liệu bảng phương thức thanh toán' }} </span></label>
                 </div>
                 <div class="form-group mb-3">
-                    <label for="payment_method">Địa chỉ giao hàng: <span class="text-success">{{ $order->shipping->ward->name }}, {{ $order->shipping->district->name }}, {{ $order->shipping->province->name }}</span></label>
+                    <label for="payment_method">Địa chỉ giao hàng: <span class="text-success">{{ $order->ward->name }}, {{ $order->district->name }}, {{ $order->province->name }}</span></label>
                 </div>
 
                 <div class="form-group">
@@ -65,7 +65,7 @@
                 </table>
 
                 <div class="text-right">
-                    <a href="{{ route('admin.pages.order.index') }}" class="btn btn-danger">Quay lại</a>
+                    <a href="{{ route('order.index') }}" class="btn btn-danger">Quay lại</a>
                     <button type="submit" class="btn btn-primary">
                         Cập nhật
                     </button>

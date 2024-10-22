@@ -48,6 +48,19 @@ class UserService extends BaseService {
         return $users;
     }
 
+    public function paginationCustomer($request){
+        $agruments = $this->paginateAgrument($request);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $users = $this->userRepository->paginationCustomer($agruments);
+        return $users;
+    }
+    public function paginationAdmin($request){
+        $agruments = $this->paginateAgrument($request);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $users = $this->userRepository->paginationAdmin($agruments);
+        return $users;
+    }
+
 
     public function create($request){
         DB::beginTransaction();

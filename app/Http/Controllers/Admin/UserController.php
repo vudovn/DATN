@@ -37,6 +37,7 @@ class UserController extends Controller implements HasMiddleware
     public function index(Request $request)
     {
         $users = $this->userService->paginate($request);
+        $users = $this->userService->paginationCustomer($request);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
         return view('admin.pages.user.user.index', compact(
@@ -52,7 +53,7 @@ class UserController extends Controller implements HasMiddleware
     }
     public function admin(Request $request)
     {
-        $users = $this->userService->paginate($request);
+        $users = $this->userService->paginationAdmin($request);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
         return view('admin.pages.user.user.index', compact(

@@ -1,36 +1,41 @@
-<?php
-
+<?php 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateOrdersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
+            $table->string('name');
+            $table->string('phone');
+            $table->string('email')->nullable();
+            $table->string('province_id')->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci');
+            $table->string('district_id')->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci');
+            $table->string('ward_id')->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci');
+            $table->string('address');
+            $table->text('note')->nullable();
+            $table->json('cart');
+            $table->decimal('total', 15, 2);
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('shipping_id')->nullable();
-            $table->decimal('total_amount', 12, 2)->nullable();
-            $table->enum('status', ['pending', 'processing', 'shipped', 'delivered', 'cancelled'])->default('pending');
-            $table->string('payment_method'); 
+            $table->string('status')->default('pending');
+            $table->tinyInteger('payment_status')->default(2); // 2 = chưa thanh toán, 1 = đã thanh toán
+            $table->decimal('fee_ship', 15, 2)->nullable();
             $table->timestamps();
+            
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('shipping_id')->references('id')->on('shippings')->onDelete('cascade');
+            $table->foreign('province_id')->references('code')->on('provinces');
+            $table->foreign('district_id')->references('code')->on('districts');
+            $table->foreign('ward_id')->references('code')->on('wards');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('orders');
     }
-};
+}

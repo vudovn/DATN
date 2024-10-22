@@ -88,10 +88,10 @@ html .ui-button.ui-state-disabled:active {
     font-weight: unset !important;
     color: unset !important;
 }
-.card-header {
+/* .card-header {
     background-color: #e9ecef;
     color: black;
-}
+} */
 /* box seo */
 .box_seo .top_box_seo {
     gap: 5px;

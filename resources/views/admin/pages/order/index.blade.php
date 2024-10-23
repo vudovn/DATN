@@ -2,6 +2,7 @@
 
 @section('template')
 <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="card">
     <div class="card-header">
         <x-filter 

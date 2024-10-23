@@ -110,6 +110,15 @@ if (!function_exists('statusOrder')) {
     }
 }
 
+if (!function_exists('paymentStatusOrder')) {
+    function paymentStatusOrder($status)
+    {
+        $status = strtolower($status);
+        $statusList = __('order.payment_status');
+        return $statusList[$status] ?? 'Không xác định';
+    }
+}
+
 if (!function_exists('getActionRoute')) {
     function getActionRoute()
     {

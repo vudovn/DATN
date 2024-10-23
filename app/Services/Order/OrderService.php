@@ -1,6 +1,7 @@
 <?php  
 namespace App\Services\Order;
 use App\Services\BaseService;
+use App\Models\OrderDetail;
 use App\Repositories\Order\OrderRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
@@ -66,18 +67,27 @@ class OrderService extends BaseService {
         DB::beginTransaction();  
         try {
             $payload = $request->except(['_token', 'send', '_method']);
+            // dd($payload);
+            
             $result = $this->orderRepository->update($id, $payload);
-            // User::create($data); chạy oke
-            // Role::create($user); chạy lỗi mọe trất
+    
+            foreach ($payload['quantity'] as $detailId => $quantity) {
+                $orderDetail = OrderDetail::find($detailId);
+                if ($orderDetail) {
+                    $orderDetail->quantity = $quantity;
+                    $orderDetail->save();
+                }
+            }
+    
             DB::commit();
             return true;
         } catch (\Exception $e) {
-           DB::rollback();
-            // echo $e->getMessage();die();
+            DB::rollback();
             $this->log($e);
-            return false;
+            // return false;
         }
     }
+    
 
     public function delete($id){
         DB::beginTransaction();

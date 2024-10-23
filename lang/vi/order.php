@@ -9,6 +9,13 @@ return [
         'cancelled' => 'Đã hủy',
     ],
 
+    'payment_status' => [
+        'pending' => 'Đang chờ',
+        'completed' => 'Đã hoàn thành',
+        'failed' => 'Thất bại',
+        'refunded' => 'Hoàn tiền'
+    ],
+
     'sort' => [
         0 => [
             'id' => 'id,desc',

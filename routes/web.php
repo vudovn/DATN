@@ -74,6 +74,8 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     /* ORDER ROUTE */
     Route::prefix('order')->name('order.')->group(function () {
         Route::get('index', [AdminOrderController::class, 'index'])->name('index');
+        Route::get('create', [AdminOrderController::class, 'create'])->name('create');
+        Route::post('store', [AdminOrderController::class, 'create'])->name('create');
         Route::get('edit/{id}', [AdminOrderController::class, 'edit'])->name('edit');
         Route::put('update/{id}', [AdminOrderController::class, 'update'])->name('update');
         Route::get('delete/{id}', [AdminOrderController::class, 'delete'])->name('delete');

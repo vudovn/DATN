@@ -11,7 +11,7 @@ class UpdateOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true; // Thay đổi thành true để cho phép
     }
 
     /**
@@ -22,7 +22,12 @@ class UpdateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required',
+            'customer_name' => 'required|string|max:255',
+            'payment_method' => 'nullable|string|max:255',
+            'payment_status' => 'required|in:pending,completed,failed',
+            'address' => 'nullable|string|max:255',
+            'status' => 'required|in:pending,processing,completed,cancelled',
+            'quantity.*' => 'required|integer|min:1',
         ];
     }
 }

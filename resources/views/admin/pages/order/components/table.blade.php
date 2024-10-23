@@ -12,8 +12,40 @@
             <td>{{ $order->code }}</td>
             <td>{{ number_format($order->total_amount, 0, ',', '.') }} VND</td>
             <td>Thanh toán khi nhận hàng</td>
-            <td>Đang xử lý</td>
-            <td>{{ statusOrder($order->status) }}</td>
+            <td>
+                <select name="payment_status_{{ $order->id }}" id="payment_status_{{ $order->id }}" class="form-control" onchange="updatePaymentStatus({{ $order->id }}, this.value)">
+                    @php
+                        $paymentStatuses = __('order.payment_status'); 
+                    @endphp
+                    
+                    @if (is_array($paymentStatuses)) 
+                        @foreach ($paymentStatuses as $key => $value)
+                            <option value="{{ $key }}" {{ $order->payment_status == $key ? 'selected' : '' }}>
+                                {{ $value }}
+                            </option>
+                        @endforeach
+                    @else
+                        <option value="">{{ $paymentStatuses }}</option> 
+                    @endif
+                </select>
+            </td>            
+            <td>
+                <select name="status_{{ $order->status }}" id="status_{{ $order->status }}" class="form-control" onchange="updateStatus({{ $order->status }}), this.value">
+                    @php
+                        $status = __('order.status');
+                    @endphp
+
+                    @if (is_array($status))
+                        @foreach ($status as $key => $value)
+                            <option value="{{ $key }}" {{ $order->status == $key ? 'selected' : '' }}>
+                                {{ $value }}
+                            </option>
+                        @endforeach
+                    @else
+                        <option value="">{{ $status }}</option>
+                    @endif
+                </select>
+            </td>
             <td>{{ changeDateFormat($order->created_at) }}</td>
             <td class="text-center table-actions">
                 <ul class="list-inline me-auto mb-0">

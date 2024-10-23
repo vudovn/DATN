@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Repositories\Order\OrderRepository;
+use App\Repositories\Location\ProvinceRepository;
 use App\Services\Order\OrderService;
-
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Traits\HasDynamicMiddleware;
 
@@ -20,20 +20,21 @@ class OrderController extends Controller  implements HasMiddleware
         return self::getMiddleware('Order'); 
     }
     protected $order;
-
     protected $orderService;
-
     protected $orderRepository;
+    protected $provinceRepository; 
 
     public function __construct(
         Order $order,
         OrderService $orderService,
-        OrderRepository $orderRepository
+        OrderRepository $orderRepository,
+        ProvinceRepository $provinceRepository, 
         )
     {
         $this->order = $order;
         $this->orderService = $orderService;
         $this->orderRepository = $orderRepository;
+        $this->provinceRepository = $provinceRepository; 
     }
 
     public function index(Request $request) 
@@ -52,25 +53,28 @@ class OrderController extends Controller  implements HasMiddleware
         $config = $this->config();
         return view('admin.pages.order.components.table',compact('orders','config'));
     }
+
     public function edit(string $id){
         $order = $this->orderRepository->findById($id, ['orderDetails']);
         $order_details = $order->orderDetails;
+        $provinces = $this->provinceRepository->getAllProvinces();
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('update');
         return view('admin.pages.order.edit', compact(
             'order', 
             'order_details',
+            'provinces',
             'config'
         ));
     }
+
     public function update(Request $request, $id)
     {
-        
-        // Tạo 1 cái file request để valid dữ liệu
-        // Không viết validate trong controller
+        // dd( $request->all());
 
         $request->validate([
             'status' => 'required|in:pending,shipped,processing,cancelled,delivered', 
+
         ]);
     
         $result = $this->orderService->update($request, $id);
@@ -103,6 +107,7 @@ class OrderController extends Controller  implements HasMiddleware
                 'css' => [
                 ],
                 'js' => [
+                    'admin_asset/library/location.js'
                 ],
                 'model' => 'order'
             ];

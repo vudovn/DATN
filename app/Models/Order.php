@@ -14,11 +14,19 @@ class Order extends Model
 
     protected $fillable = [
         'id',
-        'user_id',
-        'shipping_id',
-        'total_amount',
+        'code',
+        'name',
+        'phone',
+        'email',
+        'province_id',
+        'district_id',
+        'ward_id',
+        'address',
+        'note',
+        'total',
+        'payment_status',
         'status',
-        'payment_methood'
+        'fee_ship'
     ];
     public function getWithPaginateBy($perPage = 10)
     {
@@ -42,5 +50,9 @@ class Order extends Model
     }
     public function ward(){
         return $this->belongsTo(Ward::class, 'ward_id', 'code');
+    }
+    public function paymentStatus()
+    {
+        return $this->belongsTo(PaymentStatus::class, 'payment_status_id');
     }
 }

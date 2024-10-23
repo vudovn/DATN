@@ -42,11 +42,15 @@
     };
 
     TGNT.searchForm = () => {
-        $("#keyword").on("input", function () {
-            let keyword = $(this).val();
+        $("#keyword").on("input", function (e) {
+            let _this = $(this);
+            let keyword = _this.val();
+            if (keyword !== undefined) {
+                array['keyword'] = keyword;
+            }
             clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                TGNT.fetchData({ keyword });
+            searchTimeout = setTimeout(function () {
+                fetchData({ keyword });
             }, 500);
         });
     };
@@ -75,6 +79,5 @@
         TGNT.filterForm();
         TGNT.paginationForm();
         TGNT.fetchData();
-    });
-
-})(jQuery);
+})(jQuery)
+});

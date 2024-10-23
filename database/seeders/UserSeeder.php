@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
                 'name' => 'Nguyễn Văn ' . chr(64 + $i),
                 'email' => 'nguyenvan' . $i . '@gmail.com',
                 'password' => bcrypt('password'),
-                'avatar' => 'https://placehold.co/30x30?text=The Gioi \nNoi That',
+                'avatar' => 'https://placehold.co/600x600?text=The Gioi \nNoi That',
                 'publish' => 1,
                 'phone' => '090' . rand(1000000, 9999999),
             ]);

@@ -107,6 +107,7 @@ class UserController extends Controller implements HasMiddleware
     public function edit($id)
     {
         $user = $this->userRepository->findById($id);
+        // $user  = $this->userRepository->findById($id, ['province', 'district', 'ward']);
         $provinces = $this->provinceRepository->getAllProvinces(); // Lấy danh sách tỉnh
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('update');

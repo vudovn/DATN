@@ -1,9 +1,6 @@
 @if (isset($users) && count($users))
     @foreach ($users as $user)
-        {{-- @if (!$user->hasRole(['customer']))
-            @continue
-        @endif --}}
-        <tr class="animate__animated animate__fadeInDown animate__faster">
+        <tr class="animate__animated animate__fadeIn">
             <td class="">
                 <div class="form-check">
                     <input class="form-check-input input-primary input-checkbox checkbox-item alotest"
@@ -16,8 +13,6 @@
             <td>{{ $user->id }}</td>
             <td>
                 <a href="{{ $user->avatar }}" data-fancybox="gallery">
-                    {{-- <img loading="lazy" width="50" class="rounded" src=""
-                        alt="{{ $user->name }}"> --}}
                     <img loading="lazy" width="50" class="rounded" src="{{ $user->avatar }}"
                         alt="{{ $user->name }}">
                 </a>
@@ -45,7 +40,9 @@
                             <i class="ti ti-edit-circle f-18"></i>
                         </a>
                     </li>
+                @if ($user->id != auth()->id())
                     <x-delete :id="$user->id" :model="ucfirst($config['model'])" />
+                @endif
                 </ul>
             </td>
         </tr>

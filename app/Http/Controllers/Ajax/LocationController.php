@@ -28,7 +28,6 @@ class LocationController extends Controller {
         $get = $request->input();
         $html = '';
         if ($get['target'] == 'districts') {
-           
             $province = $this->provinceRepository->findById($get['data']['location_id'],['districts'], ['code', 'name'] ); 
             $html = $this->renderHtml($province->districts); 
         } else if ($get['target'] == 'wards') {

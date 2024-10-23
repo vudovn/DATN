@@ -13,7 +13,7 @@
             'sort' => generateSelect('Sắp xếp', __('order.sort')),
         ]" />
     </div>
-    <div class="card-body">
+    <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table">
                 <thead>

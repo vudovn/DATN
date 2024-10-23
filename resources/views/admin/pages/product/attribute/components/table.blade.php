@@ -1,6 +1,6 @@
 @if (isset($attributes) && count($attributes))
     @foreach ($attributes as $attribute)
-        <tr class="animate__animated animate__fadeInDown animate__faster">
+        <tr class="animate__animated animate__fadeIn">
             <td class="">
                 <div class="form-check">
                     <input class="form-check-input input-primary input-checkbox checkbox-item" type="checkbox"
@@ -35,7 +35,7 @@
             </td>
         </tr>
     @endforeach
-    <tr class="animate__animated animate__fadeInDown animate__faster">
+    <tr class="animate__animated animate__fadeIn">
         <td colspan="100">
             {!! $attributes->links('pagination::bootstrap-4') !!}
         </td>
@@ -43,6 +43,6 @@
 
 @else
     <tr>
-        <td colspan="8" class="text-center">Không có dữ liệu</td>
+        <td colspan="100" class="text-center">Không có dữ liệu</td>
     </tr>
 @endif

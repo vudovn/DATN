@@ -1,6 +1,6 @@
 @if (isset($products) && count($products))
     @foreach ($products as $product)
-        <tr class="animate__animated animate__fadeInDown animate__faster">
+        <tr class="animate__animated animate__fadeIn">
             <td class="">
                 <div class="form-check">
                     <input class="form-check-input input-primary input-checkbox checkbox-item" type="checkbox"
@@ -46,13 +46,13 @@
             </td>
         </tr>
     @endforeach
-    <tr class="animate__animated animate__fadeInDown animate__faster">
+    <tr class="animate__animated animate__fadeIn">
         <td colspan="100">
             {!! $products->links('pagination::bootstrap-4') !!}
         </td>
     </tr>
 @else
     <tr>
-        <td colspan="9" class="text-center">Không có dữ liệu</td>
+        <td colspan="100" class="text-center">Không có dữ liệu</td>
     </tr>
 @endif

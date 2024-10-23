@@ -11,8 +11,6 @@
             let search_params = url.searchParams;
             search_params.set(_this.attr("name"), _this.val());
             url.search = search_params.toString();
-            console.log(url);
-
             window.location.href = url.href;
         });
     };
@@ -68,7 +66,6 @@
     TGNT.checkBoxItem = () => {
         $(document).on("change", ".checkbox-item", function () {
             let _this = $(this);
-            console.log("ádasd");
             TGNT.changeBackgroud(_this);
             TGNT.allChecked();
             TGNT.handleMultipleAction();
@@ -120,7 +117,10 @@
                 let ids = TGNT.getIds();
 
                 if (ids.length === 0) {
-                    alert("Adu hacker!");
+                    VDmessage.show(
+                        "warning",
+                        "Chưa có hàng nào được chọn!"
+                    );
                     return false;
                 }
 

@@ -33,8 +33,9 @@
     <!-- [ Pre-loader ] End -->
     <div class="auth-main">
         <div class="auth-wrapper v1">
-            <form action="" method="POST" class="auth-form">
+            <form action="{{ route('change.password') }}" method="POST" class="auth-form">
                 @csrf
+                <input type="hidden" name="token" value="{{ $token }}">
                 <div class="card my-5">
                     <div class="card-body">
                         <a href="#">
@@ -45,15 +46,37 @@
                                 <b>Reset Password</b>
                             </h3>
                             <p class="text-muted">Please choose your new password</p>
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         </div>
+                       
+                            <input type="hidden" name="email" value="{{ $email }}"  class="form-control disabled" id="floatingInput"
+                            placeholder="">
+                            <input type="hidden" name="token"  value="{{ $token }}" class="form-control" id="floatingInput"
+                            placeholder="">
+
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" class="form-control" id="floatingInput" placeholder="Password">
+                            <input type="password" name="password" class="form-control" id="floatingInput"
+                                placeholder="Password">
+                            @error('password')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="floatingInput1"
+                            <input type="password" name="password_confirmation" class="form-control" id="floatingInput1"
                                 placeholder="Confirm Password">
+                            @error('password_confirmation')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="d-grid mt-4">
                             <button type="submit" class="btn btn-primary">Reset Password</button>

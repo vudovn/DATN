@@ -33,7 +33,7 @@
     <!-- [ Pre-loader ] End -->
     <div class="auth-main">
         <div class="auth-wrapper v1">
-            <form action="" method="POST" class="auth-form">
+            <form action="{{route('auth.admin.forget')}}" method="POST" class="auth-form">
                 @csrf
                 <div class="card my-5">
                     <div class="card-body">
@@ -48,8 +48,11 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Địa chỉ email</label>
-                            <input type="email" class="form-control" id="floatingInput"
+                            <input type="email" name="email" class="form-control" id="floatingInput"
                                 placeholder="Nhập địa chỉ email của bạn">
+                                @error('email')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <p class="mt-4 text-sm text-muted">Đừng quên kiểm tra hộp thư..</p>
                         <div class="d-grid mt-3">

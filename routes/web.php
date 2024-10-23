@@ -119,8 +119,17 @@ Route::get('ajax/loadAttributeValue', [AjaxDashboardController::class, 'loadAttr
 
 Route::get('/admin', [AuthController::class, 'index'])->name('auth.index')->middleware('unauthenticated');
 Route::post('/admin', [AuthController::class, 'login'])->name('auth.login');
+
 Route::get('/admin/forget-password', [AuthController::class, 'forget'])->name('auth.admin.forget');
-Route::get('/admin/change-password', [AuthController::class, 'change'])->name('auth.admin.change');
+Route::post('/admin/forget-password', [AuthController::class, 'postForgetPass'])->name('auth.admin.postForgetPass');
+
+// Route để hiển thị form thay đổi mật khẩu với token và email
+Route::get('/admin/reset-password/{token}/{email}', [AuthController::class, 'resetPassword'])->name('password.reset');
+
+// Route để xử lý thay đổi mật khẩu
+Route::post('/admin/reset-password', [AuthController::class, 'postChangePass'])->name('change.password');
+
+
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 

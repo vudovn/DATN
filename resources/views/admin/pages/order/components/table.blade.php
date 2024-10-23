@@ -1,6 +1,6 @@
 @if (isset($orders) && count($orders))
     @foreach ($orders as $order)
-        <tr class="animate__animated animate__fadeInDown animate__faster">
+        <tr class="animate__animated animate__fadeIn">
             <td>
                 <div class="form-check">
                     <input class="form-check-input input-primary input-checkbox checkbox-item" type="checkbox"

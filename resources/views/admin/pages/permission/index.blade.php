@@ -15,9 +15,9 @@
                 'sort' => generateSelect('Sắp xếp', __('general.sort')),
             ]" />
         </div>
-        <div class="card-body">
+        <div class="card-body p-0">
             <div class="table-">
-                <table class="table ">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Mô tả</th>

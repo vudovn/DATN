@@ -295,62 +295,54 @@
     };
 
     TGNT.quick_update = () => {
-        $(document).ready(function () {
-            $(".quick_update").on("dblclick", function () {
-                let inputUpdate = $("#" + $(this).data("input-id"));
-                inputUpdate.removeClass("hidden").focus();
-                $(this).addClass("hidden");
-            });
+        $(document).on("dblclick", ".quick_update", function () {
+            let inputUpdate = $("#" + $(this).data("input-id"));
+            inputUpdate.removeClass("hidden").focus();
+            $(this).addClass("hidden");
+        });
+        $(document).on("click", function (event) {
+            $(".quick_update").each(function () {
+                const _this = $(this);
+                let inputUpdate = $("#" + _this.data("input-id"));
 
-            $(document).on("click", function (event) {
-                $(".quick_update").each(function () {
-                    const _this = $(this);
-                    let inputUpdate = $("#" + _this.data("input-id"));
+                if (
+                    !_this.is(event.target) &&
+                    !inputUpdate.is(event.target) &&
+                    !inputUpdate.hasClass("hidden")
+                ) {
+                    inputUpdate.addClass("hidden");
+                    _this.removeClass("hidden");
 
-                    if (
-                        !_this.is(event.target) &&
-                        !inputUpdate.is(event.target) &&
-                        !inputUpdate.hasClass("hidden")
-                    ) {
-                        inputUpdate.addClass("hidden");
-                        _this.removeClass("hidden");
+                    const value = inputUpdate.val().trim();
 
-                        const value = inputUpdate.val().trim();
-
-                        $.ajax({
-                            url: "/permission/quickUpdate",
-                            type: "PUT",
-                            headers: {
-                                "X-CSRF-TOKEN": $(
-                                    'meta[name="csrf-token"]'
-                                ).attr("content"),
-                            },
-                            data: {
-                                model: _this.data("model"),
-                                name: _this.attr("name"),
-                                is_required: _this.attr("is_required"),
-                                id: _this.data("id"),
-                                value,
-                            },
-                            dataType: "JSON",
-                            success: () => {
-                                _this.text(value || "...");
-                                VDmessage.show(
-                                    "success",
-                                    "Cập nhật thành công!"
-                                );
-                            },
-                            error: (xhr) => {
-                                VDmessage.show(
-                                    "error",
-                                    xhr.responseJSON.message
-                                );
-                            },
-                        });
-                    }
-                });
+                    $.ajax({
+                        url: "/permission/quickUpdate",
+                        type: "PUT",
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
+                        },
+                        data: {
+                            model: _this.data("model"),
+                            name: _this.attr("name"),
+                            is_required: _this.attr("is_required"),
+                            id: _this.data("id"),
+                            value,
+                        },
+                        dataType: "JSON",
+                        success: () => {
+                            _this.text(value || "...");
+                            VDmessage.show("success", "Cập nhật thành công!");
+                        },
+                        error: (xhr) => {
+                            VDmessage.show("error", xhr.responseJSON.message);
+                        },
+                    });
+                }
             });
         });
+        // });
     };
 
     TGNT.tagify = () => {

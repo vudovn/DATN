@@ -50,7 +50,7 @@
             }
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(function () {
-                fetchData({ keyword });
+                TGNT.fetchData({ keyword });
             }, 500);
         });
     };

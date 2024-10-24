@@ -1,19 +1,15 @@
 @extends('admin.layout')
-
 @section('template')
-
     <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
-
     <div class="card">
         <div class="card-header">
-            <x-filter
-            :model="$config['model']"
-            :createButton="[
+            <x-filter :model="$config['model']" :createButton="[
                 'label' => '',
                 'route' => $config['model'] . '.create',
             ]" :options="[
                 'actions' => generateSelect('Hành động', __('general.actions')),
                 'perpage' => generateSelect('10 hàng', __('general.perpage')),
+                // 'roles' => generateSelect('Vai trò', $roles),
                 'publish' => generateSelect('Trạng thái', __('general.publish')),
                 'sort' => generateSelect('Sắp xếp', __('general.sort')),
             ]" />
@@ -30,25 +26,22 @@
                                 </div>
                             </th>
                             <th>ID</th>
-                            <th>Hình ảnh</th>
-                            <th>Tên danh mục</th>
-                            <th>Phòng</th>
+                            <th>Hỉnh ảnh</th>
+                            <th>Tên</th>
+                            <th>Email</th>
                             <th>Ngày tạo</th>
+                            <th class="text-center">Vai trò</th>
                             <th class="text-center">Trạng thái</th>
                             <th class="text-center">Hành động</th>
                         </tr>
                     </thead>
                     <tbody id="tbody">
-                        @include('admin.pages.category.components.table')
+                        @include('admin.pages.user.components.table')
                     </tbody>
                 </table>
             </div>
-
-        </div>
-        <div class="card-footer">
-            {{-- {{ $categorys->links('pagination::bootstrap-4') }} --}}
         </div>
     </div>
+    
     <input type="hidden" name="model" id="model" value="{{ ucfirst($config['model']) }}">
-
 @endsection

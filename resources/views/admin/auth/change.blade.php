@@ -2,25 +2,9 @@
 <html lang="vi">
 
 <head>
-    <title>Đăng nhập</title>
-    <!-- [Meta] -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="icon" href="{{ asset('admin_asset/images/favicon.svg') }}" type="image/x-icon" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/inter/inter.css') }}" id="main-font-link" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/phosphor/duotone/style.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/tabler-icons.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/feather.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/fontawesome.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/material.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/css/style.css') }}" id="main-style-link" />
-    <script src="{{ asset('admin_asset/js/tech-stack.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('admin_asset/css/style-preset.css') }}" />
-    <script src="{{ asset('admin_asset/js/jquery-3.1.1.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.css') }}">
-    <script src="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('admin_asset/library/cusSweetAlert.js') }}"></script>
+    <title>Thay đổi mật khẩu</title>
+    @include('admin.components.head_cdn')
+
 </head>
 
 <body data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="ltr"
@@ -43,18 +27,10 @@
                         </a>
                         <div class="mb-4">
                             <h3 class="mb-2">
-                                <b>Reset Password</b>
+                                <b>Đặt lại mật khẩu</b>
                             </h3>
-                            <p class="text-muted">Please choose your new password</p>
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+                            <p class="text-muted">Vui lòng nhập mật khẩu mới</p>
+
                         </div>
                        
                             <input type="hidden" name="email" value="{{ $email }}"  class="form-control disabled" id="floatingInput"
@@ -63,23 +39,23 @@
                             placeholder="">
 
                         <div class="mb-3">
-                            <label class="form-label">Password</label>
+                            <label class="form-label">Mật khẩu</label>
                             <input type="password" name="password" class="form-control" id="floatingInput"
-                                placeholder="Password">
+                                placeholder="Nhập mật khẩu">
                             @error('password')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Confirm Password</label>
+                            <label class="form-label">Mật khẩu xác nhận</label>
                             <input type="password" name="password_confirmation" class="form-control" id="floatingInput1"
-                                placeholder="Confirm Password">
+                                placeholder="Nhập lại mật khẩu xác nhận">
                             @error('password_confirmation')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-primary">Reset Password</button>
+                            <button type="submit" class="btn btn-primary">Đặt lại mật khẩu</button>
                         </div>
                     </div>
                 </div>

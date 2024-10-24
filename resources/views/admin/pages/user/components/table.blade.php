@@ -1,6 +1,6 @@
 @if (isset($users) && count($users))
     @foreach ($users as $user)
-        <tr class="animate__animated animate__fadeInDown animate__faster">
+        <tr class="animate__animated animate__fadeIn">
             <td class="">
                 <div class="form-check">
                     <input class="form-check-input input-primary input-checkbox checkbox-item alotest"
@@ -23,7 +23,7 @@
             <td>{{ $user->email }}</td>
             <td>{{ changeDateFormat($user->created_at) }}</td>
             <td class="text-center">
-                {{ $user->getRoleNames()->join(', ') }}
+                {{ $user->getRoleNames()->isempty() ? 'Khách' :  $user->getRoleNames()->join(', ')}}
             </td>
             <td class="text-center">
                 @if ($user->id != auth()->id())
@@ -33,21 +33,17 @@
                 @endif
             </td>
             <td class="text-center table-actions">
-                <a href="{{ route('user.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-icon btn-primary">
-                    <svg class="icon  svg-icon-ti-ti-edit" data-bs-toggle="tooltip" data-bs-title="Edit"
-                        xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path>
-                        <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z">
-                        </path>
-                        <path d="M16 5l3 3"></path>
-                    </svg>
-                </a>
+                <ul class="list-inline me-auto mb-0">
+                    <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Chỉnh sửa">
+                        <a href="{{ route('user.edit', $user->id) }}"
+                            class="avtar avtar-xs btn-link-success btn-pc-default">
+                            <i class="ti ti-edit-circle f-18"></i>
+                        </a>
+                    </li>
                 @if ($user->id != auth()->id())
                     <x-delete :id="$user->id" :model="ucfirst($config['model'])" />
                 @endif
+                </ul>
             </td>
         </tr>
     @endforeach

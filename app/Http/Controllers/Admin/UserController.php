@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\User\StoreUserRequest;
@@ -17,49 +18,47 @@ class UserController extends Controller implements HasMiddleware
     use HasDynamicMiddleware;
     public static function middleware(): array
     {
-        return self::getMiddleware('User'); 
+        return self::getMiddleware('User');
     }
     protected $userService;
     protected $userRepository;
-    protected $provinceRepository; 
+    protected $provinceRepository;
     protected $districtRepository;
     protected $wardRepository;
     public function __construct(
         UserService $userService,
         UserRepository $userRepository,
-        ProvinceRepository $provinceRepository, 
+        ProvinceRepository $provinceRepository,
     ) {
         $this->userService = $userService;
         $this->userRepository = $userRepository;
-        $this->provinceRepository = $provinceRepository; 
+        $this->provinceRepository = $provinceRepository;
     }
 
     public function index(Request $request)
     {
-        $users = $this->userService->paginate($request);
-        $users = $this->userService->paginationCustomer($request);
+        $previousUrl = class_basename(url()->current());
         $config = $this->config();
-        $config['breadcrumb'] = $this->breadcrumb('index');
-        return view('admin.pages.user.user.index', compact(
+        if ($previousUrl === 'admin') {
+            $config['breadcrumb'] = $this->breadcrumb('admin');
+        } else {
+            $config['breadcrumb'] = $this->breadcrumb('customer');
+        }
+        return view('admin.pages.user.index', compact(
             'config',
-            'users',
         ));
     }
     public function getData($request)
     {
-        $users = $this->userService->paginate($request);
+        $previousUrl = class_basename(url()->previous());
+        if ($previousUrl === 'admin') {
+            $users = $this->userService->paginationAdmin($request);
+        } else {
+            $users = $this->userService->paginationCustomer($request);
+        }
         $config = $this->config();
-        return view('admin.pages.user.user.components.table',compact('users','config'));
-    }
-    public function admin(Request $request)
-    {
-        $users = $this->userService->paginationAdmin($request);
-        $config = $this->config();
-        $config['breadcrumb'] = $this->breadcrumb('index');
-        return view('admin.pages.user.user.index', compact(
-            'config',
-            'users',
-        ));
+
+        return view('admin.pages.user.components.table', compact('users', 'config'));
     }
 
     public function create()
@@ -70,10 +69,10 @@ class UserController extends Controller implements HasMiddleware
         $config['method'] = 'create';
 
         $roles = Role::all();
-        return view('admin.pages.user.user.save', compact(
+        return view('admin.pages.user.save', compact(
             'config',
             'provinces',
-            'roles' 
+            'roles'
         ));
     }
 
@@ -84,7 +83,7 @@ class UserController extends Controller implements HasMiddleware
         if ($user) {
             return redirect()->route('user.index')->with('success', 'Tạo người dùng mới thành công');
         }
-        return  redirect()->route('user.index')->with('error', 'Tạo người dùng mới thất bại');
+        return redirect()->route('user.index')->with('error', 'Tạo người dùng mới thất bại');
     }
 
     public function update(UpdateUserRequest $request, $id)
@@ -93,19 +92,20 @@ class UserController extends Controller implements HasMiddleware
         if ($this->userService->update($request, $id)) {
             return redirect()->route('user.index', ['page' => $request->page])->with('success', 'Cập nhật người dùng thành công.');
         }
-        return  redirect()->route('user.index')->with('error', 'Cập nhật người dùng thất bại');
+        return redirect()->route('user.index')->with('error', 'Cập nhật người dùng thất bại');
     }
 
     public function edit($id)
     {
-        $user  = $this->userRepository->findById($id);
+        $user = $this->userRepository->findById($id);
+        $user = $this->userRepository->findById($id, ['wishlists.product', 'orders']);
         // $user  = $this->userRepository->findById($id, ['province', 'district', 'ward']);
         $provinces = $this->provinceRepository->getAllProvinces(); // Lấy danh sách tỉnh
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('update');
         $config['method'] = 'edit';
         $roles = Role::all();
-        return view('admin.pages.user.user.save', compact(
+        return view('admin.pages.user.save', compact(
             'config',
             'user',
             'provinces',
@@ -119,7 +119,7 @@ class UserController extends Controller implements HasMiddleware
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('delete');
         $config['method'] = 'delete';
-        return view('admin.pages.user.user.delete', compact(
+        return view('admin.pages.user.delete', compact(
             'config',
             'user'
         ));
@@ -130,7 +130,7 @@ class UserController extends Controller implements HasMiddleware
         if ($this->userService->delete($id)) {
             return redirect()->route('user.index')->with('success', 'Xóa người dùng thành công');
         }
-        return  redirect()->route('user.index')->with('error', 'Xóa người dùng thất bại');
+        return redirect()->route('user.index')->with('error', 'Xóa người dùng thất bại');
     }
 
     public function getDistricts($province_code)
@@ -155,9 +155,13 @@ class UserController extends Controller implements HasMiddleware
     private function breadcrumb($key)
     {
         $breadcrumb = [
-            'index' => [
-                'name' => 'Danh sách người dùng',
-                'list' => ['Danh sách người dùng']
+            'customer' => [
+                'name' => 'Danh sách khách hàng',
+                'list' => ['Danh sách khách hàng']
+            ],
+            'admin' => [
+                'name' => 'Danh sách nhân viên',
+                'list' => ['Danh sách nhân viên']
             ],
             'create' => [
                 'name' => 'Tạo người dùng',

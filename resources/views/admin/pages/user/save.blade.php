@@ -24,8 +24,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-6">
                                 <label for="roles[]">Chọn vai trò <span class="text-danger">*</span></label>
-                                <select class="form-control select2" name="roles[]" multiple="multiple" data-placeholder="Chọn vai trò">
-                                    <option value="">Chọn vai trò</option>
+                                <select class="form-control js-choice-multiple" name="roles[]" multiple="multiple">
                                     @foreach ($roles as $key => $role)
                                         <option value="{{ $role->name }}"
                                             {{ isset($user) && $user->roles->contains('name', $role->name) ? 'selected' : '' }}
@@ -49,24 +48,78 @@
                                         :type="'password'" />
                                 </div>
                                 <div class="col-lg-6">
-                                    <x-input :label="'Mật khẩu xác nhận'" :name="'re_password'"  :required="true"
-                                        :type="'password'" />
+                                    <x-input :label="'Mật khẩu xác nhận'" :name="'re_password'" :required="true" :type="'password'" />
                                 </div>
                             </div>
                         @endif
 
-                        @include('admin.pages.user.user.components.location')
+                        @include('admin.pages.user.components.location')
                         <div class="col-lg-12">
                             <x-input :label="'Địa chỉ cụ thể'" :name="'address'" :value="$user->address ?? ''" :required="false" />
                         </div>
                     </div>
                 </div>
+
+                <!-- Thông tin Wishlist -->
+                <h4>Wishlist</h4>
+                <div class="card">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Sản phẩm</th>
+                                <th scope="col">Ngày tạo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($user->wishlists as $wishlist)
+                                <tr>
+                                    <th scope="row">{{ $wishlist->id }}</th>
+                                    <td>{{ $wishlist->product->name ?? 'Sản phẩm không tồn tại' }}</td>
+                                    <!-- Hiển thị tên sản phẩm -->
+                                    <td>{{ $wishlist->created_at ? $wishlist->created_at->format('d/m/Y') : 'Không có ngày tạo' }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <h4>Payments</h4>
+                <div class="card">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Mã đơn hàng</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                                <th>Phương thức thanh toán</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($user->orders as $order) 
+                            <tr>
+                                <th>{{ $order->id }}</th>
+                                <td><a href="{{ route('order.edit', $order->id ) }}">{{ $order->code }}</a></td>
+                                <td>{{ number_format($order->total, 0, ',', '.') }} VND</td> 
+                                <td>{{ statusOrder($order->status) }}</td>
+                                <td>{{  $order->payment ? $order->payment->method_name : 'Chưa có phương thức thanh toán' }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+               
             </div>
+
             <div class="col-xl-3">
                 <x-save_back :model="$config['model']" />
                 <x-thumbnail :label="'Ảnh đại diện'" :name="'avatar'" :value="$user->avatar ?? '/uploads/system/no_img.jpg'" />
                 <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.active')" :value="$user->publish ?? ''" />
             </div>
+
+
         </div>
+        <input type="hidden" name="page" value="{{ request()->get('page', 1) }}" />
     </x-form>
 @endsection

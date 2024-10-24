@@ -22,8 +22,8 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     /* USER ROUTE */
     Route::prefix('user')->name('user.')->group(function () {
-        Route::get('/index', [UserController::class, 'index'])->name('index');
-        Route::get('/index-admin', [UserController::class, 'admin'])->name('admin.index');
+        Route::get('/customer', [UserController::class, 'index'])->name('index');
+        Route::get('/admin', [UserController::class, 'index'])->name('admin.index');
         Route::get('/create', [UserController::class, 'create'])->name('create');
         Route::post('/store', [UserController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
@@ -98,18 +98,17 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     //     Route::delete('/destroy/{id}', [AttributeValueController::class, 'destroy'])->name('destroy');
     // });
     /* AJAX ROUTE */
-    Route::middleware(['checkPermission'])->group(function () {
-        Route::prefix('{model}')->name('{model}.')->group(function () {
-            Route::get('/getData', [AjaxDashboardController::class, 'getData'])->name('ajax.dashboard.getData');
-            Route::put('/actions', [AjaxDashboardController::class, 'updateMultiple'])->name('ajax.dashboard.changeStatusMultiple');
-            Route::delete('/actions', [AjaxDashboardController::class, 'deleteMultiple'])->name('ajax.dashboard.deleteMultiple');
-            Route::delete('/deleteItem', [AjaxDashboardController::class, 'deleteItem'])->name('ajax.dashboard.deleteItem');
-            Route::put('/quickUpdate', [AjaxDashboardController::class, 'updateQuick'])->name('ajax.dashboard.quickUpdate');
-            Route::put('/change/status', [AjaxDashboardController::class, 'updateStatus'])->name('ajax.dashboard.updateStatus');
-        });
+});
+Route::middleware(['checkPermission'])->group(function () {
+    Route::prefix('{model}')->name('{model}.')->group(function () {
+        Route::get('/getData', [AjaxDashboardController::class, 'getData'])->name('ajax.dashboard.getData');
+        Route::put('/actions', [AjaxDashboardController::class, 'updateMultiple'])->name('ajax.dashboard.changeStatusMultiple');
+        Route::delete('/actions', [AjaxDashboardController::class, 'deleteMultiple'])->name('ajax.dashboard.deleteMultiple');
+        Route::delete('/deleteItem', [AjaxDashboardController::class, 'deleteItem'])->name('ajax.dashboard.deleteItem');
+        Route::put('/quickUpdate', [AjaxDashboardController::class, 'updateQuick'])->name('ajax.dashboard.quickUpdate');
+        Route::put('/change/status', [AjaxDashboardController::class, 'updateStatus'])->name('ajax.dashboard.updateStatus');
     });
 });
-
 Route::get('/ajax/getLocation', [LocationController::class, 'getLocation'])->name('ajax.getLocation');
 
 // get attribute value

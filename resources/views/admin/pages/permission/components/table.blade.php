@@ -1,6 +1,6 @@
 @if (isset($permissions) && count($permissions))
     @foreach ($permissions as $permission)
-        <tr class="animate__animated animate__fadeInDown animate__faster">
+        <tr class="animate__animated animate__fadeIn">
             <td>
                 <x-quickUpdate :id="$permission->id" :value="$permission->description" :model="ucfirst($config['model'])" :name="'description'" />
             </td>
@@ -26,7 +26,7 @@
             @endif
         </tr>
     @endforeach
-    <tr class="animate__animated animate__fadeInDown animate__faster">
+    <tr class="animate__animated animate__fadeIn">
         <td colspan="100">
             {!! $permissions->links('pagination::bootstrap-4') !!}
         </td>

@@ -36,7 +36,7 @@
     };
 
     TGNT.checkOldValue = () => {
-        if (attribute_values != [] || attribute_values != null) {
+        if (typeof attribute_values !== 'undefined' && attribute_values) {
             attribute_values.forEach((value) => {
                 $(".attribute_value_container").append(TGNT.renderHTML(value));
             });

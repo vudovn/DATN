@@ -1,5 +1,7 @@
-<?php  
+<?php
+
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\AuthRequest;
@@ -10,20 +12,20 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
-class AuthController extends Controller{
 
-    public function __construct(
+class AuthController extends Controller
+{
 
-    ){
-
-    }
+    public function __construct() {}
 
 
-    public function index(){
+    public function index()
+    {
         return view('admin.auth.login');
     }
 
-    public function login(AuthRequest $request){
+    public function login(AuthRequest $request)
+    {
         $credentials = [
             'email' => $request->input('email'),
             'password' => $request->input('password'),
@@ -32,9 +34,9 @@ class AuthController extends Controller{
             $request->session()->regenerate();
             return redirect()->route('dashboard.index')->with('success', 'Đăng nhập thành công');
         }
- 
+
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Email không khớp.',
         ])->onlyInput('email');
     }
 
@@ -45,13 +47,20 @@ class AuthController extends Controller{
 
     public function postForgetPass(Request $request)
     {
-        $request->validate(['email' => 'required|email']);
+        $request->validate([
+            'email' => 'required|email|exists:users'
+        ],[
+            'email.required' => 'Vui lòng nhập email',
+            'email.email' => 'Email không đúng định dạng',
+            'email.exists' => 'Email không tồn tại trong hệ thống'
+
+    ]);
         $status = Password::sendResetLink($request->only('email'));
-    
+
         if ($status === Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status));
+            return back()->with('success', __($status));
         } else {
-            return back()->withErrors(['email' => __($status)]);
+            return back()->withErrors(['error' => __($status)]);
         }
     }
 
@@ -67,6 +76,13 @@ class AuthController extends Controller{
             'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:8|confirmed',
+        ], [
+            'token.required' => 'Token là bắt buộc.',
+            'email.required' => 'Email là bắt buộc.',
+            'email.email' => 'Email không hợp lệ.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
+            'password.confirmed' => 'Mật khẩu xác nhận không khớp.',
         ]);
 
         $status = Password::reset(
@@ -75,40 +91,26 @@ class AuthController extends Controller{
                 $user->forceFill([
                     'password' => Hash::make($password)
                 ])->setRememberToken(Str::random(60));
-     
+
                 $user->save();
-     
+
                 event(new PasswordReset($user));
             }
         );
-     
+
         return $status === Password::PASSWORD_RESET
-                    ? redirect()->route('auth.index')->with('success', __($status))
-                    : back()->withErrors(['error' => [__($status)]]);
+            ? redirect()->route('auth.index')->with('success', __($status))
+            : back()->with('error', __($status));
 
-        // $user = User::where('email', $request->email)->first();
-
-        // if (!$user) {
-        //     return back()->withErrors(['email' => 'Không tìm thấy người dùng.']);
-        // }
-
-        // if ($user->reset_token !== $request->token) {
-        //     return back()->withErrors(['token' => 'Token không hợp lệ.']);
-        // }
-
-        // $user->password = Hash::make($request->password);
-        // $user->save();
-
-        // return redirect()->route('auth.index')->with('status', 'Mật khẩu đã được thay đổi thành công.');
     }
-    
 
 
-    public function logout(Request $request){
+
+    public function logout(Request $request)
+    {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('auth.index')->with('success', 'Đăng xuất thành công');
     }
-
 }

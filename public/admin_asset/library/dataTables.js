@@ -79,5 +79,5 @@
         TGNT.filterForm();
         TGNT.paginationForm();
         TGNT.fetchData();
-})(jQuery)
-});
+})
+})(jQuery);

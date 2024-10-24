@@ -60,61 +60,87 @@
                     </div>
                 </div>
 
-                <!-- Thông tin Wishlist -->
-                <h4>Wishlist</h4>
-                <div class="card">
-                    <table class="table table-bordered text-center">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Sản phẩm</th>
-                                <th scope="col">Ngày tạo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($user->wishlists as $wishlist)
-                                <tr>
-                                    <th scope="row">{{ $wishlist->id }}</th>
-                                    <td>{{ $wishlist->product->name ?? 'Sản phẩm không tồn tại' }}</td>
-                                    <!-- Hiển thị tên sản phẩm -->
-                                    <td>{{ $wishlist->created_at ? $wishlist->created_at->format('d/m/Y') : 'Không có ngày tạo' }}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <h4>Payments</h4>
-                <div class="card">
-                    <table class="table table-bordered text-center">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Mã đơn hàng</th>
-                                <th>Tổng tiền</th>
-                                <th>Trạng thái</th>
-                                <th>Phương thức thanh toán</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($user->orders as $order) 
-                            <tr>
-                                <th>{{ $order->id }}</th>
-                                <td><a href="{{ route('order.edit', $order->id ) }}">{{ $order->code }}</a></td>
-                                <td>{{ number_format($order->total, 0, ',', '.') }} VND</td> 
-                                <td>{{ statusOrder($order->status) }}</td>
-                                <td>{{  $order->payment ? $order->payment->method_name : 'Chưa có phương thức thanh toán' }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-               
+                @if (isset($config['method']) && $config['method'] == 'edit')
+                    <div class="card">
+                        <div class="card-header">
+                            Danh sách sản phẩm yêu thích
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table text-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Sản phẩm</th>
+                                        <th scope="col">Ngày tạo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (isset($user->wishlists) && count($user->wishlists))
+                                        @foreach ($user->wishlists as $wishlist)
+                                            <tr>
+                                                <th scope="row">{{ $wishlist->id }}</th>
+                                                <td>{{ $wishlist->product->name ?? 'Sản phẩm không tồn tại' }}</td>
+                                                <td>{{ $wishlist->created_at ? $wishlist->created_at->format('d/m/Y') : 'Không có ngày tạo' }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="100" class="text-center">Không có dữ liệu</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            Danh sách đơn hàng
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table text-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Mã đơn hàng</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Trạng thái</th>
+                                            <th>Phương thức thanh toán</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (isset($users->orders) && count($users->orders))
+                                            @foreach ($user->orders as $order)
+                                                <tr>
+                                                    <th>{{ $order->id }}</th>
+                                                    <td><a
+                                                            href="{{ route('order.edit', $order->id) }}">{{ $order->code }}</a>
+                                                    </td>
+                                                    <td>{{ number_format($order->total, 0, ',', '.') }} VND</td>
+                                                    <td>{{ statusOrder($order->status) }}</td>
+                                                    <td>{{ $order->payment ? $order->payment->method_name : 'Chưa có phương thức thanh toán' }}
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="100" class="text-center">Không có dữ liệu</td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+
             </div>
 
             <div class="col-xl-3">
                 <x-save_back :model="$config['model']" />
-                <x-thumbnail :label="'Ảnh đại diện'" :name="'avatar'" :value="$user->avatar ?? '/uploads/system/no_img.jpg'" />
+                <x-thumbnail :label="'Ảnh đại diện'" :name="'avatar'" :value="$user->avatar ?? 'https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That'" />
                 <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.active')" :value="$user->publish ?? ''" />
             </div>
 

@@ -55,8 +55,8 @@ class AuthController extends Controller
             'email.exists' => 'Email không tồn tại trong hệ thống'
 
     ]);
+    
         $status = Password::sendResetLink($request->only('email'));
-
         if ($status === Password::RESET_LINK_SENT) {
             return back()->with('success', __($status));
         } else {

@@ -2,13 +2,13 @@
     @foreach ($users as $user)
         <tr class="animate__animated animate__fadeIn">
             <td class="">
-                <div class="form-check">
-                    <input class="form-check-input input-primary input-checkbox checkbox-item alotest"
-                        type="checkbox" id="customCheckbox{{ $user->id }}"
-                        value="{{ $user->id }}">
-                    <label class="form-check-label"
-                        for="ustomCheckbox{{ $user->id }}"></label>
-                </div>
+                @if ($user->id != auth()->id() && !$user->hasRole('Super Admin'))
+                    <div class="form-check">
+                        <input class="form-check-input input-primary input-checkbox checkbox-item alotest" type="checkbox"
+                            id="customCheckbox{{ $user->id }}" value="{{ $user->id }}">
+                        <label class="form-check-label" for="customCheckbox{{ $user->id }}"></label>
+                    </div>
+                @endif
             </td>
             <td>{{ $user->id }}</td>
             <td>
@@ -23,7 +23,7 @@
             <td>{{ $user->email }}</td>
             <td>{{ changeDateFormat($user->created_at) }}</td>
             <td class="text-center">
-                {{ $user->getRoleNames()->isempty() ? 'Khách' :  $user->getRoleNames()->join(', ')}}
+                {{ $user->getRoleNames()->isempty() ? 'Khách' : $user->getRoleNames()->join(', ') }}
             </td>
             <td class="text-center">
                 @if ($user->id != auth()->id())
@@ -40,9 +40,9 @@
                             <i class="ti ti-edit-circle f-18"></i>
                         </a>
                     </li>
-                @if ($user->id != auth()->id())
-                    <x-delete :id="$user->id" :model="ucfirst($config['model'])" />
-                @endif
+                    @if ($user->id != auth()->id())
+                        <x-delete :id="$user->id" :model="ucfirst($config['model'])" />
+                    @endif
                 </ul>
             </td>
         </tr>
@@ -52,8 +52,8 @@
             {!! $users->links('pagination::bootstrap-4') !!}
         </td>
     </tr>
-    @else
-<tr>
-    <td colspan="100" class="text-center">Không có dữ liệu</td>
-</tr>
+@else
+    <tr>
+        <td colspan="100" class="text-center">Không có dữ liệu</td>
+    </tr>
 @endif

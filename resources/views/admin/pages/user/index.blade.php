@@ -36,11 +36,12 @@
                         </tr>
                     </thead>
                     <tbody id="tbody">
-                        @include('admin.pages.user.user.components.table')
+                        @include('admin.pages.user.components.table')
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+    
     <input type="hidden" name="model" id="model" value="{{ ucfirst($config['model']) }}">
 @endsection

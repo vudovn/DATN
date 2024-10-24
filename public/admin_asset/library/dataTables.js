@@ -1,4 +1,6 @@
-$(document).ready(function () {
+(function ($) {
+    "use strict";
+    var TGNT = {};
     let searchTimeout = "";
     let array = {
         actions: 0,
@@ -8,59 +10,74 @@ $(document).ready(function () {
         keyword: null,
         filter: null,
     };
-    fetchData();
-    getModel();
-    function getModel() {
-        let _this = $("#filter");
-        let model = _this.data("model");
-        return model;
-    }
-    function fetchData(params = {}) {
+
+    TGNT.getModel = () => {
+        let model = $("#filter").data("model");
+        return model || "user";
+    };
+
+    TGNT.fetchData = (params = {}) => {
         $("#tbody").html(
-            `<tr><td colspan="100%" class="text-center"><div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div></td></tr>`
+            `<tr><td colspan="100%" class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div></td></tr>`
         );
-        const model = getModel();
+
+        const model = TGNT.getModel();
         $.ajax({
             type: "GET",
             url: `/${model}/getData`,
-            model,
             data: { ...array, ...params },
             success: function (data) {
                 $("#tbody").html(data);
             },
             error: function (xhr, status, error) {
-                console.log(error);
+                console.error("Error fetching data:", error);
                 $("#tbody").html(
                     `<tr><td colspan="100%" class="text-center">Lỗi khi tải dữ liệu</td></tr>`
                 );
             },
         });
-    }
+    };
 
-    // Search form
-    $("#keyword").on("input", function (e) {
-        let _this = $(this);
-        let keyword = _this.val();
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(function () {
-            fetchData({ keyword });
-        }, 500);
-    });
+    TGNT.searchForm = () => {
+        $("#keyword").on("input", function (e) {
+            let _this = $(this);
+            let keyword = _this.val();
+            if (keyword !== undefined) {
+                array['keyword'] = keyword;
+            }
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(function () {
+                TGNT.fetchData({ keyword });
+            }, 500);
+        });
+    };
 
-    // Filter form
-    $(".filter-option").on("change", function () {
-        let key = $(this).attr("name");
-        let value = $(this).val();
-        if (key && value !== undefined) {
-            array[key] = value;
-        }
-        fetchData(array);
-    });
+    TGNT.filterForm = () => {
+        $(".filter-option").on("change", function () {
+            let key = $(this).attr("name");
+            let value = $(this).val();
+            if (key) {
+                array[key] = value;
+                TGNT.fetchData(array);
+            }
+        });
+    };
 
-    // Pagination form
-    $(document).on("click", ".pagination a", function (event) {
-        event.preventDefault();
-        let page = $(this).attr("href").split("page=")[1];
-        fetchData({ page });
-    });
-});
+    TGNT.paginationForm = () => {
+        $(document).on("click", ".pagination a", function (event) {
+            event.preventDefault();
+            let page = $(this).attr("href").split("page=")[1];
+            TGNT.fetchData({ page });
+        });
+    };
+
+    $(document).ready(function () {
+        TGNT.searchForm();
+        TGNT.filterForm();
+        TGNT.paginationForm();
+        TGNT.fetchData();
+})
+})(jQuery);

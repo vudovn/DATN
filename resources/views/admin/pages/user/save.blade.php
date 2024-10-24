@@ -24,8 +24,7 @@
                         <div class="row mb-3">
                             <div class="col-lg-6">
                                 <label for="roles[]">Chọn vai trò <span class="text-danger">*</span></label>
-                                <select class="form-control select2" name="roles[]" multiple="multiple" data-placeholder="Chọn vai trò">
-                                    <option value="">Chọn vai trò</option>
+                                <select class="form-control js-choice-multiple" name="roles[]" multiple="multiple">
                                     @foreach ($roles as $key => $role)
                                         <option value="{{ $role->name }}"
                                             {{ isset($user) && $user->roles->contains('name', $role->name) ? 'selected' : '' }}
@@ -55,7 +54,7 @@
                             </div>
                         @endif
 
-                        @include('admin.pages.user.user.components.location')
+                        @include('admin.pages.user.components.location')
                         <div class="col-lg-12">
                             <x-input :label="'Địa chỉ cụ thể'" :name="'address'" :value="$user->address ?? ''" :required="false" />
                         </div>
@@ -68,5 +67,6 @@
                 <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.active')" :value="$user->publish ?? ''" />
             </div>
         </div>
+        <input type="hidden" name="page" value="{{ request()->get('page', 1) }}" />
     </x-form>
 @endsection

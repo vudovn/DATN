@@ -16,7 +16,7 @@
                                 <div class="alert alert-primary" role="alert">
                                     <strong>Lưu ý:</strong> <span class="text-danger">(*)</span> là trường bắt buộc nhập
                                 </div>
-                                {{-- @if ($errors->any())
+                                @if ($errors->any())
                                     <div class="alert alert-danger">
                                         <ul>
                                             @foreach ($errors->all() as $error)
@@ -24,7 +24,7 @@
                                             @endforeach
                                         </ul>
                                     </div>
-                                @endif --}}
+                                @endif
                                 <div class="mb-3">
                                     <x-input :label="'Tên sản phẩm'" :name="'name'" :class="'name-product'" :value="$product->name ?? old('name')"
                                         :required="true" />
@@ -107,23 +107,18 @@
                         Chọn danh mục
                     </div>
                     <div class="card-body">
-                        @php
-                            $oldCategory = old('category') ?? [];
-                        @endphp
-                        <select name="category" class="js-choice form-control @error('category')is-invalid @enderror" id="">
+                        <select name="category" class="js-choice form-control @error('category') is-invalid @enderror" id="">
                             <option value="">Chọn danh mục</option>
                             @foreach ($categories as $category)
-                                @php
-                                    if ($category['is_room'] != 2) {
-                                        continue;
-                                    }
-                                @endphp
-                                <option value="{{ $category['id'] }}"
-                                    {{ in_array($category['id'], old('category') ?? []) ? 'selected' : '' }}>
-                                    {{ $category['name'] }}
-                                </option>
+                                @if ($category->is_room == 2)
+                                    <option value="{{ $category->id }}" 
+                                        {{ old('category') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endif
                             @endforeach
                         </select>
+                        
                         @error('category')
                             <small class="error text-danger">{{ $message }}</small>
                         @enderror
@@ -134,21 +129,20 @@
                         Chọn danh mục phòng
                     </div>
                     <div class="card-body">
-                        <select name="category_id[]" multiple class="js-choice-multiple form-control @error('category')is-invalid @enderror"
-                            multiple id="">
+                        <select name="category_id[]" multiple
+                            class="js-choice-multiple form-control @error('category_id') is-invalid @enderror" id="">
                             <option value="" disabled>Chọn danh mục</option>
                             @foreach ($categories as $category)
-                                @php
-                                    if ($category['is_room'] != 1) {
-                                        continue;
-                                    }
-                                @endphp
-                                <option value="{{ $category['id'] }}"
-                                    {{ in_array($category['id'], old('category') ?? []) ? 'selected' : '' }}>
-                                    {{ $category['name'] }}</option>
+                                @if ($category->is_room == 1)
+                                    <option value="{{ $category->id }}"
+                                        {{ in_array($category->id, old('category_id', [])) ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endif
                             @endforeach
                         </select>
-                        @error('category')
+
+                        @error('category_id')
                             <small class="error text-danger">{{ $message }}</small>
                         @enderror
                     </div>
@@ -165,7 +159,8 @@
                         </div>
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="radio" name="is_featured" value="2"
-                                id="is_featured1" {{ $product->is_featured ?? old('is_featured') == 2 ? 'checked' : 'checked'  }}>
+                                id="is_featured1"
+                                {{ $product->is_featured ?? old('is_featured') == 2 ? 'checked' : 'checked' }}>
                             <label class="form-check-label" for="is_featured1">Sản phẩm không nổi bật</label>
                         </div>
                     </div>

@@ -4,10 +4,8 @@
             <label for="" class="d-flex align-items-center mb-0" style="gap: 10px">
                 Sản phẩm có nhiều phiên bản
                 <div class="form-check form-switch">
-                    <input type="checkbox"
-                        class="form-check-input js-switch turnOnVariant" value="1" name="has_attribute" 
-                        id="customSwitch"
-                        {{ old('has_attribute') == 1 ? 'checked' : '' }} >
+                    <input type="checkbox" class="form-check-input js-switch turnOnVariant" value="1"
+                        name="has_attribute" id="customSwitch" {{ old('has_attribute') == 1 ? 'checked' : '' }}>
                     <label class="form-check-label" for="customSwitch"></label>
                 </div>
 
@@ -33,34 +31,36 @@
                             <div class="variant-body mb-3">
                                 @if (old('attributeCatalogue'))
                                     @foreach (old('attributeCatalogue') as $keyAttr => $valAttr)
-                                    <div class="row mb-3 variant-item">
-                                        <div class="col-lg-3">
-                                            <div class="attribute-catalogue">
-                                                <select name="attributeCatalogue[]" id="" class="choose-attribute niceSelect">
-                                                    <option value="">Chọn Nhóm thuộc tính</option>
-                                                    @foreach ($attributes as $item)
-                                                        <option {{ $valAttr == $item->id ? 'selected' : ''}} value="{{ $item->id }}">{{ $item->name }}</option>
-                                                    @endforeach
+                                        <div class="row mb-3 variant-item">
+                                            <div class="col-lg-3">
+                                                <div class="attribute-catalogue">
+                                                    <select name="attributeCatalogue[]" id=""
+                                                        class="choose-attribute niceSelect">
+                                                        <option value="">Chọn Nhóm thuộc tính</option>
+                                                        @foreach ($attributes as $item)
+                                                            <option {{ $valAttr == $item->id ? 'selected' : '' }}
+                                                                value="{{ $item->id }}">{{ $item->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-8">
+
+                                                <select class="selectVariant variant-{{ $valAttr }} form-control"
+                                                    name="attributeValue[{{ $valAttr }}][]" multiple
+                                                    data-catid="{{ $valAttr }}">
                                                 </select>
+
+                                                {{-- <input type="text" name="" disabled class="fake-variant h-100 form-control"> --}}
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <button type="button"
+                                                    class="h-100 w-100 remove-attribute btn btn-icon btn-danger">
+                                                    <i class="ti ti-trash"></i>
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="col-lg-8">
-
-                                             <select 
-                                                class="selectVariant variant-{{$valAttr}} form-control" 
-                                                name="attributeValue[{{$valAttr}}][]" multiple 
-                                                data-catid="{{$valAttr}}">
-                                            </select> 
-
-                                           {{-- <input type="text" name="" disabled class="fake-variant h-100 form-control"> --}}
-                                        </div>
-                                        <div class="col-lg-1">
-                                            <button type="button" class="h-100 w-100 remove-attribute btn btn-icon btn-danger">
-                                                <i class="ti ti-trash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    @endforeach 
+                                    @endforeach
                                 @endif
                             </div>
                             <div class="variant-foot">
@@ -80,14 +80,14 @@
         <div class="card-header">
             Danh sách phiên bản sản phẩm
         </div>
-        <div class="card-body">
+        <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table variantTable">
                     <thead></thead>
                     <tbody></tbody>
                 </table>
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -100,13 +100,14 @@
                 ];
             })->values());
 
-    var attributeValue = `{{ base64_encode(json_encode(old('attributeValue'))) }}`;       
-    var variant = `{{ base64_encode(json_encode(old('variant'))) }}`; 
+    var attributeValue = `{{ base64_encode(json_encode(old('attributeValue'))) }}`;
+    var variant = `{{ base64_encode(json_encode(old('variant'))) }}`;
 </script>
 <style>
-    .select2.select2-container.select2-container--default{
+    .select2.select2-container.select2-container--default {
         height: 100% !important;
     }
+
     .select2-selection.select2-selection--multiple {
         height: 100% !important;
     }

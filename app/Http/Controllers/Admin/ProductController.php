@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 use App\Repositories\Product\ProductRepository;
 use App\Services\Product\ProductService;
 use App\Repositories\Attribute\AttributeCategoryRepository;
+use App\Repositories\Category\CategoryRepository;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Traits\HasDynamicMiddleware;
+
+
 class ProductController extends Controller implements HasMiddleware
 {
     use HasDynamicMiddleware;
@@ -19,14 +22,17 @@ class ProductController extends Controller implements HasMiddleware
     protected $productRepository;
     protected $productService;
     protected $attributeCategoryRepository;
+    protected $categoryRepository;
     function __construct(
         ProductRepository $productRepository,
         ProductService $productService,
-        AttributeCategoryRepository $attributeCategoryRepository
+        AttributeCategoryRepository $attributeCategoryRepository,
+        CategoryRepository $categoryRepository
     ){
         $this->productRepository = $productRepository;
         $this->productService = $productService;
         $this->attributeCategoryRepository = $attributeCategoryRepository;
+        $this->categoryRepository = $categoryRepository;
     }
     public function index (Request $request) {
         $products = $this->productService->paginate($request);
@@ -48,8 +54,7 @@ class ProductController extends Controller implements HasMiddleware
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';
         $attributes = $this->attributeCategoryRepository->getAll();
-        $categories = $this->categories();
-        // dd($attributes);
+        $categories = $this->categoryRepository->getAllPublish();
         return view('admin.pages.product.product.save', compact(
             'config',
             'attributes',
@@ -61,12 +66,13 @@ class ProductController extends Controller implements HasMiddleware
         // dd($request->all());
         $request->validate([
             'name' => 'required',
+            'sku' => 'required',
             'price' => 'required',
             'quantity' => 'required',
             'category' => 'required|not_in:0',
             'category_id' => 'required|array|min:1|not_in:0',
             'category_id.*' => 'required',
-            'attributes' => 'required'
+            // 'attributes' => 'required'
         ], [
             'name.required' => 'Tên sản phẩm không được để trống',
             'price.required' => 'Giá sản phẩm không được để trống',
@@ -77,7 +83,7 @@ class ProductController extends Controller implements HasMiddleware
             'category_id.min' => 'Danh mục không hợp lệ',
             'category_id.*.required' => 'Danh mục không được để trống',
         ]);
-        // dd($request->all());
+        dd($request->all());
     }
 
     public function categories () {

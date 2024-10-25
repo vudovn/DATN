@@ -16,6 +16,25 @@ return [
         'refunded' => 'Hoàn tiền'
     ],
 
+    'payment_status_select' => [
+        0 => [
+            'id' => 'pending',
+            'name' => 'Đang chờ',
+        ],
+        1 => [
+            'id' => 'completed',
+            'name' => 'Đã hoàn thành',
+        ],
+        2 => [
+            'id' => 'failed',
+            'name' => 'Thất bại',
+        ],
+        3 => [
+            'id' => 'refunded',
+            'name' => 'Hoàn tiền',
+        ]
+    ],
+
     'sort' => [
         0 => [
             'id' => 'id,desc',

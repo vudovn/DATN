@@ -10,10 +10,11 @@
             </td>
             <td>{{ $order->id }}</td>
             <td>{{ $order->code }}</td>
+            {{-- <td><x-quickUpdate :id="$order->id" :value="$order->code" :model="ucfirst($config['model'])" :name="'code'" /></td> --}}
             <td>{{ number_format($order->total_amount, 0, ',', '.') }} VND</td>
             <td>Thanh toán khi nhận hàng</td>
-            <td>
-                <select name="payment_status_{{ $order->id }}" id="payment_status_{{ $order->id }}" class="form-control" onchange="updatePaymentStatus({{ $order->id }}, this.value)">
+            {{-- <td>
+                <select name="payment_status_{{ $order->id }}" id="payment_status_{{ $order->id }}" class=" form-control" onchange="updatePaymentStatus({{ $order->id }}, this.value)">
                     @php
                         $paymentStatuses = __('order.payment_status'); 
                     @endphp
@@ -28,9 +29,18 @@
                         <option value="">{{ $paymentStatuses }}</option> 
                     @endif
                 </select>
+            </td>             --}}
+            <td>
+                    <select name="payment_status" id="" data-id="{{ $order->id }}"  class="form-select select_status">
+                        @foreach (__('order.payment_status') as $key => $item)
+                            <option value="{{ $key }}" {{ $order->payment_status == $key ? 'selected' : '' }}>
+                                {{ $item }}
+                            </option>
+                        @endforeach
+                    </select>
             </td>            
             <td>
-                <select name="status_{{ $order->status }}" id="status_{{ $order->status }}" class="form-control" onchange="updateStatus({{ $order->status }}), this.value">
+                <select name="status" id="" data-id="{{ $order->id }}" class="form-select select_status">
                     @php
                         $status = __('order.status');
                     @endphp

@@ -1,15 +1,16 @@
 @extends('admin.layout')
-
 @section('template')
 <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="card">
     <div class="card-header">
-        <x-filter 
-        :model="$config['model']"
-        :options="[
+        <x-filter :model="$config['model']" :createButton="[
+        'label' => '',
+        'route' => $config['model'] . '.create',
+        ]" .:options="[
             'actions' => generateSelect('Hành động', __('general.actions')),
             'perpage' => generateSelect('10 hàng', __('general.perpage')),
+
             'publish' => generateSelect('Trạng thái', __('order.statusFilter')),
             'sort' => generateSelect('Sắp xếp', __('order.sort')),
         ]" />

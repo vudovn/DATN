@@ -3,6 +3,7 @@ namespace App\Services\Order;
 use App\Services\BaseService;
 use App\Models\OrderDetail;
 use App\Repositories\Order\OrderRepository;
+use App\Repositories\Order\OrderDetailsRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
@@ -12,11 +13,14 @@ use Illuminate\Support\Facades\Hash;
 class OrderService extends BaseService {
 
     protected $orderRepository;
+    protected $orderDetailsRepository;
 
     public function __construct(
-        OrderRepository $orderRepository
+        OrderRepository $orderRepository,
+        OrderDetailsRepository $orderDetailsRepository
     ){
         $this->orderRepository = $orderRepository;
+        $this->orderDetailsRepository = $orderDetailsRepository;
     }
 
 
@@ -66,19 +70,40 @@ class OrderService extends BaseService {
     public function update($request, $id) {
         DB::beginTransaction();  
         try {
-            $payload = $request->except(['_token', 'send', '_method']);
+            $payload = $request->except(['_token', 'send', '_method','quantity']);
             // dd($payload);
             
             $result = $this->orderRepository->update($id, $payload);
-    
-            foreach ($payload['quantity'] as $detailId => $quantity) {
-                $orderDetail = OrderDetail::find($detailId);
-                if ($orderDetail) {
-                    $orderDetail->quantity = $quantity;
-                    $orderDetail->save();
-                }
+
+            foreach ($request['quantity'] as $detailId => $quantity) 
+            {
+                $this->orderDetailsRepository->update($detailId, [
+                    'quantity' => $quantity, 
+                ]);
+                // $orderDetail = OrderDetail::find($detailId);
+                // if ($orderDetail) {
+                //     $orderDetail->quantity = $quantity;
+                //     $orderDetail->save();
+                // }
             }
     
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+             echo $e->getMessage();die();
+            $this->log($e);
+            // return false;
+        }
+    }
+
+    public function updatePaymentStatus($request, $id) {
+        DB::beginTransaction();  
+        try {
+            $payload = $request->except(['_token', 'send', '_method']);
+            // dd($payload);
+            $result = $this->orderRepository->update($id, $payload);
+            // dd($result);
             DB::commit();
             return true;
         } catch (\Exception $e) {

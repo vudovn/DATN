@@ -83,7 +83,7 @@
         $("#checkAll").prop(
             "checked",
             checkBoxs.length &&
-                checkBoxs.filter(":checked").length === checkBoxs.length
+            checkBoxs.filter(":checked").length === checkBoxs.length
         );
     };
 
@@ -237,8 +237,8 @@
                         success: function () {
                             deleteAxis === "column"
                                 ? $(
-                                      `th[data-axis="${id}"], td[data-axis="${id}"]`
-                                  ).remove()
+                                    `th[data-axis="${id}"], td[data-axis="${id}"]`
+                                ).remove()
                                 : _this.closest("tr").remove();
                             VDmessage.show("success", "Xóa thành công!");
                         },
@@ -254,12 +254,12 @@
     TGNT.permission_to_role = () => {
         let timeout = "";
         $(document).on("click", ".permission_to_role", function () {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-            });
+            // const Toast = Swal.mixin({
+            //     toast: true,
+            //     position: "top-end",
+            //     showConfirmButton: false,
+            //     timer: 3000,
+            // });
             const _this = $(this);
             _this.attr("disabled", true);
             const permissionName = _this.attr("data-permissionName");
@@ -295,62 +295,54 @@
     };
 
     TGNT.quick_update = () => {
-        $(document).ready(function () {
-            $(".quick_update").on("dblclick", function () {
-                let inputUpdate = $("#" + $(this).data("input-id"));
-                inputUpdate.removeClass("hidden").focus();
-                $(this).addClass("hidden");
-            });
+        $(document).on("dblclick", ".quick_update", function () {
+            let inputUpdate = $("#" + $(this).data("input-id"));
+            inputUpdate.removeClass("hidden").focus();
+            $(this).addClass("hidden");
+        });
+        $(document).on("click", function (event) {
+            $(".quick_update").each(function () {
+                const _this = $(this);
+                let inputUpdate = $("#" + _this.data("input-id"));
 
-            $(document).on("click", function (event) {
-                $(".quick_update").each(function () {
-                    const _this = $(this);
-                    let inputUpdate = $("#" + _this.data("input-id"));
+                if (
+                    !_this.is(event.target) &&
+                    !inputUpdate.is(event.target) &&
+                    !inputUpdate.hasClass("hidden")
+                ) {
+                    inputUpdate.addClass("hidden");
+                    _this.removeClass("hidden");
 
-                    if (
-                        !_this.is(event.target) &&
-                        !inputUpdate.is(event.target) &&
-                        !inputUpdate.hasClass("hidden")
-                    ) {
-                        inputUpdate.addClass("hidden");
-                        _this.removeClass("hidden");
-
-                        const value = inputUpdate.val().trim();
-
-                        $.ajax({
-                            url: "/permission/quickUpdate",
-                            type: "PUT",
-                            headers: {
-                                "X-CSRF-TOKEN": $(
-                                    'meta[name="csrf-token"]'
-                                ).attr("content"),
-                            },
-                            data: {
-                                model: _this.data("model"),
-                                name: _this.attr("name"),
-                                is_required: _this.attr("is_required"),
-                                id: _this.data("id"),
-                                value,
-                            },
-                            dataType: "JSON",
-                            success: () => {
-                                _this.text(value || "...");
-                                VDmessage.show(
-                                    "success",
-                                    "Cập nhật thành công!"
-                                );
-                            },
-                            error: (xhr) => {
-                                VDmessage.show(
-                                    "error",
-                                    xhr.responseJSON.message
-                                );
-                            },
-                        });
-                    }
-                });
+                    const value = inputUpdate.val().trim();
+                    const model = _this.data("model");
+                    $.ajax({
+                        url: `/${model}/quickUpdate`,
+                        type: "PUT",
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
+                        },
+                        data: {
+                            model: model,
+                            name: _this.attr("name"),
+                            is_required: _this.attr("is_required"),
+                            id: _this.data("id"),
+                            value,
+                        },
+                        dataType: "JSON",
+                        success: () => {
+                            _this.text(value || "...");
+                            VDmessage.show("success", "Cập nhật thành công!");
+                        },
+                        error: (xhr) => {
+                            VDmessage.show("error", xhr.responseJSON.message);
+                        },
+                    });
+                }
             });
         });
+        // });
     };
 
     TGNT.tagify = () => {
@@ -412,20 +404,46 @@
         return str;
     };
 
-    $(document).ready(function () {
-        TGNT.setupAjaxHeader();
-        TGNT.changeStatusByField();
-        TGNT.checkBoxItem();
-        TGNT.checkAll();
-        TGNT.hideActions();
-        TGNT.action();
-        TGNT.delete_item();
-        TGNT.select2();
-        TGNT.tagify();
-        TGNT.sortui();
-        TGNT.requestUrl();
-        TGNT.permission_to_role();
-        TGNT.quick_update();
-        TGNT.int();
-    });
+    TGNT.select_status = () => {
+        $(document).on("change", ".select-status", function () {
+            const statusId = $(this).val();
+            const orderId = $(this).data("id");
+        
+            $.ajax({
+                url: `/orders/${orderId}/payment_status`, 
+                type: "PUT",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+                data: {
+                    status_id: statusId,
+                },
+                dataType: "JSON",
+                success: () => {
+                    VDmessage.show("success", "Trạng thái đã được cập nhật!");
+                },
+                error: (xhr) => {
+                    VDmessage.show("error", xhr.responseJSON.message);
+                },
+            });
+        });
+    }
+    
+        $(document).ready(function () {
+            TGNT.setupAjaxHeader();
+            TGNT.changeStatusByField();
+            TGNT.checkBoxItem();
+            TGNT.checkAll();
+            TGNT.hideActions();
+            TGNT.action();
+            TGNT.delete_item();
+            TGNT.select2();
+            TGNT.tagify();
+            TGNT.sortui();
+            TGNT.requestUrl();
+            TGNT.permission_to_role();
+            TGNT.quick_update();
+            TGNT.int();
+            TGNT.select_status();
+        });
 })(jQuery);

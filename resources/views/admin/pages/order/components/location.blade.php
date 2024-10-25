@@ -1,8 +1,8 @@
 <div class="row mb-3">
     <div class="col-4 form-group">
         <label for="province" class="control-label">Tỉnh/Thành Phố</label>
-        <select name="province_id" id="province" class="form-control js-choice province location" data-target="districts">
-            <option value="" disabled>Chọn tỉnh/thành phố</option>
+        <select name="province_id" id="province" class="form-control js-choice-province province location" data-target="districts">
+            <option value="" disabled selected>Chọn tỉnh/thành phố</option>
             @foreach ($provinces as $province)
                 <option value="{{ $province->code }}"
                     {{ isset($order) && $order->province_id == $province->code ? 'selected' : '' }}>
@@ -14,13 +14,13 @@
     <div class="col-4 form-group">
         <label for="district" class="control-label">Quận/Huyện</label>
         <select name="district_id" id="district" class="form-control js-choice districts location" data-target="wards">
-            {{-- <option value="" disabled selected>Chọn quận/huyện</option> --}}
+            <option value="" disabled selected>Chọn quận/huyện</option>
         </select>
     </div>
     <div class="col-4 form-group">
         <label for="ward" class="control-label">Phường/Xã</label>
         <select name="ward_id" id="ward" class="form-control wards js-choice">
-            {{-- <option value="" disabled selected>Chọn phường/xã</option> --}}
+            <option value="" disabled selected>Chọn phường/xã</option>
         </select>
     </div>
 </div>

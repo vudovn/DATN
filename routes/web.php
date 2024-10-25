@@ -75,10 +75,11 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::prefix('order')->name('order.')->group(function () {
         Route::get('index', [AdminOrderController::class, 'index'])->name('index');
         Route::get('create', [AdminOrderController::class, 'create'])->name('create');
-        Route::post('store', [AdminOrderController::class, 'create'])->name('create');
+        Route::post('store', [AdminOrderController::class, 'store'])->name('store');
         Route::get('edit/{id}', [AdminOrderController::class, 'edit'])->name('edit');
         Route::put('update/{id}', [AdminOrderController::class, 'update'])->name('update');
         Route::get('delete/{id}', [AdminOrderController::class, 'delete'])->name('delete');
+        Route::put('/payment-status/{id}', [AdminOrderController::class, 'updatePaymentStatus'])->name('updatepayment');
     });
     /* CATEGORY ROUTE */
     Route::prefix('category')->name('category.')->group(function () {

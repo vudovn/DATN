@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
+use App\Http\Controllers\Admin\CollectionController;
 
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -22,8 +23,8 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     /* USER ROUTE */
     Route::prefix('user')->name('user.')->group(function () {
-        Route::get('/index', [UserController::class, 'index'])->name('index');
-        Route::get('/index-admin', [UserController::class, 'admin'])->name('admin.index');
+        Route::get('/customer', [UserController::class, 'index'])->name('index');
+        Route::get('/admin', [UserController::class, 'index'])->name('admin.index');
         Route::get('/create', [UserController::class, 'create'])->name('create');
         Route::post('/store', [UserController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
@@ -63,7 +64,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     });
     /* ROLE ROUTE */
     Route::prefix('role')->name('role.')->group(function () {
-        Route::get('/index', [RoleController::class, 'index'])->name('index');
+        // Route::get('/index', [RoleController::class, 'index'])->name('index');
         Route::get('/create', [RoleController::class, 'create'])->name('create');
         Route::post('/store', [RoleController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit');
@@ -90,6 +91,15 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
     });
+    Route::prefix('collection')->name('collection.')->group(function () {
+        Route::get('/index', [CollectionController::class, 'index'])->name('index');
+        Route::get('/create', [CollectionController::class, 'create'])->name('create');
+
+        Route::post('/store', [CollectionController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [CollectionController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [CollectionController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [CollectionController::class, 'delete'])->name('delete');
+    });
     // /* ATTRIBUTE VALUE ROUTE */
     // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
     //     Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
@@ -101,19 +111,20 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     //     Route::delete('/destroy/{id}', [AttributeValueController::class, 'destroy'])->name('destroy');
     // });
     /* AJAX ROUTE */
-    Route::middleware(['checkPermission'])->group(function () {
-        Route::prefix('{model}')->name('{model}.')->group(function () {
-            Route::get('/getData', [AjaxDashboardController::class, 'getData'])->name('ajax.dashboard.getData');
-            Route::put('/actions', [AjaxDashboardController::class, 'updateMultiple'])->name('ajax.dashboard.changeStatusMultiple');
-            Route::delete('/actions', [AjaxDashboardController::class, 'deleteMultiple'])->name('ajax.dashboard.deleteMultiple');
-            Route::delete('/deleteItem', [AjaxDashboardController::class, 'deleteItem'])->name('ajax.dashboard.deleteItem');
-            Route::put('/quickUpdate', [AjaxDashboardController::class, 'updateQuick'])->name('ajax.dashboard.quickUpdate');
-            Route::put('/change/status', [AjaxDashboardController::class, 'updateStatus'])->name('ajax.dashboard.updateStatus');
-        });
+});
+Route::middleware(['checkPermission'])->group(function () {
+    Route::prefix('{model}')->name('{model}.')->group(function () {
+        Route::get('/getData', [AjaxDashboardController::class, 'getData'])->name('ajax.dashboard.getData');
+        Route::put('/actions', [AjaxDashboardController::class, 'updateMultiple'])->name('ajax.dashboard.changeStatusMultiple');
+        Route::delete('/actions', [AjaxDashboardController::class, 'deleteMultiple'])->name('ajax.dashboard.deleteMultiple');
+        Route::delete('/deleteItem', [AjaxDashboardController::class, 'deleteItem'])->name('ajax.dashboard.deleteItem');
+        Route::put('/quickUpdate', [AjaxDashboardController::class, 'updateQuick'])->name('ajax.dashboard.quickUpdate');
+        Route::put('/change/status', [AjaxDashboardController::class, 'updateStatus'])->name('ajax.dashboard.updateStatus');
     });
 });
 
 Route::get('/ajax/getLocation', [LocationController::class, 'getLocation'])->name('ajax.getLocation');
+Route::get('getProduct', [AjaxDashboardController::class, 'getProduct'])->name('getProduct');
 
 // get attribute value
 Route::get('/getAttribute', [AjaxDashboardController::class, 'getAttribute'])->name('ajax.dashboard.getAttribute');

@@ -1,5 +1,4 @@
 @props(['createButton', 'options', 'action', 'method', 'model'])
-
 <div class="d-flex justify-content-between animate__animated animate__fadeIn">
     <div id="filter" data-model="{{$model ?? ''}}">
         <form action="">
@@ -11,7 +10,7 @@
                                 @php
                                     $selected = request($key) ?: old($key);
                                 @endphp
-                                <select name="{{ $key }}" id="{{ $key }}" class="form-select filter-option">
+                                <select name="{{ $key }}" id="{{ $key }}" class="form-select {{ $key != 'actions' ? 'filter-option' : '' }}">
                                     @foreach ($option as $keyItem => $valItem)
                                         <option {{ $keyItem == $selected ? 'selected' : '' }}
                                             value="{{ $keyItem }}">{{ $valItem }}</option>

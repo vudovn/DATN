@@ -5,45 +5,45 @@
     <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
 
     <div class="card">
-        @dd($config['model']);
-        <div class="card-header pb-0">
+        <div class="card-header">
             <x-filter
             :model="$config['model']"
-             :createButton="[
+            :createButton="[
                 'label' => '',
                 'route' => $config['model'] . '.create',
             ]" :options="[
                 'actions' => generateSelect('Hành động', __('general.actions')),
                 'perpage' => generateSelect('10 hàng', __('general.perpage')),
-                // 'roles' => generateSelect('Vai trò', $roles),
+                // 'user_catalogue_id' => generateSelect('Vai trò', $userCatalogues),
                 'publish' => generateSelect('Trạng thái', __('general.publish')),
                 'sort' => generateSelect('Sắp xếp', __('general.sort')),
             ]" />
         </div>
-        <div class="card-body">
-            <table class="table table-striped">
+        <div class="card-body p-0">
+           <div class="table-responsive">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input input-checkbox" type="checkbox" id="checkAll">
-                                <label for="checkAll" class="custom-control-label"></label>
+                            <div class="form-check">
+                                <input class="form-check-input input-primary" type="checkbox" id="checkAll">
+                                <label class="form-check-label" for="checkAll"></label>
                             </div>
                         </th>
                         <th>ID</th>
-                        <th>Hỉnh ảnh</th>
-                        <th>Tên</th>
-                        <th>Email</th>
-                        <th>Ngày tạo</th>
-                        <th class="text-center">Vai trò</th>
+                        <th>Ảnh bìa</th>
+                        <th>Tên bộ sưu tập</th>
+                        <th>Mô tả</th>
+                        <th class="text-center">Ngày tạo</th>
                         <th class="text-center">Trạng thái</th>
                         <th class="text-center">Hành động</th>
                     </tr>
                 </thead>
                 <tbody id="tbody">
-                    @include('admin.pages.user.user.components.table')
+                    @include('admin.pages.collection.components.table')
                 </tbody>
             </table>
+           </div>
         </div>
     </div>
     <input type="hidden" name="model" id="model" value="{{ ucfirst($config['model']) }}">

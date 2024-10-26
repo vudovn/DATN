@@ -25,15 +25,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin'),
         ]); 
-        $userCustomer = User::create([
-            'name' => 'customer',
-            'email' => 'customer@gmail.com',
-            'password' => Hash::make('admin'),
-        ]); 
         $userAdmin->assignRole('Super Admin');
-        $userCustomer->assignRole('Customer');
-
-
 
 
     }

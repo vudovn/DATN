@@ -1,68 +1,55 @@
 <?php
-namespace App\Services\Product;
+
+namespace App\Services\Collection;
 use App\Services\BaseService;
+use App\Repositories\Collection\CollectionRepository;
 use App\Repositories\Product\ProductRepository;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Hash;
-
-
-class ProductService extends BaseService
+class CollectionService extends BaseService
 {
-
+    protected $collectionRepository;
     protected $productRepository;
-
     public function __construct(
-        ProductRepository $productRepository
+        ProductRepository $productRepository,
+        CollectionRepository $collectionRepository
     ) {
         $this->productRepository = $productRepository;
+        $this->collectionRepository = $collectionRepository;
     }
-
-
-    private function paginateAgrument($request, $isFilter = false)
+    private function paginateAgrument($request)
     {
-        $defaultSort = ['id', 'asc'];
-        $defaultPerPage = $isFilter ? 12 : 10;
-
         return [
             'keyword' => [
                 'search' => $request['keyword'] ?? '',
-                'field' => $isFilter ? ['name'] : ['name', 'sku', 'description', 'price'],
+                'field' => ['name']
             ],
             'condition' => [
-                'publish' => $isFilter ? 1 : (isset($request['publish']) ? (int) $request['publish'] : null),
+                'publish' => isset($request['publish'])
+                    ? (int) $request['publish']
+                    : null,
             ],
-            'relation' => $isFilter ? [
-                'categories' => $request['categories'] ?? null,
-            ] : [],
             'sort' => isset($request['sort']) && $request['sort'] != 0
                 ? explode(',', $request['sort'])
-                : $defaultSort,
-            'perpage' => (int) ($request['perpage'] ?? $defaultPerPage),
+                : ['id', 'asc'],
+            'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
         ];
     }
-
     public function paginate($request)
     {
         $agruments = $this->paginateAgrument($request);
         $cacheKey = 'pagination: ' . md5(json_encode($agruments));
-        $users = $this->productRepository->pagination($agruments);
-        return $users;
-    }
-    public function findProduct($request)
-    {
-        $agruments = $this->paginateAgrument($request, true);
-        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
-        $data = $this->productRepository->filterProduct($agruments);
+        $data = $this->collectionRepository->pagination($agruments);
         return $data;
     }
+
     public function create($request)
     {
         DB::beginTransaction();
         try {
-            $payload = $request->except(['_token', 'send', 're_password']);
-            $payload['password'] = Hash::make($request->password);
-            $user = $this->productRepository->create($payload);
+            $payload = $request->except(['categoriesOther', 'categoriesRoom', '_token', 'send', 'idProduct', 'keyword']);
+            $collection = $this->collectionRepository->create($payload);
+            $productIds = explode(',', $request->idProduct);
+            $collection->products()->attach($productIds);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -72,14 +59,15 @@ class ProductService extends BaseService
             return false;
         }
     }
-
     public function update($request, $id)
     {
         DB::beginTransaction();
         try {
-            $payload = $request->except(['_token', 'send', '_method']);
-            $user = $this->productRepository->update($id, $payload);
-
+            $payload = $request->except(['categoriesOther', 'categoriesRoom', '_token', 'send', 'idProduct', 'keyword']);
+            $collection = $this->collectionRepository->findById($id);
+            $this->collectionRepository->update($id,$payload);
+            $productIds = explode(',', $request->idProduct);
+            $collection->products()->sync($productIds);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -94,7 +82,7 @@ class ProductService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $this->productRepository->delete($id);
+            $this->collectionRepository->delete($id);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -104,7 +92,4 @@ class ProductService extends BaseService
             return false;
         }
     }
-
-
-
 }

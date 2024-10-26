@@ -23,7 +23,7 @@
             <td>{{ $user->email }}</td>
             <td>{{ changeDateFormat($user->created_at) }}</td>
             <td class="text-center">
-                {{ $user->getRoleNames()->join(', ') }}
+                {{ $user->getRoleNames()->isempty() ? 'Khách' :  $user->getRoleNames()->join(', ')}}
             </td>
             <td class="text-center">
                 @if ($user->id != auth()->id())

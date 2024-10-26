@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
+use App\Http\Controllers\Admin\CollectionController;
 
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -63,7 +64,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     });
     /* ROLE ROUTE */
     Route::prefix('role')->name('role.')->group(function () {
-        Route::get('/index', [RoleController::class, 'index'])->name('index');
+        // Route::get('/index', [RoleController::class, 'index'])->name('index');
         Route::get('/create', [RoleController::class, 'create'])->name('create');
         Route::post('/store', [RoleController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit');
@@ -87,6 +88,15 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
     });
+    Route::prefix('collection')->name('collection.')->group(function () {
+        Route::get('/index', [CollectionController::class, 'index'])->name('index');
+        Route::get('/create', [CollectionController::class, 'create'])->name('create');
+
+        Route::post('/store', [CollectionController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [CollectionController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [CollectionController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [CollectionController::class, 'delete'])->name('delete');
+    });
     // /* ATTRIBUTE VALUE ROUTE */
     // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
     //     Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
@@ -109,7 +119,9 @@ Route::middleware(['checkPermission'])->group(function () {
         Route::put('/change/status', [AjaxDashboardController::class, 'updateStatus'])->name('ajax.dashboard.updateStatus');
     });
 });
+
 Route::get('/ajax/getLocation', [LocationController::class, 'getLocation'])->name('ajax.getLocation');
+Route::get('getProduct', [AjaxDashboardController::class, 'getProduct'])->name('getProduct');
 
 // get attribute value
 Route::get('/getAttribute', [AjaxDashboardController::class, 'getAttribute'])->name('ajax.dashboard.getAttribute');

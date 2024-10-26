@@ -59,6 +59,10 @@ class BaseRepository {
         return $this->model->whereIn($whereInField, $whereIn)->delete();
     }
 
+    public function getAll() {
+        return $this->model->all();
+    }
+
     // public function findByIdLocation(
     //     int $modelId,
     //     array $column = ['*'],

@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
 @section('template')
-<x-breadcrumb :breadcrumb="$config['breadcrumb']" />
+    <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
     <div class="card">
         <div class="card-header">
             <h4>Tạo Đơn Hàng Mới</h4>
@@ -57,33 +57,163 @@
                         </div>
                     </div>
                 </div>
-        
+
                 <!-- Trạng Thái Thanh Toán -->
                 <div class="form-group mb-3">
                     <label for="payment_status">Trạng Thái Thanh Toán:</label>
                     <select name="payment_status" id="payment_status" class="form-control">
                         @php
-                            $paymentStatuses = __('order.payment_status'); 
+                            $paymentStatuses = __('order.payment_status');
                         @endphp
-                        
-                        @if (is_array($paymentStatuses)) 
+
+                        @if (is_array($paymentStatuses))
                             @foreach ($paymentStatuses as $key => $value)
                                 <option value="{{ $key }}">{{ $value }}</option>
                             @endforeach
                         @else
-                            <option value="">{{ $paymentStatuses }}</option> 
+                            <option value="">{{ $paymentStatuses }}</option>
                         @endif
                     </select>
                 </div>
-        
+
                 <!-- Địa chỉ giao hàng -->
                 @include('admin.pages.order.components.location')
                 <div class="form-group mb-3">
                     <x-input :label="'Địa chỉ giao hàng'" name="address" :value="''" :required="false" />
                 </div>
 
+                {{-- Thêm sản phẩm --}}
+                <div class="filterProduct">
+                    <div class="card-header">
+                        <div class="alert alert-success" role="alert">
+                            Bạn phải thêm sản phẩm mới!
+                            <span style="cursor: pointer" onclick="toggleProductInput()"
+                                class="me-3 link-success add-product">
+                                Thêm sản phẩm
+                            </span>
+                        </div>
+                        <input type="hidden" name="idProduct" id="idProduct">
+                        <style>
+                            /* Custom CSS */
+                            .show-product {
+                                position: relative;
+                            }
+                            .product-dropdown {
+                                position: absolute;
+                                top: 80%;
+                                left: 25px;
+                                right: 0;
+                                max-height: 200px;
+                                overflow-y: auto;
+                                border: 1px solid #ddd;
+                                background-color: #fff;
+                                z-index: 1000;
+                                width: 93%;
+                            }
+                            .product-dropdown-item {
+                                padding: 8px;
+                                cursor: pointer;
+                            }
+                            .product-dropdown-item:hover {
+                                background-color: #f1f1f1;
+                            }
+                            .fix-input input {
+                                border: 2px solid gray;
+                            }
+                        </style>
+                        <div class="card-body show-product d-none" id="productInputContainer">
+                            <input type="text" class="form-control mt-3" id="product-search" placeholder="Nhập tên sản phẩm cần thêm">
+                            <div class="product-dropdown d-none" id="product-dropdown">
+                                <!-- Kết quả tìm kiếm sẽ hiển thị ở đây -->
+                            </div>
+                        </div>
+                        <!-- jQuery -->
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script>
+                            $(document).ready(function(){
+                                let productsData = []; // Lưu trữ sản phẩm được lấy từ API
+                                
+                                $('#product-search').on('input', function(){
+                                    let query = $(this).val();
+                                    if(query.length > 0){
+                                        $.ajax({
+                                            url: "{{ route('order.dataProduct') }}",
+                                            method: 'GET',
+                                            dataType: 'json',
+                                            success: function(data){
+                                                productsData = data;
+                                                let filteredProducts = data.filter(product => 
+                                                    product.name.toLowerCase().includes(query.toLowerCase())
+                                                );
+                
+                                                let dropdown = $('#product-dropdown');
+                                                dropdown.empty(); 
+                                                if (filteredProducts.length > 0) {
+                                                    filteredProducts.forEach(product => {
+                                                        dropdown.append(`<div class="product-dropdown-item" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">${product.name}</div>`);
+                                                    });
+                                                    dropdown.removeClass('d-none');
+                                                } else {
+                                                    dropdown.addClass('d-none');
+                                                }
+                                            },
+                                            error: function(){
+                                                alert('Không thể tải dữ liệu sản phẩm!');
+                                            }
+                                        });
+                                    } else {
+                                        $('#product-dropdown').addClass('d-none');
+                                    }
+                                });
+                
+                                // Xử lý khi chọn sản phẩm từ danh sách thả xuống
+                                $(document).on('click', '.product-dropdown-item', function(){
+                                    let productId = $(this).data('id');
+                                    let productName = $(this).data('name');
+                                    let productPrice = $(this).data('price');
+                                    let quantity = 1; // Mặc định số lượng là 1, có thể điều chỉnh
+                
+                                    // Tính tổng tiền
+                                    let totalPrice = quantity * productPrice;
+                
+                                    // Thêm sản phẩm vào bảng
+                                    $('#product-table-body').append(`
+                                        <tr>
+                                            <td>${productId}</td>
+                                            <td>${productName}</td>
+                                            <td class='fix-input'><input type="number" value="${quantity}" class="product-quantity" data-price="${productPrice}" style="width: 60px;"></td>
+                                            <td>${productPrice} VNĐ</td>
+                                            <td class="total-price">${totalPrice} VNĐ</td>
+                                        </tr>
+                                    `);
+                
+                                    // Ẩn dropdown và xóa từ khóa tìm kiếm
+                                    $('#product-search').val('');
+                                    $('#product-dropdown').addClass('d-none');
+                                });
+                
+                                // Cập nhật tổng tiền khi thay đổi số lượng sản phẩm
+                                $(document).on('input', '.product-quantity', function(){
+                                    let quantity = $(this).val();
+                                    let price = $(this).data('price');
+                                    let totalPrice = quantity * price;
+                                    $(this).closest('tr').find('.total-price').text(totalPrice + ' VNĐ');
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+                <script>
+                    function toggleProductInput() {
+                        const productInput = document.getElementById('productInputContainer');
+                        productInput.classList.toggle('d-none');
+                    }
+                </script>
+                
+
+
                 <h5 class="mt-4">Chi tiết Đơn Hàng</h5>
-                <table class="table table-striped">
+                <table class="table table-striped mt-3">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -93,6 +223,9 @@
                             <th>Tổng Tiền</th>
                         </tr>
                     </thead>
+                    <tbody id="product-table-body">
+                        <!-- Dữ liệu sản phẩm sẽ được thêm vào đây -->
+                    </tbody>
                 </table>
 
                 <!-- Hiển thị tổng tiền -->
@@ -100,7 +233,7 @@
                     <label for="total_amount">Tổng tiền:</label>
                     <input type="text" id="total_amount" name="total_amount" class="form-control" value="0 VND">
                 </div>
-        
+
                 <div class="text-right">
                     <a href="{{ route('order.index') }}" class="btn btn-danger">Quay lại</a>
                     <button type="submit" class="btn btn-primary">Tạo mới</button>

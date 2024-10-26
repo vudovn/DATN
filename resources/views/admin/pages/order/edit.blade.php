@@ -88,6 +88,29 @@
                     <x-input :label="'Địa chỉ chi tiết'" name="address" :value="$user->address ?? ''" :required="false" />
                 </div>
         
+                {{-- Thêm sản phẩm --}}
+                <div class="filterProduct">
+                    <div class="card-header">
+                        <div class="alert alert-success" role="alert">
+                            Bạn phải thêm ít nhất là 2 sản phẩm mới hoàn thành bộ sưu tập!
+                            <span style="cursor: pointer" onclick="toggleProductInput()"
+                                class="me-3 link-success add-product">
+                                Thêm sản phẩm
+                            </span>
+                        </div>
+                        <input type="hidden" name="idProduct" id="idProduct">
+                        <div class="card-body show-product d-none">
+                            <input type="text" class="form-control mt-3" placeholder="Nhập tên sản phẩm cần thêm">
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function toggleProductInput() {
+                        const productInput = document.querySelector('.show-product');
+                        productInput.classList.toggle('d-none');
+                        productInput.classList.toggle('d-block');
+                    }
+                </script>
 
                 @php
                     $totalAmount = 0;

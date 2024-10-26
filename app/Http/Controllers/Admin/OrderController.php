@@ -8,12 +8,14 @@ use App\Http\Requests\order\UpdateOrderRequest;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderDetails;
+use App\Models\Product;
 use App\Models\User;
 use App\Repositories\Order\OrderRepository;
 use App\Repositories\Location\ProvinceRepository;
 use App\Services\Order\OrderService;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Traits\HasDynamicMiddleware;
+use App\Repositories\Category\CategoryRepository;
 
 class OrderController extends Controller  implements HasMiddleware
 {
@@ -26,18 +28,21 @@ class OrderController extends Controller  implements HasMiddleware
     protected $orderService;
     protected $orderRepository;
     protected $provinceRepository; 
+    protected $categoryRepository;
 
     public function __construct(
         Order $order,
         OrderService $orderService,
         OrderRepository $orderRepository,
         ProvinceRepository $provinceRepository, 
+        CategoryRepository $categoryRepository,
         )
     {
         $this->order = $order;
         $this->orderService = $orderService;
         $this->orderRepository = $orderRepository;
         $this->provinceRepository = $provinceRepository; 
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function index(Request $request) 
@@ -60,6 +65,8 @@ class OrderController extends Controller  implements HasMiddleware
     public function create()
     {
         $provinces = $this->provinceRepository->getAllProvinces();
+        $categories = $this->categoryRepository->findByField('is_room', 2)->pluck('name', 'id')->prepend('Danh mục', 0)->toArray();
+        $categoryRoom = $this->categoryRepository->findByField('is_room', 1)->pluck('name', 'id')->prepend('Phòng', 0)->toArray();
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';
@@ -67,7 +74,9 @@ class OrderController extends Controller  implements HasMiddleware
         $user = User::all();
         return view('admin.pages.order.create', compact(
             'provinces',
-            'config'
+            'config',
+            'categories',
+            'categoryRoom'
         ));
     }
 

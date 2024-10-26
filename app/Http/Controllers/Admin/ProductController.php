@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Repositories\Product\ProductRepository;
 use App\Services\Product\ProductService;
@@ -152,4 +153,9 @@ class ProductController extends Controller implements HasMiddleware
             'model' => 'product'
         ];
     }
+    public function dataProduct(){
+        $products = Product::all();
+        return response()->json($products);
+    }
+    
 }

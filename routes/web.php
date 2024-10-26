@@ -74,6 +74,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
 
     /* ORDER ROUTE */
     Route::prefix('order')->name('order.')->group(function () {
+        Route::get('dataProduct', [ProductController::class, 'dataProduct'])->name('dataProduct');
         Route::get('index', [AdminOrderController::class, 'index'])->name('index');
         Route::get('create', [AdminOrderController::class, 'create'])->name('create');
         Route::post('store', [AdminOrderController::class, 'store'])->name('store');

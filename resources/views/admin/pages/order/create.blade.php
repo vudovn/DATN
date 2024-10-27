@@ -101,7 +101,7 @@
                         </div>
                         <!-- jQuery -->
                         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                        <script>
+                        {{-- <script>
                             $(document).ready(function(){
                                 let productsData = []; // Lưu trữ sản phẩm được lấy từ API
                                 
@@ -172,7 +172,7 @@
                                     $(this).closest('tr').find('.total-price').text(totalPrice + ' VNĐ');
                                 });
                             });
-                        </script>
+                        </script> --}}
                     </div>
                 </div>
                 <script>

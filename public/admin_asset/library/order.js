@@ -78,16 +78,15 @@ $(document).ready(function () {
         let productName = $(this).data('name');
         let productPrice = $(this).data('price');
         let quantity = 1;
-
+    
         let existingRow = $('#product-table-body').find(`tr[data-id="${productId}"]`);
         if (existingRow.length > 0) {
-
             let currentQuantityInput = existingRow.find('.product-quantity');
-            quantity = parseInt(currentQuantityInput.val()) + 1; // Tăng số lượng
+            quantity = parseInt(currentQuantityInput.val()) + 1;
             currentQuantityInput.val(quantity);
-
+    
             let totalPrice = quantity * productPrice;
-            existingRow.find('.total-price').text(totalPrice + ' VNĐ');
+            existingRow.find('.total-price').text(formatNumber(totalPrice) + ' VNĐ');
         } else {
             $('#product-table-body').append(`
                 <tr data-id="${productId}">
@@ -96,15 +95,30 @@ $(document).ready(function () {
                     <td class='fix-input'>
                         <input type="number" value="${quantity}" class="product-quantity" data-price="${productPrice}" min="1" style="width: 60px;">
                     </td>
-                    <td>${productPrice} VNĐ</td>
-                    <td class="total-price">${quantity * productPrice} VNĐ</td>
+                    <td>${formatNumber(productPrice)} VNĐ</td>
+                    <td class="total-price">${formatNumber(quantity * productPrice)} VNĐ</td>
                     <td><button class="btn btn-danger btn-sm rounded delete-product-btn">Xóa</button></td>
                 </tr>
             `);
         }
-
+    
         $('#product-search').val('');
         $('#product-dropdown').addClass('d-none');
+        calculateTotalAmount();
+    });
+    
+    $(document).on('input', '.product-quantity', function () {
+        let quantity = $(this).val();
+        let price = $(this).data('price');
+        let totalPrice = quantity * price;
+        $(this).closest('tr').find('.total-price').text(formatNumber(totalPrice) + ' VNĐ');
+    
+        calculateTotalAmount();
+    });
+    
+    $('#product-table-body').on('click', '.delete-product-btn', function () {
+        $(this).closest('tr').remove();
+        calculateTotalAmount(); // Cập nhật tổng tiền sau khi xóa sản phẩm
     });
 
     $(document).on('input', '.product-quantity', function () {
@@ -112,10 +126,31 @@ $(document).ready(function () {
         let price = $(this).data('price');
         let totalPrice = quantity * price;
         $(this).closest('tr').find('.total-price').text(totalPrice + ' VNĐ');
+
+        calculateTotalAmount();
     });
 
     $('#product-table-body').on('click', '.delete-product-btn', function () {
         $(this).closest('tr').remove();
     });
 });
+
+// Hàm định dạng số tiền
+function formatNumber(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+// Hàm tính tổng tiền
+function calculateTotalAmount() {
+    let totalAmount = 0;
+
+    $('#product-table-body .total-price').each(function () {
+        let priceText = $(this).text().replace(' VNĐ', '').replace(/\./g, '').trim(); 
+        let price = parseInt(priceText);
+        totalAmount += price;
+    });
+
+    $('#total_amount').val(formatNumber(totalAmount) + ' VND');
+}
+
 

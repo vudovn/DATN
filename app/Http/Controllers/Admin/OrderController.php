@@ -148,6 +148,7 @@ class OrderController extends Controller  implements HasMiddleware
         private function config(){
             return [
                 'css' => [
+                    'admin_asset/css/order.css'
                 ],
                 'js' => [
                     'admin_asset/library/location.js', 

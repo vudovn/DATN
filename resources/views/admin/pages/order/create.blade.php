@@ -93,34 +93,6 @@
                             </span>
                         </div>
                         <input type="hidden" name="idProduct" id="idProduct">
-                        <style>
-                            /* Custom CSS */
-                            .show-product {
-                                position: relative;
-                            }
-                            .product-dropdown {
-                                position: absolute;
-                                top: 80%;
-                                left: 25px;
-                                right: 0;
-                                max-height: 200px;
-                                overflow-y: auto;
-                                border: 1px solid #ddd;
-                                background-color: #fff;
-                                z-index: 1000;
-                                width: 93%;
-                            }
-                            .product-dropdown-item {
-                                padding: 8px;
-                                cursor: pointer;
-                            }
-                            .product-dropdown-item:hover {
-                                background-color: #f1f1f1;
-                            }
-                            .fix-input input {
-                                border: 2px solid gray;
-                            }
-                        </style>
                         <div class="card-body show-product d-none" id="productInputContainer">
                             <input type="text" class="form-control mt-3" id="product-search" placeholder="Nhập tên sản phẩm cần thêm">
                             <div class="product-dropdown d-none" id="product-dropdown">

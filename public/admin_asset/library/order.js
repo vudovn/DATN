@@ -43,7 +43,6 @@ $(document).ready(function () {
         let query = $(this).val();
         if (query.length > 0) {
             $.ajax({
-                // url: "{{ route('order.dataProduct') }}",
                 url: `/order/dataProduct`,
                 method: 'GET',
                 dataType: 'json',
@@ -80,48 +79,43 @@ $(document).ready(function () {
         let productPrice = $(this).data('price');
         let quantity = 1;
 
-        $('#quantity').on('input', function () {
-            quantity = parseInt($(this).val());
+        let existingRow = $('#product-table-body').find(`tr[data-id="${productId}"]`);
+        if (existingRow.length > 0) {
 
-            if (isNaN(quantity) || quantity < 1) {
-                quantity = 1;
-                $(this).val(quantity);
-            }
-        });
+            let currentQuantityInput = existingRow.find('.product-quantity');
+            quantity = parseInt(currentQuantityInput.val()) + 1; // Tăng số lượng
+            currentQuantityInput.val(quantity);
 
+            let totalPrice = quantity * productPrice;
+            existingRow.find('.total-price').text(totalPrice + ' VNĐ');
+        } else {
+            $('#product-table-body').append(`
+                <tr data-id="${productId}">
+                    <td>${productId}</td>
+                    <td>${productName}</td>
+                    <td class='fix-input'>
+                        <input type="number" value="${quantity}" class="product-quantity" data-price="${productPrice}" min="1" style="width: 60px;">
+                    </td>
+                    <td>${productPrice} VNĐ</td>
+                    <td class="total-price">${quantity * productPrice} VNĐ</td>
+                    <td><button class="btn btn-danger btn-sm rounded delete-product-btn">Xóa</button></td>
+                </tr>
+            `);
+        }
 
-        // Tính tổng tiền
-        let totalPrice = quantity * productPrice;
-
-        // Thêm sản phẩm vào bảng
-        $('#product-table-body').append(`
-            <tr>
-                <td>${productId}</td>
-                <td>${productName}</td>
-                <td class='fix-input'>
-                    <input type="number" id="quantity" value="${quantity}" class="product-quantity" data-price="${productPrice}" min="1" style="width: 60px;">
-                </td>
-                <td>${productPrice} VNĐ</td>
-                <td class="total-price">${totalPrice} VNĐ</td>
-                 <td><button class="btn btn-danger btn-sm rounded delete-product-btn">Xóa</button></td>
-            </tr>
-        `);
-
-        // Xóa sản phẩm khi nhấn nút Xóa
-        $('#product-table-body').on('click', '.delete-product-btn', function () {
-            $(this).closest('tr').remove();
-        });
-
-        // Ẩn dropdown và xóa từ khóa tìm kiếm
         $('#product-search').val('');
         $('#product-dropdown').addClass('d-none');
     });
 
-    // Cập nhật tổng tiền khi thay đổi số lượng sản phẩm
     $(document).on('input', '.product-quantity', function () {
         let quantity = $(this).val();
         let price = $(this).data('price');
         let totalPrice = quantity * price;
         $(this).closest('tr').find('.total-price').text(totalPrice + ' VNĐ');
     });
+
+    $('#product-table-body').on('click', '.delete-product-btn', function () {
+        $(this).closest('tr').remove();
+    });
 });
+

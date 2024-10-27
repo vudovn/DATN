@@ -12,8 +12,8 @@
         @yield('content')
     </main>
     @include('client.components.footer')
-    @include('client.components.alert')
     @include('client.components.script')
+    @include('client.components.alert')
 </body>
 
 </html>

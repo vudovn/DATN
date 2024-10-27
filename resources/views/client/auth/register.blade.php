@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="{{ asset('/client_asset/custom/css/color.css') }}" />
     <link rel="stylesheet" href="{{ asset('/client_asset/custom/css/auth.css') }}" />
     <link rel="stylesheet" href="{{ asset('/client_asset/library/icon/feather-webfont/dist/feather-icons.css') }}" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/css/plugins/animate.min.css" />
     <link href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/message/message.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/message/message.js"></script>
     <title>Đăng ký</title>
@@ -29,11 +31,12 @@
             </div>
             <div class="col-md-6 right">
                 <h2 class="mb-4 text-center text-white">Đăng ký tài khoản</h2>
-                <form action="#" method="POST">
+                <form action="" method="POST">
+                    @csrf
                     <div class="form-group mb-3">
                         <input type="text" name="name" class="form-control input-tgnt" placeholder="Họ & Tên">
                         @error('name')
-                            <small class="text-white">*123132</small>
+                            <small class="text-danger">*{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group mb-3">
@@ -44,23 +47,27 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <input type="password" name="" class="form-control input-tgnt" placeholder="Mật khẩu">
-                        @error('email')
+                        <input type="password" name="password" class="form-control input-tgnt" placeholder="Mật khẩu">
+                        @error('password')
                             <small class="text-danger">*{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <input type="password" name="" class="form-control input-tgnt" placeholder="Mật khẩu xác nhận">
-                        @error('email')
+                        <input type="password" name="password-confirm" class="form-control input-tgnt"
+                            placeholder="Mật khẩu xác nhận">
+                        @error('password-confirm')
                             <small class="text-danger">*{{ $message }}</small>
                         @enderror
                     </div>
 
                     <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" id="remember">
-                        <label class="form-check-label text-white" for="remember">
+                        <input class="form-check-input" type="checkbox" name="terms" id="terms">
+                        <label class="form-check-label text-white" for="terms">
                             Bạn đồng ý với các điều khoản của chúng tôi
                         </label>
+                        @error('terms')
+                            <small class="text-danger">*{{ $message }}</small>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-tgnt w-100">Đăng ký</button>
                 </form>
@@ -71,6 +78,8 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/js/jquery-3.1.1.min.js"></script>
+    @include('client.components.alert')
 </body>
 
 </html>

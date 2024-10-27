@@ -13,6 +13,10 @@ use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
+
+
+
+
 class AuthController extends Controller
 {
 
@@ -60,7 +64,7 @@ class AuthController extends Controller
         if ($status === Password::RESET_LINK_SENT) {
             return back()->with('success', __($status));
         } else {
-            return back()->withErrors(['error' => __($status)]);
+            return back()->with('error', __($status));
         }
     }
 
@@ -113,4 +117,7 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('auth.index')->with('success', 'Đăng xuất thành công');
     }
+
+    
+
 }

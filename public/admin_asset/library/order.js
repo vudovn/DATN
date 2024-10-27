@@ -150,7 +150,7 @@ function calculateTotalAmount() {
         totalAmount += price;
     });
 
-    $('#total_amount').val(formatNumber(totalAmount) + ' VND');
+    $('#total_amount').val(formatNumber(totalAmount) + ' VNĐ');
 }
 
 

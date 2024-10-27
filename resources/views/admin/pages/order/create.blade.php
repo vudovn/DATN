@@ -193,6 +193,7 @@
                             <th>Số Lượng</th>
                             <th>Giá Tiền</th>
                             <th>Tổng Tiền</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody id="product-table-body">

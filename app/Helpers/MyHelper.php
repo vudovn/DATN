@@ -141,3 +141,9 @@ if (!function_exists('orderCode')) {
         return 'TGNT' . str_pad($id, 7, '0', STR_PAD_LEFT);
     }
 }
+
+if(!function_exists('convertNumber')){
+    function convertNumber($number){
+        return str_replace('.', '', $number);
+    }
+}

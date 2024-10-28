@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\StoreProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 use Illuminate\Http\Request;
 use App\Repositories\Product\ProductRepository;
 use App\Services\Product\ProductService;
@@ -17,7 +19,7 @@ class ProductController extends Controller implements HasMiddleware
     use HasDynamicMiddleware;
     public static function middleware(): array
     {
-        return self::getMiddleware('Product'); 
+        return self::getMiddleware('Product');
     }
     protected $productRepository;
     protected $productService;
@@ -28,13 +30,14 @@ class ProductController extends Controller implements HasMiddleware
         ProductService $productService,
         AttributeCategoryRepository $attributeCategoryRepository,
         CategoryRepository $categoryRepository
-    ){
+    ) {
         $this->productRepository = $productRepository;
         $this->productService = $productService;
         $this->attributeCategoryRepository = $attributeCategoryRepository;
         $this->categoryRepository = $categoryRepository;
     }
-    public function index (Request $request) {
+    public function index(Request $request)
+    {
         $products = $this->productService->paginate($request);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
@@ -47,9 +50,10 @@ class ProductController extends Controller implements HasMiddleware
     {
         $products = $this->productService->paginate($request);
         $config = $this->config();
-        return view('admin.pages.product.product.components.table',compact('products','config'));
+        return view('admin.pages.product.product.components.table', compact('products', 'config'));
     }
-    public function create(){
+    public function create()
+    {
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';
@@ -62,31 +66,42 @@ class ProductController extends Controller implements HasMiddleware
         ));
     }
 
-    public function store(Request $request){
-        // dd($request->all());
-        $request->validate([
-            'name' => 'required',
-            'sku' => 'required',
-            'price' => 'required',
-            'quantity' => 'required',
-            'category' => 'required|not_in:0',
-            'category_id' => 'required|array|min:1|not_in:0',
-            'category_id.*' => 'required',
-            // 'attributes' => 'required'
-        ], [
-            'name.required' => 'Tên sản phẩm không được để trống',
-            'price.required' => 'Giá sản phẩm không được để trống',
-            'quantity.required' => 'Số lượng sản phẩm không được để trống',
-            'category.required' => 'Danh mục không được để trống',
-            'category.not_in' => 'Danh mục không hợp lệ',
-            'category_id.required' => 'Danh mục không được để trống',
-            'category_id.min' => 'Danh mục không hợp lệ',
-            'category_id.*.required' => 'Danh mục không được để trống',
-        ]);
-        dd($request->all());
+    public function store(StoreProductRequest $request)
+    {
+        if($this->productService->create($request)) {
+            return redirect()->route('product.index')->with('success', 'Tạo sản phẩm thành công');
+        } else {
+            return redirect()->back()->with('error', 'Tạo sản phẩm thất bại');
+        }
     }
 
-    public function categories () {
+    public function edit($id)
+    {
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('update');
+        $config['method'] = 'edit';
+        $product = $this->productRepository->findByid($id, ['categories', 'productVariants', 'productVariants.productVariantAttributes']);
+        $attributes = $this->attributeCategoryRepository->getAll();
+        $categories = $this->categoryRepository->getAllPublish();
+        return view('admin.pages.product.product.save', compact(
+            'config',
+            'product',
+            'attributes',
+            'categories'
+        ));
+    }
+
+    public function update(UpdateProductRequest $request, $id)
+    {
+        if($this->productService->update($request, $id)) {
+            return redirect()->route('product.index')->with('success', 'Cập nhật sản phẩm thành công');
+        } else {
+            return redirect()->back()->with('error', 'Cập nhật sản phẩm thất bại');
+        }
+    }
+
+    public function categories()
+    {
         return [
             [
                 'id' => 1,
@@ -121,7 +136,8 @@ class ProductController extends Controller implements HasMiddleware
         ];
     }
 
-    private function breadcrumb($key){
+    private function breadcrumb($key)
+    {
         $breadcrumb = [
             'index' => [
                 'name' => 'Danh sách sản phẩm',
@@ -129,7 +145,7 @@ class ProductController extends Controller implements HasMiddleware
             ],
             'create' => [
                 'name' => 'Tạo sản phẩm',
-                'list' => ['QL sản phẩm', 'Tạo sản phẩm'] 
+                'list' => ['QL sản phẩm', 'Tạo sản phẩm']
             ],
             'update' => [
                 'name' => 'Cập nhật sản phẩm',
@@ -143,14 +159,15 @@ class ProductController extends Controller implements HasMiddleware
         return $breadcrumb[$key];
     }
 
-    private function config(){
+    private function config()
+    {
         return [
             'css' => [
                 'admin_asset\plugins\nice-select\css\nice-select.css',
                 'https://unpkg.com/slim-select@latest/dist/slimselect.css'
             ],
             'js' => [
-                
+
                 'admin_asset/library/variant.js',
                 'admin_asset\plugins\nice-select\js\jquery.nice-select.min.js',
                 'https://unpkg.com/slim-select@latest/dist/slimselect.min.js'

@@ -31,8 +31,8 @@
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <label for="short_description">Mô tả ngắn</label>
-                                    <textarea class="form-control" name="short_description" id="short_description" rows="3">{{ $product->short_description ?? old('short_description') }}</textarea>
+                                    <label for="short_content">Mô tả ngắn</label>
+                                    <textarea class="form-control" name="short_content" id="short_content" rows="3">{{ $product->short_content ?? old('short_content') }}</textarea>
                                 </div>
                                 {{--  --}}
                                 <div class="row price-group">
@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="mb-3 form-group">
-                                            <label class="form-label" for="discount">Giảm giá </label>
+                                            <label class="form-label" for="discount">Giảm giá (%) </label>
                                             <input class="form-control int" max="100"
                                                 value="{{ $product->discount ?? old('discount') }}" type="number"
                                                 name="discount" id="discount">
@@ -84,7 +84,11 @@
                                     </div>
                                 </div>
                                 {{--  --}}
-                                <x-album :label="'Hình ảnh sản phẩm'" :name="'albums'" :value="$product->album ?? old('albums')" />
+                                <x-album :label="'Hình ảnh sản phẩm'" :name="'albums'" :value="old(
+                                    'albums',
+                                    isset($product->albums) ? json_decode($product->albums) : null,
+                                )" />
+
                                 <x-editor :label="'Mô tả sản phẩm'" :name="'description'" :value="$product->description ?? old('description')" class="form-control" />
                             </div>
                         </div>
@@ -93,7 +97,7 @@
                     @include('admin.pages.product.product.components.variant')
 
                     <div class="col-lg-12">
-                        <x-seo :value_meta_title="$product->meta_title ?? ''" :value_meta_description="$product->meta_description ?? ''" :value_meta_keywords="$product->meta_keywords ?? ''" />
+                        <x-seo :value_meta_title="$product->meta_title ?? old('meta_title')" :value_meta_description="$product->meta_description ?? old('meta_description')" />
                     </div>
                 </div>
             </div>
@@ -107,18 +111,19 @@
                         Chọn danh mục
                     </div>
                     <div class="card-body">
-                        <select name="category" class="js-choice form-control @error('category') is-invalid @enderror" id="">
+                        <select name="category" class="js-choice form-control @error('category') is-invalid @enderror"
+                            id="">
                             <option value="">Chọn danh mục</option>
                             @foreach ($categories as $category)
                                 @if ($category->is_room == 2)
-                                    <option value="{{ $category->id }}" 
-                                        {{ old('category') == $category->id ? 'selected' : '' }}>
+                                    <option value="{{ $category->id }}" @if (old('category') == $category->id || (isset($product) && $product->categories->pluck('id')->contains($category->id))) selected @endif>
                                         {{ $category->name }}
                                     </option>
                                 @endif
                             @endforeach
                         </select>
-                        
+
+
                         @error('category')
                             <small class="error text-danger">{{ $message }}</small>
                         @enderror
@@ -130,17 +135,18 @@
                     </div>
                     <div class="card-body">
                         <select name="category_id[]" multiple
-                            class="js-choice-multiple form-control @error('category_id') is-invalid @enderror" id="">
+                            class="js-choice-multiple form-control @error('category_id') is-invalid @enderror">
                             <option value="" disabled>Chọn danh mục</option>
                             @foreach ($categories as $category)
                                 @if ($category->is_room == 1)
-                                    <option value="{{ $category->id }}"
-                                        {{ in_array($category->id, old('category_id', [])) ? 'selected' : '' }}>
+                                    <option value="{{ $category->id }}" @if (in_array($category->id, old('category_id', [])) ||
+                                            (isset($product) && $product->categories->pluck('id')->contains($category->id))) selected @endif>
                                         {{ $category->name }}
                                     </option>
                                 @endif
                             @endforeach
                         </select>
+
 
                         @error('category_id')
                             <small class="error text-danger">{{ $message }}</small>
@@ -154,17 +160,19 @@
                     <div class="card-body">
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="radio" name="is_featured" value="1"
-                                id="is_featured2" {{ $product->is_featured ?? old('is_featured') == 1 ? 'checked' : '' }}>
+                                id="is_featured2"
+                                {{ old('is_featured', $product->is_featured ?? 0) == 1 ? 'checked' : '' }}>
                             <label class="form-check-label" for="is_featured2">Sản phẩm nổi bật</label>
                         </div>
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="radio" name="is_featured" value="2"
                                 id="is_featured1"
-                                {{ $product->is_featured ?? old('is_featured') == 2 ? 'checked' : 'checked' }}>
+                                {{ old('is_featured', $product->is_featured ?? 0) == 2 ? 'checked' : '' }}>
                             <label class="form-check-label" for="is_featured1">Sản phẩm không nổi bật</label>
                         </div>
                     </div>
                 </div>
+
                 <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.publish')" :value="$product->publish ?? old('publish')" />
             </div>
 

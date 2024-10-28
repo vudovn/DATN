@@ -18,4 +18,10 @@ class Attribute extends Model
     {
         return $this->belongsTo(AttributeCategory::class);
     }
+
+
+    public function product_variants()
+    {
+        return $this->belongsToMany(ProductVariant::class, 'product_variant_attribute', 'attribute_id', 'product_variant_id');
+    }
 }

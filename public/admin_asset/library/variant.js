@@ -328,11 +328,8 @@
                 .each(function () {
                     let className = $(this).attr("class");
                     variantData[className] = $(this).val();
-                    console.log(className);
+                    // console.log(className);
                 });
-
-            console.log(variantData);
-
             if ($(".updateVariantRow").length == 0) {
                 parents.after(TGNT.renderUpdateVariantHtml(variantData));
             }
@@ -341,8 +338,6 @@
 
     TGNT.renderUpdateVariantHtml = (variantData) => {
         let variantAlbums = variantData.variant_albums.split(",");
-        console.log(variantAlbums);
-
         let html = `
             <tr class="updateVariantRow animate__animated animate__fadeIn">
                 <td colspan="10">
@@ -368,17 +363,17 @@
                                                         <i class="fa-duotone fa-solid fa-cloud-arrow-up"></i>
                                                     </a>
                                                 </li>`;
-                                                if (variantAlbums != "") {
-                                                    variantAlbums.forEach((element) => {
-                                                        html += TGNT.variantAlbumList(element);
-                                                    });
-                                                }
-                                html += `</ul>
+        if (variantAlbums != "") {
+            variantAlbums.forEach((element) => {
+                html += TGNT.variantAlbumList(element);
+            });
+        }
+        html += `</ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row price-group">
+                            <div class="row me-0">
                                 <div class="col-lg-4">
                                     <div class="mb-3 position-relative">
                                         <label class="form-label" for="sku">SKU <span class="text-danger">*</span></label>
@@ -398,12 +393,9 @@
                                 <div class="col-lg-4">
                                     <div class="mb-3 position-relative">
                                         <label class="form-label" for="variant_price">Giá tiền <span class="text-danger">*</span></label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend"><span class="input-group-text">$</span></div>
                                             <input type="text" name="variant_price" value="${TGNT.addCommas(
                                                 variantData.variant_price
                                             )}" id="variant_price" class="form-control int">
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -660,13 +652,14 @@
                     );
                 }
                 TGNT.getSelect2(_this);
+                TGNT.checkMaxAttributeGroup(attributeCatalogue);
             });
         }
     };
 
     TGNT.productVariant = () => {
         variant = JSON.parse(atob(variant));
-        console.log(variant);
+        // console.log(variant);
 
         $(".variant-row").each(function (index, value) {
             let _this = $(this);
@@ -704,7 +697,7 @@
             let variantImage = album
                 ? album.split(",")[0]
                 : "https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That";
-            console.log(variantImage);
+            // console.log(variantImage);
             _this.find(".td-quantity").text(variant.quantity[index]);
             _this.find(".td-price").text(variant.price[index]);
             _this.find(".td-sku").text(variant.sku[index]);

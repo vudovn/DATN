@@ -25,7 +25,6 @@
         );
         // console.log(array);
         const model = TGNT.getModel();
-        const keyToCheck = "categoriesOther";
         const url =
             Object.values(array).length > 6
                 ? `/getProduct`
@@ -134,7 +133,6 @@
                         : "alert alert-danger"
                 );
             $("#idProduct").val(array.idArray.join(","));
-            
         });
     };
 

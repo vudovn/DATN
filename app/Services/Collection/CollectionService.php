@@ -46,9 +46,11 @@ class CollectionService extends BaseService
     {
         DB::beginTransaction();
         try {
+            dd( $request );
+
+            $productIds = explode(',', $request->idProduct);
             $payload = $request->except(['categoriesOther', 'categoriesRoom', '_token', 'send', 'idProduct', 'keyword']);
             $collection = $this->collectionRepository->create($payload);
-            $productIds = explode(',', $request->idProduct);
             $collection->products()->attach($productIds);
             DB::commit();
             return true;
@@ -65,7 +67,7 @@ class CollectionService extends BaseService
         try {
             $payload = $request->except(['categoriesOther', 'categoriesRoom', '_token', 'send', 'idProduct', 'keyword']);
             $collection = $this->collectionRepository->findById($id);
-            $this->collectionRepository->update($id,$payload);
+            $this->collectionRepository->update($id, $payload);
             $productIds = explode(',', $request->idProduct);
             $collection->products()->sync($productIds);
             DB::commit();

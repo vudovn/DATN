@@ -18,6 +18,9 @@ use App\Http\Controllers\Ajax\LocationController;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+Route::get('/account', function () {
+    return view('admin.pages.account.application.index');
+})->name('home');
 
 Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');

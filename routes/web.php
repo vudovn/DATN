@@ -134,7 +134,6 @@ Route::get('/order-code', function () {
 });
 Route::get('/test', [AjaxDashboardController::class, 'test']);
 
-
 // client route
 Route::prefix('/')->name('client.')->group(function () {
 
@@ -148,9 +147,16 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('xac-nhan-tai-khoan', [ClientAuthController::class, 'active'])->name('active');
     });
 
+
+
     // index route
     Route::get('/', [IndexController::class, 'home'])->name('client.home');
-    Route::get('tai-khoan', [AccountController::class, 'index'])->name('client.account');
+
+    // account route
+    Route::prefix('tai-khoan')->name('account.')->group(function () {
+        Route::get('/', [AccountController::class, 'index'])->name('index');
+        
+    });
 
     // product route
     Route::prefix('san-pham')->name('client.product.')->group(function () {

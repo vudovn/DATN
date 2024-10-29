@@ -4,29 +4,25 @@
     <!-- abc -->
     <section class="product_ct container">
         <div class="row">
-            <div class="col-xxl-12 d-none d-xxl-block">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="trangchu.html" class="text-stnt">Trang chủ</a></li>
-                        <li class="breadcrumb-item"><a href="product.html" class="text-stnt">Sản phẩm</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Sofa 3 chỗ Orientale da beige R5</li>
-                    </ol>
-                </nav>
-            </div>
+
             <div class="col-xxl-6 col-sm-12 mb-5">
                 <div class="row">
                     <div class="col-md-12 text-center overflow-hidden rounded">
                         <!-- Main product image -->
                         <div class="bg-secondary overflow-hidden rounded">
-                            <img id="mainImage"
+                            <a href="https://nhaxinh.com/wp-content/uploads/2024/08/sofa-3-cho-orientale-da-beige-r5-768x511.jpg" data-fancybox="gallery">
+                                <img id="mainImage"
                                 src="https://nhaxinh.com/wp-content/uploads/2024/08/sofa-3-cho-orientale-da-beige-r5-768x511.jpg"
                                 class="product-image img-fluid rounded" alt="Main Product Image">
+                            </a>
+                           
                         </div>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-12 text-center thumbnail-images">
                         <!-- Thumbnail images -->
+                        
                         <img src="https://nhaxinh.com/wp-content/uploads/2024/08/sofa-3-cho-orientale-da-beige-r5-768x511.jpg"
                             class="img-thumbnail active"
                             data-image="https://nhaxinh.com/wp-content/uploads/2024/08/sofa-3-cho-orientale-da-beige-r5-768x511.jpg">
@@ -127,8 +123,8 @@
                         </li>
                         <!-- đánh giá -->
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link fs-xxl-5 fw-bold pb-2" id="pills-feedback-tab" data-bs-toggle="pill"
-                                href="#pills-feedback" role="tab" aria-controls="pills-feedback"
+                            <a class="nav-link fs-xxl-5 fw-bold pb-2" id="pills-rate-tab" data-bs-toggle="pill"
+                                href="#pills-rate" role="tab" aria-controls="pills-rate"
                                 aria-selected="false">
                                 Đánh giá
                             </a>

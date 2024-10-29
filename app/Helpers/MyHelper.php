@@ -147,3 +147,10 @@ if(!function_exists('convertNumber')){
         return str_replace('.', '', $number);
     }
 }
+
+
+if(!function_exists('formatMon')){
+    function formatNumber($number){
+        return number_format($number, 0, '.', '.');
+    }
+}

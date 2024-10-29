@@ -142,6 +142,12 @@
         TGNT.createTableHeader(attributeTitle);
 
         let trClass = [];
+        let baseVariant = JSON.parse(atob(variant))
+        let max = Math.max(baseVariant.albums.length, baseVariant.sku.length, baseVariant.price.length, baseVariant.quantity.length)
+        console.log(max);
+        if(baseVariant != []){
+            
+        }
         attributesNew.forEach((attribute, index) => {
             let $row = TGNT.createVariantRow(attribute, variantsNew[index]);
             let classModified =
@@ -277,6 +283,13 @@
         return $row;
     };
 
+    TGNT.deleteVariant = () => {
+        $(document).on("click", ".btnDeleteVariant", function () {
+            let _this = $(this);
+            _this.parents(".variant-row").remove();
+        });
+    };
+
     TGNT.createTableHeader = (attributeTitle) => {
         let $thead = $("table.variantTable thead");
         $thead.addClass("animate__animated animate__fadeIn");
@@ -403,7 +416,6 @@
                     </div>
                 </td>
             </tr>`;
-
         return html;
     };
 
@@ -418,7 +430,9 @@
                             <input type="hidden" name="variant_albums[]" value="${album}">
                         </span>
                         <div class="btn_delete_albums_tgnt">
-                            <button class="delete-image btn btn-icon btn-sm btn-danger"><i class="ti ti-trash"></i></button>
+                            <button type="button" class="delete-image btn btn-sm btn-light-danger" title="Delete Image">
+                                <i class="ti ti-trash"></i>
+                            </button>
                         </div>
                     </div>
                 </li>`;
@@ -598,7 +612,6 @@
             let html = "";
             for (var i = 0; i < allFiles.length; i++) {
                 var image = allFiles[i].url;
-
                 html += `
                     <li class="ui-state-default img_li_tgnt col-xl-2 col-md-3 col-sm-6 mb-3">
                         <div class="thumb img_albums_tgnt">
@@ -609,8 +622,8 @@
                                 <input type="hidden" name="${data_name}[]" value="${image}">
                             </span>
                             <div class="btn_delete_albums_tgnt">
-                                <button class="delete-image btn btn-sm btn-danger">
-                                    <i class="fa-solid fa-trash"></i>
+                                <button type="button" class="delete-image btn btn-sm btn-light-danger" title="Delete Image">
+                                    <i class="ti ti-trash"></i>
                                 </button>
                             </div>
                         </div>
@@ -660,7 +673,6 @@
     TGNT.productVariant = () => {
         variant = JSON.parse(atob(variant));
         // console.log(variant);
-
         $(".variant-row").each(function (index, value) {
             let _this = $(this);
             let inputHiddenFields = [
@@ -717,6 +729,7 @@
         TGNT.updateVariant();
         TGNT.cancleVariantUpdate();
         TGNT.saveVariantUpdate();
+        TGNT.deleteVariant();
         TGNT.setupSelectMultiple(() => TGNT.productVariant());
     });
 })(jQuery);

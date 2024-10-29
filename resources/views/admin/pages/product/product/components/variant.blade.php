@@ -79,8 +79,6 @@
                                     </button>
                                 </div>
                             </div>
-
-
                             <div class="card product-variant mt-3">
                                 <div class="card-header">
                                     Danh sách phiên bản sản phẩm

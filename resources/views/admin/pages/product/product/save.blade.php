@@ -63,7 +63,7 @@
                                         <div class="mb-3 form-group">
                                             <label class="form-label" for="price">Giá tiền <span
                                                     class="text-danger">*</span></label>
-                                            <input class="form-control int" value="{{ $product->price ?? old('price') }}"
+                                            <input class="form-control int" value="{{ formatNumber($product->price) ?? old('price') }}"
                                                 type="text" name="price" id="price" value="">
                                             @error('price')
                                                 <small class="error text-danger">*{{ $message }}</small>

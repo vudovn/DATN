@@ -24,7 +24,7 @@
                 <div class="d-flex justify-content-center align-items-center h-100" style="flex-direction: column">
                     <p class="text-white">Chào mừng bạn đến với {{ env('CMS_NAME') }}. Nếu bạn đã có tài khoản, có thể
                         đăng nhập ở đây</p>
-                    <a href="{{ route('client.auth.login') }}" class="btn btn btn-tgnt w-100">Đăng nhập ngay</a>
+                    <a href="{{ route('client.auth.login') }}" class="btn btn btn-tgnt w-100">Đăng nhập</a>
                 </div>
             </div>
             <div class="col-md-6 right">

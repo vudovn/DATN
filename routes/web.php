@@ -143,7 +143,7 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('dang-nhap', [ClientAuthController::class, 'login'])->name('login');
         Route::get('dang-ky', [ClientAuthController::class, 'register'])->name('register');
         Route::get('quen-mat-khau', [ClientAuthController::class, 'forget'])->name('forget');
-        Route::get('cap-nhat-mat-khau', [ClientAuthController::class, 'change'])->name('change');
+        Route::get('doi-mat-khau', [ClientAuthController::class, 'change'])->name('change');
         Route::get('xac-nhan-tai-khoan', [ClientAuthController::class, 'active'])->name('active');
     });
 

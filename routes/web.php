@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
 
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
+use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\IndexController;
 
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
@@ -150,5 +151,11 @@ Route::prefix('/')->name('client.')->group(function () {
     // index route
     Route::get('/', [IndexController::class, 'home'])->name('client.home');
     Route::get('tai-khoan', [AccountController::class, 'index'])->name('client.account');
+
+    // product route
+    Route::prefix('san-pham')->name('client.product.')->group(function () {
+        Route::get('/', [ClientProductController::class, 'index'])->name('index');
+        Route::get('{slug}', [ClientProductController::class, 'detail'])->name('detail');
+    });
 });
 

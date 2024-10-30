@@ -1,6 +1,12 @@
-<footer class="main-footer">
-    <strong>Copyright &copy; 2024 <a href="">{{ env('CMS_NAME') }}</a>.</strong>
-    <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 1.0
+<footer class="pc-footer">
+    <div class="footer-wrapper container-fluid">
+        <div class="row">
+            <div class="col my-1">
+                <p class="m-0"> Able Pro &#9829; crafted by Team <a href="#"
+                        target="_blank">{{ env('CMS_NAME') }}</a>
+                </p>
+            </div>
+        </div>
     </div>
 </footer>
+

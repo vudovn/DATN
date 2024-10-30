@@ -27,7 +27,7 @@ class UnauthorizedException extends HttpException
 
     public static function forPermissions(array $permissions): self
     {
-        $message = 'User does not have the right permissions.';
+        $message = 'Không có quyền truy cập vào trang này.';
 
         if (config('permission.display_permission_in_exception')) {
             $message .= ' Necessary permissions are '.implode(', ', $permissions);

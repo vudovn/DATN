@@ -1,6 +1,10 @@
 <?php  
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\Review;
+use App\Models\User;
 
 class DashboardController extends Controller{
 
@@ -15,8 +19,18 @@ class DashboardController extends Controller{
 
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
+        // data total - ân
+        $totalOrder = Order::count();
+        $totalReview = Review::count();
+        $totalUser = User::count();
+        $totalProduct = Product::count();
+        // data total - ân
         return view('admin.pages.dashboard.index', compact(
-            'config'
+            'config',
+            'totalOrder',
+            'totalUser',
+            'totalProduct',
+            'totalReview'
         ));
     }
 

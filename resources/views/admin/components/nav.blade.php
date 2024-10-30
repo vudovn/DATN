@@ -1,18 +1,28 @@
-<nav class="main-header navbar navbar-expand navbar-white navbar-light" style="z-index: 1 !important;">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ route('home') }}" class="nav-link">Trang chủ</a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link btn btn-sm btn-primary text-white" href="{{ route('auth.logout') }}">
-          <i class="fa-solid fa-right-from-bracket"></i>
-        </a>
-      </li>
-    </ul>
-  </nav>
+<header class="pc-header">
+  <div class="header-wrapper">
+    <div class="me-auto pc-mob-drp">
+      <ul class="list-unstyled">
+        <li class="pc-h-item pc-sidebar-collapse">
+          <a href="#" class="pc-head-link ms-0" id="sidebar-hide">
+            <i class="ti ti-menu-2"></i>
+          </a>
+        </li>
+        <li class="pc-h-item pc-sidebar-popup">
+          <a href="#" class="pc-head-link ms-0" id="mobile-collapse">
+            <i class="ti ti-menu-2"></i>
+          </a>
+        </li>
+        <li class="pc-h-item d-none d-md-inline-flex">
+          <form class="form-search">
+            <i class="search-icon">
+              <svg class="pc-icon">
+                <use xlink:href="#custom-search-normal-1"></use>
+              </svg>
+            </i>
+            <input type="search" class="form-control" placeholder="Ctrl + K" />
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>

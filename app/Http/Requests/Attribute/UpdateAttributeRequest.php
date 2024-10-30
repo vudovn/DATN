@@ -22,7 +22,7 @@ class UpdateAttributeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:attributes,name,' . $this->id,
+            'name' => 'required|unique:attribute_category,name,' . $this->id,
         ];
     }
 

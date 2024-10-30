@@ -3,63 +3,110 @@
 
 @section('template')
     <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
-
     <div class="row">
-        <div class="col-lg-3 col-6">
-
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h3>150</h3>
-                    <p>New Orders</p>
+        <div class="col-12">
+            <div class="card welcome-banner bg-blue-800">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="p-4">
+                                <h2 class="text-white">Thế Giới Nội Thất </h2>
+                                <p class="text-white"> The Brand new User Interface with power of Bootstrap Components.
+                                    Explore the Endless possibilities with Able Pro. </p>
+                                <a href="#" class="btn btn-outline-light">Demo</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 text-center">
+                            <div class="img-welcome-banner">
+                                <img src="https://ableproadmin.com/assets/images/widget/welcome-banner.png" alt="img"
+                                    class="img-fluid" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-
-        <div class="col-lg-3 col-6">
-
-            <div class="small-box bg-success">
-                <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
-                    <p>Bounce Rate</p>
+    </div>
+    <div class="mb-3 row">
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <div
+                                class="bg-green-200 text-primary rounded d-flex align-items-center p-3 justify-content-center">
+                                <i class="ti ti-user" style="font-size: 1.875rem !important;"></i>
+                            </div>
+                        </div>
+                        <div class="col-9 d-flex align-items-center justify-content-end text-end">
+                            <div>
+                                <h4 class="card-title">750$</h4>
+                                <h6 class="card-subtitle mb-0">Hằng tuần</h6>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-
-        <div class="col-lg-3 col-6">
-
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>44</h3>
-                    <p>User Registrations</p>
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <div
+                                class="bg-danger-subtle text-danger rounded d-flex align-items-center p-3 justify-content-center">
+                                <i class="ti ti-chart-pie" style="font-size: 1.875rem !important;"></i>
+                            </div>
+                        </div>
+                        <div class="col-9 d-flex align-items-center justify-content-end text-end">
+                            <div>
+                                <h4 class="card-title">750$</h4>
+                                <h6 class="card-subtitle mb-0">Hằng tuần</h6>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-
-        <div class="col-lg-3 col-6">
-
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>65</h3>
-                    <p>Unique Visitors</p>
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <div
+                                class="bg-warning-subtle text-warning rounded d-flex align-items-center p-3 justify-content-center">
+                                <i class="ti ti-box" style="font-size: 1.875rem !important;"></i>
+                            </div>
+                        </div>
+                        <div class="col-9 d-flex align-items-center justify-content-end text-end">
+                            <div>
+                                <h4 class="card-title">750</h4>
+                                <h6 class="card-subtitle mb-0">Hằng tuần</h6>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <div
+                                class="bg-secondary-subtle text-secondary rounded d-flex align-items-center p-3 justify-content-center">
+                                <i class="ti ti-currency-dollar" style="font-size: 1.875rem !important;"></i>
+                            </div>
+                        </div>
+                        <div class="col-9 d-flex align-items-center justify-content-end text-end">
+                            <div>
+                                <h4 class="card-title">750$</h4>
+                                <h6 class="card-subtitle mb-0">Hằng tuần</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

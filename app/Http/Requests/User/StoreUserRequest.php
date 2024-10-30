@@ -27,13 +27,27 @@ class StoreUserRequest extends FormRequest
             'phone' => 'required|unique:users,phone',
             'password' => 'required|min:6',
             're_password' => 'required|same:password',
-            'user_catalogue_id' => 'gt:0'
+            // 'roles' => 'required|array|min:1',
+            // 'roles.*' => 'required',
         ];
     }
 
-    public function messages():array {
+    public function messages(): array
+    {
         return [
-            'user_catalogue_id.gt' => 'You have not selected a user group'
+            'email.required' => 'Không được để trống email',
+            'emmail.email' => 'Email phải đúng định dạng',
+            'email.unique' => 'Email đã tồn tại',
+            'name.required' => 'Không được để trống tên',
+            'phone.required' => 'Không được để trống số điện thoại',
+            'phone.unique' => 'Số điện thoại đã tồn tại',
+            'password.required' => 'Không được để trống mật khẩu',
+            'password.min' => 'Mật khẩu phải có ít nhất 6 kí tự',
+            're_password.required' => 'Không được để trống mật khẩu xác nhận',
+            're_password.same' => 'Mật khẩu xác nhận không khớp với mật khẩu đã nhập',
+            // 'roles.required' => 'Không được để trống vai trò',
+            // 'roles.array' => 'Vai trò phải là một mảng',
+            // 'roles.*.exists' => 'Vai trò không hợp lệ',
         ];
     }
 }

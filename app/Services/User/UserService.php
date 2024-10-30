@@ -19,29 +19,44 @@ class UserService extends BaseService {
     }
 
 
-    private function paginateAgrument($request){
+    private function paginateAgrument($request)
+    {
+        // dd($request);
         return [
             'keyword' => [
-                'search' => $request->input('keyword'),
-                'field' => ['name', 'email', 'phone', 'address']
+                'search' => $request['keyword'] ?? '',
+                'field' => ['name', 'email', 'phone', 'address', 'created_at']
             ],
             'condition' => [
-                'publish' => $request->integer('publish'),
-                'user_catalogue_id' => $request->integer('user_catalogue_id'),
+                'publish' => isset($request['publish'])
+                    ? (int) $request['publish']
+                    : null,
             ],
-            'sort' => $request->input('sort') 
-                ? array_map('trim', explode(',', $request->input('sort')))  
-                : ['id', 'desc'],
-            'perpage' => $request->integer('perpage') ?? 20,
+            'sort' => isset($request['sort']) && $request['sort'] != 0
+                ? explode(',', $request['sort'])
+                : ['id', 'asc'],
+            'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
         ];
     }
 
-    public function paginate($request){
+    public function paginate($request)
+    {
         $agruments = $this->paginateAgrument($request);
-        // dd($agruments);
         $cacheKey = 'pagination: ' . md5(json_encode($agruments));
-        
         $users = $this->userRepository->pagination($agruments);
+        return $users;
+    }
+
+    public function paginationCustomer($request){
+        $agruments = $this->paginateAgrument($request);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $users = $this->userRepository->paginationCustomer($agruments);
+        return $users;
+    }
+    public function paginationAdmin($request){
+        $agruments = $this->paginateAgrument($request);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $users = $this->userRepository->paginationAdmin($agruments);
         return $users;
     }
 
@@ -52,43 +67,35 @@ class UserService extends BaseService {
             $payload = $request->except(['_token', 'send', 're_password']);
             $payload['password'] = Hash::make($request->password);
             $user = $this->userRepository->create($payload);
-            //lỗi ở đây
+            if ($request->has('roles')) {
+                $user->syncRoles($request->input('roles')); // Đồng bộ vai trò
+            }
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
             echo $e->getMessage();die();
             // $this->log($e);
-            return false;
+            // return false;
         }
     }
 
     public function update($request, $id){
-        
-        // thêm nhiều dữ liệu vào nhiều bảng khác nhau
-        // ví dụ : tạo mới user và gắn quyền cho hắn 
-        // tạo user xong rồi mà gắn quyền hắn lỗi trất
-                // User::create($data); chạy oke
-                // Role::create($user); chạy lỗi mọe trất
-        // Là thằn user nó được tạo trong bảng Users rồi nhưng trong bảng Roles thì chưa có quyền của thằn user đó 
-        // => lỗi :v, mất dữ liệu
-        // => giải pháp : dùng transaction => Đảm bảo toàn vẹn dữ liệu
-        // đang chạy trong 1 transaction, nếu có lỗi thì rollback lại hết (reset lại như chưa từng chạy)
-        // Try Catch để bắt lỗi
-            // Bất kể lỗi gì xảy ra trong try thì nó sẽ tự động chạy vào catch
         DB::beginTransaction();  
         try {
             $payload = $request->except(['_token', 'send', '_method']);
-            $user = $this->userRepository->update($id, $payload);
-            // User::create($data); chạy oke
-            // Role::create($user); chạy lỗi mọe trất
+            $user = $this->userRepository->update($id, $payload); 
+            $findUser = $this->userRepository->findById($id);
+            $findUser->syncRoles($request->input('roles')); // Đồng bộ vai trò
+    
             DB::commit();
             return true;
         } catch (\Exception $e) {
            DB::rollback();
-            // echo $e->getMessage();die();
-            $this->log($e);
-            return false;
+            echo $e->getMessage();die();
+            // $this->log($e);
+            // return false;
         }
     }
 
@@ -105,7 +112,6 @@ class UserService extends BaseService {
             return false;
         }
     }
-
 
 
 }

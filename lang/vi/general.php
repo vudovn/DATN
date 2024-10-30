@@ -26,7 +26,7 @@
                 'id' => $item,
                 'name' => $item.' hàng',
             ];
-        }, range(10, 50, 10)),
+        }, range(20, 50, 10)),
         'sort' => [
             0 => [
                 'id' => 'id,desc',

@@ -4,7 +4,7 @@ namespace App\Http\Requests\User;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+class UpdateUserCurrentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,9 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|unique:users,email,' . $this->id,
+            'email' => 'required|email|unique:users,email,' . auth()->user()->id,
             'name' => 'required',
-            'phone' => 'required|unique:users,phone,' . $this->id,
-
-            // 'roles' => 'required|array|min:1',
-            // 'roles.*' => 'required',
-
+            'phone' => 'required|unique:users,phone,' . auth()->user()->id,
         ];
     }
 
@@ -41,9 +37,6 @@ class UpdateUserRequest extends FormRequest
             'name.required' => 'Không được để trống tên',
             'phone.required' => 'Không được để trống số điện thoại',
             'phone.unique' => 'Số điện thoại đã tồn tại ',
-            // 'roles.required' => 'Không được để trống vai trò',
-            // 'roles.array' => 'Vai trò phải là một mảng',
-            // 'roles.*.exists' => 'Vai trò không hợp lệ',
         ];
     }
 }

@@ -9,11 +9,11 @@ return [
             'module' => [
                 [
                     'name' => 'Danh sách khách hàng',
-                    'path' => route('user.index')
+                    'path' => route('user.index', ['type' => 'customer']), 
                 ],
                 [
                     'name' => 'Danh sách nhân viên',
-                    'path' => route('user.admin.index')
+                    'path' => route('user.index', ['type' => 'staff']), 
                 ],
             ]
         ],

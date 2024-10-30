@@ -1,6 +1,6 @@
 @props(['createButton', 'options', 'action', 'method', 'model'])
 <div class="d-flex justify-content-between animate__animated animate__fadeIn">
-    <div id="filter" data-model="{{$model ?? ''}}">
+    <div id="filter" data-model="{{ $model ?? '' }}">
         <form action="">
             <div class="d-flex flex-wrap gap-2 align-items-center">
                 @if (isset($options) && count($options) && is_array($options))
@@ -10,7 +10,8 @@
                                 @php
                                     $selected = request($key) ?: old($key);
                                 @endphp
-                                <select name="{{ $key }}" id="{{ $key }}" class="form-select {{ $key != 'actions' ? 'filter-option' : '' }}">
+                                <select name="{{ $key }}" id="{{ $key }}"
+                                    class="form-select {{ $key != 'actions' ? 'filter-option' : '' }}">
                                     @foreach ($option as $keyItem => $valItem)
                                         <option {{ $keyItem == $selected ? 'selected' : '' }}
                                             value="{{ $keyItem }}">{{ $valItem }}</option>
@@ -22,8 +23,9 @@
                 @endif
 
                 <div class="form-group col-auto">
-                    <input type="text" name="keyword" id="keyword"value="{{ request('keyword') ?: old('keyword') }}"
-                        class="form-control" placeholder="Nhập từ khóa">
+                    <input type="text" name="keyword"
+                        id="keyword"value="{{ request('keyword') ?: old('keyword') }}" class="form-control"
+                        placeholder="Nhập từ khóa">
                 </div>
 
                 {{-- <div class="form-group col-auto">
@@ -45,9 +47,10 @@
                     </button>
                 </form>
             @else
-                <a href="{{ route($createButton['route']) }}" class="btn btn-danger d-inline-flex justify-content-center">
+                <a href="{{ route($createButton['route'], isset($createButton['type']) ? ['type' => $createButton['type']] : []) }}"
+                    class="btn btn-danger d-inline-flex justify-content-center">
                     <i data-feather="plus-circle" class="me-1"></i>
-                    {{ $createButton['label']  ?? 'Thêm mới' }}
+                    {{ $createButton['label'] ?? 'Thêm mới' }}
                     Thêm mới
                 </a>
             @endif

@@ -19,13 +19,15 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+
 Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     /* USER ROUTE */
     Route::prefix('user')->name('user.')->group(function () {
-        Route::get('/customer', [UserController::class, 'index'])->name('index');
-        Route::get('/admin', [UserController::class, 'index'])->name('admin.index');
-        Route::get('/create', [UserController::class, 'create'])->name('create');
+        Route::get('/{type}', [UserController::class, 'index'])->name('index')
+        ->where('type', 'customer|staff');
+        Route::get('/create/{type}', [UserController::class, 'create'])
+        ->name('create')->where('type', 'customer|staff');
         Route::post('/store', [UserController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
@@ -109,6 +111,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     // });
     /* AJAX ROUTE */
 });
+
 Route::middleware(['checkPermission'])->group(function () {
     Route::prefix('{model}')->name('{model}.')->group(function () {
         Route::get('/getData', [AjaxDashboardController::class, 'getData'])->name('ajax.dashboard.getData');
@@ -119,6 +122,12 @@ Route::middleware(['checkPermission'])->group(function () {
         Route::put('/change/status', [AjaxDashboardController::class, 'updateStatus'])->name('ajax.dashboard.updateStatus');
     });
 });
+
+Route::get('your-information', [UserController::class, 'getInformation'])->name('user.information');
+Route::put('update-information', [UserController::class, 'updateInformation'])->name('user.updateInformation');
+Route::get('change-password', [UserController::class, 'getChangePassword'])->name('user.changePassword');
+Route::put('update-password', [UserController::class, 'updatePassword'])->name('user.updatePassword');
+
 
 Route::get('/ajax/getLocation', [LocationController::class, 'getLocation'])->name('ajax.getLocation');
 Route::get('getProduct', [AjaxDashboardController::class, 'getProduct'])->name('getProduct');
@@ -136,6 +145,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 
 Route::get('/order-code', function () {
-    return orderCode(7);});
+    return orderCode(7);
+});
 Route::get('/test', [AjaxDashboardController::class, 'test']);
 

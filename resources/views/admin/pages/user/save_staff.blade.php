@@ -21,7 +21,6 @@
                                 <x-input :label="'Tên đầy đủ'" :name="'name'" :value="$user->name ?? ''" :required="true" />
                             </div>
                         </div>
-
                         @if (isset($config['method']) && $config['method'] !== 'edit')
                             <div class="row mb-3">
                                 <div class="col-lg-6">
@@ -66,7 +65,7 @@
                 </div>
             </div>
             <div class="col-xl-3">
-                <x-save_back :model="$config['model']" :type="'customer'" />
+                <x-save_back :model="$config['model']" :type="'staff'" />
                 <x-thumbnail :label="'Ảnh đại diện'" :name="'avatar'" :value="$user->avatar ?? '/uploads/system/no_img.jpg'" />
                 <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.active')" :value="$user->publish ?? ''" />
             </div>

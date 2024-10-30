@@ -81,6 +81,7 @@ class OrderController extends Controller  implements HasMiddleware
     }
 
     public function store(Request $request) {
+        // dd($request->all());
         $order = $this->orderService->create($request);
         if ($order) {
             return redirect()->route('order.index')->with('success', 'Tạo đơn hàng mới thành công');

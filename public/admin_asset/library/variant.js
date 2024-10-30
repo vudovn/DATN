@@ -142,6 +142,12 @@
         TGNT.createTableHeader(attributeTitle);
 
         let trClass = [];
+        let baseVariant = JSON.parse(atob(variant))
+        let max = Math.max(baseVariant.albums.length, baseVariant.sku.length, baseVariant.price.length, baseVariant.quantity.length)
+        console.log(max);
+        if(baseVariant != []){
+            
+        }
         attributesNew.forEach((attribute, index) => {
             let $row = TGNT.createVariantRow(attribute, variantsNew[index]);
             let classModified =
@@ -277,6 +283,13 @@
         return $row;
     };
 
+    TGNT.deleteVariant = () => {
+        $(document).on("click", ".btnDeleteVariant", function () {
+            let _this = $(this);
+            _this.parents(".variant-row").remove();
+        });
+    };
+
     TGNT.createTableHeader = (attributeTitle) => {
         let $thead = $("table.variantTable thead");
         $thead.addClass("animate__animated animate__fadeIn");
@@ -328,11 +341,8 @@
                 .each(function () {
                     let className = $(this).attr("class");
                     variantData[className] = $(this).val();
-                    console.log(className);
+                    // console.log(className);
                 });
-
-            console.log(variantData);
-
             if ($(".updateVariantRow").length == 0) {
                 parents.after(TGNT.renderUpdateVariantHtml(variantData));
             }
@@ -341,8 +351,6 @@
 
     TGNT.renderUpdateVariantHtml = (variantData) => {
         let variantAlbums = variantData.variant_albums.split(",");
-        console.log(variantAlbums);
-
         let html = `
             <tr class="updateVariantRow animate__animated animate__fadeIn">
                 <td colspan="10">
@@ -368,17 +376,17 @@
                                                         <i class="fa-duotone fa-solid fa-cloud-arrow-up"></i>
                                                     </a>
                                                 </li>`;
-                                                if (variantAlbums != "") {
-                                                    variantAlbums.forEach((element) => {
-                                                        html += TGNT.variantAlbumList(element);
-                                                    });
-                                                }
-                                html += `</ul>
+        if (variantAlbums != "") {
+            variantAlbums.forEach((element) => {
+                html += TGNT.variantAlbumList(element);
+            });
+        }
+        html += `</ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row price-group">
+                            <div class="row me-0">
                                 <div class="col-lg-4">
                                     <div class="mb-3 position-relative">
                                         <label class="form-label" for="sku">SKU <span class="text-danger">*</span></label>
@@ -398,12 +406,9 @@
                                 <div class="col-lg-4">
                                     <div class="mb-3 position-relative">
                                         <label class="form-label" for="variant_price">Giá tiền <span class="text-danger">*</span></label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend"><span class="input-group-text">$</span></div>
                                             <input type="text" name="variant_price" value="${TGNT.addCommas(
                                                 variantData.variant_price
                                             )}" id="variant_price" class="form-control int">
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -411,7 +416,6 @@
                     </div>
                 </td>
             </tr>`;
-
         return html;
     };
 
@@ -426,7 +430,9 @@
                             <input type="hidden" name="variant_albums[]" value="${album}">
                         </span>
                         <div class="btn_delete_albums_tgnt">
-                            <button class="delete-image btn btn-icon btn-sm btn-danger"><i class="ti ti-trash"></i></button>
+                            <button type="button" class="delete-image btn btn-sm btn-light-danger" title="Delete Image">
+                                <i class="ti ti-trash"></i>
+                            </button>
                         </div>
                     </div>
                 </li>`;
@@ -606,7 +612,6 @@
             let html = "";
             for (var i = 0; i < allFiles.length; i++) {
                 var image = allFiles[i].url;
-
                 html += `
                     <li class="ui-state-default img_li_tgnt col-xl-2 col-md-3 col-sm-6 mb-3">
                         <div class="thumb img_albums_tgnt">
@@ -617,8 +622,8 @@
                                 <input type="hidden" name="${data_name}[]" value="${image}">
                             </span>
                             <div class="btn_delete_albums_tgnt">
-                                <button class="delete-image btn btn-sm btn-danger">
-                                    <i class="fa-solid fa-trash"></i>
+                                <button type="button" class="delete-image btn btn-sm btn-light-danger" title="Delete Image">
+                                    <i class="ti ti-trash"></i>
                                 </button>
                             </div>
                         </div>
@@ -660,14 +665,14 @@
                     );
                 }
                 TGNT.getSelect2(_this);
+                TGNT.checkMaxAttributeGroup(attributeCatalogue);
             });
         }
     };
 
     TGNT.productVariant = () => {
         variant = JSON.parse(atob(variant));
-        console.log(variant);
-
+        // console.log(variant);
         $(".variant-row").each(function (index, value) {
             let _this = $(this);
             let inputHiddenFields = [
@@ -704,7 +709,7 @@
             let variantImage = album
                 ? album.split(",")[0]
                 : "https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That";
-            console.log(variantImage);
+            // console.log(variantImage);
             _this.find(".td-quantity").text(variant.quantity[index]);
             _this.find(".td-price").text(variant.price[index]);
             _this.find(".td-sku").text(variant.sku[index]);
@@ -724,6 +729,7 @@
         TGNT.updateVariant();
         TGNT.cancleVariantUpdate();
         TGNT.saveVariantUpdate();
+        TGNT.deleteVariant();
         TGNT.setupSelectMultiple(() => TGNT.productVariant());
     });
 })(jQuery);

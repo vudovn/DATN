@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-md-6">
                     <select class="form-control mt-3" id="product-variant">
-                        <option value="">Chọn biến thể</option>
+                        
                     </select>
                 </div>
             </div>
@@ -37,7 +37,7 @@
 <table class="table table-striped mt-3">
     <thead>
         <tr>
-            <th>ID</th>
+            <th>SKU</th>
             <th>Tên Sản Phẩm</th>
             <th>Số Lượng</th>
             <th>Giá Tiền</th>
@@ -45,7 +45,7 @@
             <th>Hành động</th>
         </tr>
     </thead>
-    <tbody id="product-table-body">
+    <tbody id="product-table-body" class="product-variant">
         <!-- Dữ liệu sản phẩm sẽ được thêm vào đây -->
     </tbody>
 </table>
@@ -53,5 +53,5 @@
 <!-- Hiển thị tổng tiền -->
 <div class="form-group mb-3">
     <label for="total_amount">Tổng tiền:</label>
-    <input type="text" id="total_amount" name="total_amount" class="form-control" value="0 VND">
+    <input type="text" id="total_amount" name="total_amount" class="form-control" value="0">
 </div>

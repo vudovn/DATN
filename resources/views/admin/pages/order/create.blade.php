@@ -82,9 +82,8 @@
                     <x-input :label="'Địa chỉ giao hàng'" name="address" :value="''" :required="false" />
                 </div>
 
-
                 
-                @include("admin.pages.order.components.add_product");
+                @include("admin.pages.order.components.add_product")
 
                 <div class="text-right">
                     <a href="{{ route('order.index') }}" class="btn btn-danger">Quay lại</a>

@@ -82,4 +82,5 @@
         TGNT.paginationForm();
         TGNT.fetchData();
     });
+
 })(jQuery);

@@ -75,4 +75,11 @@ class BaseService {
         }
     }
 
+    public function formatJson($data)
+    {   if(!is_array($data || $data != null || $data != '')){
+            return json_encode($data, JSON_UNESCAPED_UNICODE);
+        }
+    }
+    
+
 }

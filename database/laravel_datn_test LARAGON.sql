@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 22, 2024 at 04:58 AM
+-- Generation Time: Oct 30, 2024 at 02:51 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -36,6 +36,18 @@ CREATE TABLE `attributes` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `attributes`
+--
+
+INSERT INTO `attributes` (`id`, `attribute_category_id`, `value`, `publish`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Màu xanh', 2, NULL, NULL),
+(2, 1, 'Màu đỏ', 2, NULL, NULL),
+(3, 1, 'Màu Vàng', 2, NULL, NULL),
+(4, 2, '1m', 2, NULL, NULL),
+(5, 2, '2m', 2, NULL, NULL),
+(6, 2, '3m', 2, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -50,6 +62,14 @@ CREATE TABLE `attribute_category` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `attribute_category`
+--
+
+INSERT INTO `attribute_category` (`id`, `name`, `publish`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Màu sắc', 1, '2024-10-22 09:13:45', '2024-10-22 09:13:45', NULL),
+(2, 'kích thước', 1, '2024-10-27 07:59:44', '2024-10-27 07:59:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -68,7 +88,7 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:11:\"description\";s:1:\"d\";s:10:\"guard_name\";}s:11:\"permissions\";a:29:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:15:\"Dashboard index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:10:\"User index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:2;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:10:\"User admin\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:3;a:4:{s:1:\"a\";i:4;s:1:\"b\";s:11:\"User create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:4;a:4:{s:1:\"a\";i:5;s:1:\"b\";s:9:\"User edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:5;a:4:{s:1:\"a\";i:6;s:1:\"b\";s:11:\"User delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:6;a:4:{s:1:\"a\";i:7;s:1:\"b\";s:13:\"Product index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:7;a:4:{s:1:\"a\";i:8;s:1:\"b\";s:14:\"Product create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:8;a:4:{s:1:\"a\";i:9;s:1:\"b\";s:12:\"Product edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:9;a:4:{s:1:\"a\";i:10;s:1:\"b\";s:14:\"Product delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:10;a:4:{s:1:\"a\";i:11;s:1:\"b\";s:23:\"AttributeCategory index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:11;a:4:{s:1:\"a\";i:12;s:1:\"b\";s:24:\"AttributeCategory create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:12;a:4:{s:1:\"a\";i:13;s:1:\"b\";s:22:\"AttributeCategory edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:13;a:4:{s:1:\"a\";i:14;s:1:\"b\";s:24:\"AttributeCategory delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:14;a:4:{s:1:\"a\";i:15;s:1:\"b\";s:16:\"Permission index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:15;a:4:{s:1:\"a\";i:16;s:1:\"b\";s:17:\"Permission create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:16;a:4:{s:1:\"a\";i:17;s:1:\"b\";s:15:\"Permission edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:17;a:4:{s:1:\"a\";i:18;s:1:\"b\";s:17:\"Permission delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:18;a:4:{s:1:\"a\";i:19;s:1:\"b\";s:10:\"Role index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:19;a:4:{s:1:\"a\";i:20;s:1:\"b\";s:11:\"Role create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:20;a:4:{s:1:\"a\";i:21;s:1:\"b\";s:9:\"Role edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:21;a:4:{s:1:\"a\";i:22;s:1:\"b\";s:11:\"Role delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:22;a:4:{s:1:\"a\";i:23;s:1:\"b\";s:11:\"Order index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:23;a:4:{s:1:\"a\";i:24;s:1:\"b\";s:10:\"Order edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:24;a:4:{s:1:\"a\";i:25;s:1:\"b\";s:12:\"Order delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:25;a:4:{s:1:\"a\";i:26;s:1:\"b\";s:14:\"Category index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:26;a:4:{s:1:\"a\";i:27;s:1:\"b\";s:15:\"Category create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:27;a:4:{s:1:\"a\";i:28;s:1:\"b\";s:13:\"Category edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:28;a:4:{s:1:\"a\";i:29;s:1:\"b\";s:15:\"Category delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}}s:5:\"roles\";a:0:{}}', 1729659260);
+('spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:11:\"description\";s:1:\"d\";s:10:\"guard_name\";}s:11:\"permissions\";a:30:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:15:\"Dashboard index\";s:1:\"c\";s:3:\"OKE\";s:1:\"d\";s:3:\"web\";}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:10:\"User index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:2;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:10:\"User admin\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:3;a:4:{s:1:\"a\";i:4;s:1:\"b\";s:11:\"User create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:4;a:4:{s:1:\"a\";i:5;s:1:\"b\";s:9:\"User edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:5;a:4:{s:1:\"a\";i:6;s:1:\"b\";s:11:\"User delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:6;a:4:{s:1:\"a\";i:7;s:1:\"b\";s:13:\"Product index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:7;a:4:{s:1:\"a\";i:8;s:1:\"b\";s:14:\"Product create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:8;a:4:{s:1:\"a\";i:9;s:1:\"b\";s:12:\"Product edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:9;a:4:{s:1:\"a\";i:10;s:1:\"b\";s:14:\"Product delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:10;a:4:{s:1:\"a\";i:11;s:1:\"b\";s:23:\"AttributeCategory index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:11;a:4:{s:1:\"a\";i:12;s:1:\"b\";s:24:\"AttributeCategory create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:12;a:4:{s:1:\"a\";i:13;s:1:\"b\";s:22:\"AttributeCategory edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:13;a:4:{s:1:\"a\";i:14;s:1:\"b\";s:24:\"AttributeCategory delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:14;a:4:{s:1:\"a\";i:15;s:1:\"b\";s:16:\"Permission index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:15;a:4:{s:1:\"a\";i:16;s:1:\"b\";s:17:\"Permission create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:16;a:4:{s:1:\"a\";i:17;s:1:\"b\";s:15:\"Permission edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:17;a:4:{s:1:\"a\";i:18;s:1:\"b\";s:17:\"Permission delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:18;a:4:{s:1:\"a\";i:19;s:1:\"b\";s:10:\"Role index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:19;a:4:{s:1:\"a\";i:20;s:1:\"b\";s:11:\"Role create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:20;a:4:{s:1:\"a\";i:21;s:1:\"b\";s:9:\"Role edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:21;a:4:{s:1:\"a\";i:22;s:1:\"b\";s:11:\"Role delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:22;a:4:{s:1:\"a\";i:23;s:1:\"b\";s:11:\"Order index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:23;a:4:{s:1:\"a\";i:24;s:1:\"b\";s:10:\"Order edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:24;a:4:{s:1:\"a\";i:25;s:1:\"b\";s:12:\"Order delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:25;a:4:{s:1:\"a\";i:26;s:1:\"b\";s:14:\"Category index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:26;a:4:{s:1:\"a\";i:27;s:1:\"b\";s:15:\"Category create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:27;a:4:{s:1:\"a\";i:28;s:1:\"b\";s:13:\"Category edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:28;a:4:{s:1:\"a\";i:29;s:1:\"b\";s:15:\"Category delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:29;a:4:{s:1:\"a\";i:30;s:1:\"b\";s:12:\"Ajax getData\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}}s:5:\"roles\";a:0:{}}', 1730092852);
 
 -- --------------------------------------------------------
 
@@ -103,6 +123,17 @@ CREATE TABLE `categories` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `slug`, `thumbnail`, `parent_id`, `is_room`, `publish`, `meta_title`, `meta_description`, `meta_keyword`, `created_at`, `updated_at`) VALUES
+(1, 'Phòng khách', 'phong-khach', '/uploads/image/user/3698e40dc20d5d517ee41bdf43a4e285.jpg', 0, 1, 1, NULL, NULL, NULL, '2024-10-22 15:52:52', '2024-10-24 01:49:10'),
+(2, 'Phòng ngủ', 'phong-ngu', '/uploads/image/user/3698e40dc20d5d517ee41bdf43a4e285.jpg', 0, 1, 1, NULL, NULL, NULL, '2024-10-22 15:53:08', '2024-10-24 01:49:10'),
+(3, 'Phòng bếp', 'phong-bep', '/uploads/image/user/3698e40dc20d5d517ee41bdf43a4e285.jpg', 0, 1, 1, NULL, NULL, NULL, '2024-10-22 15:53:19', '2024-10-24 01:49:10'),
+(4, 'Ghế', 'ghe', '/uploads/system/no_img.jpg', 0, 2, 1, NULL, NULL, NULL, '2024-10-23 08:02:19', '2024-10-24 01:49:10'),
+(5, 'Giường', 'giuong', 'https://placehold.co/600x600?text=The%20Gioi%20\\nNoi%20That', 0, 2, 1, NULL, NULL, NULL, '2024-10-27 09:36:29', '2024-10-27 09:36:29');
+
 -- --------------------------------------------------------
 
 --
@@ -113,6 +144,16 @@ CREATE TABLE `category_product` (
   `category_id` bigint UNSIGNED DEFAULT NULL,
   `product_id` bigint UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `category_product`
+--
+
+INSERT INTO `category_product` (`category_id`, `product_id`) VALUES
+(1, 63),
+(4, 63),
+(1, 64),
+(4, 64);
 
 -- --------------------------------------------------------
 
@@ -154,9 +195,54 @@ CREATE TABLE `collection_product` (
 CREATE TABLE `comments` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED DEFAULT NULL,
-  `collection_id` bigint UNSIGNED DEFAULT NULL,
+  `product_id` bigint UNSIGNED DEFAULT NULL,
   `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `parent_id` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `discount_codes`
+--
+
+CREATE TABLE `discount_codes` (
+  `id` bigint UNSIGNED NOT NULL,
+  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `discount_type` tinyint NOT NULL,
+  `discount_value` decimal(10,2) NOT NULL,
+  `min_order_amount` bigint UNSIGNED NOT NULL,
+  `start_date` timestamp NOT NULL,
+  `end_date` timestamp NOT NULL,
+  `status` tinyint NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `discount_codes`
+--
+
+INSERT INTO `discount_codes` (`id`, `code`, `title`, `discount_type`, `discount_value`, `min_order_amount`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'THEGIOINOITHAT', 'Giảm giá 10% cho đơn hàng trên 1 triệu', 1, 10.00, 1000000, '2024-10-30 02:45:38', '2024-11-29 02:45:38', 1, '2024-10-30 02:45:38', '2024-10-30 02:45:38'),
+(2, 'FREESHIP100', 'Giảm 100k và miễn phí vận chuyển', 2, 100000.00, 500000, '2024-10-30 02:45:38', '2024-11-14 02:45:38', 1, '2024-10-30 02:45:38', '2024-10-30 02:45:38'),
+(3, 'HELLO20', 'Giảm 20% cho khách hàng mới', 1, 20.00, 0, '2024-10-30 02:45:38', '2024-11-06 02:45:38', 1, '2024-10-30 02:45:38', '2024-10-30 02:45:38'),
+(4, 'NOEL50', 'Giảm 50k cho đơn hàng dịp Noel', 2, 50000.00, 200000, '2024-10-30 02:45:38', '2024-12-29 02:45:38', 2, '2024-10-30 02:45:38', '2024-10-30 02:45:38'),
+(5, 'BLACKFRIDAY', 'Giảm giá 30% cho tất cả đơn hàng', 1, 30.00, 0, '2024-10-30 02:45:38', '2024-10-31 02:45:38', 1, '2024-10-30 02:45:38', '2024-10-30 02:45:38');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `discount_code_user`
+--
+
+CREATE TABLE `discount_code_user` (
+  `id` bigint UNSIGNED NOT NULL,
+  `discount_code_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -976,7 +1062,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (16, '2024_10_07_003553_create_orders_table', 1),
 (17, '2024_10_07_140905_create_order_details_table', 1),
 (18, '2024_10_07_144146_create_order_payments_table', 1),
-(19, '2024_10_07_230429_create_permission_tables', 1);
+(19, '2024_10_07_230429_create_permission_tables', 1),
+(20, '2024_10_30_094013_create_discount_codes_table', 2),
+(21, '2024_10_30_094042_create_discount_code_user_table', 2);
 
 -- --------------------------------------------------------
 
@@ -1008,7 +1096,7 @@ CREATE TABLE `model_has_roles` (
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\Models\\User', 1),
-(2, 'App\\Models\\User', 2);
+(1, 'App\\Models\\User', 3);
 
 -- --------------------------------------------------------
 
@@ -1028,7 +1116,9 @@ CREATE TABLE `orders` (
   `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `note` text COLLATE utf8mb4_unicode_ci,
   `cart` json NOT NULL,
+  `discount_code_id` bigint DEFAULT NULL,
   `total` decimal(15,2) NOT NULL,
+  `total_after_discount` decimal(10,0) DEFAULT NULL,
   `user_id` bigint UNSIGNED DEFAULT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
   `payment_status` tinyint NOT NULL DEFAULT '2',
@@ -1041,9 +1131,9 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `code`, `name`, `phone`, `email`, `province_id`, `district_id`, `ward_id`, `address`, `note`, `cart`, `total`, `user_id`, `status`, `payment_status`, `fee_ship`, `created_at`, `updated_at`) VALUES
-(3, 'TGNT_001', 'Vũ', '0779440918', 'vudevweb@gmail.com', '01', '001', '00001', 'Adu', 'boom hàng', '[]', 1888.00, 1, 'pending', 2, 2111.00, '2024-10-22 04:30:30', '2024-10-22 04:30:30'),
-(4, 'TGNT_002', 'Vũ', '0779440918', 'vudevweb@gmail.com', '01', '001', '00001', 'Adu', 'thêm đơn mới', '{}', 2500.00, 1, 'pending', 2, 1500.00, '2024-10-22 05:00:00', '2024-10-22 05:00:00');
+INSERT INTO `orders` (`id`, `code`, `name`, `phone`, `email`, `province_id`, `district_id`, `ward_id`, `address`, `note`, `cart`, `discount_code_id`, `total`, `total_after_discount`, `user_id`, `status`, `payment_status`, `fee_ship`, `created_at`, `updated_at`) VALUES
+(3, 'TGNT_001', 'Vũ', '0779440918', 'vudevweb@gmail.com', '01', '001', '00001', 'Adu', 'boom hàng', '[]', 0, 1888.00, NULL, 1, 'pending', 2, 2111.00, '2024-10-22 04:30:30', '2024-10-22 04:30:30'),
+(4, 'TGNT_002', 'Vũ', '0779440918', 'vudevweb@gmail.com', '01', '001', '00001', 'Adu', 'thêm đơn mới', '{}', 0, 2500.00, NULL, 1, 'pending', 2, 1500.00, '2024-10-22 05:00:00', '2024-10-22 05:00:00');
 
 -- --------------------------------------------------------
 
@@ -1088,6 +1178,14 @@ CREATE TABLE `order_payments` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `order_payments`
+--
+
+INSERT INTO `order_payments` (`id`, `order_id`, `method_name`, `payment_id`, `payment_detail`, `created_at`, `updated_at`) VALUES
+(1, 3, 'Momo', 'MOMO_BANK', '{\"time\": \"2024-10-22 12:00:00\", \"amount\": 1888, \"status\": \"successful\", \"transaction_id\": \"T123456789\"}', NULL, NULL),
+(2, 4, 'COD', 'COD_DELIVERY', '{\"status\": \"pending\", \"expected_delivery\": \"2024-10-23\"}', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1120,7 +1218,7 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `name`, `description`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'Dashboard index', NULL, 'web', '2024-10-22 03:45:25', '2024-10-22 03:45:25'),
+(1, 'Dashboard index', 'OKE', 'web', '2024-10-22 03:45:25', '2024-10-23 02:42:40'),
 (2, 'User index', NULL, 'web', '2024-10-22 03:45:26', '2024-10-22 03:45:26'),
 (3, 'User admin', NULL, 'web', '2024-10-22 03:45:26', '2024-10-22 03:45:26'),
 (4, 'User create', NULL, 'web', '2024-10-22 03:45:26', '2024-10-22 03:45:26'),
@@ -1148,7 +1246,8 @@ INSERT INTO `permissions` (`id`, `name`, `description`, `guard_name`, `created_a
 (26, 'Category index', NULL, 'web', '2024-10-22 03:45:26', '2024-10-22 03:45:26'),
 (27, 'Category create', NULL, 'web', '2024-10-22 03:45:26', '2024-10-22 03:45:26'),
 (28, 'Category edit', NULL, 'web', '2024-10-22 03:45:26', '2024-10-22 03:45:26'),
-(29, 'Category delete', NULL, 'web', '2024-10-22 03:45:26', '2024-10-22 03:45:26');
+(29, 'Category delete', NULL, 'web', '2024-10-22 03:45:26', '2024-10-22 03:45:26'),
+(30, 'Ajax getData', NULL, 'web', '2024-10-22 17:15:53', '2024-10-22 17:15:53');
 
 -- --------------------------------------------------------
 
@@ -1165,12 +1264,15 @@ CREATE TABLE `products` (
   `description` text COLLATE utf8mb4_unicode_ci,
   `quantity` int UNSIGNED NOT NULL DEFAULT '0',
   `price` decimal(12,2) NOT NULL,
-  `discount` decimal(12,2) NOT NULL,
+  `discount` int DEFAULT NULL,
   `thumbnail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'https://img.muji.net/img/item/4550583440404_1260.jpg',
   `albums` json DEFAULT NULL,
   `publish` tinyint(1) NOT NULL DEFAULT '2',
   `is_featured` tinyint(1) NOT NULL DEFAULT '2',
   `has_attribute` tinyint(1) NOT NULL DEFAULT '2',
+  `attribute_category` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `attribute` text COLLATE utf8mb4_unicode_ci,
+  `variant` text COLLATE utf8mb4_unicode_ci,
   `meta_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1182,13 +1284,15 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `sku`, `name`, `slug`, `short_content`, `description`, `quantity`, `price`, `discount`, `thumbnail`, `albums`, `publish`, `is_featured`, `has_attribute`, `meta_title`, `meta_description`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(2, 'PRODUCT_002', 'Giường ngủ bọc nệm da đẹp hiện đại giá rẻ', 'giuong-ngu-boc-nem-da-dep-hien-dai-gia-re', NULL, 'Giường ngủ bọc nệm da đẹp hiện đại giá rẻ', 100, 12400000.00, 11300000.00, 'https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg', NULL, 1, 0, 2, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-09 20:13:39'),
-(3, 'PRODUCT_003', 'Bàn làm việc gỗ tự nhiên đẹp', 'ban-lam-viec-go-tu-nhien-dep', NULL, 'Bàn làm việc gỗ tự nhiên đẹp giá tốt', 50, 3500000.00, 3200000.00, 'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQcGV92YREKvjEYjRwWNWANQfx7Sp74lcf0C13xVv-6348LniSeToWfE291tcCe8ILpyHr1xPa-74fNJwZ-n8oZ6ojsDFVm&usqp=CAE', NULL, 1, 1, 2, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-09 20:13:39'),
-(6, 'PRODUCT_006', 'Ghế sofa da cao cấp', 'ghe-sofa-da-cao-cap', NULL, 'Ghế sofa da cao cấp hiện đại', 20, 13500000.00, 12500000.00, 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRvGNaV35WOH31MtBT1IHC-H5ClnNDdXDF9wwQnuONygMtAoUrSjnMeyeLLkxPYXiuOI83ZFDaAF0tCSY5DAHRi-d8q1Hpolnzd7uEhHNXrTlA7bwuv5rgUOw&usqp=CAE', NULL, 2, 1, 2, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-17 22:43:43'),
-(7, 'PRODUCT_007', 'Giường tầng trẻ em bằng gỗ', 'giuong-tang-tre-em-bang-go', NULL, 'Giường tầng trẻ em bằng gỗ chắc chắn', 25, 8900000.00, 8400000.00, 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTmI3f_jIIRbJM3gepPWcJIzK-gTmJWfKxk0MJ07_OQWbMRJvNhEJV0ZcgHcBFIY642sFFRLn2VD_xF-n-4j8rLxjD3iueQc6NxZf4sdXc&usqp=CAE', NULL, 1, 0, 2, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-18 00:07:15'),
-(8, 'PRODUCT_008', 'Bàn ăn 6 ghế gỗ tự nhiên', 'ban-an-6-ghe-go-tu-nhien', NULL, 'Bàn ăn 6 ghế gỗ tự nhiên sang trọng', 15, 9500000.00, 9000000.00, 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSWsiid86wGQVZ5gVJ8GovqiZBM8SPqRlQmbuNx3FIoCRYNa-giy57MF13EQndPQFhS0pqsAlYaDfZLV9ZkqMDCPIPTxGjpWBBTagKe6ww&usqp=CAE', NULL, 2, 0, 2, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-17 22:43:44'),
-(9, 'PRODUCT_009', 'Kệ tivi gỗ công nghiệp', 'ke-tivi-go-cong-nghiep', NULL, 'Kệ tivi gỗ công nghiệp hiện đại', 12, 4800000.00, 4500000.00, 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTxUBoScu2c59ta8iyK5_U7l21NPzOivKpLiFtMkw__bsk2FbOR1MPMotH0Of7US3gdJQSPt2JelY4PuOY74ksyl2o2OA7tj9Yh42BZIWQh&usqp=CAE', NULL, 1, 0, 2, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-09 20:13:39');
+INSERT INTO `products` (`id`, `sku`, `name`, `slug`, `short_content`, `description`, `quantity`, `price`, `discount`, `thumbnail`, `albums`, `publish`, `is_featured`, `has_attribute`, `attribute_category`, `attribute`, `variant`, `meta_title`, `meta_description`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(2, 'PRODUCT_002', 'Giường ngủ bọc nệm da đẹp hiện đại giá rẻ', 'giuong-ngu-boc-nem-da-dep-hien-dai-gia-re', NULL, 'Giường ngủ bọc nệm da đẹp hiện đại giá rẻ', 100, 12400000.00, 10, 'https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg', NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
+(3, 'PRODUCT_003', 'Bàn làm việc gỗ tự nhiên đẹp', 'ban-lam-viec-go-tu-nhien-dep', NULL, 'Bàn làm việc gỗ tự nhiên đẹp giá tốt', 50, 3500000.00, 0, 'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQcGV92YREKvjEYjRwWNWANQfx7Sp74lcf0C13xVv-6348LniSeToWfE291tcCe8ILpyHr1xPa-74fNJwZ-n8oZ6ojsDFVm&usqp=CAE', NULL, 1, 1, 2, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
+(6, 'PRODUCT_006', 'Ghế sofa da cao cấp', 'ghe-sofa-da-cao-cap', NULL, 'Ghế sofa da cao cấp hiện đại', 20, 13500000.00, 25, 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRvGNaV35WOH31MtBT1IHC-H5ClnNDdXDF9wwQnuONygMtAoUrSjnMeyeLLkxPYXiuOI83ZFDaAF0tCSY5DAHRi-d8q1Hpolnzd7uEhHNXrTlA7bwuv5rgUOw&usqp=CAE', NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
+(7, 'PRODUCT_007', 'Giường tầng trẻ em bằng gỗ', 'giuong-tang-tre-em-bang-go', NULL, 'Giường tầng trẻ em bằng gỗ chắc chắn', 25, 8900000.00, 0, 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTmI3f_jIIRbJM3gepPWcJIzK-gTmJWfKxk0MJ07_OQWbMRJvNhEJV0ZcgHcBFIY642sFFRLn2VD_xF-n-4j8rLxjD3iueQc6NxZf4sdXc&usqp=CAE', NULL, 1, 0, 2, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
+(8, 'PRODUCT_008', 'Bàn ăn 6 ghế gỗ tự nhiên', 'ban-an-6-ghe-go-tu-nhien', NULL, 'Bàn ăn 6 ghế gỗ tự nhiên sang trọng', 15, 9500000.00, 0, 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSWsiid86wGQVZ5gVJ8GovqiZBM8SPqRlQmbuNx3FIoCRYNa-giy57MF13EQndPQFhS0pqsAlYaDfZLV9ZkqMDCPIPTxGjpWBBTagKe6ww&usqp=CAE', NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
+(9, 'PRODUCT_009', 'Kệ tivi gỗ công nghiệp', 'ke-tivi-go-cong-nghiep', NULL, 'Kệ tivi gỗ công nghiệp hiện đại', 12, 4800000.00, 2, 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTxUBoScu2c59ta8iyK5_U7l21NPzOivKpLiFtMkw__bsk2FbOR1MPMotH0Of7US3gdJQSPt2JelY4PuOY74ksyl2o2OA7tj9Yh42BZIWQh&usqp=CAE', NULL, 1, 0, 2, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 07:47:36'),
+(63, 'DEMO1', 'DEMO1', 'demo1', NULL, '<p>DEMO1</p>', 123, 1230934.00, 2, '/uploads/image/products/b3fc46885db9559abb8332c5a73040a8.jpg', '[\"/uploads/image/products/40d4d2bcbc026404f429b25de3b0624c.jpg\", \"/uploads/image/products/b3fc46885db9559abb8332c5a73040a8.jpg\"]', 1, 1, 1, '[\"1\",\"2\"]', '{\"1\":[\"3\",\"1\"],\"2\":[\"5\"]}', '{\"sku\":[\"DEMO1-3-5\",\"DEMO1-1-5\"],\"quantity\":[\"23\",\"233\"],\"price\":[\"1.230.934\",\"1.230.934\"],\"albums\":[\"\\/uploads\\/image\\/products\\/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\",\"\\/uploads\\/image\\/products\\/b3fc46885db9559abb8332c5a73040a8.jpg\"]}', 'DEMO1', 'DEMO1', NULL, '2024-10-27 14:04:26', '2024-10-27 14:04:26'),
+(64, 'YOUTUBE', 'YOUTUBE', 'youtube', 'short_content', '<p>YOUTUBE</p>', 123, 15000.00, 12, '/uploads/image/products/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg', '[\"/uploads/image/products/40d4d2bcbc026404f429b25de3b0624c.jpg\", \"/uploads/image/products/96049b4e28b79a088da222a0b695e506.jpg\"]', 1, 1, 1, '[\"1\",\"2\"]', '{\"1\":[\"1\",\"3\"],\"2\":[\"4\",\"5\"]}', '{\"sku\":[\"YOUTUBE-3-4\",\"YOUTUBE-1-4\",\"YOUTUBE-1-5\"],\"quantity\":[\"34\",\"12\",\"123\"],\"price\":[\"23.123\",\"23.123\",\"2.312.300\"],\"albums\":[\"\\/uploads\\/image\\/products\\/b3fc46885db9559abb8332c5a73040a8.jpg\",\"\\/uploads\\/image\\/products\\/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\",\"\\/uploads\\/image\\/products\\/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\"]}', NULL, NULL, NULL, '2024-10-27 16:06:40', '2024-10-28 16:39:19');
 
 -- --------------------------------------------------------
 
@@ -1201,7 +1305,7 @@ CREATE TABLE `product_variants` (
   `sku` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `price` decimal(8,2) DEFAULT NULL,
+  `price` decimal(15,2) DEFAULT NULL,
   `quantity` int NOT NULL DEFAULT '0',
   `thumbnail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'https://img.muji.net/img/item/4550583440404_1260.jpg',
   `albums` json DEFAULT NULL,
@@ -1210,6 +1314,17 @@ CREATE TABLE `product_variants` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_variants`
+--
+
+INSERT INTO `product_variants` (`id`, `sku`, `code`, `title`, `price`, `quantity`, `thumbnail`, `albums`, `publish`, `product_id`, `created_at`, `updated_at`) VALUES
+(110, 'DEMO1-3-5', '3, 5', NULL, 1230934.00, 23, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\"', 1, 63, '2024-10-27 14:04:26', '2024-10-27 14:04:26'),
+(111, 'DEMO1-1-5', '1, 5', NULL, 1230934.00, 233, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/b3fc46885db9559abb8332c5a73040a8.jpg\"', 1, 63, '2024-10-27 14:04:26', '2024-10-27 14:04:26'),
+(122, 'YOUTUBE-3-4', '1, 4', NULL, 23123.00, 34, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/b3fc46885db9559abb8332c5a73040a8.jpg\"', 1, 64, '2024-10-28 16:39:19', '2024-10-28 16:39:19'),
+(123, 'YOUTUBE-1-4', '3, 4', NULL, 23123.00, 12, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\"', 1, 64, '2024-10-28 16:39:19', '2024-10-28 16:39:19'),
+(124, 'YOUTUBE-1-5', '1, 5', NULL, 2312300.00, 123, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\"', 1, 64, '2024-10-28 16:39:19', '2024-10-28 16:39:19');
 
 -- --------------------------------------------------------
 
@@ -1224,6 +1339,22 @@ CREATE TABLE `product_variant_attribute` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_variant_attribute`
+--
+
+INSERT INTO `product_variant_attribute` (`id`, `attribute_id`, `product_variant_id`, `created_at`, `updated_at`) VALUES
+(61, 3, 110, NULL, NULL),
+(62, 5, 110, NULL, NULL),
+(63, 1, 111, NULL, NULL),
+(64, 5, 111, NULL, NULL),
+(85, 1, 122, NULL, NULL),
+(86, 4, 122, NULL, NULL),
+(87, 1, 123, NULL, NULL),
+(88, 5, 123, NULL, NULL),
+(89, 3, 124, NULL, NULL),
+(90, 4, 124, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1348,8 +1479,7 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `description`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', NULL, 'web', '2024-10-22 03:44:29', '2024-10-22 03:44:29'),
-(2, 'Customer', NULL, 'web', '2024-10-22 04:54:20', '2024-10-22 04:54:20');
+(1, 'Super Admin', NULL, 'web', '2024-10-22 03:44:29', '2024-10-22 03:44:29');
 
 -- --------------------------------------------------------
 
@@ -1382,7 +1512,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('kL8AJ7FkUEQ5ApayVCNN607WD5VqRdy7rNVjYF3N', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoidjJES2VrQW5LWWJqd2tYNTJHWDl2NE1BRTVxNndubGY1akVhWTRrWiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9jYXRlZ29yeS9pbmRleCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1729572919);
+('aJmUwu9PoCJqtAi65gV3zhQUsUWtQuWkDxRFYCgb', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiSVYybTcxS3RMN0Z2bGQxdUpkb21TeVRsc0l4ZW9VZUg3Q3c4RFpIWiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zYW4tcGhhbS8xMjMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1730198686),
+('o5oRKwBk1rcO9WfcVmqGqUf5tdXi2bHepu5Dihpb', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZUNJQkk5dGVtd1Vuc1djeHpNZkxJbDFhamdPejZxWGh1eVdoQ2pYQyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zYW4tcGhhbS8xMjMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1730220406);
 
 -- --------------------------------------------------------
 
@@ -1413,8 +1544,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `avatar`, `phone`, `publish`, `email_verified_at`, `province_id`, `district_id`, `ward_id`, `address`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@gmail.com', '$2y$12$GRtpoZ7.0qWBdmcTJk3z9.0OkHTh0A2LFLH1vbtn1ERh1wWjrAb.W', '/uploads/image/user/cc8566358768ef50c857c8c140cdf482.gif', '0779440918', 1, NULL, '48', '495', '20306', 'Tôn Đản', NULL, '2024-10-22 03:45:07', '2024-10-22 03:48:18'),
-(2, 'customer', 'customer@gmail.com', '$2y$12$sf4k7YvSnkcXMdLpf78FFOs7zquWTCjrnsV6tkBytjXs3zHo8vBqC', '/uploads/image/user/3698e40dc20d5d517ee41bdf43a4e285.jpg', '0779440912', 1, NULL, '77', '750', '26602', 'vvasss', NULL, '2024-10-22 04:54:59', '2024-10-22 04:54:59');
+(1, 'admin', 'admin@gmail.com', '$2y$12$GRtpoZ7.0qWBdmcTJk3z9.0OkHTh0A2LFLH1vbtn1ERh1wWjrAb.W', '/uploads/image/user/logo.gif', '0779440918', 1, NULL, '48', '495', '20306', 'Tôn Đản', NULL, '2024-10-22 03:45:07', '2024-10-23 08:00:33'),
+(2, 'customer', 'customer@gmail.com', '$2y$12$sf4k7YvSnkcXMdLpf78FFOs7zquWTCjrnsV6tkBytjXs3zHo8vBqC', '/uploads/image/user/3698e40dc20d5d517ee41bdf43a4e285.jpg', '0779440912', 1, NULL, '77', '750', '26602', 'vvasss', NULL, '2024-10-22 04:54:59', '2024-10-22 17:12:41'),
+(3, 'Vũ Đỗ', 'vudevweb@gmail.com', '$2y$12$/HZPgytWDG2WH0r0ynr7S.NuhPL6sHUG39a2Q0rLj3a6vDz3prUT.', '/uploads/image/user/logo.gif', '0779440999', 1, NULL, '48', '495', '20306', 'Tôn Đản', 'ahoFeCiz4yJXIzOfIh2f1Uz8tXd346hbQwBcVeUpPuzQ5pGaCwoD4F1sq88K', '2024-10-24 14:57:23', '2024-10-24 15:08:26');
 
 -- --------------------------------------------------------
 
@@ -12131,7 +12263,22 @@ ALTER TABLE `collection_product`
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `comments_user_id_foreign` (`user_id`),
-  ADD KEY `comments_collection_id_foreign` (`collection_id`);
+  ADD KEY `comments_collection_id_foreign` (`product_id`);
+
+--
+-- Indexes for table `discount_codes`
+--
+ALTER TABLE `discount_codes`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `discount_codes_code_unique` (`code`);
+
+--
+-- Indexes for table `discount_code_user`
+--
+ALTER TABLE `discount_code_user`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `discount_code_user_discount_code_id_foreign` (`discount_code_id`),
+  ADD KEY `discount_code_user_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `districts`
@@ -12311,19 +12458,19 @@ ALTER TABLE `wishlists`
 -- AUTO_INCREMENT for table `attributes`
 --
 ALTER TABLE `attributes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `attribute_category`
 --
 ALTER TABLE `attribute_category`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `collections`
@@ -12335,6 +12482,18 @@ ALTER TABLE `collections`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `discount_codes`
+--
+ALTER TABLE `discount_codes`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `discount_code_user`
+--
+ALTER TABLE `discount_code_user`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -12353,7 +12512,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -12371,31 +12530,31 @@ ALTER TABLE `order_details`
 -- AUTO_INCREMENT for table `order_payments`
 --
 ALTER TABLE `order_payments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `product_variants`
 --
 ALTER TABLE `product_variants`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT for table `product_variant_attribute`
 --
 ALTER TABLE `product_variant_attribute`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `reviews`
@@ -12413,7 +12572,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `wishlists`
@@ -12449,8 +12608,15 @@ ALTER TABLE `collection_product`
 -- Constraints for table `comments`
 --
 ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_collection_id_foreign` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `comments_collection_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   ADD CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `discount_code_user`
+--
+ALTER TABLE `discount_code_user`
+  ADD CONSTRAINT `discount_code_user_discount_code_id_foreign` FOREIGN KEY (`discount_code_id`) REFERENCES `discount_codes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `discount_code_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `districts`

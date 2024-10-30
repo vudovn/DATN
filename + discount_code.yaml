@@ -1,0 +1,22 @@
++ bảng discount_codes:
+  - id:
+  - code: THEGIOINOITHAT ,.....
+  - title: Giảm giá 10% cho đơn hàng trên 1 triệu,..
+  - discount_type: 1:percent, 2:money (loại giảm giá % hoặc tiền)
+  - discount_value: 10% or 10000
+  - min_order_amount: 100000 (max discount value)
+  - start_date: ngày bắt đầu
+  - end_date:  ngày kết thúc
+  - status: 1 or 2 (1:publish, 2:unpublish)
+
++ bảng discount_code_user:
+  - id:
+  - discount_code_id: 
+  - user_id:
+
+module quản lý mã giảm giá:
+    - Danh sách mã giảm giá:
+    - Thêm mã giảm giá: 
+    - Cập nhật mã giảm giá:
+    - Xóa mã giảm giá:
+

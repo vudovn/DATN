@@ -151,6 +151,9 @@ if(!function_exists('convertNumber')){
 
 if(!function_exists('formatMon')){
     function formatNumber($number){
+        if($number == ''){
+            return '';
+        }
         return number_format($number, 0, '.', '.');
     }
 }

@@ -52,7 +52,7 @@
                                             <label class="form-label" for="quantity">Số lượng <span
                                                     class="text-danger">*</span></label>
                                             <input class="form-control int"
-                                                value="{{ $product->quantity ?? old('quantity') }}" type="text"
+                                                value="{{ old('quantity', $product->quantity ?? '') }}" type="text"
                                                 name="quantity" id="quantity" value="">
                                             @error('quantity')
                                                 <small class="error text-danger">*{{ $message }}</small>
@@ -63,8 +63,9 @@
                                         <div class="mb-3 form-group">
                                             <label class="form-label" for="price">Giá tiền <span
                                                     class="text-danger">*</span></label>
-                                            <input class="form-control int" value="{{ formatNumber($product->price) ?? old('price') }}"
-                                                type="text" name="price" id="price" value="">
+                                            <input class="form-control int"
+                                                value="{{ old('price' , formatNumber($product->price ?? '')) }}" type="text"
+                                                name="price" id="price" value="">
                                             @error('price')
                                                 <small class="error text-danger">*{{ $message }}</small>
                                             @enderror

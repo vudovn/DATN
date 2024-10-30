@@ -54,7 +54,7 @@ class ProductService extends BaseService
         DB::beginTransaction();
         try {
             $product = $this->createProduct($request);
-            dd($product);
+            // dd($product);
             $this->updateCategory($product, $request);
             if ($request->has('has_attribute')) {
                 $this->createVariant($product, $request);

@@ -142,12 +142,12 @@
         TGNT.createTableHeader(attributeTitle);
 
         let trClass = [];
-        let baseVariant = JSON.parse(atob(variant))
-        let max = Math.max(baseVariant.albums.length, baseVariant.sku.length, baseVariant.price.length, baseVariant.quantity.length)
-        console.log(max);
-        if(baseVariant != []){
+        // let baseVariant = JSON.parse(atob(variant))
+        // let max = Math.max(baseVariant.albums.length, baseVariant.sku.length, baseVariant.price.length, baseVariant.quantity.length)
+        // console.log(max);
+        // if(baseVariant != []){
             
-        }
+        // }
         attributesNew.forEach((attribute, index) => {
             let $row = TGNT.createVariantRow(attribute, variantsNew[index]);
             let classModified =

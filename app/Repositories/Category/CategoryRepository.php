@@ -13,6 +13,14 @@ class CategoryRepository extends BaseRepository{
         $this->model = $model;
     }
 
+    public function getAll(){
+        return $this->model->all();
+    }
+
+    public function getAllPublish(){
+        return $this->model->where('publish',1)->get();
+    }
+
    
     
 

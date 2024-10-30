@@ -83,12 +83,12 @@ class AuthController extends Controller
 
     public function forget()
     {
-
+        return view('client.auth.forget_password.forget');
     }
 
     public function change()
     {
-
+        return view('client.auth.forget_password.change');
     }
 
     public function active($email)
@@ -104,7 +104,6 @@ class AuthController extends Controller
 
     public function logout()
     {
-
     }
 
 

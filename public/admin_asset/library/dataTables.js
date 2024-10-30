@@ -1,6 +1,6 @@
 (function ($) {
     "use strict";
-    var TGNT = {};
+    const TGNT = {};
     let searchTimeout = "";
     let array = {
         actions: 0,
@@ -43,10 +43,12 @@
 
     TGNT.searchForm = () => {
         $("#keyword").on("input", function (e) {
+            console.log("input");
+            
             let _this = $(this);
             let keyword = _this.val();
             if (keyword !== undefined) {
-                array['keyword'] = keyword;
+                array["keyword"] = keyword;
             }
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(function () {
@@ -79,5 +81,6 @@
         TGNT.filterForm();
         TGNT.paginationForm();
         TGNT.fetchData();
-})
+    });
+
 })(jQuery);

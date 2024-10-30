@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{{ asset('/client_asset/custom/css/color.css') }}" />
     <link rel="stylesheet" href="{{ asset('/client_asset/custom/css/auth.css') }}" />
     <link rel="stylesheet" href="{{ asset('/client_asset/library/icon/feather-webfont/dist/feather-icons.css') }}" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/css/plugins/animate.min.css" />
     <link href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/message/message.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/message/message.js"></script>
     <title>Đăng nhập</title>
@@ -23,9 +22,8 @@
         <div class="row g-0">
             <div class="col-md-6 left">
                 <div class="d-flex justify-content-center align-items-center h-100" style="flex-direction: column">
-                    <p class="text-white">Chào mừng bạn đến với {{ env('CMS_NAME') }}. Nếu bạn chưa có tài khoản, có thể
-                        đăng ký ở đây</p>
-                    <a href="{{ route('client.auth.register') }}" class="btn btn btn-tgnt w-100">Đăng ký ngay</a>
+                    <p class="text-white">Chào mừng bạn đến với {{ env('CMS_NAME') }}. Nếu bạn chưa có tài khoản, có thể đăng ký ở đây</p>
+                    <a href="{{ route('client.auth.register') }}" class="btn btn btn-tgnt w-100">Đăng ký</a>
                 </div>
             </div>
             <div class="col-md-6 right">
@@ -55,7 +53,7 @@
                 </form>
 
                 <div class="text-center mt-3">
-                    <a href="#" class="text-white">Quên mật khẩu?</a>
+                    <a href="{{ route('client.auth.forget') }}" class="text-white">Quên mật khẩu?</a>
                 </div>
             </div>
         </div>

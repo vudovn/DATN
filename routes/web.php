@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
 
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
+use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\IndexController;
 
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
@@ -142,24 +143,36 @@ Route::get('/order-code', function () {
 });
 Route::get('/test', [AjaxDashboardController::class, 'test']);
 
-
 // client route
 Route::prefix('/')->name('client.')->group(function () {
 
     // auth route
     Route::prefix('')->name('auth.')->group(function () {
-        Route::get('dang-xuat', [ClientAuthController::class, 'logout'])->name('logout');
+        Route::get('dang-xuat', [ClientAuthController::class, 'login'])->name('logout');
         Route::get('dang-nhap', [ClientAuthController::class, 'login'])->name('login');
         Route::post('dang-nhap', [ClientAuthController::class, 'postLogin'])->name('post-login');
         Route::get('dang-ky', [ClientAuthController::class, 'register'])->name('register');
         Route::post('dang-ky', [ClientAuthController::class, 'postRegister'])->name('post-register');
         Route::get('quen-mat-khau', [ClientAuthController::class, 'forget'])->name('forget');
-        Route::get('cap-nhat-mat-khau', [ClientAuthController::class, 'change'])->name('change');
+        Route::get('doi-mat-khau', [ClientAuthController::class, 'change'])->name('change');
         Route::get('xac-nhan-tai-khoan/{email}', [ClientAuthController::class, 'active'])->name('active');
     });
 
+
+
     // index route
     Route::get('/', [IndexController::class, 'home'])->name('client.home');
-    Route::get('tai-khoan', [AccountController::class, 'index'])->name('client.account');
+
+    // account route
+    Route::prefix('tai-khoan')->name('account.')->group(function () {
+        Route::get('/', [AccountController::class, 'index'])->name('index');
+        
+    });
+
+    // product route
+    Route::prefix('san-pham')->name('client.product.')->group(function () {
+        Route::get('/', [ClientProductController::class, 'index'])->name('index');
+        Route::get('{slug}', [ClientProductController::class, 'detail'])->name('detail');
+    });
 });
 

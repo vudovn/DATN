@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="{{ asset('/client_asset/custom/css/color.css') }}" />
     <link rel="stylesheet" href="{{ asset('/client_asset/custom/css/auth.css') }}" />
     <link rel="stylesheet" href="{{ asset('/client_asset/library/icon/feather-webfont/dist/feather-icons.css') }}" />
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/css/plugins/animate.min.css" />
     <link href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/message/message.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/message/message.js"></script>
     <title>Đăng ký</title>
@@ -26,7 +24,7 @@
                 <div class="d-flex justify-content-center align-items-center h-100" style="flex-direction: column">
                     <p class="text-white">Chào mừng bạn đến với {{ env('CMS_NAME') }}. Nếu bạn đã có tài khoản, có thể
                         đăng nhập ở đây</p>
-                    <a href="{{ route('client.auth.login') }}" class="btn btn btn-tgnt w-100">Đăng nhập ngay</a>
+                    <a href="{{ route('client.auth.login') }}" class="btn btn btn-tgnt w-100">Đăng nhập</a>
                 </div>
             </div>
             <div class="col-md-6 right">
@@ -61,19 +59,16 @@
                     </div>
 
                     <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" name="terms" id="terms">
-                        <label class="form-check-label text-white" for="terms">
+                        <input class="form-check-input" type="checkbox" id="remember">
+                        <label class="form-check-label text-white" for="remember">
                             Bạn đồng ý với các điều khoản của chúng tôi
                         </label>
-                        @error('terms')
-                            <small class="text-danger">*{{ $message }}</small>
-                        @enderror
                     </div>
                     <button type="submit" class="btn btn-tgnt w-100">Đăng ký</button>
                 </form>
 
                 <div class="text-center mt-3">
-                    <a href="#" class="text-white">Quên mật khẩu?</a>
+                    <a href="{{ route('client.auth.forget') }}" class="text-white">Quên mật khẩu?</a>
                 </div>
             </div>
         </div>

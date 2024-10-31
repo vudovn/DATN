@@ -84,8 +84,8 @@
                                     Danh sách phiên bản sản phẩm
                                 </div>
                                 <div class="card-body p-0">
-                                    <div class="table-responsive">
-                                        <table class="table variantTable">
+                                    <div class="table-responsive ">
+                                        <table class="table variantTable mb-0">
                                             <thead></thead>
                                             <tbody></tbody>
                                         </table>

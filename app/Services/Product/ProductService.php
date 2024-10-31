@@ -79,11 +79,15 @@ class ProductService extends BaseService
             $product = $this->productRepository->findById($id);
             $this->updateProduct($product, $request);
             $this->updateCategory($product, $request);
+
             $product->productVariants()->each(function ($variant) {
                 $variant->attributes()->detach();
                 $variant->delete();
             });
-            $this->createVariant($product, $request);
+
+            if ($request->has('has_attribute')) {
+                $this->createVariant($product, $request);
+            }
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -139,6 +143,7 @@ class ProductService extends BaseService
                 $variant[] = [
                     'code' => $payload['productVariantValue']['id'][$key] ?? '',
                     'sku' => $value,
+                    'title' => $payload['productVariantValue']['name'][$key]?? '',
                     'price' => convertNumber($payload['variant']['price'][$key]) ?? 0,
                     'quantity' => convertNumber($payload['variant']['quantity'][$key]) ?? 0,
                     'albums' => json_encode($payload['variant']['albums'][$key] ?? [], JSON_UNESCAPED_UNICODE),
@@ -148,7 +153,7 @@ class ProductService extends BaseService
 
             // dd($variant);
         }
-        // dd($payload);
+        // dd($variant);
         return $variant;
     }
 
@@ -166,11 +171,12 @@ class ProductService extends BaseService
         $payload = $request->except(['_token', 'send']);
         $payload['price'] = convertNumber($payload['price']);
         $payload['quantity'] = convertNumber($payload['quantity']);
-    
+        
+
         if (empty($payload['slug'])) {
             $payload['slug'] = getSlug($payload['name']);
         }
-
+        
         foreach (['albums', 'attributeCatalogue', 'attributeValue', 'variant'] as $field) {
             if ($request->has($field) && isset($payload[$field])) {
                 $key = match ($field) {
@@ -181,7 +187,13 @@ class ProductService extends BaseService
                 $payload[$key] = $this->formatJson($payload[$field]);
             }
         }
-    
+        if(!$request->has('has_attribute')) {
+            $payload['has_attribute'] = 2;
+            // $payload['attribute_category'] = null;
+            // $payload['attribute'] = null;
+            // $payload['variant'] = null;
+        }
+        // dd($payload);
         return $payload;
     }
     

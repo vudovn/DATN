@@ -150,10 +150,14 @@ Route::prefix('/')->name('client.')->group(function () {
     Route::prefix('')->name('auth.')->group(function () {
         Route::get('dang-xuat', [ClientAuthController::class, 'login'])->name('logout');
         Route::get('dang-nhap', [ClientAuthController::class, 'login'])->name('login');
+        Route::post('dang-nhap', [ClientAuthController::class, 'postLogin'])->name('post-login');
         Route::get('dang-ky', [ClientAuthController::class, 'register'])->name('register');
+        Route::post('dang-ky', [ClientAuthController::class, 'postRegister'])->name('post-register');
         Route::get('quen-mat-khau', [ClientAuthController::class, 'forget'])->name('forget');
-        Route::get('doi-mat-khau', [ClientAuthController::class, 'change'])->name('change');
-        Route::get('xac-nhan-tai-khoan', [ClientAuthController::class, 'active'])->name('active');
+        Route::post('quen-mat-khau', [ClientAuthController::class, 'submitForgetPasswordForm'])->name('post-forget');
+        Route::get('doi-mat-khau/{user}/{token}', [ClientAuthController::class, 'change'])->name('change');
+        Route::post('doi-mat-khau/{user}/{token}', [ClientAuthController::class, 'submitChangePasswordForm'])->name('post-reset');
+        Route::get('xac-nhan-tai-khoan/{email}', [ClientAuthController::class, 'active'])->name('active');
     });
 
 

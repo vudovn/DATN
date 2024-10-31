@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xác minh tài khoản</title>
+    <title>Đặt lại mật khẩu</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -50,10 +50,15 @@
         .button {
             padding: 12px 24px;
             background-color: #4CAF50;
+            color: white;
             text-decoration: none;
             border-radius: 5px;
             font-size: 16px;
             display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #45a049;
         }
         .footer {
             text-align: center;
@@ -73,20 +78,20 @@
 
         <!-- Content -->
         <div class="content">
-            <h3>Xin chào, {{$account->name}}</h3>
-            <p>Cảm ơn bạn đã đăng ký tài khoản! Chúng tôi rất vui khi có bạn tham gia. Để bắt đầu, vui lòng xác nhận địa chỉ email của bạn bằng cách nhấn vào nút dưới đây.</p>
+            <h3>Xin chào, {{ $user->name }}</h3>
+            <p>Chúng tôi nhận thấy bạn đã yêu cầu đặt lại mật khẩu cho tài khoản của mình. Vui lòng nhấn vào nút dưới đây để đặt lại mật khẩu của bạn:</p>
             
             <!-- Button -->
             <div class="button-container">
-                <a style="color: white" href="{{ route('client.auth.active', $account->email) }}" class="button">Kích hoạt tài khoản</a>
+                <a style="color: white" href="{{ route('client.auth.change', ['user'=> $user->id, 'token'=> $token]) }}" class="button">Đặt lại mật khẩu</a>
             </div>
 
-            <p>Nếu bạn không tạo tài khoản này, vui lòng bỏ qua email này.</p>
+            <p>Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này.</p>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <p>&copy; {{ date('Y') }} TheGioiNoiThat. Mọi quyền được bảo lưu.</p>
+            <p>&copy; {{ date('Y') }} Thế Giới Nội Thất. Mọi quyền được bảo lưu.</p>
         </div>
     </div>
 </body>

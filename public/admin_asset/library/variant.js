@@ -140,14 +140,8 @@
         let variantsNew = TGNT.generateVariants(variants);
 
         TGNT.createTableHeader(attributeTitle);
-
         let trClass = [];
-        // let baseVariant = JSON.parse(atob(variant))
-        // let max = Math.max(baseVariant.albums.length, baseVariant.sku.length, baseVariant.price.length, baseVariant.quantity.length)
-        // console.log(max);
-        // if(baseVariant != []){
-            
-        // }
+        
         attributesNew.forEach((attribute, index) => {
             let $row = TGNT.createVariantRow(attribute, variantsNew[index]);
             let classModified =
@@ -270,12 +264,12 @@
                                     )
                                     .attr("type", "button")
                                     .append($("<i>").addClass("ti ti-edit")),
-                                $("<button>")
-                                    .addClass(
-                                        "btn btn-sm btn-danger btnDeleteVariant"
-                                    )
-                                    .attr("type", "button")
-                                    .append($("<i>").addClass("ti ti-trash"))
+                                // $("<button>")
+                                //     .addClass(
+                                //         "btn btn-sm btn-danger btnDeleteVariant"
+                                //     )
+                                //     .attr("type", "button")
+                                //     .append($("<i>").addClass("ti ti-trash"))
                             )
                     )
             )
@@ -306,7 +300,7 @@
         $row.append($("<th>").text("SKU").attr("scope", "col"));
         $row.append(
             $("<th>")
-                .text("Hành động")
+                // .text("Hành động")
                 .attr("scope", "col")
                 .addClass("text-center")
         );
@@ -715,6 +709,82 @@
             _this.find(".td-sku").text(variant.sku[index]);
             _this.find(".td-thumbnail").attr("src", variantImage);
             _this.find(".td-thumbnai-pre").attr("href", variantImage);
+        });
+    };
+
+    TGNT.createVariant = () => {
+        let attributes = [];
+        let variants = [];
+        let attributeTitle = [];
+
+        $(".variant-item").each(function () {
+            let _this = $(this);
+            let attr = [];
+            let attrVariant = [];
+
+            const attributeCatalogueId = _this.find(".choose-attribute").val();
+            const optionText = _this
+                .find(".choose-attribute option:selected")
+                .text();
+            const attribute = $(".variant-" + attributeCatalogueId).select2(
+                "data"
+            );
+
+            attribute.forEach((attrItem) => {
+                let item = {};
+                let itemVariant = {};
+
+                item[optionText] = attrItem.text;
+                itemVariant[attributeCatalogueId] = attrItem.id;
+
+                attr.push(item);
+                attrVariant.push(itemVariant);
+            });
+
+            attributeTitle.push(optionText);
+            attributes.push(attr);
+            variants.push(attrVariant);
+        });
+
+        let attributesNew = TGNT.generateVariants(attributes);
+        let variantsNew = TGNT.generateVariants(variants);
+
+        TGNT.createTableHeader(attributeTitle);
+        let trClass = [];
+
+        let baseVariant = JSON.parse(atob(variant));
+
+        attributesNew.forEach((attribute, index) => {
+            let $row = TGNT.createVariantRow(attribute, variantsNew[index]);
+            let classModified =
+                "tr-variant-" +
+                Object.values(variantsNew[index])
+                    .join(", ")
+                    .replace(/, /g, "-");
+
+            trClass.push(classModified);
+            if (!$(`table.variantTable tbody tr.${classModified}`).length) {
+                $("table.variantTable tbody").append($row);
+            }
+        });
+
+        $("table.variantTable tbody tr").each(function () {
+            const $row = $(this);
+            const rowClasses = $row.attr("class");
+
+            if (rowClasses) {
+                const rowClassArray = rowClasses.split(" ");
+                let shouldRemove = true;
+                rowClassArray.forEach((item) => {
+                    if (trClass.includes(item)) {
+                        shouldRemove = false;
+                    }
+                });
+
+                if (shouldRemove) {
+                    $row.remove();
+                }
+            }
         });
     };
 

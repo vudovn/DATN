@@ -23,10 +23,8 @@
             <!-- Cột bên phải chứa các thông tin bổ sung -->
             <div class="col-lg-3 col-md-12 mb-4">
                 <x-save_back :model="$config['model']" />
-                <x-thumbnail :label="'Ảnh danh mục'" :name="'thumbnail'" :value="$category->thumbnail ?? '/uploads/system/no_img.jpg'" :require="true" />
+                <x-thumbnail :label="'Ảnh danh mục'" :name="'thumbnail'" :value="$category->thumbnail ?? '	https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That'" :require="true" />
                 @if (isset($config['method']) && $config['method'] !== 'edit')
-
-                
                     <div class="card">
                         <label class="card-header">Loại danh mục</label>
                         <div class="card-body">

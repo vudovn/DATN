@@ -176,6 +176,9 @@ html .ui-button.ui-state-disabled:active {
 .select2-container--default .select2-selection--multiple {
     padding: 2px;
 }
+.select2.select2-container.select2-container--default {
+    width: 100% !important;
+}
 
 .fake-variant {
     height: 100% !important;

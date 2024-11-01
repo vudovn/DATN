@@ -56,7 +56,7 @@ $(document).ready(function () {
                     dropdown.empty();
                     if (filteredProducts.length > 0) {
                         filteredProducts.forEach(product => {
-                            dropdown.append(`<div class="product-dropdown-item" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">${product.name}</div>`);
+                            dropdown.append(`<div class="product-dropdown-item" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}" data-sku="${product.sku}" data-thumbnail="${product.thumbnail}">${product.name}</div>`);
                         });
                         dropdown.removeClass('d-none');
                     } else {
@@ -72,7 +72,6 @@ $(document).ready(function () {
         }
     });
 
-    // Xử lý khi chọn sản phẩm từ danh sách thả xuống
     $(document).on('click', '.product-dropdown-item', function () {
         let productId = $(this).data('id');
         let productName = $(this).data('name');
@@ -102,23 +101,28 @@ $(document).ready(function () {
             `);
         }
     
-        $('#product-search').val('');
-        $('#product-dropdown').addClass('d-none');
-        calculateTotalAmount();
+        function updateTotalPrice(row, quantity, price) {
+            let totalPrice = quantity * price;
+            row.find('.total-price').text(formatNumber(totalPrice) + ' VNĐ');
+            calculateTotalAmount();
+        }
     });
     
-    $(document).on('input', '.product-quantity', function () {
+    $(document).on('input', '.quantity', function () {
         let quantity = $(this).val();
         let price = $(this).data('price');
         let totalPrice = quantity * price;
         $(this).closest('tr').find('.total-price').text(formatNumber(totalPrice) + ' VNĐ');
+        console.log(totalPrice);    
+        
     
         calculateTotalAmount();
     });
     
+
     $('#product-table-body').on('click', '.delete-product-btn', function () {
         $(this).closest('tr').remove();
-        calculateTotalAmount(); // Cập nhật tổng tiền sau khi xóa sản phẩm
+        calculateTotalAmount();
     });
 
     $(document).on('input', '.product-quantity', function () {
@@ -145,7 +149,7 @@ function calculateTotalAmount() {
     let totalAmount = 0;
 
     $('#product-table-body .total-price').each(function () {
-        let priceText = $(this).text().replace(' VNĐ', '').replace(/\./g, '').trim(); 
+        let priceText = $(this).text().replace(' VNĐ', '').replace(/\./g, '').trim();
         let price = parseInt(priceText);
         totalAmount += price;
     });

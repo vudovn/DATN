@@ -70,5 +70,8 @@ class BaseRepository {
     // ){
     //     return $this->model->select($column)->with($relation)->findOrFail($modelId);
     // }  cái ni t tạo hôm qua , chừ không dùng nữa !
+    public function createMany(array $payload = []){
+        return $this->model->insert($payload);
+    }
 
 }

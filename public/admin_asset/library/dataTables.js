@@ -1,6 +1,6 @@
 (function ($) {
     "use strict";
-    var TGNT = {};
+    const TGNT = {};
     let searchTimeout = "";
     let array = {
         actions: 0,
@@ -54,10 +54,16 @@
     };
 
     TGNT.searchForm = () => {
-        $("#keyword").on("input", function () {
+        $("#keyword").on("input", function (e) {
+            let _this = $(this);
+            let keyword = _this.val();
+            if (keyword !== undefined) {
+                array['keyword'] = keyword;
+            }
             clearTimeout(searchTimeout);
-            array.keyword = $(this).val();
-            searchTimeout = setTimeout(() => TGNT.fetchData({ keyword: array.keyword }), 500);
+            searchTimeout = setTimeout(function () {
+                TGNT.fetchData({ keyword });
+            }, 500);
         });
     };
 
@@ -116,7 +122,5 @@
         TGNT.filterForm();
         TGNT.paginationForm();
         TGNT.fetchData();
-        TGNT.showProduct();
-        TGNT.checkInput();
-    });
+})
 })(jQuery);

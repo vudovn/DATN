@@ -64,20 +64,18 @@
         
                 <!-- Trạng Thái Thanh Toán -->
                 <div class="form-group mb-3">
-                    <label for="payment_status">Trạng Thái Thanh Toán:</label>
+                    <label for="payment_status" class="form-label required">Trạng Thái Thanh Toán:</label>
                     <select name="payment_status" id="payment_status" class="form-control">
                         @php
-                            $paymentStatuses = __('order.payment_status'); 
+                            $paymentStatuses = __('order.payment_status');
                         @endphp
-                        
-                        @if (is_array($paymentStatuses)) 
+
+                        @if (is_array($paymentStatuses))
                             @foreach ($paymentStatuses as $key => $value)
-                                <option value="{{ $key }}" {{ $order->payment_status == $key ? 'selected' : '' }}>
-                                    {{ $value }}
-                                </option>
+                                <option value="{{ $key }}">{{ $value }}</option>
                             @endforeach
                         @else
-                            <option value="">{{ $paymentStatuses }}</option> 
+                            <option value="">{{ $paymentStatuses }}</option>
                         @endif
                     </select>
                 </div>
@@ -89,28 +87,39 @@
                 </div>
         
                 {{-- Thêm sản phẩm --}}
-                <div class="filterProduct">
-                    <div class="card-header">
-                        <div class="alert alert-success" role="alert">
-                            Bạn phải thêm ít nhất là 2 sản phẩm mới hoàn thành bộ sưu tập!
-                            <span style="cursor: pointer" onclick="toggleProductInput()"
-                                class="me-3 link-success add-product">
-                                Thêm sản phẩm
-                            </span>
-                        </div>
-                        <input type="hidden" name="idProduct" id="idProduct">
-                        <div class="card-body show-product d-none">
-                            <input type="text" class="form-control mt-3" placeholder="Nhập tên sản phẩm cần thêm">
-                        </div>
-                    </div>
+<div class="filterProduct">
+    <div class="card-header">
+        <div class="alert alert-success" role="alert">
+            Bạn phải thêm sản phẩm mới!
+            <span style="cursor: pointer" onclick="toggleProductInput()" class="me-3 link-success add-product">
+                Thêm sản phẩm
+            </span>
+        </div>
+        <input type="hidden" name="idProduct" id="idProduct">
+
+        <div class="card-body show-product d-none" id="productInputContainer">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" class="form-control mt-3" id="product-search" placeholder="Nhập tên sản phẩm">
                 </div>
-                <script>
-                    function toggleProductInput() {
-                        const productInput = document.querySelector('.show-product');
-                        productInput.classList.toggle('d-none');
-                        productInput.classList.toggle('d-block');
-                    }
-                </script>
+                <div class="col-md-6">
+                    <select class="form-control mt-3" id="product-variant">
+                        
+                    </select>
+                </div>
+            </div>
+            <div class="product-dropdown d-none" id="product-dropdown">
+                <!-- Danh sách sản phẩm sẽ được thêm động ở đây -->
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleProductInput() {
+        const productInput = document.getElementById('productInputContainer');
+        productInput.classList.toggle('d-none');
+    }
+</script>
 
                 @php
                     $totalAmount = 0;

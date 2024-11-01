@@ -16,6 +16,7 @@ use App\Services\Order\OrderService;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Traits\HasDynamicMiddleware;
 use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Product\ProductRepository;
 
 class OrderController extends Controller  implements HasMiddleware
 {
@@ -29,6 +30,7 @@ class OrderController extends Controller  implements HasMiddleware
     protected $orderRepository;
     protected $provinceRepository; 
     protected $categoryRepository;
+    protected $productRepository;
 
     public function __construct(
         Order $order,
@@ -36,6 +38,7 @@ class OrderController extends Controller  implements HasMiddleware
         OrderRepository $orderRepository,
         ProvinceRepository $provinceRepository, 
         CategoryRepository $categoryRepository,
+        ProductRepository $productRepository,
         )
     {
         $this->order = $order;
@@ -43,6 +46,7 @@ class OrderController extends Controller  implements HasMiddleware
         $this->orderRepository = $orderRepository;
         $this->provinceRepository = $provinceRepository; 
         $this->categoryRepository = $categoryRepository;
+        $this->productRepository =  $productRepository;
     }
 
     public function index(Request $request) 
@@ -81,11 +85,22 @@ class OrderController extends Controller  implements HasMiddleware
     }
 
     public function store(Request $request) {
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'payment_method' => 'required',
+            'status' => 'required',
+            'payment_status' => 'required',
+            'address' => 'required',
+            
+        ]);
         $order = $this->orderService->create($request);
-        if ($order) {
-            return redirect()->route('order.index')->with('success', 'Tạo đơn hàng mới thành công');
-        } 
-        return redirect()->route('order.index')->with('Error', 'Tạo đơn hàng mới thất bại');
+        // if ($order) {
+        //     return redirect()->route('order.index')->with('success', 'Tạo đơn hàng mới thành công');
+        // } 
+        // return redirect()->route('order.index')->with('Error', 'Tạo đơn hàng mới thất bại');
     }
 
     public function edit(string $id){
@@ -122,6 +137,16 @@ class OrderController extends Controller  implements HasMiddleware
         }else{
             return errorResponse();
         }
+    }
+
+    public function dataProduct(){
+        $products = Product::all();
+        return response()->json($products);
+    }
+
+    public function dataVariantsProduct($id) {
+        $product = $this->productRepository->findById($id, ['productVariants']);
+        return successResponse($product->productVariants);
     }
 
     

@@ -11,7 +11,7 @@
             <td>{{ $order->id }}</td>
             <td>{{ $order->code }}</td>
             {{-- <td><x-quickUpdate :id="$order->id" :value="$order->code" :model="ucfirst($config['model'])" :name="'code'" /></td> --}}
-            <td>{{ number_format($order->total_amount, 0, ',', '.') }} VND</td>
+            <td>{{ number_format($order->total, 0, ',', '.') }} VND</td>
             <td>Thanh toán khi nhận hàng</td>
             {{-- <td>
                 <select name="payment_status_{{ $order->id }}" id="payment_status_{{ $order->id }}" class=" form-control" onchange="updatePaymentStatus({{ $order->id }}, this.value)">

@@ -10,20 +10,37 @@ class Product extends Model
     use HasFactory, QueryScope;
 
     protected $fillable = [
-        'sku', 'name', 'slug', 'description', 'quantity', 'price', 
-        'discount', 'thumbnail', 'albums', 'publish', 'is_featured', 
-        'deleted_at', 'created_at', 'updated_at'
+        'sku',
+        'name',
+        'slug',
+        'short_content',
+        'description',
+        'quantity',
+        'price',
+        'discount',
+        'thumbnail',
+        'albums',
+        'publish',
+        'is_featured',
+        'has_attribute',
+        'attribute_category',
+        'attribute',
+        'variant',
+        'meta_title',
+        'meta_description',
+        'deleted_at',
+        'created_at',
+        'updated_at'
     ];
-    public function collection()
-    {
-        return $this->belongsTo(Collection::class);
-    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'category_product', 'product_id', 'category_id');
     }
-    public function collections()
+
+    public function productVariants()
     {
-        return $this->belongsToMany(Collection::class, 'collection_product', 'product_id', 'collection_id');
+        return $this->hasMany(ProductVariant::class, 'product_id', 'id');
     }
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Client\AccountController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -8,16 +9,18 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\OrderController ;
 use App\Http\Controllers\Admin\AttributeCategoryController;
 use App\Http\Controllers\Admin\CollectionController;
+
+use App\Http\Controllers\Client\AuthController as ClientAuthController;
+use App\Http\Controllers\Client\ProductController as ClientProductController;
+use App\Http\Controllers\Client\IndexController;
 
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+
 
 Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
@@ -74,14 +77,15 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
 
     /* ORDER ROUTE */
     Route::prefix('order')->name('order.')->group(function () {
-        Route::get('dataProduct', [ProductController::class, 'dataProduct'])->name('dataProduct');
-        Route::get('index', [AdminOrderController::class, 'index'])->name('index');
-        Route::get('create', [AdminOrderController::class, 'create'])->name('create');
-        Route::post('store', [AdminOrderController::class, 'store'])->name('store');
-        Route::get('edit/{id}', [AdminOrderController::class, 'edit'])->name('edit');
-        Route::put('update/{id}', [AdminOrderController::class, 'update'])->name('update');
-        Route::get('delete/{id}', [AdminOrderController::class, 'delete'])->name('delete');
-        Route::put('/payment-status/{id}', [AdminOrderController::class, 'updatePaymentStatus'])->name('updatepayment');
+        Route::get('dataProduct', [OrderController::class, 'dataProduct'])->name('dataProduct');
+        Route::get('index', [OrderController::class, 'index'])->name('index');
+        Route::get('create', [OrderController::class, 'create'])->name('create');
+        Route::post('store', [OrderController::class, 'store'])->name('store');
+        Route::get('edit/{id}', [OrderController::class, 'edit'])->name('edit');
+        Route::put('update/{id}', [OrderController::class, 'update'])->name('update');
+        Route::get('delete/{id}', [OrderController::class, 'delete'])->name('delete');
+        Route::put('/payment-status/{id}', [OrderController::class, 'updatePaymentStatus'])->name('updatepayment');
+        Route::get('dataVariantsProduct/{id}', [OrderController::class, 'dataVariantsProduct'])->name('dataVariantsProduct');
     });
     /* CATEGORY ROUTE */
     Route::prefix('category')->name('category.')->group(function () {
@@ -113,6 +117,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     // });
     /* AJAX ROUTE */
 });
+
 Route::middleware(['checkPermission'])->group(function () {
     Route::prefix('{model}')->name('{model}.')->group(function () {
         Route::get('/getData', [AjaxDashboardController::class, 'getData'])->name('ajax.dashboard.getData');
@@ -139,7 +144,40 @@ Route::get('/admin/change-password', [AuthController::class, 'change'])->name('a
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 
+
 Route::get('/order-code', function () {
-    return orderCode(7);});
+    return orderCode(7);
+});
 Route::get('/test', [AjaxDashboardController::class, 'test']);
+
+// client route
+Route::prefix('/')->name('client.')->group(function () {
+
+    // auth route
+    Route::prefix('')->name('auth.')->group(function () {
+        Route::get('dang-xuat', [ClientAuthController::class, 'login'])->name('logout');
+        Route::get('dang-nhap', [ClientAuthController::class, 'login'])->name('login');
+        Route::get('dang-ky', [ClientAuthController::class, 'register'])->name('register');
+        Route::get('quen-mat-khau', [ClientAuthController::class, 'forget'])->name('forget');
+        Route::get('doi-mat-khau', [ClientAuthController::class, 'change'])->name('change');
+        Route::get('xac-nhan-tai-khoan', [ClientAuthController::class, 'active'])->name('active');
+    });
+
+
+
+    // index route
+    Route::get('/', [IndexController::class, 'home'])->name('client.home');
+
+    // account route
+    Route::prefix('tai-khoan')->name('account.')->group(function () {
+        Route::get('/', [AccountController::class, 'index'])->name('index');
+        
+    });
+
+    // product route
+    Route::prefix('san-pham')->name('client.product.')->group(function () {
+        Route::get('/', [ClientProductController::class, 'index'])->name('index');
+        Route::get('{slug}', [ClientProductController::class, 'detail'])->name('detail');
+    });
+});
 

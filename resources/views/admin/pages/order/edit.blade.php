@@ -87,33 +87,33 @@
                 </div>
         
                 {{-- Thêm sản phẩm --}}
-<div class="filterProduct">
-    <div class="card-header">
-        <div class="alert alert-success" role="alert">
-            Bạn phải thêm sản phẩm mới!
-            <span style="cursor: pointer" onclick="toggleProductInput()" class="me-3 link-success add-product">
-                Thêm sản phẩm
-            </span>
-        </div>
-        <input type="hidden" name="idProduct" id="idProduct">
+                <div class="filterProduct">
+                    <div class="card-header">
+                        <div class="alert alert-success" role="alert">
+                            Bạn phải thêm sản phẩm mới!
+                            <span style="cursor: pointer" onclick="toggleProductInput()" class="me-3 link-success add-product">
+                                Thêm sản phẩm
+                            </span>
+                        </div>
+                        <input type="hidden" name="idProduct" id="idProduct">
 
-        <div class="card-body show-product d-none" id="productInputContainer">
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="text" class="form-control mt-3" id="product-search" placeholder="Nhập tên sản phẩm">
+                        <div class="card-body show-product d-none" id="productInputContainer">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control mt-3" id="product-search" placeholder="Nhập tên sản phẩm">
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control mt-3" id="product-variant">
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="product-dropdown d-none" id="product-dropdown">
+                                <!-- Danh sách sản phẩm sẽ được thêm động ở đây -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <select class="form-control mt-3" id="product-variant">
-                        
-                    </select>
-                </div>
-            </div>
-            <div class="product-dropdown d-none" id="product-dropdown">
-                <!-- Danh sách sản phẩm sẽ được thêm động ở đây -->
-            </div>
-        </div>
-    </div>
-</div>
 <script>
     function toggleProductInput() {
         const productInput = document.getElementById('productInputContainer');

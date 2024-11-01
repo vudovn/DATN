@@ -33,10 +33,10 @@ class CustomResetPasswordMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'emails.reset-password',
+            view: 'client.emails.reset-password',
             with: [
                 'user' => $this->notifiable,
-                        'resetUrl' => $this->resetUrl,
+                'resetUrl' => $this->resetUrl,
             ]
         );
     }

@@ -57,7 +57,7 @@ class OrderService extends BaseService {
             $storeOrderDetail = $this->storeOrderDetail($request, $storeOrder);
             //lỗi ở đây
             DB::commit();
-            return true;
+            // return true;
         } catch (\Exception $e) {
             DB::rollback();
             echo $e->getMessage();die();
@@ -93,10 +93,9 @@ class OrderService extends BaseService {
         $check = $this->orderDetailsRepository->insert($result);
        return $check;
     }
-    
-    
-
-
+        
+        return $this->orderRepository->create($payload);
+    }
     public function update($request, $id) {
         DB::beginTransaction();  
         try {

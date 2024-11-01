@@ -93,9 +93,7 @@ class OrderService extends BaseService {
         $check = $this->orderDetailsRepository->insert($result);
        return $check;
     }
-        
-        return $this->orderRepository->create($payload);
-    }
+
     public function update($request, $id) {
         DB::beginTransaction();  
         try {

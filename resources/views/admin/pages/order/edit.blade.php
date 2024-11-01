@@ -87,6 +87,7 @@
                 </div>
         
                 {{-- Thêm sản phẩm --}}
+
                 <div class="filterProduct">
                     <div class="card-header">
                         <div class="alert alert-success" role="alert">
@@ -114,6 +115,7 @@
                         </div>
                     </div>
                 </div>
+
 <script>
     function toggleProductInput() {
         const productInput = document.getElementById('productInputContainer');

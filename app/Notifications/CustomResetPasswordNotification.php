@@ -45,8 +45,8 @@ class CustomResetPasswordNotification extends Notification
        
         // Mail::to($notifiable->email)->send(new CustomResetPasswordMail($notifiable, $resetUrl));
         // Dispatch job để gửi email trong background
-        return (new CustomResetPasswordMail($notifiable, $resetUrl))->to($notifiable->email);
-        // SendResetPasswordEmail::dispatch($notifiable, $resetUrl);
+        // return (new CustomResetPasswordMail($notifiable, $resetUrl))->to($notifiable->email);
+        SendResetPasswordEmail::dispatch($notifiable, $resetUrl);
     }
 
     /**

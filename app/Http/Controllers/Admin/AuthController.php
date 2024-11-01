@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use App\Jobs\ExampleJob;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -55,14 +57,16 @@ class AuthController extends Controller
             'email.exists' => 'Email không tồn tại trong hệ thống'
 
     ]);
-    
-        $status = Password::sendResetLink($request->only('email'));
-        if ($status === Password::RESET_LINK_SENT) {
-            return back()->with('success', __($status));
-        } else {
-            return back()->with('error', __($status));
+        
+        ExampleJob::dispatch($request->email);
+        return back()->with('success', 'Vui lòng kiểm tra email để đặt lại mật khẩu');
 
-        }
+        // $status = Password::sendResetLink($request->only('email'));
+        // if ($status === Password::RESET_LINK_SENT) {
+        //     return back()->with('success', __($status));
+        // } else {
+        //     return back()->with('error', __($status));
+        // }
     }
 
     // Hiển thị trang thay đổi mật khẩu

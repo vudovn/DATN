@@ -22,18 +22,17 @@ class CustomResetPasswordMail extends Mailable implements ShouldQueue
         $this->resetUrl = $resetUrl;
     }
 
-    // public function build()
-    // {
-    //     return $this->markdown('emails.reset-password')
-    //                 ->with([
-    //                     'user' => $this->notifiable,
-    //                     'resetUrl' => $this->resetUrl,
-    //                 ]);
-    // }
+    public function envelope(): Envelope
+    {
+        return new Envelope(
+            subject: 'Yêu cầu đặt lại mật khẩu',
+        );
+    }
+
     public function content(): Content
     {
         return new Content(
-            view: 'client.emails.reset-password',
+            view: 'emails.reset_password',
             with: [
                 'user' => $this->notifiable,
                 'resetUrl' => $this->resetUrl,

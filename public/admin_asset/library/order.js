@@ -56,7 +56,7 @@ $(document).ready(function () {
                     dropdown.empty();
                     if (filteredProducts.length > 0) {
                         filteredProducts.forEach(product => {
-                            dropdown.append(`<div class="product-dropdown-item" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">${product.name}</div>`);
+                            dropdown.append(`<div class="product-dropdown-item" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}" data-sku="${product.sku}" data-thumbnail="${product.thumbnail}">${product.name}</div>`);
                         });
                         dropdown.removeClass('d-none');
                     } else {
@@ -72,53 +72,110 @@ $(document).ready(function () {
         }
     });
 
-    // Xử lý khi chọn sản phẩm từ danh sách thả xuống
     $(document).on('click', '.product-dropdown-item', function () {
-        let productId = $(this).data('id');
-        let productName = $(this).data('name');
-        let productPrice = $(this).data('price');
-        let quantity = 1;
+        let _this = $(this);
+        let id = _this.data('id');
+        let productName = _this.data('name');
+        let productSku = _this.data('sku');
+        let productPrice = _this.data('price');
+        let productQuantity = _this.data('quantity');
     
-        let existingRow = $('#product-table-body').find(`tr[data-id="${productId}"]`);
-        if (existingRow.length > 0) {
-            let currentQuantityInput = existingRow.find('.product-quantity');
-            quantity = parseInt(currentQuantityInput.val()) + 1;
-            currentQuantityInput.val(quantity);
+        $('#product-dropdown').addClass('d-none');
     
-            let totalPrice = quantity * productPrice;
-            existingRow.find('.total-price').text(formatNumber(totalPrice) + ' VNĐ');
-        } else {
-            $('#product-table-body').append(`
-                <tr data-id="${productId}">
-                    <td>${productId}</td>
-                    <td>${productName}</td>
-                    <td class='fix-input'>
-                        <input type="number" value="${quantity}" class="product-quantity" data-price="${productPrice}" min="1" style="width: 60px;">
-                    </td>
-                    <td>${formatNumber(productPrice)} VNĐ</td>
-                    <td class="total-price">${formatNumber(quantity * productPrice)} VNĐ</td>
-                    <td><button class="btn btn-danger btn-sm rounded delete-product-btn">Xóa</button></td>
-                </tr>
-            `);
+        $.ajax({
+            url: `/order/dataVariantsProduct/${id}`,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data.data);
+    
+                $('#product-variant').empty();
+    
+                if (data.data && data.data.length > 0) {
+                    
+                    let html = `<option value="">Chọn biến thể</option>`;
+                    data.data.forEach((item) => {
+                        html += `<option value="${item.product_id}" data-sku="${item.sku}" data-name="${productName}" data-price="${item.price}" data-quantity="${item.quantity}">${item.title}</option>`;
+                    });
+    
+                    $("#product-variant").append(html);
+                    $("#product-variant").removeClass('d-none');
+                } else {
+                    $("#product-variant").addClass('d-none');
+                    addProductToTable(productName, null, productSku, productPrice, productQuantity , id);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Có lỗi xảy ra:", error);
+            }
+        });
+    
+        $(document).off('change', '#product-variant').on('change', '#product-variant', function () {
+            let selectOption = $(this).find('option:selected');
+            let productName = selectOption.data('name');
+            let variant = selectOption.text();
+            let sku = selectOption.data('sku');
+            let price = selectOption.data('price');
+            let quantity = selectOption.data('quantity');
+            let product_id = selectOption.val();
+    
+            if (selectOption.val()) {
+                addProductToTable(productName, variant, sku, price, quantity, product_id);
+            }
+        });
+    
+        function addProductToTable(productName, variant, sku, price, quantity,product_id) {
+            let existingRow = $(`#product-table-body tr[data-sku="${sku}"]`);
+    
+            if (existingRow.length > 0) {
+                let quantityInput = existingRow.find('.quantity');
+                let newQuantity = parseInt(quantityInput.val()) + 1;
+                quantityInput.val(newQuantity);
+                updateTotalPrice(existingRow, newQuantity, price);
+            } else {
+                let variantText = variant ? ` - ${variant}` : '';
+                let html = `<tr data-sku="${sku}">
+                            <td>${sku || ''}</td> 
+                            <td>${productName}${variantText}</td>
+                            <td><input type="number" name="quantity[]" value="1" class="form-control quantity form-control-sm" data-price="${price}" /></td>
+                            <td><span class="product-price">${formatNumber(price)}</span></td> 
+                            <td><span class="total-price">${formatNumber(price)}</span></td>
+                            <td class="hidden">
+                                <input name="sku[]" value="${sku}" />
+                                <input name="product_id[]" value="${product_id}"/>
+                                <input name="name_orderDetail[]" value="${productName}${variantText}" />
+                                <input name="price[]" value="${price}" />
+                                
+                            </td>
+                            <td><button class="btn btn-danger remove-product">Xóa</button></td>
+                        </tr>`;
+                $('#product-table-body').append(html);
+            }
+            calculateTotalAmount();
         }
     
-        $('#product-search').val('');
-        $('#product-dropdown').addClass('d-none');
-        calculateTotalAmount();
+        function updateTotalPrice(row, quantity, price) {
+            let totalPrice = quantity * price;
+            row.find('.total-price').text(formatNumber(totalPrice) + ' VNĐ');
+            calculateTotalAmount();
+        }
     });
     
-    $(document).on('input', '.product-quantity', function () {
+    $(document).on('input', '.quantity', function () {
         let quantity = $(this).val();
         let price = $(this).data('price');
         let totalPrice = quantity * price;
         $(this).closest('tr').find('.total-price').text(formatNumber(totalPrice) + ' VNĐ');
+        console.log(totalPrice);    
+        
     
         calculateTotalAmount();
     });
     
+
     $('#product-table-body').on('click', '.delete-product-btn', function () {
         $(this).closest('tr').remove();
-        calculateTotalAmount(); // Cập nhật tổng tiền sau khi xóa sản phẩm
+        calculateTotalAmount();
     });
 
     $(document).on('input', '.product-quantity', function () {
@@ -145,7 +202,7 @@ function calculateTotalAmount() {
     let totalAmount = 0;
 
     $('#product-table-body .total-price').each(function () {
-        let priceText = $(this).text().replace(' VNĐ', '').replace(/\./g, '').trim(); 
+        let priceText = $(this).text().replace(' VNĐ', '').replace(/\./g, '').trim();
         let price = parseInt(priceText);
         totalAmount += price;
     });

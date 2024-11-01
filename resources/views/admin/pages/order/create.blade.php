@@ -13,20 +13,17 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group mb-3">
-                            <label for="customer_name">Tên khách hàng:</label>
-                            <input type="text" id="customer_name" name="name" class="form-control" required>
+                            <x-input :label="'Tên khách hàng'" name="name" :value="old('name')" :required="true" />
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group mb-3">
-                            <label for="customer_email">Email:</label>
-                            <input type="text" id="customer_email" name="email" class="form-control" required>
+                            <x-input :label="'Email'" name="email" :value="old('email')" :required="true" />
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group mb-3">
-                            <label for="customer_phone">Phone:</label>
-                            <input type="text" id="customer_phone" name="phone" class="form-control" required>
+                            <x-input :label="'Số điện thoại'" name="phone" :value="old('phone')" :required="true" />
                         </div>
                     </div>
                     <div class="col-6">
@@ -41,7 +38,7 @@
                     <div class="col-6">
                         <!-- Phương Thức Thanh Toán -->
                         <div class="form-group mb-3">
-                            <label for="payment_method">Phương Thức Thanh Toán:</label>
+                            <label for="payment_method" class="form-label">Phương Thức Thanh Toán:</label>
                             <input type="text" id="payment_method" name="payment_method" class="form-control">
                         </div>
                     </div>
@@ -60,7 +57,7 @@
 
                 <!-- Trạng Thái Thanh Toán -->
                 <div class="form-group mb-3">
-                    <label for="payment_status">Trạng Thái Thanh Toán:</label>
+                    <label for="payment_status" class="form-label required">Trạng Thái Thanh Toán:</label>
                     <select name="payment_status" id="payment_status" class="form-control">
                         @php
                             $paymentStatuses = __('order.payment_status');
@@ -79,12 +76,11 @@
                 <!-- Địa chỉ giao hàng -->
                 @include('admin.pages.order.components.location')
                 <div class="form-group mb-3">
-                    <x-input :label="'Địa chỉ giao hàng'" name="address" :value="''" :required="false" />
+                    <x-input :label="'Địa chỉ giao hàng'" name="address" :value="old('address')" :required="false" />
                 </div>
 
-
                 
-                @include("admin.pages.order.components.add_product");
+                @include("admin.pages.order.components.add_product")
 
                 <div class="text-right">
                     <a href="{{ route('order.index') }}" class="btn btn-danger">Quay lại</a>

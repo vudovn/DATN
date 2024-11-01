@@ -75,4 +75,21 @@ class BaseService {
         }
     }
 
+    public function formatJson($data)
+    {   if(!is_array($data || $data != null || $data != '')){
+            return json_encode($data, JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+    public function filterPrice($price) {
+        $priceString = str_replace(" VNĐ", "", $price);
+
+        // Bước 2: Loại bỏ dấu chấm
+        $priceString = str_replace(".", "", $priceString);
+
+        // Bước 3: Chuyển đổi thành số nguyên
+        return (int)$priceString;
+    }
+    
+
 }

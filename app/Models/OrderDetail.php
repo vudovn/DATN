@@ -14,6 +14,9 @@ class OrderDetail extends Model
         'order_id', 
         'product_id', 
         'quantity',  
+        'sku',
+        'name',
+        'price'
     ];
 
     public function product(){

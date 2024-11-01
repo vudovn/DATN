@@ -53,9 +53,8 @@ class OrderService extends BaseService {
     public function create($request){
         DB::beginTransaction();
         try {
-            $payload = $request->except(['_token', 'send', 're_password']);
-            $payload['password'] = Hash::make($request->password);
-            $user = $this->orderRepository->create($payload);
+            $storeOrder = $this->storeOrder($request);
+            $storeOrderDetail = $this->storeOrderDetail($request, $storeOrder);
             //lỗi ở đây
             DB::commit();
             return true;
@@ -63,15 +62,46 @@ class OrderService extends BaseService {
             DB::rollback();
             echo $e->getMessage();die();
             // $this->log($e);
-            return false;
+            // return false;
         }
     }
+
+    private function storeOrder($request) {
+        $payload = $request->only(['name', 'phone', 'email', 'province_id', 'district_id', 'ward_id', 'address', 'note','status', 'payment_status','total_amount' ,'fee_ship']);
+        $payload['total'] = $this->filterPrice($payload['total_amount']);
+        $payload['code'] = orderCode();
+        return $this->orderRepository->create($payload);
+    }
+
+    private function storeOrderDetail($request, $storeOrder) {        
+        $payload = $request->only('quantity', 'sku', 'product_id', 'name_orderDetail', 'price');
+            // dd($payload);
+        $result = []; 
+        foreach($payload['sku'] as $key => $value) {
+             $result[] = [
+                'order_id' => $storeOrder->id,
+                'product_id' => (int)$payload['product_id'][$key],
+                'sku' => $value,
+                'name' => $payload['name_orderDetail'][$key],
+                'quantity' => (int)$payload['quantity'][$key],
+                'price' => (float)$payload['price'][$key], 
+                
+            ];
+        }
+        // dd($result);
+    
+        $check = $this->orderDetailsRepository->insert($result);
+       return $check;
+    }
+    
+    
+
 
     public function update($request, $id) {
         DB::beginTransaction();  
         try {
             $payload = $request->except(['_token', 'send', '_method','quantity']);
-            // dd($payload);
+            dd($payload);
             
             $result = $this->orderRepository->update($id, $payload);
 

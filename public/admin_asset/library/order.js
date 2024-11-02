@@ -33,9 +33,6 @@
     });
 })(jQuery);
 
-
-
-
 $(document).ready(function () {
     let productsData = []; // Lưu trữ sản phẩm được lấy từ API
 
@@ -71,21 +68,23 @@ $(document).ready(function () {
             $('#product-dropdown').addClass('d-none');
         }
     });
+    
 
+    // Khi nhấn vào một sản phẩm trong danh sách
     $(document).on('click', '.product-dropdown-item', function () {
         let productId = $(this).data('id');
         let productName = $(this).data('name');
         let productPrice = $(this).data('price');
         let quantity = 1;
-    
+
         let existingRow = $('#product-table-body').find(`tr[data-id="${productId}"]`);
         if (existingRow.length > 0) {
             let currentQuantityInput = existingRow.find('.product-quantity');
             quantity = parseInt(currentQuantityInput.val()) + 1;
             currentQuantityInput.val(quantity);
-    
+
             let totalPrice = quantity * productPrice;
-            existingRow.find('.total-price').text(formatNumber(totalPrice) + ' VNĐ');
+            existingRow.find('.total-price').text(formatNumber(totalPrice) );
         } else {
             $('#product-table-body').append(`
                 <tr data-id="${productId}">
@@ -94,31 +93,20 @@ $(document).ready(function () {
                     <td class='fix-input'>
                         <input type="number" value="${quantity}" class="product-quantity" data-price="${productPrice}" min="1" style="width: 60px;">
                     </td>
-                    <td>${formatNumber(productPrice)} VNĐ</td>
-                    <td class="total-price">${formatNumber(quantity * productPrice)} VNĐ</td>
+                    <td>${formatNumber(productPrice)}</td>
+                    <td class="total-price">${formatNumber(quantity * productPrice)}</td>
                     <td><button class="btn btn-danger btn-sm rounded delete-product-btn">Xóa</button></td>
                 </tr>
             `);
         }
-    
-        function updateTotalPrice(row, quantity, price) {
-            let totalPrice = quantity * price;
-            row.find('.total-price').text(formatNumber(totalPrice) + ' VNĐ');
-            calculateTotalAmount();
-        }
-    });
-    
-    $(document).on('input', '.quantity', function () {
-        let quantity = $(this).val();
-        let price = $(this).data('price');
-        let totalPrice = quantity * price;
-        $(this).closest('tr').find('.total-price').text(formatNumber(totalPrice) + ' VNĐ');
-        console.log(totalPrice);    
-        
-    
+
+        // Làm trống ô tìm kiếm và ẩn danh sách sản phẩm
+        $('#product-search').val('');
+        $('#product-dropdown').addClass('d-none');
+
+        // Cập nhật tổng tiền
         calculateTotalAmount();
     });
-    
 
     $('#product-table-body').on('click', '.delete-product-btn', function () {
         $(this).closest('tr').remove();
@@ -129,32 +117,26 @@ $(document).ready(function () {
         let quantity = $(this).val();
         let price = $(this).data('price');
         let totalPrice = quantity * price;
-        $(this).closest('tr').find('.total-price').text(totalPrice + ' VNĐ');
+        $(this).closest('tr').find('.total-price').text(formatNumber(totalPrice) );
 
         calculateTotalAmount();
     });
 
-    $('#product-table-body').on('click', '.delete-product-btn', function () {
-        $(this).closest('tr').remove();
-    });
+    // Hàm định dạng số tiền
+    function formatNumber(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Hàm tính tổng tiền
+    function calculateTotalAmount() {
+        let totalAmount = 0;
+
+        $('#product-table-body .total-price').each(function () {
+            let priceText = $(this).text().replace('', '').replace(/\./g, '').trim();
+            let price = parseInt(priceText);
+            totalAmount += price;
+        });
+
+        $('#total_amount').val(formatNumber(totalAmount) + ' VNĐ');
+    }
 });
-
-// Hàm định dạng số tiền
-function formatNumber(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
-
-// Hàm tính tổng tiền
-function calculateTotalAmount() {
-    let totalAmount = 0;
-
-    $('#product-table-body .total-price').each(function () {
-        let priceText = $(this).text().replace(' VNĐ', '').replace(/\./g, '').trim();
-        let price = parseInt(priceText);
-        totalAmount += price;
-    });
-
-    $('#total_amount').val(formatNumber(totalAmount) + ' VNĐ');
-}
-
-

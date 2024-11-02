@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 30, 2024 at 02:51 AM
+-- Generation Time: Nov 02, 2024 at 07:53 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -83,13 +83,6 @@ CREATE TABLE `cache` (
   `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `cache`
---
-
-INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:11:\"description\";s:1:\"d\";s:10:\"guard_name\";}s:11:\"permissions\";a:30:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:15:\"Dashboard index\";s:1:\"c\";s:3:\"OKE\";s:1:\"d\";s:3:\"web\";}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:10:\"User index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:2;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:10:\"User admin\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:3;a:4:{s:1:\"a\";i:4;s:1:\"b\";s:11:\"User create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:4;a:4:{s:1:\"a\";i:5;s:1:\"b\";s:9:\"User edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:5;a:4:{s:1:\"a\";i:6;s:1:\"b\";s:11:\"User delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:6;a:4:{s:1:\"a\";i:7;s:1:\"b\";s:13:\"Product index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:7;a:4:{s:1:\"a\";i:8;s:1:\"b\";s:14:\"Product create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:8;a:4:{s:1:\"a\";i:9;s:1:\"b\";s:12:\"Product edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:9;a:4:{s:1:\"a\";i:10;s:1:\"b\";s:14:\"Product delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:10;a:4:{s:1:\"a\";i:11;s:1:\"b\";s:23:\"AttributeCategory index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:11;a:4:{s:1:\"a\";i:12;s:1:\"b\";s:24:\"AttributeCategory create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:12;a:4:{s:1:\"a\";i:13;s:1:\"b\";s:22:\"AttributeCategory edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:13;a:4:{s:1:\"a\";i:14;s:1:\"b\";s:24:\"AttributeCategory delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:14;a:4:{s:1:\"a\";i:15;s:1:\"b\";s:16:\"Permission index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:15;a:4:{s:1:\"a\";i:16;s:1:\"b\";s:17:\"Permission create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:16;a:4:{s:1:\"a\";i:17;s:1:\"b\";s:15:\"Permission edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:17;a:4:{s:1:\"a\";i:18;s:1:\"b\";s:17:\"Permission delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:18;a:4:{s:1:\"a\";i:19;s:1:\"b\";s:10:\"Role index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:19;a:4:{s:1:\"a\";i:20;s:1:\"b\";s:11:\"Role create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:20;a:4:{s:1:\"a\";i:21;s:1:\"b\";s:9:\"Role edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:21;a:4:{s:1:\"a\";i:22;s:1:\"b\";s:11:\"Role delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:22;a:4:{s:1:\"a\";i:23;s:1:\"b\";s:11:\"Order index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:23;a:4:{s:1:\"a\";i:24;s:1:\"b\";s:10:\"Order edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:24;a:4:{s:1:\"a\";i:25;s:1:\"b\";s:12:\"Order delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:25;a:4:{s:1:\"a\";i:26;s:1:\"b\";s:14:\"Category index\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:26;a:4:{s:1:\"a\";i:27;s:1:\"b\";s:15:\"Category create\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:27;a:4:{s:1:\"a\";i:28;s:1:\"b\";s:13:\"Category edit\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:28;a:4:{s:1:\"a\";i:29;s:1:\"b\";s:15:\"Category delete\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}i:29;a:4:{s:1:\"a\";i:30;s:1:\"b\";s:12:\"Ajax getData\";s:1:\"c\";N;s:1:\"d\";s:3:\"web\";}}s:5:\"roles\";a:0:{}}', 1730092852);
-
 -- --------------------------------------------------------
 
 --
@@ -150,10 +143,16 @@ CREATE TABLE `category_product` (
 --
 
 INSERT INTO `category_product` (`category_id`, `product_id`) VALUES
-(1, 63),
-(4, 63),
 (1, 64),
-(4, 64);
+(4, 64),
+(2, 67),
+(1, 67),
+(3, 67),
+(5, 67),
+(1, 2),
+(4, 2),
+(2, 68),
+(4, 68);
 
 -- --------------------------------------------------------
 
@@ -992,6 +991,13 @@ CREATE TABLE `failed_jobs` (
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `failed_jobs`
+--
+
+INSERT INTO `failed_jobs` (`id`, `uuid`, `connection`, `queue`, `payload`, `exception`, `failed_at`) VALUES
+(18, 'ef241cf2-7aa1-421b-b7ab-bd7973ada58b', 'database', 'default', '{\"uuid\":\"ef241cf2-7aa1-421b-b7ab-bd7973ada58b\",\"displayName\":\"App\\\\Mail\\\\CustomResetPasswordMail\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Mail\\\\SendQueuedMailable\",\"command\":\"O:34:\\\"Illuminate\\\\Mail\\\\SendQueuedMailable\\\":15:{s:8:\\\"mailable\\\";O:32:\\\"App\\\\Mail\\\\CustomResetPasswordMail\\\":4:{s:13:\\\"\\u0000*\\u0000notifiable\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";i:3;s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:11:\\\"\\u0000*\\u0000resetUrl\\\";s:126:\\\"http:\\/\\/127.0.0.1:8000\\/admin\\/reset-password\\/12dffa39109425f8eb3e7334cf24e0fef38fbf01e4f9c0542d7777632b8e8f4c\\/vudevweb@gmail.com\\\";s:2:\\\"to\\\";a:1:{i:0;a:2:{s:4:\\\"name\\\";N;s:7:\\\"address\\\";s:18:\\\"vudevweb@gmail.com\\\";}}s:6:\\\"mailer\\\";s:4:\\\"smtp\\\";}s:5:\\\"tries\\\";N;s:7:\\\"timeout\\\";N;s:13:\\\"maxExceptions\\\";N;s:17:\\\"shouldBeEncrypted\\\";b:0;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;s:3:\\\"job\\\";N;}\"}}', 'ErrorException: Undefined variable $user in C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\storage\\framework\\views\\b44b568a2e1f10686ea7052550dcc3a5.php:8\nStack trace:\n#0 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(256): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, \'Undefined varia...\', \'C:\\\\Users\\\\Admin\\\\...\', 8)\n#1 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\storage\\framework\\views\\b44b568a2e1f10686ea7052550dcc3a5.php(8): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}(2, \'Undefined varia...\', \'C:\\\\Users\\\\Admin\\\\...\', 8)\n#2 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(123): require(\'C:\\\\Users\\\\Admin\\\\...\')\n#3 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(124): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()\n#4 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire(\'C:\\\\Users\\\\Admin\\\\...\', Array)\n#5 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(74): Illuminate\\View\\Engines\\PhpEngine->evaluatePath(\'C:\\\\Users\\\\Admin\\\\...\', Array)\n#6 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(208): Illuminate\\View\\Engines\\CompilerEngine->get(\'C:\\\\Users\\\\Admin\\\\...\', Array)\n#7 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(191): Illuminate\\View\\View->getContents()\n#8 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(160): Illuminate\\View\\View->renderContents()\n#9 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Mail\\Mailer.php(445): Illuminate\\View\\View->render()\n#10 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Mail\\Mailer.php(420): Illuminate\\Mail\\Mailer->renderView(\'emails.reset_pa...\', Array)\n#11 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Mail\\Mailer.php(313): Illuminate\\Mail\\Mailer->addContent(Object(Illuminate\\Mail\\Message), \'emails.reset_pa...\', NULL, NULL, Array)\n#12 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Mail\\Mailable.php(205): Illuminate\\Mail\\Mailer->send(\'emails.reset_pa...\', Array, Object(Closure))\n#13 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\Localizable.php(19): Illuminate\\Mail\\Mailable->Illuminate\\Mail\\{closure}()\n#14 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Mail\\Mailable.php(198): Illuminate\\Mail\\Mailable->withLocale(NULL, Object(Closure))\n#15 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Mail\\SendQueuedMailable.php(83): Illuminate\\Mail\\Mailable->send(Object(Illuminate\\Mail\\MailManager))\n#16 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Mail\\SendQueuedMailable->handle(Object(Illuminate\\Mail\\MailManager))\n#17 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()\n#18 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))\n#19 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))\n#20 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(690): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)\n#21 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Bus\\Dispatcher.php(128): Illuminate\\Container\\Container->call(Array)\n#22 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(144): Illuminate\\Bus\\Dispatcher->Illuminate\\Bus\\{closure}(Object(Illuminate\\Mail\\SendQueuedMailable))\n#23 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(119): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Mail\\SendQueuedMailable))\n#24 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Bus\\Dispatcher.php(132): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))\n#25 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\CallQueuedHandler.php(124): Illuminate\\Bus\\Dispatcher->dispatchNow(Object(Illuminate\\Mail\\SendQueuedMailable), false)\n#26 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(144): Illuminate\\Queue\\CallQueuedHandler->Illuminate\\Queue\\{closure}(Object(Illuminate\\Mail\\SendQueuedMailable))\n#27 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(119): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Mail\\SendQueuedMailable))\n#28 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\CallQueuedHandler.php(123): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))\n#29 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\CallQueuedHandler.php(71): Illuminate\\Queue\\CallQueuedHandler->dispatchThroughMiddleware(Object(Illuminate\\Queue\\Jobs\\DatabaseJob), Object(Illuminate\\Mail\\SendQueuedMailable))\n#30 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\Jobs\\Job.php(102): Illuminate\\Queue\\CallQueuedHandler->call(Object(Illuminate\\Queue\\Jobs\\DatabaseJob), Array)\n#31 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\Worker.php(440): Illuminate\\Queue\\Jobs\\Job->fire()\n#32 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\Worker.php(390): Illuminate\\Queue\\Worker->process(\'database\', Object(Illuminate\\Queue\\Jobs\\DatabaseJob), Object(Illuminate\\Queue\\WorkerOptions))\n#33 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\Worker.php(334): Illuminate\\Queue\\Worker->runJob(Object(Illuminate\\Queue\\Jobs\\DatabaseJob), \'database\', Object(Illuminate\\Queue\\WorkerOptions))\n#34 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\Console\\WorkCommand.php(139): Illuminate\\Queue\\Worker->runNextJob(\'database\', \'default\', Object(Illuminate\\Queue\\WorkerOptions))\n#35 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\Console\\WorkCommand.php(122): Illuminate\\Queue\\Console\\WorkCommand->runWorker(\'database\', \'default\')\n#36 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Queue\\Console\\WorkCommand->handle()\n#37 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()\n#38 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))\n#39 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))\n#40 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(690): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)\n#41 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(213): Illuminate\\Container\\Container->call(Array)\n#42 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\symfony\\console\\Command\\Command.php(279): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))\n#43 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(182): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))\n#44 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\symfony\\console\\Application.php(1047): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#45 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\symfony\\console\\Application.php(316): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Queue\\Console\\WorkCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#46 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\symfony\\console\\Application.php(167): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#47 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(197): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#48 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1203): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#49 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\artisan(13): Illuminate\\Foundation\\Application->handleCommand(Object(Symfony\\Component\\Console\\Input\\ArgvInput))\n#50 {main}\n\nNext Illuminate\\View\\ViewException: Undefined variable $user (View: C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\resources\\views\\emails\\reset_password.blade.php) in C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\storage\\framework\\views\\b44b568a2e1f10686ea7052550dcc3a5.php:8\nStack trace:\n#0 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(60): Illuminate\\View\\Engines\\CompilerEngine->handleViewException(Object(ErrorException), 0)\n#1 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(74): Illuminate\\View\\Engines\\PhpEngine->evaluatePath(\'C:\\\\Users\\\\Admin\\\\...\', Array)\n#2 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(208): Illuminate\\View\\Engines\\CompilerEngine->get(\'C:\\\\Users\\\\Admin\\\\...\', Array)\n#3 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(191): Illuminate\\View\\View->getContents()\n#4 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(160): Illuminate\\View\\View->renderContents()\n#5 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Mail\\Mailer.php(445): Illuminate\\View\\View->render()\n#6 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Mail\\Mailer.php(420): Illuminate\\Mail\\Mailer->renderView(\'emails.reset_pa...\', Array)\n#7 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Mail\\Mailer.php(313): Illuminate\\Mail\\Mailer->addContent(Object(Illuminate\\Mail\\Message), \'emails.reset_pa...\', NULL, NULL, Array)\n#8 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Mail\\Mailable.php(205): Illuminate\\Mail\\Mailer->send(\'emails.reset_pa...\', Array, Object(Closure))\n#9 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\Localizable.php(19): Illuminate\\Mail\\Mailable->Illuminate\\Mail\\{closure}()\n#10 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Mail\\Mailable.php(198): Illuminate\\Mail\\Mailable->withLocale(NULL, Object(Closure))\n#11 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Mail\\SendQueuedMailable.php(83): Illuminate\\Mail\\Mailable->send(Object(Illuminate\\Mail\\MailManager))\n#12 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Mail\\SendQueuedMailable->handle(Object(Illuminate\\Mail\\MailManager))\n#13 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()\n#14 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))\n#15 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))\n#16 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(690): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)\n#17 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Bus\\Dispatcher.php(128): Illuminate\\Container\\Container->call(Array)\n#18 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(144): Illuminate\\Bus\\Dispatcher->Illuminate\\Bus\\{closure}(Object(Illuminate\\Mail\\SendQueuedMailable))\n#19 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(119): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Mail\\SendQueuedMailable))\n#20 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Bus\\Dispatcher.php(132): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))\n#21 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\CallQueuedHandler.php(124): Illuminate\\Bus\\Dispatcher->dispatchNow(Object(Illuminate\\Mail\\SendQueuedMailable), false)\n#22 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(144): Illuminate\\Queue\\CallQueuedHandler->Illuminate\\Queue\\{closure}(Object(Illuminate\\Mail\\SendQueuedMailable))\n#23 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(119): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Mail\\SendQueuedMailable))\n#24 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\CallQueuedHandler.php(123): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))\n#25 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\CallQueuedHandler.php(71): Illuminate\\Queue\\CallQueuedHandler->dispatchThroughMiddleware(Object(Illuminate\\Queue\\Jobs\\DatabaseJob), Object(Illuminate\\Mail\\SendQueuedMailable))\n#26 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\Jobs\\Job.php(102): Illuminate\\Queue\\CallQueuedHandler->call(Object(Illuminate\\Queue\\Jobs\\DatabaseJob), Array)\n#27 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\Worker.php(440): Illuminate\\Queue\\Jobs\\Job->fire()\n#28 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\Worker.php(390): Illuminate\\Queue\\Worker->process(\'database\', Object(Illuminate\\Queue\\Jobs\\DatabaseJob), Object(Illuminate\\Queue\\WorkerOptions))\n#29 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\Worker.php(334): Illuminate\\Queue\\Worker->runJob(Object(Illuminate\\Queue\\Jobs\\DatabaseJob), \'database\', Object(Illuminate\\Queue\\WorkerOptions))\n#30 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\Console\\WorkCommand.php(139): Illuminate\\Queue\\Worker->runNextJob(\'database\', \'default\', Object(Illuminate\\Queue\\WorkerOptions))\n#31 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Queue\\Console\\WorkCommand.php(122): Illuminate\\Queue\\Console\\WorkCommand->runWorker(\'database\', \'default\')\n#32 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Queue\\Console\\WorkCommand->handle()\n#33 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()\n#34 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(95): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))\n#35 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))\n#36 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(690): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)\n#37 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(213): Illuminate\\Container\\Container->call(Array)\n#38 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\symfony\\console\\Command\\Command.php(279): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))\n#39 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(182): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))\n#40 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\symfony\\console\\Application.php(1047): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#41 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\symfony\\console\\Application.php(316): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Queue\\Console\\WorkCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#42 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\symfony\\console\\Application.php(167): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#43 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(197): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#44 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1203): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#45 C:\\Users\\Admin\\Desktop\\DATN\\source code\\Laravel\\artisan(13): Illuminate\\Foundation\\Application->handleCommand(Object(Symfony\\Component\\Console\\Input\\ArgvInput))\n#46 {main}', '2024-11-01 16:45:04');
+
 -- --------------------------------------------------------
 
 --
@@ -1115,14 +1121,14 @@ CREATE TABLE `orders` (
   `ward_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `note` text COLLATE utf8mb4_unicode_ci,
-  `cart` json NOT NULL,
+  `cart` text COLLATE utf8mb4_unicode_ci,
   `discount_code_id` bigint DEFAULT NULL,
-  `total` decimal(15,2) NOT NULL,
+  `total` decimal(15,0) NOT NULL,
   `total_after_discount` decimal(10,0) DEFAULT NULL,
   `user_id` bigint UNSIGNED DEFAULT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
-  `payment_status` tinyint NOT NULL DEFAULT '2',
-  `fee_ship` decimal(15,2) DEFAULT NULL,
+  `payment_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `fee_ship` decimal(15,0) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1132,8 +1138,9 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `code`, `name`, `phone`, `email`, `province_id`, `district_id`, `ward_id`, `address`, `note`, `cart`, `discount_code_id`, `total`, `total_after_discount`, `user_id`, `status`, `payment_status`, `fee_ship`, `created_at`, `updated_at`) VALUES
-(3, 'TGNT_001', 'Vũ', '0779440918', 'vudevweb@gmail.com', '01', '001', '00001', 'Adu', 'boom hàng', '[]', 0, 1888.00, NULL, 1, 'pending', 2, 2111.00, '2024-10-22 04:30:30', '2024-10-22 04:30:30'),
-(4, 'TGNT_002', 'Vũ', '0779440918', 'vudevweb@gmail.com', '01', '001', '00001', 'Adu', 'thêm đơn mới', '{}', 0, 2500.00, NULL, 1, 'pending', 2, 1500.00, '2024-10-22 05:00:00', '2024-10-22 05:00:00');
+(3, 'TGNT_001', 'Vũ', '0779440918', 'vudevweb@gmail.com', '01', '001', '00001', 'Adu', 'boom hàng', '[]', 0, 1888, NULL, 1, 'pending', '2', 2111, '2024-10-22 04:30:30', '2024-10-22 04:30:30'),
+(4, 'TGNT_002', 'Vũ', '0779440918', 'vudevweb@gmail.com', '01', '001', '00001', 'Adu', 'thêm đơn mới', '{}', 0, 2500, NULL, 1, 'pending', '2', 1500, '2024-10-22 05:00:00', '2024-10-22 05:00:00'),
+(13, 'TGNT6725d1ba9af83', 'OKE', '088717231332', 'OKE@gmail.com', '06', '061', '01924', 'OKE@gmail.com', 'OKE@gmail.com', NULL, NULL, 13524624, NULL, NULL, 'delivered', 'completed', NULL, '2024-11-02 07:16:10', '2024-11-02 07:16:10');
 
 -- --------------------------------------------------------
 
@@ -1160,7 +1167,9 @@ CREATE TABLE `order_details` (
 --
 
 INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `sku`, `name`, `quantity`, `price`, `discount`, `options`, `created_at`, `updated_at`) VALUES
-(1, 3, 3, 'PRODUCT_001', 'test', 2, 100000.00, 0.00, '[]', '2024-10-22 04:35:59', '2024-10-22 04:35:59');
+(1, 3, 3, 'PRODUCT_001', 'test', 2, 100000.00, 0.00, '[]', '2024-10-22 04:35:59', '2024-10-22 04:35:59'),
+(4, 13, 67, '123-3', 'oke - Hồng- 2m', 2, 12312.00, 0.00, NULL, NULL, NULL),
+(5, 13, 6, 'PRODUCT_006', 'Ghế sofa da cao cấp', 1, 13500000.00, 0.00, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1263,7 +1272,7 @@ CREATE TABLE `products` (
   `short_content` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
   `quantity` int UNSIGNED NOT NULL DEFAULT '0',
-  `price` decimal(12,2) NOT NULL,
+  `price` decimal(15,0) NOT NULL,
   `discount` int DEFAULT NULL,
   `thumbnail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'https://img.muji.net/img/item/4550583440404_1260.jpg',
   `albums` json DEFAULT NULL,
@@ -1285,14 +1294,15 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `sku`, `name`, `slug`, `short_content`, `description`, `quantity`, `price`, `discount`, `thumbnail`, `albums`, `publish`, `is_featured`, `has_attribute`, `attribute_category`, `attribute`, `variant`, `meta_title`, `meta_description`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(2, 'PRODUCT_002', 'Giường ngủ bọc nệm da đẹp hiện đại giá rẻ', 'giuong-ngu-boc-nem-da-dep-hien-dai-gia-re', NULL, 'Giường ngủ bọc nệm da đẹp hiện đại giá rẻ', 100, 12400000.00, 10, 'https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg', NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
-(3, 'PRODUCT_003', 'Bàn làm việc gỗ tự nhiên đẹp', 'ban-lam-viec-go-tu-nhien-dep', NULL, 'Bàn làm việc gỗ tự nhiên đẹp giá tốt', 50, 3500000.00, 0, 'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQcGV92YREKvjEYjRwWNWANQfx7Sp74lcf0C13xVv-6348LniSeToWfE291tcCe8ILpyHr1xPa-74fNJwZ-n8oZ6ojsDFVm&usqp=CAE', NULL, 1, 1, 2, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
-(6, 'PRODUCT_006', 'Ghế sofa da cao cấp', 'ghe-sofa-da-cao-cap', NULL, 'Ghế sofa da cao cấp hiện đại', 20, 13500000.00, 25, 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRvGNaV35WOH31MtBT1IHC-H5ClnNDdXDF9wwQnuONygMtAoUrSjnMeyeLLkxPYXiuOI83ZFDaAF0tCSY5DAHRi-d8q1Hpolnzd7uEhHNXrTlA7bwuv5rgUOw&usqp=CAE', NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
-(7, 'PRODUCT_007', 'Giường tầng trẻ em bằng gỗ', 'giuong-tang-tre-em-bang-go', NULL, 'Giường tầng trẻ em bằng gỗ chắc chắn', 25, 8900000.00, 0, 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTmI3f_jIIRbJM3gepPWcJIzK-gTmJWfKxk0MJ07_OQWbMRJvNhEJV0ZcgHcBFIY642sFFRLn2VD_xF-n-4j8rLxjD3iueQc6NxZf4sdXc&usqp=CAE', NULL, 1, 0, 2, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
-(8, 'PRODUCT_008', 'Bàn ăn 6 ghế gỗ tự nhiên', 'ban-an-6-ghe-go-tu-nhien', NULL, 'Bàn ăn 6 ghế gỗ tự nhiên sang trọng', 15, 9500000.00, 0, 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSWsiid86wGQVZ5gVJ8GovqiZBM8SPqRlQmbuNx3FIoCRYNa-giy57MF13EQndPQFhS0pqsAlYaDfZLV9ZkqMDCPIPTxGjpWBBTagKe6ww&usqp=CAE', NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
-(9, 'PRODUCT_009', 'Kệ tivi gỗ công nghiệp', 'ke-tivi-go-cong-nghiep', NULL, 'Kệ tivi gỗ công nghiệp hiện đại', 12, 4800000.00, 2, 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTxUBoScu2c59ta8iyK5_U7l21NPzOivKpLiFtMkw__bsk2FbOR1MPMotH0Of7US3gdJQSPt2JelY4PuOY74ksyl2o2OA7tj9Yh42BZIWQh&usqp=CAE', NULL, 1, 0, 2, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 07:47:36'),
-(63, 'DEMO1', 'DEMO1', 'demo1', NULL, '<p>DEMO1</p>', 123, 1230934.00, 2, '/uploads/image/products/b3fc46885db9559abb8332c5a73040a8.jpg', '[\"/uploads/image/products/40d4d2bcbc026404f429b25de3b0624c.jpg\", \"/uploads/image/products/b3fc46885db9559abb8332c5a73040a8.jpg\"]', 1, 1, 1, '[\"1\",\"2\"]', '{\"1\":[\"3\",\"1\"],\"2\":[\"5\"]}', '{\"sku\":[\"DEMO1-3-5\",\"DEMO1-1-5\"],\"quantity\":[\"23\",\"233\"],\"price\":[\"1.230.934\",\"1.230.934\"],\"albums\":[\"\\/uploads\\/image\\/products\\/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\",\"\\/uploads\\/image\\/products\\/b3fc46885db9559abb8332c5a73040a8.jpg\"]}', 'DEMO1', 'DEMO1', NULL, '2024-10-27 14:04:26', '2024-10-27 14:04:26'),
-(64, 'YOUTUBE', 'YOUTUBE', 'youtube', 'short_content', '<p>YOUTUBE</p>', 123, 15000.00, 12, '/uploads/image/products/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg', '[\"/uploads/image/products/40d4d2bcbc026404f429b25de3b0624c.jpg\", \"/uploads/image/products/96049b4e28b79a088da222a0b695e506.jpg\"]', 1, 1, 1, '[\"1\",\"2\"]', '{\"1\":[\"1\",\"3\"],\"2\":[\"4\",\"5\"]}', '{\"sku\":[\"YOUTUBE-3-4\",\"YOUTUBE-1-4\",\"YOUTUBE-1-5\"],\"quantity\":[\"34\",\"12\",\"123\"],\"price\":[\"23.123\",\"23.123\",\"2.312.300\"],\"albums\":[\"\\/uploads\\/image\\/products\\/b3fc46885db9559abb8332c5a73040a8.jpg\",\"\\/uploads\\/image\\/products\\/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\",\"\\/uploads\\/image\\/products\\/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\"]}', NULL, NULL, NULL, '2024-10-27 16:06:40', '2024-10-28 16:39:19');
+(2, 'PRODUCT_002', 'Giường ngủ bọc nệm da đẹp hiện đại giá rẻ', 'giuong-ngu-boc-nem-da-dep-hien-dai-gia-re', 'Giường ngủ bọc nệm da đẹp hiện đại giá rẻ', '<p>Giường ngủ bọc nệm da đẹp hiện đại gi&aacute; rẻ</p>', 100, 12400000, 10, 'https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg', '[\"/uploads/image/products/40d4d2bcbc026404f429b25de3b0624c.jpg\"]', 1, 1, 1, '[\"1\",\"2\"]', '{\"1\":[\"1\"],\"2\":[\"5\"]}', '{\"sku\":[\"PRODUCT_002-1-5\"],\"quantity\":[\"2\"],\"price\":[\"12.400.000\"],\"albums\":[\"\\/uploads\\/image\\/products\\/b3fc46885db9559abb8332c5a73040a8.jpg\"]}', NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-31 03:03:18'),
+(3, 'PRODUCT_003', 'Bàn làm việc gỗ tự nhiên đẹp', 'ban-lam-viec-go-tu-nhien-dep', NULL, 'Bàn làm việc gỗ tự nhiên đẹp giá tốt', 50, 3500000, 0, 'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQcGV92YREKvjEYjRwWNWANQfx7Sp74lcf0C13xVv-6348LniSeToWfE291tcCe8ILpyHr1xPa-74fNJwZ-n8oZ6ojsDFVm&usqp=CAE', NULL, 1, 1, 2, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
+(6, 'PRODUCT_006', 'Ghế sofa da cao cấp', 'ghe-sofa-da-cao-cap', NULL, 'Ghế sofa da cao cấp hiện đại', 20, 13500000, 25, 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRvGNaV35WOH31MtBT1IHC-H5ClnNDdXDF9wwQnuONygMtAoUrSjnMeyeLLkxPYXiuOI83ZFDaAF0tCSY5DAHRi-d8q1Hpolnzd7uEhHNXrTlA7bwuv5rgUOw&usqp=CAE', NULL, 1, 1, 2, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
+(7, 'PRODUCT_007', 'Giường tầng trẻ em bằng gỗ', 'giuong-tang-tre-em-bang-go', NULL, 'Giường tầng trẻ em bằng gỗ chắc chắn', 25, 8900000, 0, 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTmI3f_jIIRbJM3gepPWcJIzK-gTmJWfKxk0MJ07_OQWbMRJvNhEJV0ZcgHcBFIY642sFFRLn2VD_xF-n-4j8rLxjD3iueQc6NxZf4sdXc&usqp=CAE', NULL, 1, 0, 2, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
+(8, 'PRODUCT_008', 'Bàn ăn 6 ghế gỗ tự nhiên', 'ban-an-6-ghe-go-tu-nhien', NULL, 'Bàn ăn 6 ghế gỗ tự nhiên sang trọng', 15, 9500000, 0, 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSWsiid86wGQVZ5gVJ8GovqiZBM8SPqRlQmbuNx3FIoCRYNa-giy57MF13EQndPQFhS0pqsAlYaDfZLV9ZkqMDCPIPTxGjpWBBTagKe6ww&usqp=CAE', NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 05:01:44'),
+(9, 'PRODUCT_009', 'Kệ tivi gỗ công nghiệp', 'ke-tivi-go-cong-nghiep', NULL, 'Kệ tivi gỗ công nghiệp hiện đại', 12, 4800000, 2, 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTxUBoScu2c59ta8iyK5_U7l21NPzOivKpLiFtMkw__bsk2FbOR1MPMotH0Of7US3gdJQSPt2JelY4PuOY74ksyl2o2OA7tj9Yh42BZIWQh&usqp=CAE', NULL, 1, 0, 2, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-09 20:13:39', '2024-10-23 07:47:36'),
+(64, 'YOUTUBE', 'YOUTUBE', 'youtube', 'short_content', '<p>YOUTUBE</p>', 123, 15000, 12, '/uploads/image/products/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg', '[\"/uploads/image/products/40d4d2bcbc026404f429b25de3b0624c.jpg\", \"/uploads/image/products/96049b4e28b79a088da222a0b695e506.jpg\"]', 1, 1, 1, '[\"1\",\"2\"]', '{\"1\":[\"1\",\"3\"],\"2\":[\"4\",\"5\"]}', '{\"sku\":[\"YOUTUBE-3-4\",\"YOUTUBE-1-4\",\"YOUTUBE-1-5\"],\"quantity\":[\"34\",\"12\",\"123\"],\"price\":[\"23.123\",\"23.123\",\"2.312.300\"],\"albums\":[\"\\/uploads\\/image\\/products\\/b3fc46885db9559abb8332c5a73040a8.jpg\",\"\\/uploads\\/image\\/products\\/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\",\"\\/uploads\\/image\\/products\\/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\"]}', NULL, NULL, NULL, '2024-10-27 16:06:40', '2024-10-28 16:39:19'),
+(67, '123', 'oke', 'oke', 'oke', '<p>formatNumber($product-&gt;price) ??</p>', 100, 12312, 12, '/uploads/image/products/96049b4e28b79a088da222a0b695e506.jpg', '[\"/uploads/image/products/40d4d2bcbc026404f429b25de3b0624c.jpg\"]', 1, 1, 1, '[\"1\"]', '{\"1\":[\"3\",\"1\"]}', '{\"sku\":[\"123-3\",\"123-1\"],\"quantity\":[\"122\",\"22\"],\"price\":[\"12.312\",\"12.312\"],\"albums\":[\"\\/uploads\\/image\\/products\\/96049b4e28b79a088da222a0b695e506.jpg\",\"\\/uploads\\/image\\/products\\/z5853026253747_31a394e30203c49eba262f84ce48b639.jpg\"]}', NULL, NULL, NULL, '2024-10-30 03:35:39', '2024-10-30 03:35:39'),
+(68, 'sp test 1', 'sp test 1', 'sp-test-1', 'sp test 1', '<p>sp test 1</p>', 121, 12555, 12, '/uploads/image/products/96049b4e28b79a088da222a0b695e506.jpg', '[\"/uploads/image/products/96049b4e28b79a088da222a0b695e506.jpg\"]', 1, 1, 2, NULL, NULL, NULL, 'sp test 1', 'sp test 1', NULL, '2024-10-31 02:52:32', '2024-10-31 02:52:32');
 
 -- --------------------------------------------------------
 
@@ -1305,7 +1315,7 @@ CREATE TABLE `product_variants` (
   `sku` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `price` decimal(15,2) DEFAULT NULL,
+  `price` decimal(15,0) DEFAULT NULL,
   `quantity` int NOT NULL DEFAULT '0',
   `thumbnail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'https://img.muji.net/img/item/4550583440404_1260.jpg',
   `albums` json DEFAULT NULL,
@@ -1320,11 +1330,12 @@ CREATE TABLE `product_variants` (
 --
 
 INSERT INTO `product_variants` (`id`, `sku`, `code`, `title`, `price`, `quantity`, `thumbnail`, `albums`, `publish`, `product_id`, `created_at`, `updated_at`) VALUES
-(110, 'DEMO1-3-5', '3, 5', NULL, 1230934.00, 23, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\"', 1, 63, '2024-10-27 14:04:26', '2024-10-27 14:04:26'),
-(111, 'DEMO1-1-5', '1, 5', NULL, 1230934.00, 233, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/b3fc46885db9559abb8332c5a73040a8.jpg\"', 1, 63, '2024-10-27 14:04:26', '2024-10-27 14:04:26'),
-(122, 'YOUTUBE-3-4', '1, 4', NULL, 23123.00, 34, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/b3fc46885db9559abb8332c5a73040a8.jpg\"', 1, 64, '2024-10-28 16:39:19', '2024-10-28 16:39:19'),
-(123, 'YOUTUBE-1-4', '3, 4', NULL, 23123.00, 12, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\"', 1, 64, '2024-10-28 16:39:19', '2024-10-28 16:39:19'),
-(124, 'YOUTUBE-1-5', '1, 5', NULL, 2312300.00, 123, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\"', 1, 64, '2024-10-28 16:39:19', '2024-10-28 16:39:19');
+(122, 'YOUTUBE-3-4', '1, 4', 'cam- 2m', 23123, 34, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/b3fc46885db9559abb8332c5a73040a8.jpg\"', 1, 64, '2024-10-28 16:39:19', '2024-10-28 16:39:19'),
+(123, 'YOUTUBE-1-4', '3, 4', 'đen- 2m', 23123, 12, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\"', 1, 64, '2024-10-28 16:39:19', '2024-10-28 16:39:19'),
+(124, 'YOUTUBE-1-5', '1, 5', 'trắng- 2m', 2312300, 123, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/z5853026168941_1808b988ff164b0f51291353c6eaf9fa.jpg\"', 1, 64, '2024-10-28 16:39:19', '2024-10-28 16:39:19'),
+(125, '123-3', '3', 'Hồng- 2m', 12312, 122, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/96049b4e28b79a088da222a0b695e506.jpg\"', 1, 67, '2024-10-30 03:35:39', '2024-10-30 03:35:39'),
+(126, '123-1', '1', 'vàng- 2m', 12312, 22, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/z5853026253747_31a394e30203c49eba262f84ce48b639.jpg\"', 1, 67, '2024-10-30 03:35:39', '2024-10-30 03:35:39'),
+(128, 'PRODUCT_002-1-5', '1, 5', 'Màu xanh, 2m', 12400000, 2, 'https://img.muji.net/img/item/4550583440404_1260.jpg', '\"/uploads/image/products/b3fc46885db9559abb8332c5a73040a8.jpg\"', 1, 2, '2024-10-31 03:03:18', '2024-10-31 03:03:18');
 
 -- --------------------------------------------------------
 
@@ -1345,16 +1356,16 @@ CREATE TABLE `product_variant_attribute` (
 --
 
 INSERT INTO `product_variant_attribute` (`id`, `attribute_id`, `product_variant_id`, `created_at`, `updated_at`) VALUES
-(61, 3, 110, NULL, NULL),
-(62, 5, 110, NULL, NULL),
-(63, 1, 111, NULL, NULL),
-(64, 5, 111, NULL, NULL),
 (85, 1, 122, NULL, NULL),
 (86, 4, 122, NULL, NULL),
 (87, 1, 123, NULL, NULL),
 (88, 5, 123, NULL, NULL),
 (89, 3, 124, NULL, NULL),
-(90, 4, 124, NULL, NULL);
+(90, 4, 124, NULL, NULL),
+(91, 3, 125, NULL, NULL),
+(92, 1, 126, NULL, NULL),
+(94, 1, 128, NULL, NULL),
+(95, 5, 128, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1512,8 +1523,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('aJmUwu9PoCJqtAi65gV3zhQUsUWtQuWkDxRFYCgb', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiSVYybTcxS3RMN0Z2bGQxdUpkb21TeVRsc0l4ZW9VZUg3Q3c4RFpIWiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zYW4tcGhhbS8xMjMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1730198686),
-('o5oRKwBk1rcO9WfcVmqGqUf5tdXi2bHepu5Dihpb', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiZUNJQkk5dGVtd1Vuc1djeHpNZkxJbDFhamdPejZxWGh1eVdoQ2pYQyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zYW4tcGhhbS8xMjMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1730220406);
+('DtcvdJnNcMCNZDAfnVhPwIUwRs8zawbP8tlz4RsT', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiRmgycVpEa08wamdSTmpMVEVIOHZWWEQ0VE9MQXNaamxQYmo4MzZZVSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9vcmRlci9jcmVhdGUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1730532701);
 
 -- --------------------------------------------------------
 
@@ -1546,7 +1556,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `avatar`, `phone`, `publish`, `email_verified_at`, `province_id`, `district_id`, `ward_id`, `address`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'admin@gmail.com', '$2y$12$GRtpoZ7.0qWBdmcTJk3z9.0OkHTh0A2LFLH1vbtn1ERh1wWjrAb.W', '/uploads/image/user/logo.gif', '0779440918', 1, NULL, '48', '495', '20306', 'Tôn Đản', NULL, '2024-10-22 03:45:07', '2024-10-23 08:00:33'),
 (2, 'customer', 'customer@gmail.com', '$2y$12$sf4k7YvSnkcXMdLpf78FFOs7zquWTCjrnsV6tkBytjXs3zHo8vBqC', '/uploads/image/user/3698e40dc20d5d517ee41bdf43a4e285.jpg', '0779440912', 1, NULL, '77', '750', '26602', 'vvasss', NULL, '2024-10-22 04:54:59', '2024-10-22 17:12:41'),
-(3, 'Vũ Đỗ', 'vudevweb@gmail.com', '$2y$12$/HZPgytWDG2WH0r0ynr7S.NuhPL6sHUG39a2Q0rLj3a6vDz3prUT.', '/uploads/image/user/logo.gif', '0779440999', 1, NULL, '48', '495', '20306', 'Tôn Đản', 'ahoFeCiz4yJXIzOfIh2f1Uz8tXd346hbQwBcVeUpPuzQ5pGaCwoD4F1sq88K', '2024-10-24 14:57:23', '2024-10-24 15:08:26');
+(3, 'Vũ Đỗ', 'vudevweb@gmail.com', '$2y$12$fttnMsXUEkOUzAoVMEpLtOScHDPvuPcj6YWYIxtNsHJAkb9ztfjaG', '/uploads/image/user/logo.gif', '0779440999', 1, NULL, '48', '495', '20306', 'Tôn Đản', 'bMGV3aQC2iQ3s4lK6W5ePFxmjHIJVSWDIpyzNpEILTolfx00RCEC3OOy3yoG', '2024-10-24 14:57:23', '2024-11-01 17:11:11'),
+(5, 'no way 4 u', 'vudo.contact.vn@gmail.com', '$2y$12$c.iAxzEfDxS7Ka9At01C.eLkw/4mbCNCaTMTNyJqJGGShK9wxQRum', '/uploads/image/products/z5853026253747_31a394e30203c49eba262f84ce48b639.jpg', NULL, 1, '2024-10-31 14:00:35', NULL, NULL, NULL, NULL, NULL, '2024-10-31 14:00:13', '2024-10-31 14:05:54');
 
 -- --------------------------------------------------------
 
@@ -12500,13 +12511,13 @@ ALTER TABLE `discount_code_user`
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -12518,13 +12529,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `order_payments`
@@ -12542,19 +12553,19 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `product_variants`
 --
 ALTER TABLE `product_variants`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `product_variant_attribute`
 --
 ALTER TABLE `product_variant_attribute`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT for table `reviews`
@@ -12572,7 +12583,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `wishlists`

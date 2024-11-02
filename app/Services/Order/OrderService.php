@@ -1,4 +1,4 @@
-<?php  
+<?php
 namespace App\Services\Order;
 use App\Services\BaseService;
 use App\Models\OrderDetail;
@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Hash;
 
 
 
-class OrderService extends BaseService {
+class OrderService extends BaseService
+{
 
     protected $orderRepository;
     protected $orderDetailsRepository;
@@ -18,17 +19,18 @@ class OrderService extends BaseService {
     public function __construct(
         OrderRepository $orderRepository,
         OrderDetailsRepository $orderDetailsRepository
-    ){
+    ) {
         $this->orderRepository = $orderRepository;
         $this->orderDetailsRepository = $orderDetailsRepository;
     }
 
 
-    private function paginateAgrument($request){
+    private function paginateAgrument($request)
+    {
         return [
             'keyword' => [
-               'search' => $request['keyword'] ?? '',
-                'field' => ['created_at','code','total'],
+                'search' => $request['keyword'] ?? '',
+                'field' => ['created_at', 'code', 'total'],
             ],
             'condition' => [
                 'status' => $request->input('publish') == 0 ? 0 : $request->input('publish'),
@@ -36,76 +38,80 @@ class OrderService extends BaseService {
             'sort' => isset($request['sort']) && $request['sort'] != 0
                 ? explode(',', $request['sort'])
                 : ['id', 'asc'],
-                'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
-            ];
+            'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
+        ];
     }
 
-    public function paginate($request){
+    public function paginate($request)
+    {
         $agruments = $this->paginateAgrument($request);
         // dd($agruments);
         $cacheKey = 'pagination: ' . md5(json_encode($agruments));
-        
         $users = $this->orderRepository->pagination($agruments);
         return $users;
     }
 
 
-    public function create($request){
+    public function create($request)
+    {
         DB::beginTransaction();
         try {
             $storeOrder = $this->storeOrder($request);
             $storeOrderDetail = $this->storeOrderDetail($request, $storeOrder);
             //lỗi ở đây
             DB::commit();
-            // return true;
+            return true;
         } catch (\Exception $e) {
             DB::rollback();
-            echo $e->getMessage();die();
+            echo $e->getMessage();
+            die();
             // $this->log($e);
             // return false;
         }
     }
 
-    private function storeOrder($request) {
-        $payload = $request->only(['name', 'phone', 'email', 'province_id', 'district_id', 'ward_id', 'address', 'note','status', 'payment_status','total_amount' ,'fee_ship']);
+    private function storeOrder($request)
+    {
+        $payload = $request->only(['name', 'phone', 'email', 'province_id', 'district_id', 'ward_id', 'address', 'note', 'status', 'payment_status', 'total_amount', 'fee_ship']);
         $payload['total'] = $this->filterPrice($payload['total_amount']);
         $payload['code'] = orderCode();
+        $payload['user_id'] = auth()->user()->id;
         return $this->orderRepository->create($payload);
     }
 
-    private function storeOrderDetail($request, $storeOrder) {        
+    private function storeOrderDetail($request, $storeOrder)
+    {
         $payload = $request->only('quantity', 'sku', 'product_id', 'name_orderDetail', 'price');
-            // dd($payload);
-        $result = []; 
-        foreach($payload['sku'] as $key => $value) {
-             $result[] = [
+        $result = [];
+        foreach ($payload['sku'] as $key => $value) {
+            $result[] = [
                 'order_id' => $storeOrder->id,
-                'product_id' => (int)$payload['product_id'][$key],
+                'product_id' => (int) $payload['product_id'][$key],
                 'sku' => $value,
                 'name' => $payload['name_orderDetail'][$key],
-                'quantity' => (int)$payload['quantity'][$key],
-                'price' => (float)$payload['price'][$key], 
-                
+                'quantity' => (int) $payload['quantity'][$key],
+                'price' => (float) $payload['price'][$key],
+
             ];
         }
         // dd($result);
-    
+
         $check = $this->orderDetailsRepository->insert($result);
-       return $check;
+        return $check;
     }
 
-    public function update($request, $id) {
-        DB::beginTransaction();  
+    public function update($request, $id)
+    {
+        DB::beginTransaction();
         try {
-            $payload = $request->except(['_token', 'send', '_method','quantity']);
+            $payload = $request->except(['_token', 'send', '_method', 'quantity']);
             dd($payload);
-            
+
             $result = $this->orderRepository->update($id, $payload);
 
-            foreach ($request['quantity'] as $detailId => $quantity) 
-            {
+            foreach ($request['quantity'] as $detailId => $quantity) {
                 $this->orderDetailsRepository->update($detailId, [
-                    'quantity' => $quantity, 
+                    'quantity' => $quantity,
                 ]);
                 // $orderDetail = OrderDetail::find($detailId);
                 // if ($orderDetail) {
@@ -113,19 +119,21 @@ class OrderService extends BaseService {
                 //     $orderDetail->save();
                 // }
             }
-    
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-             echo $e->getMessage();die();
+            echo $e->getMessage();
+            die();
             $this->log($e);
             // return false;
         }
     }
 
-    public function updatePaymentStatus($request, $id) {
-        DB::beginTransaction();  
+    public function updatePaymentStatus($request, $id)
+    {
+        DB::beginTransaction();
         try {
             $payload = $request->except(['_token', 'send', '_method']);
             // dd($payload);
@@ -139,16 +147,17 @@ class OrderService extends BaseService {
             // return false;
         }
     }
-    
 
-    public function delete($id){
+
+    public function delete($id)
+    {
         DB::beginTransaction();
         try {
             $this->orderRepository->delete($id);
             DB::commit();
             return true;
         } catch (\Exception $e) {
-           DB::rollback();
+            DB::rollback();
             // echo $e->getMessage();die();
             $this->log($e);
             return false;

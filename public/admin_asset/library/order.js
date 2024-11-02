@@ -7,12 +7,14 @@
         $(document).on("change", ".select_status", function () {
             const statusId = $(this).val();
             const orderId = $(this).data("id");
-            const name = $(this).attr('name');
+            const name = $(this).attr("name");
             $.ajax({
                 url: `/order/payment-status/${orderId}`,
                 type: "PUT",
                 headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
                 },
                 data: {
                     [name]: statusId,
@@ -26,117 +28,276 @@
                 },
             });
         });
-    }
+    };
 
-    $(document).ready(function () {
-        TGNT.select_status();
-    });
-})(jQuery);
+    TGNT.getProduct = () => {
+        let typingTimer;
+        const typingDelay = 500;
+        const $productSearch = $("#product-search");
+        const $productDropdown = $("#product-dropdown");
 
-$(document).ready(function () {
-    let productsData = []; // Lưu trữ sản phẩm được lấy từ API
+        $productSearch.on("input", function () {
+            let query = $(this).val().trim();
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(() => {
+                if (query.length > 0) {
+                    $productDropdown
+                        .empty()
+                        .removeClass("d-none")
+                        .append(
+                            `  <div class="text-center">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div> `
+                        );
 
-    $('#product-search').on('input', function () {
-        let query = $(this).val();
-        if (query.length > 0) {
+                    $.ajax({
+                        url: `/order/dataProduct`,
+                        method: "GET",
+                        dataType: "json",
+                        success: function (data) {
+                            TGNT.renderDropdown(data.data);
+                        },
+                        error: function () {
+                            $productDropdown.html(
+                                "<div class='text-danger'>Không thể tải dữ liệu sản phẩm!</div>"
+                            );
+                        },
+                    });
+                } else {
+                    $productDropdown.addClass("d-none");
+                }
+            }, typingDelay);
+        });
+    };
+
+    TGNT.getVariant = () => {
+        $(document).on("click", ".get-variant-btn", function () {
+            let _this = $(this);
+            let productId = _this.data("id");
+            let thumbnail = _this.data("thumbnail");
+            let name = _this.data("name");
+
             $.ajax({
-                url: `/order/dataProduct`,
-                method: 'GET',
-                dataType: 'json',
+                url: `/order/dataVariantsProduct/${productId}`,
+                method: "GET",
+                dataType: "json",
                 success: function (data) {
-                    productsData = data;
-                    let filteredProducts = data.filter(product =>
-                        product.name.toLowerCase().includes(query.toLowerCase())
-                    );
+                    const productVariants = [];
 
-                    let dropdown = $('#product-dropdown');
-                    dropdown.empty();
-                    if (filteredProducts.length > 0) {
-                        filteredProducts.forEach(product => {
-                            dropdown.append(`<div class="product-dropdown-item" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}" data-sku="${product.sku}" data-thumbnail="${product.thumbnail}">${product.name}</div>`);
+                    data.data.forEach((item) => {
+                        productVariants.push({
+                            id: productId,
+                            sku: item.sku,
+                            name: name + " - " + item.title,
+                            price: item.price,
+                            thumbnail: thumbnail,
+                            quantity: 1,
                         });
-                        dropdown.removeClass('d-none');
-                    } else {
-                        dropdown.addClass('d-none');
-                    }
+                    });
+                    TGNT.renderDropdown(productVariants); 
                 },
                 error: function () {
-                    alert('Không thể tải dữ liệu sản phẩm!');
-                }
+                    VDmessage.show("error", "Không thể tải dữ liệu biến thể!");
+                },
             });
+        });
+    };
+
+    TGNT.renderDropdown = (data) => {
+        const query = $("#product-search").val().trim().toLowerCase();
+        const filteredProducts = data.filter((product) =>
+            product.name.toLowerCase().includes(query)
+        );
+        const $dropdown = $("#product-dropdown");
+        $dropdown.empty();
+
+        if (filteredProducts.length > 0) {
+            filteredProducts.forEach((product) => {
+                $dropdown.append(
+                    `<div class="product-dropdown-item d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <img src="${product.thumbnail}" alt="${
+                        product.name
+                    }" class="product-thumbnail" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px; margin-right: 10px;">
+                            <div class="product-details">
+                                <div class="product-name">${product.name}</div>
+                                <div class="product-price">${TGNT.formatNumber(
+                                    product.price
+                                )} VND</div>
+                            </div>
+                        </div>
+                        <div class="product-action">
+                            ${
+                                product.has_attribute == 1
+                                    ? `<button type="button" class="btn btn-primary btn-sm get-variant-btn" 
+                                        data-id="${product.id}" 
+                                        data-name="${product.name}"
+                                        data-thumbnail="${product.thumbnail}">
+                                        Chọn biến thể
+                                    </button>`
+                                    : `<button type="button" class="btn btn-primary btn-sm add-product-btn" 
+                                        data-id="${product.id}" 
+                                        data-name="${product.name}" 
+                                        data-price="${product.price}" 
+                                        data-sku="${product.sku}" 
+                                        data-thumbnail="${product.thumbnail}">
+                                        Thêm
+                                    </button>`
+                            }
+                        </div>
+                    </div>`
+                );
+            });
+            $dropdown.removeClass("d-none");
         } else {
-            $('#product-dropdown').addClass('d-none');
+            $dropdown
+                .append(
+                    "<div class='text-muted'>Không có sản phẩm phù hợp.</div>"
+                )
+                .removeClass("d-none");
         }
-    });
-    
+    };
 
-    // Khi nhấn vào một sản phẩm trong danh sách
-    $(document).on('click', '.product-dropdown-item', function () {
-        let productId = $(this).data('id');
-        let productName = $(this).data('name');
-        let productPrice = $(this).data('price');
-        let quantity = 1;
+    TGNT.addToTable = () => {
+        $(document).on("click", ".add-product-btn", function () {
+            let _this = $(this);
+            let productData = {
+                id: _this.data("id"),
+                name: _this.data("name"),
+                price: _this.data("price"),
+                sku: _this.data("sku"),
+                thumbnail: _this.data("thumbnail"),
+                quantity: 1,
+            };
+            TGNT.renderRow(productData);
+            $("#product-search").val("");
+            $("#product-dropdown").addClass("d-none");
+            TGNT.calculateTotalAmount();
+        });
+    };
 
-        let existingRow = $('#product-table-body').find(`tr[data-id="${productId}"]`);
+    TGNT.renderRow = (product) => {
+        let existingRow = $("#product-table-body").find(
+            `tr[data-id="${product.id}"]`
+        );
         if (existingRow.length > 0) {
-            let currentQuantityInput = existingRow.find('.product-quantity');
-            quantity = parseInt(currentQuantityInput.val()) + 1;
-            currentQuantityInput.val(quantity);
-
-            let totalPrice = quantity * productPrice;
-            existingRow.find('.total-price').text(formatNumber(totalPrice) );
+            let currentQuantityInput = existingRow.find(".product-quantity");
+            product.quantity = parseInt(currentQuantityInput.val()) + 1;
+            currentQuantityInput.val(product.quantity);
+            let totalPrice = product.quantity * product.price;
+            existingRow
+                .find(".total-price")
+                .text(TGNT.formatNumber(totalPrice));
         } else {
-            $('#product-table-body').append(`
-                <tr data-id="${productId}">
-                    <td>${productId}</td>
-                    <td>${productName}</td>
+            $("#product-table-body").append(`
+                <tr data-id="${product.id}">
+                   <td>
+                       <a href="${product.thumbnail}" data-fancybox="gallery">
+                           <img src="${product.thumbnail}" alt="${
+                product.name
+            }" class="product-thumbnail">
+                       </a>
+                   </td>
+                    <td>${product.sku}</td>
+                    <td class="text-wrap">${product.name}</td>
                     <td class='fix-input'>
-                        <input type="number" value="${quantity}" class="product-quantity" data-price="${productPrice}" min="1" style="width: 60px;">
+                        <input type="number" value="${
+                            product.quantity
+                        }" class="product-quantity form-control" data-price="${
+                product.price
+            }" min="1" max="5" style="width: 60px;">
                     </td>
-                    <td>${formatNumber(productPrice)}</td>
-                    <td class="total-price">${formatNumber(quantity * productPrice)}</td>
-                    <td><button class="btn btn-danger btn-sm rounded delete-product-btn">Xóa</button></td>
+                    <td>${TGNT.formatNumber(product.price)}</td>
+                    <td class="total-price">${TGNT.formatNumber(
+                        product.total ?? product.price
+                    )}</td>
+                    <td><button type="button" class="btn btn-danger btn-sm rounded delete-product-btn">Xóa</button></td>
+                    <td class="hidden">
+                        <input type="text" name="product_id[]" value="${
+                            product.id
+                        }">
+                        <input type="text" class="product_quantity_input" name="quantity[]" value="${
+                            product.quantity
+                        }">
+                        <input type="text"  name="price[]" value="${
+                            product.price
+                        }">
+                        <input type="text" name="name_orderDetail[]" value="${
+                            product.name
+                        }">
+                        <input type="text" name="sku[]" value="${product.sku}">
+                        <input type="text" name="thumbnail[]" value="${
+                            product.thumbnail
+                        }">
+                        <input type="text" name="total[]" value="${
+                            product.total ?? product.price
+                        }">
+                    </td>
                 </tr>
             `);
         }
+    };
 
-        // Làm trống ô tìm kiếm và ẩn danh sách sản phẩm
-        $('#product-search').val('');
-        $('#product-dropdown').addClass('d-none');
-
-        // Cập nhật tổng tiền
-        calculateTotalAmount();
-    });
-
-    $('#product-table-body').on('click', '.delete-product-btn', function () {
-        $(this).closest('tr').remove();
-        calculateTotalAmount();
-    });
-
-    $(document).on('input', '.product-quantity', function () {
-        let quantity = $(this).val();
-        let price = $(this).data('price');
-        let totalPrice = quantity * price;
-        $(this).closest('tr').find('.total-price').text(formatNumber(totalPrice) );
-
-        calculateTotalAmount();
-    });
-
-    // Hàm định dạng số tiền
-    function formatNumber(number) {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-
-    // Hàm tính tổng tiền
-    function calculateTotalAmount() {
+    TGNT.calculateTotalAmount = () => {
         let totalAmount = 0;
-
-        $('#product-table-body .total-price').each(function () {
-            let priceText = $(this).text().replace('', '').replace(/\./g, '').trim();
+        $("#product-table-body .total-price").each(function () {
+            let priceText = $(this)
+                .text()
+                .replace("", "")
+                .replace(/\./g, "")
+                .trim();
             let price = parseInt(priceText);
             totalAmount += price;
         });
+        $("#total_amount").val(TGNT.formatNumber(totalAmount));
+        $(".total_amount").text(TGNT.formatNumber(totalAmount));
+    };
 
-        $('#total_amount').val(formatNumber(totalAmount) + ' VNĐ');
-    }
-});
+    TGNT.updateQuantity = () => {
+        $(document).on("input", ".product-quantity", function () {
+            let quantity = $(this).val();
+            let price = $(this).data("price");
+            let totalPrice = quantity * price;
+
+            $(this).closest("tr").find(".product_quantity_input").val(quantity);
+            $(this)
+                .closest("tr")
+                .find(".total-price")
+                .text(TGNT.formatNumber(totalPrice));
+
+            TGNT.calculateTotalAmount();
+        });
+    };
+
+    TGNT.deleteProduct = () => {
+        $(document).on("click", ".delete-product-btn", function () {
+            $(this).closest("tr").remove();
+            TGNT.calculateTotalAmount();
+        });
+    };
+
+    TGNT.checkProduct = () => {
+        if (Array.isArray(productVariants) && productVariants.length > 0) {
+            productVariants.forEach((product) => {
+                TGNT.renderRow(product); 
+            });
+            TGNT.calculateTotalAmount();
+        }
+    };
+
+    TGNT.formatNumber = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    };
+
+    $(document).ready(function () {
+        TGNT.select_status();
+        TGNT.getProduct();
+        TGNT.addToTable();
+        TGNT.updateQuantity();
+        TGNT.deleteProduct();
+        TGNT.getVariant();
+        TGNT.checkProduct();
+    });
+})(jQuery);

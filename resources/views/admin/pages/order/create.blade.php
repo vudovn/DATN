@@ -5,6 +5,15 @@
     <div class="card">
         <div class="card-header">
             <h4>Tạo Đơn Hàng Mới</h4>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </div>
 
         <div class="card-body">
@@ -79,12 +88,14 @@
                     <x-input :label="'Địa chỉ giao hàng'" name="address" :value="old('address')" :required="false" />
                 </div>
 
-                
-                @include("admin.pages.order.components.add_product")
 
-                <div class="text-right">
-                    <a href="{{ route('order.index') }}" class="btn btn-danger">Quay lại</a>
-                    <button type="submit" class="btn btn-primary">Tạo mới</button>
+                @include('admin.pages.order.components.add_product')
+
+                <div class="card-footer">
+                    <div class="text-end">
+                        <a href="{{ route('order.index') }}" class="btn btn-danger">Quay lại</a>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
                 </div>
             </form>
         </div>

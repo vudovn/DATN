@@ -96,6 +96,7 @@ class OrderController extends Controller  implements HasMiddleware
             'address' => 'required',
             
         ]);
+
         $order = $this->orderService->create($request);
         // if ($order) {
         //     return redirect()->route('order.index')->with('success', 'Tạo đơn hàng mới thành công');
@@ -141,7 +142,7 @@ class OrderController extends Controller  implements HasMiddleware
 
     public function dataProduct(){
         $products = Product::all();
-        return response()->json($products);
+        return successResponse($products);
     }
 
     public function dataVariantsProduct($id) {

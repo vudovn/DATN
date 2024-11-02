@@ -49,6 +49,22 @@ class CategoryService extends BaseService
         return $categories;
     }
 
+    public function paginationCategory($request)
+    {
+        $agruments = $this->paginateAgrument($request);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $categories = $this->categoryRepository->paginationCategory($agruments);
+        return $categories;
+    }
+
+    public function paginationRoom($request)
+    {
+        $agruments = $this->paginateAgrument($request);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $categories = $this->categoryRepository->paginationRoom($agruments);
+        return $categories;
+    }
+
 
     public function create($request)
     {
@@ -103,14 +119,17 @@ class CategoryService extends BaseService
             return false;
         }
     }
-    public function renderCategoryOptions($categories, $level = 0)
+    public function renderCategoryOptions($categories, $category = null, $level = 0)
     {
         $html = '';
-        foreach ($categories as $category) {
-            $indent = str_repeat('&nbsp;', $level * 4);
-            $html .= '<option value="' . $category->id . '">' . $indent . $category->name . '</option>';
-            if ($category->children->isNotEmpty()) {
-                $html .= $this->renderCategoryOptions($category->children, $level + 1);
+
+        foreach ($categories as $childCategory) {
+            if ($category === null || $childCategory->id !== $category->id) {
+                $indent = str_repeat('&nbsp;', $level * 4);
+                $html .= '<option value="' . $childCategory->id . '">' . $indent . $childCategory->name . '</option>';
+                if ($childCategory->children->isNotEmpty()) {
+                    $html .= $this->renderCategoryOptions($childCategory->children, $category, $level + 1);
+                }
             }
         }
         return $html;

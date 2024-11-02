@@ -81,6 +81,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     /* CATEGORY ROUTE */
     Route::prefix('category')->name('category.')->group(function () {
         Route::get('/index', [CategoryController::class, 'index'])->name('index');
+        Route::get('/room', [CategoryController::class, 'index'])->name('room.index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
         Route::post('/store', [CategoryController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
@@ -124,6 +125,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 
 Route::get('/order-code', function () {
-    return orderCode(7);});
+    return orderCode(7);
+});
 Route::get('/test', [AjaxDashboardController::class, 'test']);
-

@@ -19,7 +19,7 @@
                 <td>
                     <span class="row-name">{{ $category->name }}</span>
                 </td>
-                @if ($category->is_room == 2)
+                @if ($category->is_room == 1)
                     <td>Phòng</td>
                 @else
                     <td>Danh mục khác</td>

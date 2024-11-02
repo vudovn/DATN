@@ -15,11 +15,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('collection_id')->nullable();
+            $table->unsignedBigInteger('product_id')->nullable(); //
             $table->text('content');
             $table->integer('parent_id')->nullable();
             $table->timestamps();
+            $table->softDeletes(); //
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('collection_id')->references('id')->on('collections')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade'); //
         });
     }
 

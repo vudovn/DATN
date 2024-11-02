@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CommentController;
+use App\Http\Controllers\Admin\CommentForbiddenWordController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
 
@@ -87,6 +90,30 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
     });
+    /* COMMENT ROUTE */
+    Route::prefix('comment')->name('comment.')->group(function () {
+        Route::get('/index', [CommentController::class, 'index'])->name('index');
+        Route::get('/create', [CommentController::class, 'create'])->name('create');
+        Route::post('/store', [CommentController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [CommentController::class, 'edit'])->name('edit');
+        Route::get('/reply/{id}', [CommentController::class, 'reply'])->name('reply');
+        Route::put('/update/{id}', [CommentController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [CommentController::class, 'delete'])->name('delete');
+    });
+    /* REVIEW ROUTE */
+    Route::prefix('review')->name('review.')->group(function () {
+        Route::get('/index', [ReviewController::class, 'index'])->name('index');
+        Route::get('/create', [ReviewController::class, 'create'])->name('create');
+        Route::post('/store', [ReviewController::class, 'store'])->name('store');
+        Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'destroy'])->name('delete');
+    });
+    /* FORBIDDEN WORD ROUTE */
+    Route::prefix('forbiddenword')->name('CommentForbiddenWord.')->group(function () {
+        Route::get('/index', [CommentForbiddenWordController::class, 'index'])->name('index');
+        Route::get('/create', [CommentForbiddenWordController::class, 'create'])->name('create');
+        Route::post('/store', [CommentForbiddenWordController::class, 'store'])->name('store');
+        Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'delete'])->name('delete');
+    });
     // /* ATTRIBUTE VALUE ROUTE */
     // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
     //     Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
@@ -124,6 +151,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 
 Route::get('/order-code', function () {
-    return orderCode(7);});
+    return orderCode(7);
+});
 Route::get('/test', [AjaxDashboardController::class, 'test']);
-

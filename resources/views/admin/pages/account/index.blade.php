@@ -16,15 +16,21 @@
                     <div class="card-body p-1">
                         <div class="row mb-3">
                             <div class="col-lg-12">
-                                <a class="btn btn-link {{ request()->routeIs('user.information') ? '' : 'text-secondary' }}"
-                                    href="{{ route('user.information') }}">
+                                <a class="btn btn-link {{ class_basename(request()->path()) === 'your-information' ? '' : 'text-secondary' }}"
+                                    href="{{ route('setting.account.index', ['type' => 'your-information']) }}">
                                     Hồ sơ
                                 </a>
                             </div>
                             <div class="col-lg-12">
-                                <a class="btn btn-link {{ request()->routeIs('user.changePassword') ? '' : 'text-secondary' }}"
-                                    href="{{ route('user.changePassword') }}">
+                                <a class="btn btn-link {{class_basename(request()->path()) === 'change-password' ? '' : 'text-secondary' }}"
+                                    href="{{ route('setting.account.index', ['type' => 'change-password']) }}">
                                     Đổi mật khẩu
+                                </a>
+                            </div>
+                            <div class="col-lg-12">
+                                <a class="btn btn-link {{class_basename(request()->path()) === 'address' ? '' : 'text-secondary' }}"
+                                    href="{{ route('setting.account.index', ['type' => 'address']) }}">
+                                    Địa chỉ
                                 </a>
                             </div>
                         </div>

@@ -44,7 +44,7 @@ class UserController extends Controller implements HasMiddleware
         $config['breadcrumb'] = $this->breadcrumb($type);
         return view('admin.pages.user.index', compact('config', 'type'));
     }
-    
+
     public function getData($request)
     {
         $previousUrl = class_basename(url()->previous());
@@ -154,45 +154,52 @@ class UserController extends Controller implements HasMiddleware
 
         return response()->json($wards);
     }
-    public function getInformation()
+
+
+    public function getInformation($type)
     {
         $user = $this->userRepository->findById(Auth::id());
         $provinces = $this->provinceRepository->getAllProvinces();
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('information');
-        $config['method'] = 'edit';
         $roles = Role::all();
-        return view('admin.pages.account.components.information', compact(
-            'user',
-            'config',
-            'provinces',
-            'roles'
-        ));
-    }
-    public function updateInformation(UpdateUserCurrentRequest $request)
-    {
-        $user = $this->userService->update($request, Auth::id());
-        if ($user) {
-            return redirect()->back()->with('success', 'Cập nhật người dùng thành công');
+        $views = [
+            'change-password' => 'admin.pages.account.components.changePassword',
+            'your-information' => 'admin.pages.account.components.information',
+            'address' => 'admin.pages.account.components.address',
+        ];
+        $view = $views[$type] ?? null;
+        if (!$view) {
+            return to_route('NotFound');
         }
-        return redirect()->back()->with('error', 'Cập nhật người dùng thất bại');
+        return view($view, compact('user', 'config', 'provinces', 'roles'));
     }
-    public function getChangePassword()
+    public function updateInformation(Request $request, $type)
     {
-        $config = $this->config();
-        $config['breadcrumb'] = $this->breadcrumb('information');
-        return view('admin.pages.account.components.changePassword', compact(
-            'config',
-        ));
-    }
-    public function updatePassword(ChangePasswordRequest $request)
-    {   
-        $password = $this->userService->changePassword($request,Auth::id());
-        if ($password) {
-            return redirect()->back()->with('success', 'Thay đổi mật khẩu thành công');
+        $user = false; $password = false; $address = false;
+        switch ($type) {
+            case 'information':
+                $validatedRequest = app(UpdateUserCurrentRequest::class);
+                $user = $this->userService->update($validatedRequest, Auth::id());
+                $message = $user ? 'Cập nhật người dùng thành công' : 'Cập nhật người dùng thất bại';
+                break;
+            case 'password':
+                $validatedRequest = app(ChangePasswordRequest::class);
+                dd($validatedRequest);
+                $password = $this->userService->changePassword($validatedRequest, Auth::id());
+                $message = $password ? 'Thay đổi mật khẩu thành công' : 'Thay đổi mật khẩu thất bại';
+                break;
+            case 'address':
+                $address = $this->userService->update($request, Auth::id());
+                $message = $address ? 'Thay đổi mật khẩu thành công' : 'Thay đổi mật khẩu thất bại';
+                break;
+            default:
+                return redirect()->back()->with('error', 'Hành động không hợp lệ');
         }
-        return redirect()->back()->with('error', 'Thay đổi mật khẩu thất bại');
+        $key = $user || $password || $address;
+        return redirect()->back()->with( $key ? 'success' : 'error', $message);
     }
+
 
     private function breadcrumb($key)
     {

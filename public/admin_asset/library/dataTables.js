@@ -10,7 +10,7 @@
         keyword: null,
         filter: null,
     };
-    
+    let idProduct = "";
     TGNT.getModel = () => {
         let model = $("#filter").data("model");
         return model || "user";

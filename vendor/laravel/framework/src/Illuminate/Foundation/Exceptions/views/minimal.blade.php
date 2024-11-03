@@ -255,8 +255,7 @@
 <body class="antialiased">
     <div class="container">
         <div class="error">
-            <h1>Adu</h1>
-            <h2>hacker</h2>
+            <h2>Not Found</h2>
             <p>Ruh-roh, có điều gì đó không ổn... Có thể đường dẫn này không tồn tại ở trang web của chúng tôi ;)</p>
         </div>
         <div class="stack-container">

@@ -26,7 +26,7 @@
                     </div>
                     <div class="collapse pc-user-links" id="pc_sidebar_userlink">
                         <div class="pt-3">
-                            <a href="{{ route('user.information') }}">
+                            <a href="{{ route('setting.account.index',['type' => 'your-information']) }}">
                                 <i class="ti ti-user"></i>
                                 <span>Tài khoản</span>
                             </a>

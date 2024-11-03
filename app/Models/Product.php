@@ -14,10 +14,6 @@ class Product extends Model
         'discount', 'thumbnail', 'albums', 'publish', 'is_featured', 
         'deleted_at', 'created_at', 'updated_at'
     ];
-    public function collection()
-    {
-        return $this->belongsTo(Collection::class);
-    }
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'category_product', 'product_id', 'category_id');

@@ -12,6 +12,10 @@
                 class="img-thumbnail img-fluid" alt="Hình ảnh" style="border: 1px solid #008080 !important;">
             <label for="" class="test"><i class="ti ti-edit-circle f-18"></i> Chọn ảnh</label>
         </div>
+        <p class="text-muted mt-1" style="font-size: 13px">
+            <label for="">Dung lượng file tối đa 1 MB</label>
+            <label for="">Định dạng: .JPEG, .PNG</label>
+        </p>
         <input type="hidden" name="{{ $name }}" value="{{ old($name, $value ?? '') }}">
     </div>
 </div>
@@ -20,7 +24,6 @@
         position: relative;
         cursor: pointer;
         transition: 0.3s all;
-
         &:hover .test {
             opacity: 1;
             z-index: 1;

@@ -25,16 +25,16 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     /* USER ROUTE */
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('/{type}', [UserController::class, 'index'])->name('index')
-        ->where('type', 'customer|staff');
+            ->where('type', 'customer|staff');
         Route::get('/create/{type}', [UserController::class, 'create'])
-        ->name('create')->where('type', 'customer|staff');
+            ->name('create')->where('type', 'customer|staff');
         Route::post('/store', [UserController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
 
         // Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
-        // Route::get('/api/wards/{district_code}', [UserController::class, 'getWards'])->name('wards');
+        Route::get('/api/wards/{district_code}', [UserController::class, 'getWards'])->name('wards');
     });
     /* PRODUCT ROUTE */
     Route::prefix('product')->name('product.')->group(function () {
@@ -93,23 +93,11 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::prefix('collection')->name('collection.')->group(function () {
         Route::get('/index', [CollectionController::class, 'index'])->name('index');
         Route::get('/create', [CollectionController::class, 'create'])->name('create');
-
         Route::post('/store', [CollectionController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [CollectionController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [CollectionController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CollectionController::class, 'delete'])->name('delete');
     });
-    // /* ATTRIBUTE VALUE ROUTE */
-    // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
-    //     Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
-    //     Route::get('/create', [AttributeValueController::class, 'create'])->name('create');
-    //     Route::post('/store', [AttributeValueController::class, 'store'])->name('store');
-    //     Route::get('/edit/{id}', [AttributeValueController::class, 'edit'])->name('edit');
-    //     Route::put('/update', [AttributeValueController::class, 'update'])->name('update');
-    //     Route::get('/delete/{id}', [AttributeValueController::class, 'delete'])->name('delete');
-    //     Route::delete('/destroy/{id}', [AttributeValueController::class, 'destroy'])->name('destroy');
-    // });
-    /* AJAX ROUTE */
 });
 
 Route::middleware(['checkPermission'])->group(function () {
@@ -122,12 +110,10 @@ Route::middleware(['checkPermission'])->group(function () {
         Route::put('/change/status', [AjaxDashboardController::class, 'updateStatus'])->name('ajax.dashboard.updateStatus');
     });
 });
-
-Route::get('your-information', [UserController::class, 'getInformation'])->name('user.information');
-Route::put('update-information', [UserController::class, 'updateInformation'])->name('user.updateInformation');
-Route::get('change-password', [UserController::class, 'getChangePassword'])->name('user.changePassword');
-Route::put('update-password', [UserController::class, 'updatePassword'])->name('user.updatePassword');
-
+Route::prefix('setting/account')->name('setting.account.')->group(function () {
+    Route::get('/{type}', [UserController::class, 'getInformation'])->name('index');
+    Route::put('/update-{type}', [UserController::class, 'updateInformation'])->name('update');
+});
 
 Route::get('/ajax/getLocation', [LocationController::class, 'getLocation'])->name('ajax.getLocation');
 Route::get('getProduct', [AjaxDashboardController::class, 'getProduct'])->name('getProduct');

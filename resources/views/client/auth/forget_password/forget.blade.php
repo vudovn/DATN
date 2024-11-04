@@ -29,7 +29,8 @@
             </div>
             <div class="col-md-6 right">
                 <h2 class="mb-4 text-center text-white">Quên mật khẩu</h2>
-                <form action="#" method="POST">
+                <form action="{{ route('client.auth.post-forget') }}" method="POST">
+                    @csrf
                     <div class="form-group mb-3">
                         <input type="text" name="email" class="form-control input-tgnt"
                             placeholder="Địa chỉ Email">
@@ -47,6 +48,7 @@
             </div>
         </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/js/jquery-3.1.1.min.js"></script> 
+    @include('client.components.alert')
 </body>
 </html>

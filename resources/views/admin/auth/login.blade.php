@@ -4,7 +4,7 @@
 <head>
     <title>Đăng nhập</title>
     <!-- [Meta] -->
-    <meta charset="utf-8" />
+    {{-- <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="icon" href="{{ asset('admin_asset/images/favicon.svg') }}" type="image/x-icon" />
@@ -20,7 +20,8 @@
     <script src="{{ asset('admin_asset/js/jquery-3.1.1.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.css') }}">
     <script src="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('admin_asset/library/cusSweetAlert.js') }}"></script>
+    <script src="{{ asset('admin_asset/library/cusSweetAlert.js') }}"></script> --}}
+    @include('admin.components.head_cdn')
 </head>
 
 <body data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="ltr"

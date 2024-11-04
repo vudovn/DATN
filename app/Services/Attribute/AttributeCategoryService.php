@@ -27,7 +27,7 @@ class AttributeCategoryService extends BaseService {
         return [
             'keyword' => [
                 'search' => $request['keyword'] ?? '',
-                'field' => ['name','value'],
+                'field' => ['name'],
             ],
             'condition' => [
                 'publish' => isset($request['publish'])

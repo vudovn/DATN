@@ -36,8 +36,8 @@
                 <div class="col-md-3 col-md-3">
                     <div class="bg-light p-5 rounded mb-5">
                         <h5 class="mt-1">Bộ sưu tập Thế giới nội thất</h5>
-                        <hr class="w-25 my-2">
-                        <div class="row ">
+                        <hr class="border-top border-3 w-25 my-2">
+                        <div class="row">
                             @for ($i = 0; $i < 5; $i++)
                                 <div class="col-6 col-md-12 mb-2">
                                     <a href="">Mây mới</a>
@@ -59,7 +59,7 @@
                                     <div class="table mt-2 p-3">
                                         <a href="#" class="card-caption">Quisque id elit maximus, pretium diam at
                                             mollis elit sadsadasd ádsadasda</a>
-                                        <hr class="w-25 my-2">
+                                        <hr class="border-3 w-25 my-2">
                                         <p class="card-description"> Lorem ipsum dolor sit amet, consectetur adipis
                                             cingelit.
                                             Etiam

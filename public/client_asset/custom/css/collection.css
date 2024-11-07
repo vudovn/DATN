@@ -1,6 +1,4 @@
-.collection_tgnt a {
-    color: var(--base-color) !important;
-}
+
 .collection_tgnt .slick-prev.slick-arrow,
 .slick-next.slick-arrow {
     display: none !important;

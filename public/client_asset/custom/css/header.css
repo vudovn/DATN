@@ -1,6 +1,12 @@
 *{
   font-family: 'Roboto', sans-serif !important;
 }
+a {
+  color: var(--base-color) !important;
+  &:hover{
+    color: var(--base-color-hover) !important;
+  }
+}
 .bg-stnt {
 
   background-color: var(--base-color) !important;

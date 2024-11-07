@@ -4,36 +4,24 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\Product\ProductRepository;
+use App\Repositories\Collection\CollectionRepository;
 class CollectionController extends Controller
 {
-    protected $productRepository;
+    protected $collectionRepository;
     public function __construct(
-        ProductRepository $productRepository
+        CollectionRepository $collectionRepository
         )
     {
-        $this->productRepository = $productRepository;
+        $this->collectionRepository = $collectionRepository;
     }
     public function index(request $request)
     {
         $config = $this->config();
+        dd(successResponse($this->collectionRepository));
         return view('client.pages.collection.index', compact('config'));
     }
 
-    public function detail($slug)
-    {
-        $config = $this->config();
-        return view('client.pages.product_detail.index', compact(
-            'config'
-        ));
-    }
 
-    public function getComment($product_id)
-    {
-        $product = $this->productRepository->findById($product_id, ['comments'], ['name'] );
-        $comments = $product->comments;
-        return successResponse($comments);
-    }
 
 
     private function config()
@@ -44,9 +32,8 @@ class CollectionController extends Controller
             ],
             'js' => [
                 "https://freshcart.codescandy.com/assets/libs/rater-js/index.js",
-                'client_asset/custom/js/comment_review.js'
             ],
-            'model' => 'product'
+            'model' => 'collection'
         ];
     }
 

@@ -2,25 +2,10 @@
 <html lang="vi">
 
 <head>
-    <title>Đăng nhập</title>
     <!-- [Meta] -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="icon" href="{{ asset('admin_asset/images/favicon.svg') }}" type="image/x-icon" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/inter/inter.css') }}" id="main-font-link" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/phosphor/duotone/style.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/tabler-icons.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/feather.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/fontawesome.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/material.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/css/style.css') }}" id="main-style-link" />
-    <script src="{{ asset('admin_asset/js/tech-stack.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('admin_asset/css/style-preset.css') }}" />
-    <script src="{{ asset('admin_asset/js/jquery-3.1.1.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.css') }}">
-    <script src="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('admin_asset/library/cusSweetAlert.js') }}"></script>
+    <title>Quên mật khẩu</title>
+    @include('admin.components.head_cdn')
+
 </head>
 
 <body data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="ltr"
@@ -33,7 +18,7 @@
     <!-- [ Pre-loader ] End -->
     <div class="auth-main">
         <div class="auth-wrapper v1">
-            <form action="" method="POST" class="auth-form">
+            <form action="{{route('auth.admin.forget')}}" method="POST" class="auth-form">
                 @csrf
                 <div class="card my-5">
                     <div class="card-body">
@@ -48,8 +33,11 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Địa chỉ email</label>
-                            <input type="email" class="form-control" id="floatingInput"
+                            <input type="email" name="email" class="form-control" id="floatingInput"
                                 placeholder="Nhập địa chỉ email của bạn">
+                                @error('email')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <p class="mt-4 text-sm text-muted">Đừng quên kiểm tra hộp thư..</p>
                         <div class="d-grid mt-3">

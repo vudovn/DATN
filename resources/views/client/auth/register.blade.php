@@ -29,11 +29,12 @@
             </div>
             <div class="col-md-6 right">
                 <h2 class="mb-4 text-center text-white">Đăng ký tài khoản</h2>
-                <form action="#" method="POST">
+                <form action="" method="POST">
+                    @csrf
                     <div class="form-group mb-3">
                         <input type="text" name="name" class="form-control input-tgnt" placeholder="Họ & Tên">
                         @error('name')
-                            <small class="text-white">*123132</small>
+                            <small class="text-danger">*{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group mb-3">
@@ -44,14 +45,15 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <input type="password" name="" class="form-control input-tgnt" placeholder="Mật khẩu">
-                        @error('email')
+                        <input type="password" name="password" class="form-control input-tgnt" placeholder="Mật khẩu">
+                        @error('password')
                             <small class="text-danger">*{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <input type="password" name="" class="form-control input-tgnt" placeholder="Mật khẩu xác nhận">
-                        @error('email')
+                        <input type="password" name="password-confirm" class="form-control input-tgnt"
+                            placeholder="Mật khẩu xác nhận">
+                        @error('password-confirm')
                             <small class="text-danger">*{{ $message }}</small>
                         @enderror
                     </div>
@@ -66,11 +68,13 @@
                 </form>
 
                 <div class="text-center mt-3">
-                    <a href="#" class="text-white">Quên mật khẩu?</a>
+                    <a href="{{ route('client.auth.forget') }}" class="text-white">Quên mật khẩu?</a>
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/js/jquery-3.1.1.min.js"></script>
+    @include('client.components.alert')
 </body>
 
 </html>

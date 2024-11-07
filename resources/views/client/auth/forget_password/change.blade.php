@@ -27,7 +27,11 @@
             </div>
             <div class="col-md-6 right">
                 <h2 class="mb-4 text-center text-white">Thay đổi mật khẩu</h2>
-                <form action="#" method="POST">
+                <form action="{{ route('client.auth.post-reset', ['user' => $user, 'token' => $token]) }}"
+                    method="POST">
+                    @csrf
+                    <input type="hidden" name="token" value="{{ $token }}" class="form-control"
+                        id="floatingInput" placeholder="">
                     <div class="form-group mb-3">
                         <input type="password" name="password" class="form-control input-tgnt"
                             placeholder="Mật khẩu mới">
@@ -36,9 +40,9 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <input type="password" name="password" class="form-control input-tgnt"
+                        <input type="password" name="password_confirmation" class="form-control input-tgnt"
                             placeholder="Xác nhận mật khẩu mới">
-                        @error('password')
+                        @error('password_confirmation')
                             <small class="text-danger">*{{ $message }}</small>
                         @enderror
                     </div>
@@ -47,6 +51,8 @@
             </div>
         </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/js/jquery-3.1.1.min.js"></script>
+    @include('client.components.alert')
 </body>
+
 </html>

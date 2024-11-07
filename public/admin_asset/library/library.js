@@ -314,9 +314,9 @@
                     _this.removeClass("hidden");
 
                     const value = inputUpdate.val().trim();
-
+                    const model = _this.data("model");
                     $.ajax({
-                        url: "/permission/quickUpdate",
+                        url: `/${model}/quickUpdate`,
                         type: "PUT",
                         headers: {
                             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -324,7 +324,7 @@
                             ),
                         },
                         data: {
-                            model: _this.data("model"),
+                            model: model,
                             name: _this.attr("name"),
                             is_required: _this.attr("is_required"),
                             id: _this.data("id"),

@@ -1,6 +1,6 @@
 (function ($) {
     "use strict";
-    var TGNT = {};
+    const TGNT = {};
     let searchTimeout = "";
     let array = {
         actions: 0,
@@ -18,10 +18,13 @@
 
     TGNT.fetchData = (params = {}) => {
         $("#tbody").html(
-            `<tr><td colspan="100%" class="text-center">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div></td></tr>`
+            `<tr>
+                <td colspan="100%" class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </td>
+            </tr>`
         );
         // console.log(array);
         const model = TGNT.getModel();
@@ -68,6 +71,7 @@
     };
 
     TGNT.searchForm = () => {
+
         $("#keyword").on("input", function () {
             clearTimeout(searchTimeout);
             array.keyword = $(this).val();

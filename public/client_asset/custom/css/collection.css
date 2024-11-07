@@ -1,7 +1,8 @@
-.collection_tgnt a{
+.collection_tgnt a {
     color: var(--base-color) !important;
 }
-.collection_tgnt .slick-prev.slick-arrow, .slick-next.slick-arrow {
+.collection_tgnt .slick-prev.slick-arrow,
+.slick-next.slick-arrow {
     display: none !important;
 }
 
@@ -43,7 +44,6 @@
     top: 0;
 }
 
-
 .collect-item {
     flex-direction: row;
     display: flex;
@@ -52,8 +52,8 @@
     padding: 10px 60px 0px 60px;
     justify-content: center;
     align-items: center;
-    border-top: 7px solid var(--cream, #F6E1C3);
-    border-bottom: 7px solid var(--cream, #F6E1C3);
+    border-top: 7px solid var(--cream, #f6e1c3);
+    border-bottom: 7px solid var(--cream, #f6e1c3);
 }
 
 .collect-item p {
@@ -66,32 +66,75 @@
 }
 .overlay-bottom {
     position: absolute;
-    top: 10px; 
+    top: 10px;
     left: 70%;
     transform: translateX(-50%);
     text-align: center;
-    display: flex; 
+    display: flex;
     justify-content: center;
     align-items: center;
-    color: #181616; 
+    color: #181616;
     width: 50%;
 }
 .collect-light-text {
-    color: var(--Text-draft, #6A6A6A);
+    color: var(--Text-draft, #6a6a6a);
 }
 
-.overlay-bottom p, .overlay-bottom i {
+.overlay-bottom p,
+.overlay-bottom i {
     margin: 0 5px;
-    font-weight: bold; 
+    font-weight: bold;
 }
 
 .overlay-bottom i {
-    font-size: 17px; 
-    color: #6A6A6A; 
+    font-size: 17px;
+    color: #6a6a6a;
 }
 
+.collection_tgnt .card {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    margin-bottom: 30px;
+    border-radius: 6px;
+    color: rgba(0, 0, 0, 0.87);
+    background: #fff;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14);
+}
 
+.collection_tgnt .card .card-image {
+    position: relative;
+    overflow: hidden;
+    margin: -30px 15px 0;
+    border-radius: 6px;
+    box-shadow: 0 9px 26px -12px rgba(0, 0, 0, 0.56),
+        0 4px 25px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
 
- 
+.collection_tgnt .card .card-image img {
+    aspect-ratio: 5/3;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: inherit;
+    pointer-events: none;
+}
 
-  
+.collection_tgnt .card .card-caption,
+.collection_tgnt .card .card-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.collection_tgnt .card .card-caption {
+    font-weight: bold;
+    -webkit-line-clamp: 1;
+    font-size: clamp(1em, 1.1vw, 1.7em);
+}
+
+.collection_tgnt .card .card-description {
+    -webkit-line-clamp: 2;
+    font-size: clamp(0.8em, 1vw, 1.5em);
+}
+

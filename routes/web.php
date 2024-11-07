@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AttributeCategoryController;
 
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
+use App\Http\Controllers\Client\CollectionController as ClientCollectionController;
 use App\Http\Controllers\Client\IndexController;
 
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
@@ -141,11 +142,13 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 Route::get('/order-code', function () {
     return orderCode(7);
 });
+
+
 Route::get('/test', [AjaxDashboardController::class, 'test']);
 
+// =======================================================CLIENT================================================================
 // client route
 Route::prefix('/')->name('client.')->group(function () {
-
     // auth route
     Route::prefix('')->name('auth.')->group(function () {
         Route::get('dang-xuat', [ClientAuthController::class, 'login'])->name('logout');
@@ -161,20 +164,24 @@ Route::prefix('/')->name('client.')->group(function () {
     });
 
 
-
     // index route
     Route::get('/', [IndexController::class, 'home'])->name('client.home');
 
     // account route
     Route::prefix('tai-khoan')->name('account.')->group(function () {
         Route::get('/', [AccountController::class, 'index'])->name('index');
-        
+
     });
 
     // product route
     Route::prefix('san-pham')->name('client.product.')->group(function () {
         Route::get('/', [ClientProductController::class, 'index'])->name('index');
         Route::get('{slug}', [ClientProductController::class, 'detail'])->name('detail');
+    });
+    // collection route
+    Route::prefix('bo-suu-tap')->name('client.collection.')->group(function () {
+        Route::get('/', [ClientCollectionController::class, 'index'])->name('index');
+        Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
     });
 });
 

@@ -181,6 +181,7 @@
                 tôi!”
             </p>
         </section>
+        <hr class="w-75 m-auto">
         <!-- 9. SECTION 9 -->
         <!-- <section class="collection-content">
     <div class="testimonial-title container p-md-5 p-3">
@@ -269,7 +270,7 @@
     </section> -->
 
         <!-- 14.Comment -->
-        <section class="comment-client">
+        <section class="comment-client ">
             <div class="container p-5 text-center">
                 <h2>Khách hàng của chúng tôi nói gì</h2>
                 <p>

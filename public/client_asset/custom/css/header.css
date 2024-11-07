@@ -1,3 +1,6 @@
+*{
+  font-family: 'Roboto', sans-serif !important;
+}
 .bg-stnt {
 
   background-color: var(--base-color) !important;
@@ -158,13 +161,6 @@
   }
 }
 
-
-=======
-
-    background-color: var(--base-color) !important;
-
-  }
-  
   
   .header_search input {
     border-radius: 30px !important;

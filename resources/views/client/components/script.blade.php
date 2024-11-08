@@ -15,6 +15,7 @@
 <script src="https://freshcart.codescandy.com/assets/js/vendors/slick-slider.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library//client_asset/custom/home.js"></script>
 
+
 @if (isset($config['js']) && count($config['js']))
     @foreach ($config['js'] as $key => $val)
         <script src="{{ asset($val) }}"></script>
@@ -25,6 +26,6 @@
     $(window).on("load", function() {
         $(".loading_tgnt").fadeOut("slow");
     });
-
 </script>
 
+<script src="/client_asset/custom/js/library.js"></script>

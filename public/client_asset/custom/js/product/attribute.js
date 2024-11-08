@@ -111,6 +111,5 @@
         TGNT.selectVariantProduct();
         TGNT.formatMoney();
         TGNT.checkChange();
-
     });
 })(jQuery);

@@ -47,6 +47,12 @@ class BaseRepository {
         return $this->model->select($select)->where($field, $value);
     }
 
+    public function findByWhereIn($column, $values = [], $relation = [], $select = ['*'])
+    {
+        return $this->model->select($select)->whereIn($column, $values)->with($relation)->get();
+    }
+    
+
     public function delete(int $id){
         return $this->findById($id)->delete();
     }

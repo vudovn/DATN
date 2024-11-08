@@ -34,6 +34,7 @@
 
 <link href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/message/message.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/message/message.js"></script>
+
 @if (isset($config['css']) && count($config['css']))
     @foreach ($config['css'] as $key => $val)
         <link href="{{ asset($val) }}" rel="stylesheet" />

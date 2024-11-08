@@ -2,74 +2,91 @@
 
 @section('content')
     <!-- abc -->
-    <section class="product_ct container">
-        <div class="row">
+    @php
+        $name = $product->name;
+        $price = $product->price;
+        $discount = $product->discount;
+        $albums = json_decode($product->albums);
+        $description = $product->description;
+        $category = $product->categories;
+        $attributeCategory = $product->attribute_category;
+    @endphp
 
-            <div class="col-xxl-6 col-sm-12 mb-5">
-                <div class="row">
+    <section class="product_ct container animate__animated animate__fadeIn">
+        <div class="col-xxl-12 d-none d-xxl-block">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('client.client.home') }}" class="text-stnt">Trang chủ</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="product.html" class="text-stnt">Sản phẩm</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ $name }}</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="row">
+            {{-- <div class="col-xxl-6 col-sm-12 mb-5 gallery-container">
+                <div class="row ">
                     <div class="col-md-12 text-center overflow-hidden rounded">
-                        <!-- Main product image -->
                         <div class="bg-secondary overflow-hidden rounded">
-                            <a href="https://nhaxinh.com/wp-content/uploads/2024/08/sofa-3-cho-orientale-da-beige-r5-768x511.jpg" data-fancybox="gallery">
-                                <img id="mainImage"
-                                src="https://nhaxinh.com/wp-content/uploads/2024/08/sofa-3-cho-orientale-da-beige-r5-768x511.jpg"
-                                class="product-image img-fluid rounded" alt="Main Product Image">
-                            </a>
-                           
+                            @if ($albums)
+                                <a href="{{ $albums[0] }}" class="img_preview" data-fancybox="gallery">
+                                    <img id="mainImage" src="{{ $albums[0] }}" class="product-image img-fluid rounded"
+                                        alt="Main Product Image">
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-12 text-center thumbnail-images">
                         <!-- Thumbnail images -->
-                        
-                        <img src="https://nhaxinh.com/wp-content/uploads/2024/08/sofa-3-cho-orientale-da-beige-r5-768x511.jpg"
-                            class="img-thumbnail active"
-                            data-image="https://nhaxinh.com/wp-content/uploads/2024/08/sofa-3-cho-orientale-da-beige-r5-768x511.jpg">
-                        <img src="https://nhaxinh.com/wp-content/uploads/2024/08/sofa-3-cho-orientale-da-beige-r5-3-768x511.jpg"
-                            class="img-thumbnail"
-                            data-image="https://nhaxinh.com/wp-content/uploads/2024/08/sofa-3-cho-orientale-da-beige-r5-3-768x511.jpg">
-                        <img src="https://nhaxinh.com/wp-content/uploads/2024/08/sofa-3-cho-orientale-da-beige-r5-2-768x511.jpg"
-                            class="img-thumbnail"
-                            data-image="https://nhaxinh.com/wp-content/uploads/2024/08/sofa-3-cho-orientale-da-beige-r5-2-768x511.jpg">
-                        <img src="https://nhaxinh.com/wp-content/uploads/2024/08/BST-Orientale-768x512.jpg"
-                            class="img-thumbnail"
-                            data-image="https://nhaxinh.com/wp-content/uploads/2024/08/BST-Orientale-768x512.jpg">
+                        @if ($albums)
+                            @foreach ($albums as $key => $album)
+                                <img src="{{ $album }}" alt="{{ $product->name }}"
+                                    class="img-thumbnail {{ $key == 0 ? 'active' : '' }}" data-image="{{ $album }}"
+                                    alt="{{ $product->name }}">
+                            @endforeach
+                        @endif
                     </div>
                 </div>
-            </div>
-            <div class="col-xxl-6 col-sm-12 mb-5">
-                <div class="title_spct mb-7">
-                    <h1>Sofa 3 chỗ Orientale da beige R5</h1>
+            </div> --}}
+            <div class="col-xxl-7 col-sm-12 mb-5 gallery-container">
+                <div class="fotorama" data-nav="thumbs" data-width="100%"  data-ratio="900/600" data-allowfullscreen="true">
+                    @if ($albums)
+                        @foreach ($albums as $album)
+                            <img class="img-preview-tgnt" src="{{ $album }}" alt="{{ $product->name }}">
+                        @endforeach
+                    @endif
                 </div>
-                <div class="price_spct d-flex">
-                    <!-- <i class="heart_spct bi bi-heart"></i> -->
-                    <span class="price_base_spct text-danger">12,300,000 đ</span>
-                    <strike class="price_discount_spct ms-3">15,300,000 đ</strike>
+            </div>
+            <div class="col-xxl-5 col-sm-12 mb-5">
+                <div class="title_spct mb-7">
+                    <h2 class="product-title">{{ $name }}
+                    </h2>
+                    <span class="badge bg-light-warning text-dark-warning"> Giảm {{ $product->discount }} %</span>
+                </div>
+                <div class="price_spct product-price d-flex">
+                    @if ($discount > 0)
+                        <span
+                            class="price_base_spct text-danger price">{{ formatMoney($price - ($price * $discount) / 100) }}</span>
+                        <strike class="price_discount_spct ms-3 price">{{ formatMoney($price) }}</strike>
+                    @else
+                        <span class="price_base_spct text-danger price">{{ formatMoney($price) }}</span>
+                    @endif
                 </div>
 
                 <!-- info sản phẩm -->
                 <div class="info_spct mt-7">
-                    <div class="mb-xxl-7 mb-2">
-                        <strong>Vật liệu: </strong>
-                        <span class="badge bg-light text-dark product_ct_badge">Khung gỗ Walnut tự nhiên </span>
-                        <span class="badge bg-light text-dark product_ct_badge">Nệm bọc da bò tự nhiên cao cấp màu Beige
-                            R5</span>
-                    </div>
-                    <div class="mb-xxl-7 mb-2">
-                        <strong>Kích thước: </strong>
-                        <span class="badge bg-light text-dark product_ct_badge"> D2300 - R945 - C390/780 mm</span>
-                    </div>
-                    <div class="mb-xxl-7 mb-2">
-                        <strong>Hàng có sẵn: </strong>
-                        <span class="badge bg-light text-dark product_ct_badge"> Trong kho </span>
-                    </div>
+                    @include('client.pages.product_detail.components.variant')
                     <div class="mb-xxl-7 mb-2">
                         <strong>Danh mục: </strong>
-                        <a href="" class="cate_ctsp"><span class="badge bg-light text-dark product_ct_badge"> Phòng
-                                khách </span></a>
-                        <a href="" class="cate_ctsp"><span class="badge bg-light text-dark product_ct_badge"> Sofa
-                            </span></a>
+                        @foreach ($category as $item)
+                            <a href="{{ $item->slug }}" class="cate_ctsp">
+                                <span class="badge bg-light text-dark product_ct_badge">
+                                    {{ $item->name }}
+                                </span>
+                            </a>
+                        @endforeach
                     </div>
                 </div>
                 <!-- end info sản phẩm -->
@@ -108,34 +125,31 @@
                         <!-- bảo hành -->
                         <li class="nav-item" role="presentation">
                             <a class="nav-link fs-xxl-5 fw-bold pb-2" id="pills-policy-tab" data-bs-toggle="pill"
-                                href="#pills-policy" role="tab" aria-controls="pills-policy"
-                                aria-selected="false">
+                                href="#pills-policy" role="tab" aria-controls="pills-policy" aria-selected="false">
                                 Chính sách
                             </a>
                         </li>
                         <!-- vận chuyển -->
                         <li class="nav-item" role="presentation">
                             <a class="nav-link fs-xxl-5 fw-bold pb-2" id="pills-comment-tab" data-bs-toggle="pill"
-                                href="#pills-comment" role="tab" aria-controls="pills-comment"
-                                aria-selected="false">
+                                href="#pills-comment" role="tab" aria-controls="pills-comment" aria-selected="false">
                                 Bình luận
                             </a>
                         </li>
                         <!-- đánh giá -->
                         <li class="nav-item" role="presentation">
                             <a class="nav-link fs-xxl-5 fw-bold pb-2" id="pills-rate-tab" data-bs-toggle="pill"
-                                href="#pills-rate" role="tab" aria-controls="pills-rate"
-                                aria-selected="false">
+                                href="#pills-rate" role="tab" aria-controls="pills-rate" aria-selected="false">
                                 Đánh giá
                             </a>
                         </li>
                     </ul>
                     <!-- Tab content -->
                     <div class="tab-content" id="pills-tabContent-javascript-behavior-pills">
-                        @include('client.pages.product_detail.components.tab_description')
-                        @include('client.pages.product_detail.components.tab_policy')
-                        @include('client.pages.product_detail.components.tab_rate')
-                        @include('client.pages.product_detail.components.tab_comment')
+                        @include('client.pages.product_detail.components.tab.tab_description')
+                        @include('client.pages.product_detail.components.tab.tab_policy')
+                        @include('client.pages.product_detail.components.tab.tab_rate')
+                        @include('client.pages.product_detail.components.tab.tab_comment')
                     </div>
                 </div>
                 <!-- end policy sản phẩm -->
@@ -143,18 +157,4 @@
         </div>
     </section>
     <!-- end -->
-
-    <script>
-        $(document).ready(function() {
-            $('.thumbnail-images img').on('click', function() {
-                var newImage = $(this).data('image');
-                $('#mainImage').fadeOut(300, function() {
-                    $('#mainImage').attr('src', newImage);
-                    $('#mainImage').fadeIn(300);
-                });
-                $('.thumbnail-images img').removeClass('active');
-                $(this).addClass('active');
-            });
-        });
-    </script>
 @endsection

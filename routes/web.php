@@ -194,7 +194,8 @@ Route::prefix('/')->name('client.')->group(function () {
     // product route
     Route::prefix('san-pham')->name('product.')->group(function () {
         Route::get('/', [ClientProductController::class, 'index'])->name('index');
-        Route::get('{slug}', [ClientProductController::class, 'detail'])->name('detail');
+        Route::get('/{slug}.html', [ClientProductController::class, 'detail'])->name('detail');
+        Route::get('/ajax/get-variant', [ClientProductController::class, 'getVariant'])->name('get-variant');
     });
     // collection route
     Route::prefix('bo-suu-tap')->name('collection.')->group(function () {

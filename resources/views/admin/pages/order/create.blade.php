@@ -4,41 +4,50 @@
     <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
     <div class="card">
         <div class="card-header">
-            <h4>Chỉnh sửa Đơn Hàng #{{ $order->id }}</h4>
+            <h4>Tạo Đơn Hàng Mới</h4>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </div>
 
         <div class="card-body">
-
-            <form action="{{ route('order.update', ['id' => $order->id]) }}" method="POST">
+            <form action="{{ route('order.store') }}" method="POST">
                 @csrf
-                @method('PUT')
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="form-group mb-3">
-                            <label for="customer_name">Tên khách hàng:</label>
-                            <input type="text" id="customer_name" name="name" class="form-control"
-                                value="{{ $order->name }}" required>
+                            <h5>Tìm khách hàng theo số điện thoại</h5>
+                            <div class="input-group">
+                                <input type="number" class="form-control search-customer" placeholder="Nhập số điện thoại">
+                                <button type="button" class="btn btn-primary btn-search-customer">Tìm</button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group mb-3">
-                            <label for="customer_email">Email:</label>
-                            <input type="text" id="customer_email" name="email" class="form-control"
-                                value="{{ $order->email }}" required>
+                            <x-input :label="'Tên khách hàng'" name="name" :value="old('name')" :required="true" />
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group mb-3">
-                            <label for="customer_phone">Phone:</label>
-                            <input type="text" id="customer_phone" name="phone" class="form-control"
-                                value="{{ $order->phone }}" required>
+                            <x-input :label="'Email'" name="email" :value="old('email')" :required="true" />
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group mb-3">
+                            <x-input :label="'Số điện thoại'" name="phone" :value="old('phone')" :required="true" />
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group mb-3">
                             <label for="customer_note">Note:</label>
-                            <input type="text" id="customer_note" name="note" class="form-control"
-                                value="{{ $order->note }}" required>
+                            <input type="text" id="customer_note" name="note" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -47,9 +56,8 @@
                     <div class="col-6">
                         <!-- Phương Thức Thanh Toán -->
                         <div class="form-group mb-3">
-                            <label for="payment_method">Phương Thức Thanh Toán:</label>
-                            <input type="text" id="payment_method" name="payment_method" class="form-control"
-                                value="{{ $order->payment_method ?? 'Đợi có dữ liệu bảng phương thức thanh toán' }}">
+                            <label for="payment_method" class="form-label">Phương Thức Thanh Toán:</label>
+                            <input type="text" id="payment_method" name="payment_method" class="form-control">
                         </div>
                     </div>
                     <div class="col-6">
@@ -58,9 +66,7 @@
                             <label for="status" class="form-label">Trạng Thái</label>
                             <select name="status" id="status" class="form-control js-choice-order">
                                 @foreach (__('order.status') as $key => $value)
-                                    <option value="{{ $key }}" {{ $order->status == $key ? 'selected' : '' }}>
-                                        {{ $value }}
-                                    </option>
+                                    <option value="{{ $key }}">{{ $value }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -88,10 +94,10 @@
                 <!-- Địa chỉ giao hàng -->
                 @include('admin.pages.order.components.location')
                 <div class="form-group mb-3">
-                    <x-input :label="'Địa chỉ chi tiết'" name="address" :value="$address" :required="false" />
-                </div>                
+                    <x-input :label="'Địa chỉ giao hàng'" name="address" :value="old('address')" :required="false" />
+                </div>
 
-                {{-- Thêm sản phẩm --}}
+
                 @include('admin.pages.order.components.add_product')
 
                 <div class="card-footer">
@@ -102,10 +108,18 @@
                 </div>
             </form>
         </div>
-
     </div>
-    <script>
-        
-    </script>
+
+    {{-- <script>
+        $(document).ready(function() {
+            new Choices('.js-choice-order');
+            new Choices('.js-choice-province');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+    </script> --}}
 
 @endsection

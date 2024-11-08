@@ -78,6 +78,17 @@ class BaseRepository
         return $this->model->whereIn($whereInField, $whereIn)->delete();
     }
 
+    public function getAll() {
+        return $this->model->all();
+    }
+
+    // public function findByIdLocation(
+    //     int $modelId,
+    //     array $column = ['*'],
+    //     array $relation = []
+    // ){
+    //     return $this->model->select($column)->with($relation)->findOrFail($modelId);
+    // }  cái ni t tạo hôm qua , chừ không dùng nữa !
     public function createMany(array $payload = []){
         return $this->model->insert($payload);
     }

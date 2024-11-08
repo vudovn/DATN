@@ -12,8 +12,8 @@ class CollectionSeeder extends Seeder
         Collection::create([
             'name' => 'Bộ sưu tập mùa hè',
             'slug' => 'bo-suu-tap-mua-he',
-            'short_content' => 'Thiết kế và phong cách độc quyền cho mùa hè.',
-            'content' => 'Đây là mô tả chi tiết về Bộ sưu tập mùa hè.',
+            'short_description' => 'Thiết kế và phong cách độc quyền cho mùa hè.',
+            'description' => 'Đây là mô tả chi tiết về Bộ sưu tập mùa hè.',
             'discount' => 15.00, // Giảm giá 15%
             'thumbnail' => 'https://placehold.co/600x600?text=The Gioi \nNoi That',
             'publish' => 1, // Đã xuất bản
@@ -24,8 +24,8 @@ class CollectionSeeder extends Seeder
         Collection::create([
             'name' => 'Bộ sưu tập mùa đông',
             'slug' => 'bo-suu-tap-mua-dong',
-            'short_content' => 'Thiết kế mùa đông ấm áp và thời trang.',
-            'content' => 'Đây là mô tả chi tiết về Bộ sưu tập mùa đông.',
+            'short_description' => 'Thiết kế mùa đông ấm áp và thời trang.',
+            'description' => 'Đây là mô tả chi tiết về Bộ sưu tập mùa đông.',
             'discount' => 10.00, // Giảm giá 10%
             'thumbnail' => 'https://placehold.co/600x600?text=The Gioi \nNoi That',
             'publish' => 1, // Đã xuất bản
@@ -36,8 +36,8 @@ class CollectionSeeder extends Seeder
         Collection::create([
             'name' => 'Bộ sưu tập mùa xuân',
             'slug' => 'bo-suu-tap-mua-xuan',
-            'short_content' => 'Thời trang mùa xuân tươi mới và đầy màu sắc.',
-            'content' => 'Đây là mô tả chi tiết về Bộ sưu tập mùa xuân.',
+            'short_description' => 'Thời trang mùa xuân tươi mới và đầy màu sắc.',
+            'description' => 'Đây là mô tả chi tiết về Bộ sưu tập mùa xuân.',
             'discount' => 5.00, // Giảm giá 5%
             'thumbnail' => 'https://placehold.co/600x600?text=The Gioi \nNoi That',
             'publish' => 2, // Chưa xuất bản

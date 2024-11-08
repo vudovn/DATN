@@ -12,12 +12,13 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Traits\HasDynamicMiddleware;
+
 class PermissionController extends Controller implements HasMiddleware
 {
     use HasDynamicMiddleware;
     public static function middleware(): array
     {
-        return self::getMiddleware('Permission'); 
+        return self::getMiddleware('Permission');
     }
     protected $permissionService;
     protected $permissionRepository;
@@ -50,7 +51,7 @@ class PermissionController extends Controller implements HasMiddleware
         $permissions = $this->permissionService->paginate($request);
         $config = $this->config();
         $roles = Role::all();
-        return view('admin.pages.permission.components.table',compact('permissions','config','roles'));
+        return view('admin.pages.permission.components.table', compact('permissions', 'config', 'roles'));
     }
     public function create()
     {
@@ -74,7 +75,7 @@ class PermissionController extends Controller implements HasMiddleware
                 Permission::create(['name' => $newPermission]);
             }
         } else {
-            $lostPermissions = array_diff( getActionRoute(),$allPermission);
+            $lostPermissions = array_diff(getActionRoute(), $allPermission);
             foreach ($lostPermissions as $newPermission) {
                 Permission::create(['name' => $newPermission]);
             }
@@ -133,10 +134,8 @@ class PermissionController extends Controller implements HasMiddleware
     private function config()
     {
         return [
-            'css' => [
-            ],
-            'js' => [
-            ],
+            'css' => [],
+            'js' => [],
             'model' => 'permission'
         ];
     }

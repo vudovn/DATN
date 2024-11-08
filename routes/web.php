@@ -84,7 +84,8 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('edit/{id}', [OrderController::class, 'edit'])->name('edit');
         Route::put('update/{id}', [OrderController::class, 'update'])->name('update');
         Route::get('delete/{id}', [OrderController::class, 'delete'])->name('delete');
-        Route::put('/payment-status/{id}', [OrderController::class, 'updatePaymentStatus'])->name('updatepayment');
+        Route::get('search_customer', [OrderController::class, 'searchCustomer'])->name('searchCustomer');
+        Route::put('payment-status/{id}', [OrderController::class, 'updatePaymentStatus'])->name('updatepayment');
         Route::get('dataVariantsProduct/{id}', [OrderController::class, 'dataVariantsProduct'])->name('dataVariantsProduct');
     });
     /* CATEGORY ROUTE */

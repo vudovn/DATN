@@ -20,6 +20,15 @@
             <form action="{{ route('order.store') }}" method="POST">
                 @csrf
                 <div class="row">
+                    <div class="col-12">
+                        <div class="form-group mb-3">
+                            <h5>Tìm khách hàng theo số điện thoại</h5>
+                            <div class="input-group">
+                                <input type="number" class="form-control search-customer" placeholder="Nhập số điện thoại">
+                                <button type="button" class="btn btn-primary btn-search-customer">Tìm</button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-6">
                         <div class="form-group mb-3">
                             <x-input :label="'Tên khách hàng'" name="name" :value="old('name')" :required="true" />
@@ -105,6 +114,12 @@
         $(document).ready(function() {
             new Choices('.js-choice-order');
             new Choices('.js-choice-province');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
         });
     </script>
+
 @endsection

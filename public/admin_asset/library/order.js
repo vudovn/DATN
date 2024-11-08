@@ -211,7 +211,7 @@
                     </td>
                     <td>${TGNT.formatNumber(product.price)}</td>
                     <td class="total-price">${TGNT.formatNumber(
-                        product.total ?? product.price
+                        product.total ?? product.price  *  product.quantity
                     )}</td>
                     <td><button type="button" class="btn btn-danger btn-sm rounded delete-product-btn">Xóa</button></td>
                     <td class="hidden">
@@ -279,7 +279,9 @@
     };
 
     TGNT.checkProduct = () => {
+        console.log(sku);
         if (Array.isArray(productVariants) && productVariants.length > 0) {
+            $("#product-table-body").html("")
             productVariants.forEach((product) => {
                 TGNT.renderRow(product); 
             });
@@ -291,6 +293,58 @@
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
 
+    // =======================================================--====4
+    TGNT.searchCustomer = () => {
+        $('.btn-search-customer').on('click', function() {
+            const phoneNumber = $('.search-customer').val().trim();
+    
+            if (phoneNumber) {
+                $.ajax({
+                    url: `/order/search_customer`, 
+                    method: 'GET',
+                    data: { phone: phoneNumber },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.data.success && response.data.customer) {
+                            VDmessage.show('success', 'Đã tìm thấy khách hàng');
+                            const customer = response.data.customer;
+                            
+                            // Cập nhật thông tin khách hàng
+                            $('input[name="name"]').val(customer.name);
+                            $('input[name="email"]').val(customer.email);
+                            $('input[name="phone"]').val(customer.phone);
+                            $('input[name="address"]').val(customer.address);
+                            $('#customer_note').val(customer.note || '');
+                            
+                            // Kiểm tra và update các trường select
+                            if (customer.province_id) {
+                                $('select[name="province_id"]').val(customer.province_id).trigger('change');
+                            }
+                            if (customer.district_id) {
+                                $('select[name="district_id"]').val(customer.district_id).trigger('change');
+                            }
+                            if (customer.ward_id) {
+                                $('select[name="ward_id"]').val(customer.ward_id).trigger('change');
+                            }
+                        } else {
+                            VDmessage.show('error', 'Không tồn tại khách hàng');
+                            $('input[name="name"], input[name="email"], input[name="address"]').val('');
+                            $('#customer_note').val('');
+                            $('select[name="province_id"], select[name="district_id"], select[name="ward_id"]').val('').trigger('change');
+                        }
+                        console.log(response);
+                    },
+                    error: function() {
+                        VDmessage.show('error', 'Không tồn tại khách hàng');
+                    }
+                });
+            } else {
+                alert('Vui lòng nhập số điện thoại trước khi tìm kiếm.');
+            }
+        });
+    };
+    
+
     $(document).ready(function () {
         TGNT.select_status();
         TGNT.getProduct();
@@ -299,5 +353,9 @@
         TGNT.deleteProduct();
         TGNT.getVariant();
         TGNT.checkProduct();
+        TGNT.calculateTotalAmount();
+
+        // =================
+        TGNT.searchCustomer();
     });
 })(jQuery);

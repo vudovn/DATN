@@ -28,9 +28,9 @@ class StoreOrderRequest extends FormRequest
             'note' => 'nullable|string',
             'payment_method' => 'required|string|max:50',
             'status' => 'required|in:pending,processing,shipped,delivered,cancelled', // tùy theo các giá trị trạng thái của bạn
-            'payment_status' => 'required|in:unpaid,paid', // thay đổi theo giá trị trạng thái thanh toán
+            'payment_status' => 'required|in:completed,pending,failed,refunded', // thay đổi theo giá trị trạng thái thanh toán
             'address' => 'required|string|max:255',
-            'total_amount' => 'required|numeric|min:0',
+            'total_amount' => 'required|min:0',
         ];
     }
 
@@ -49,7 +49,6 @@ class StoreOrderRequest extends FormRequest
             'payment_status.required' => 'Trạng thái thanh toán là bắt buộc.',
             'address.required' => 'Địa chỉ giao hàng là bắt buộc.',
             'total_amount.required' => 'Tổng tiền là bắt buộc.',
-            'total_amount.numeric' => 'Tổng tiền phải là một con số.',
         ];
     }
 }

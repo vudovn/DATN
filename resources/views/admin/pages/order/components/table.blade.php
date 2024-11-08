@@ -1,5 +1,5 @@
 @if (isset($orders) && count($orders))
-    @foreach ($orders as $order)
+    @foreach ($orders as $key => $order)
         <tr class="animate__animated animate__fadeIn">
             <td>
                 <div class="form-check">
@@ -8,28 +8,10 @@
                     <label class="form-check-label" for="ustomCheckbox{{ $order->id }}"></label>
                 </div>
             </td>
-            <td>{{ $order->id }}</td>
+            <td>{{ $key+2 }}</td>
             <td>{{ $order->code }}</td>
-            {{-- <td><x-quickUpdate :id="$order->id" :value="$order->code" :model="ucfirst($config['model'])" :name="'code'" /></td> --}}
-            <td>{{ number_format($order->total, 0, ',', '.') }} VND</td>
+            <td>{{ number_format($order->total, 0, '.', '.') }}</td>
             <td>Thanh toán khi nhận hàng</td>
-            {{-- <td>
-                <select name="payment_status_{{ $order->id }}" id="payment_status_{{ $order->id }}" class=" form-control" onchange="updatePaymentStatus({{ $order->id }}, this.value)">
-                    @php
-                        $paymentStatuses = __('order.payment_status'); 
-                    @endphp
-                    
-                    @if (is_array($paymentStatuses)) 
-                        @foreach ($paymentStatuses as $key => $value)
-                            <option value="{{ $key }}" {{ $order->payment_status == $key ? 'selected' : '' }}>
-                                {{ $value }}
-                            </option>
-                        @endforeach
-                    @else
-                        <option value="">{{ $paymentStatuses }}</option> 
-                    @endif
-                </select>
-            </td>             --}}
             <td>
                     <select name="payment_status" id="" data-id="{{ $order->id }}"  class="form-select select_status">
                         @foreach (__('order.payment_status') as $key => $item)

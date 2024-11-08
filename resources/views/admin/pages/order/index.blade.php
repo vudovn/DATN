@@ -7,11 +7,10 @@
         <x-filter :model="$config['model']" :createButton="[
         'label' => '',
         'route' => $config['model'] . '.create',
-        ]" .:options="[
+        ]" :options="[
             'actions' => generateSelect('Hành động', __('general.actions')),
             'perpage' => generateSelect('10 hàng', __('general.perpage')),
-
-            'publish' => generateSelect('Trạng thái', __('order.statusFilter')),
+            // 'publish' => generateSelect('Trạng thái', __('order.statusFilter')),
             'sort' => generateSelect('Sắp xếp', __('order.sort')),
         ]" />
     </div>
@@ -26,7 +25,7 @@
                                 <label class="form-check-label" for="checkAll"></label>
                             </div>
                         </th>
-                        <th>ID</th>
+                        <th>STT</th>
                         <th>Mã đơn hàng</th>
                         <th>Tổng Tiền</th>
                         <th>Phương Thức Thanh Toán</th>

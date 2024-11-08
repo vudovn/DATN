@@ -26,7 +26,8 @@ class Order extends Model
         'total',
         'payment_status',
         'status',
-        'fee_ship'
+        'fee_ship',
+        'user_id'
     ];
     public function getWithPaginateBy($perPage = 10)
     {
@@ -35,9 +36,6 @@ class Order extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
-    // public function shipping(){
-    //     return $this->belongsTo(Shipping::class, 'shipping_id');
-    // }
     public function orderDetails() {
         return $this->hasMany(OrderDetail::class, 'order_id');
     }

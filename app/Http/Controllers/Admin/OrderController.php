@@ -84,24 +84,13 @@ class OrderController extends Controller  implements HasMiddleware
         ));
     }
 
-    public function store(Request $request) {
-
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'payment_method' => 'required',
-            'status' => 'required',
-            'payment_status' => 'required',
-            'address' => 'required',
-            
-        ]);
+    public function store(StoreOrderRequest $request) {
 
         $order = $this->orderService->create($request);
-        // if ($order) {
-        //     return redirect()->route('order.index')->with('success', 'Tạo đơn hàng mới thành công');
-        // } 
-        // return redirect()->route('order.index')->with('Error', 'Tạo đơn hàng mới thất bại');
+        if ($order) {
+            return redirect()->route('order.index')->with('success', 'Tạo đơn hàng mới thành công');
+        } 
+        return redirect()->route('order.index')->with('Error', 'Tạo đơn hàng mới thất bại');
     }
 
     public function edit(string $id){
@@ -150,6 +139,30 @@ class OrderController extends Controller  implements HasMiddleware
         return successResponse($product->productVariants);
     }
 
+    public function searchCustomer(Request $request){
+        $phone = $request->get('phone');
+
+        $customer = Order::where('phone', $phone)->first();
+       
+        if ($customer) {
+            $new = [
+                'success' => true,
+                'customer' => [
+                    'name' => $customer->name,
+                    'email' => $customer->email,
+                    'phone' => $customer->phone,
+                    'address' => $customer->address,
+                    'province_id'=> $customer->province_id,
+                    'district_id' => $customer->district_id,
+                    'ward_id' => $customer->ward_id
+                ],
+            ];
+            return successResponse($new);
+
+        }
+
+        return errorResponse('Không tìm thấy khách hàng');
+    }
     
     private function breadcrumb($key)
     {

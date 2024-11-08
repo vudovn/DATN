@@ -28,7 +28,35 @@
                 </tr>
             </thead>
             <tbody id="product-table-body" class="product-variant">
-                <!-- Dữ liệu sản phẩm sẽ được thêm vào đây -->
+                @if (isset($order_details))
+                @foreach ($order_details as $detail)
+                {{-- @dd($detail->product) --}}
+                <tr data-id="{{ $detail->product->id }}">
+                    <td>
+                        <a href="{{$detail->product->thumbnail}}" data-fancybox="gallery">
+                            <img src="{{$detail->product->thumbnail}}" alt="{{$detail->name}}" class="product-thumbnail">
+                        </a>
+                    </td>
+                    <td>{{ $detail->sku }}</td>
+                    <td>{{ $detail->product->name }}</td>
+                    <td class='fix-input'>
+                        <input type="number" value="{{$detail->quantity}}" class="product-quantity form-control" data-price="{{$detail->price}}" min="1" max="5" style="width: 60px;">
+                    </td>
+                    <td>{{ formatNumber($detail->price) }}</td>
+                    <td class="total-price">{{ formatNumber($detail->price * $detail->quantity) }}</td>
+                    <td><button type="button" class="btn btn-danger btn-sm rounded delete-product-btn">Xóa</button></td>
+                    <td class="hidden">
+                        <input type="text" name="product_id[]" value="{{$detail->product->id}}">
+                        <input type="text" class="product_quantity_input" name="quantity[]" value="{{$detail->quantity}}">
+                        <input type="text"  name="price[]" value="{{$detail->price}}">
+                        <input type="text" name="name_orderDetail[]" value="{{$detail->name}}">
+                        <input type="text" name="sku[]" value="{{ $detail->sku }}">
+                        <input type="text" name="thumbnail[]" value="{{$detail->product->thumbnail}}">
+                        <input type="text" name="total[]" value="{{$detail->price * $detail->quantity}}">
+                    </td>
+                </tr>
+            @endforeach
+                @endif
             </tbody>
         </table>
 
@@ -58,7 +86,7 @@
             name: name[i],
             price: price[i],
             thumbnail: thumbnail[i],
-            quantity: 1,
+            quantity: quantity[i],
         });
     }
 </script>

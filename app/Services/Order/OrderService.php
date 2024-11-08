@@ -76,6 +76,7 @@ class OrderService extends BaseService
         $payload['total'] = $this->filterPrice($payload['total_amount']);
         $payload['code'] = orderCode();
         $payload['user_id'] = auth()->user()->id;
+        // dd($payload);
         return $this->orderRepository->create($payload);
     }
 
@@ -94,7 +95,6 @@ class OrderService extends BaseService
 
             ];
         }
-        // dd($result);
 
         $check = $this->orderDetailsRepository->insert($result);
         return $check;
@@ -105,20 +105,8 @@ class OrderService extends BaseService
         DB::beginTransaction();
         try {
             $payload = $request->except(['_token', 'send', '_method', 'quantity']);
-            dd($payload);
-
-            $result = $this->orderRepository->update($id, $payload);
-
-            foreach ($request['quantity'] as $detailId => $quantity) {
-                $this->orderDetailsRepository->update($detailId, [
-                    'quantity' => $quantity,
-                ]);
-                // $orderDetail = OrderDetail::find($detailId);
-                // if ($orderDetail) {
-                //     $orderDetail->quantity = $quantity;
-                //     $orderDetail->save();
-                // }
-            }
+            $updateOrder = $this->updateOrder($request, (int)$id);
+            $storeOrderDetail = $this->UpdateOrderDetail($request, $id);
 
             DB::commit();
             return true;
@@ -130,6 +118,42 @@ class OrderService extends BaseService
             // return false;
         }
     }
+
+    private function updateOrder($request, $id)
+    {
+        $payload = $request->only(['name', 'phone', 'email', 'province_id', 'district_id', 'ward_id', 'address', 'note', 'status', 'payment_status', 'total_amount', 'fee_ship']);
+        $payload['total'] = $this->filterPrice($payload['total_amount']);
+        return $this->orderRepository->update($id, $payload);
+    }
+
+
+    private function UpdateOrderDetail($request, $id)
+    {   
+        $payload = $request->only('quantity', 'sku', 'product_id', 'name_orderDetail', 'price');
+        $check = null;
+    
+        foreach ($payload['sku'] as $key => $value) {
+            $data = [
+                'order_id' => (int)$id,
+                'product_id' => (int) $payload['product_id'][$key],
+                'sku' => $value,
+                'name' => $payload['name_orderDetail'][$key],
+                'quantity' => (int) $payload['quantity'][$key],
+                'price' => (float) $payload['price'][$key],
+            ];
+    
+            $check = $this->orderDetailsRepository->updateOrCreate(
+                [
+                    "order_id" => $id,
+                    "sku" => $value
+                ],
+                $data
+            );
+        }
+        
+        return $check;
+    }
+    
 
     public function updatePaymentStatus($request, $id)
     {

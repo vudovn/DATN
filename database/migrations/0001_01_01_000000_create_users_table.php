@@ -20,14 +20,18 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->boolean('publish')->default(2);
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('province_id',20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
-            $table->string('district_id',20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
-            $table->string('ward_id',20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
+            $table->string('province_id', 20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
+            $table->string('district_id', 20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
+            $table->string('ward_id', 20)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci')->nullable();
             $table->string('address')->nullable();
+            //is_banned: true user bị block | ban_expires_at: bị block đến
+            $table->boolean('is_banned')->default(2);
+            $table->timestamp('ban_expires_at')->nullable();
+            //end
             $table->rememberToken();
             $table->timestamps();
-            
-            $table->foreign('province_id')->references('code')->on( 'provinces')->onDelete('cascade');
+
+            $table->foreign('province_id')->references('code')->on('provinces')->onDelete('cascade');
             $table->foreign('district_id')->references('code')->on('districts')->onDelete('cascade');
             $table->foreign('ward_id')->references('code')->on('wards')->onDelete('cascade');
         });

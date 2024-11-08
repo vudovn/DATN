@@ -157,12 +157,22 @@ if(!function_exists('convertNumber')){
     }
 }
 
-
 if(!function_exists('formatMon')){
     function formatNumber($number){
         if($number == ''){
             return '';
         }
         return number_format($number, 0, '.', '.');
+    }
+}
+
+
+//format money vnd 
+if(!function_exists('formatMoney')){
+    function formatMoney($number){
+        if($number == ''){
+            return '';
+        }
+        return number_format($number, 0, '.', '.') . ' đ';
     }
 }

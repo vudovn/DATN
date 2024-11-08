@@ -37,7 +37,7 @@ class CategoryController extends Controller
     {
         $categories = $this->categoryService->paginate($request);
         $config = $this->config();
-        return view('admin.pages.category.components.table',compact('categories','config'));
+        return view('admin.pages.category.components.table', compact('categories', 'config'));
     }
     public function create()
     {

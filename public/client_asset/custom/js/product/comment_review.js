@@ -4,7 +4,6 @@
     const VDmessage = new VdMessage();
 
     TGNT.checkTab = () => {
-        
         let url = new URL(window.location.href);
         let tab = url.searchParams.get("tab");
 
@@ -49,8 +48,7 @@
                                 <span class="text-muted">26-9-2024</span>
                             </p>
                             <p>
-                                Chất lượng sản phẩm tốt. Nhưng cân nặng có vẻ chưa tới 1kg. Vì
-                                nó được gửi trong gói mở nên có khả năng bị ăn trộm ở giữa v.v.
+                                Vui vậy thôi nhưng bố dặn con này, con thấy bố chơi tốt đúng không? Cũng không hẳn là như vậy. Ngày xưa bố thì bố cũng chơi rất là tệ, thậm chí là rất ít khi chơi cẩn thận, thua rất nhiều là đằng khác nhưng sau này đã biết suy tính và cận trọng hơn
                             </p>
                             <div>
                                 <button data-product_id="" data-parent_id="1" data-user_id="" data-status="noactive"
@@ -64,7 +62,7 @@
                                     <h6 class="mb-1">Quỳnh An</h6>
                                     <p class="small text-muted">26-9-2024</p>
                                     <p>
-                                        <strong class="text-tgnt">Vũ Đỗ</strong> Dỡn hay thiệt vậy cha?
+                                        <strong class="text-tgnt">Vũ Đỗ</strong>  🥲??
                                     </p>
                                     <div>
                                         <button data-product_id="" data-parent_id="1" data-user_id="1" data-status="noactive"

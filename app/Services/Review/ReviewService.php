@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Services\Category;
+namespace App\Services\Review;
 
 use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
-use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Comment\ReviewRepository;
 
 
 
-class CategoryService extends BaseService
+class ReviewService extends BaseService
 {
 
-    protected $categoryRepository;
+    protected $reviewRepository;
 
     public function __construct(
-        CategoryRepository $categoryRepository
+        ReviewRepository $reviewRepository
     ) {
-        $this->categoryRepository = $categoryRepository;
+        $this->reviewRepository = $reviewRepository;
     }
 
 
@@ -28,11 +28,6 @@ class CategoryService extends BaseService
             'keyword' => [
                 'search' => $request['keyword'] ?? '',
                 'field' => ['name']
-            ],
-            'condition' => [
-                'publish' => isset($request['publish'])
-                    ? (int) $request['publish']
-                    : null,
             ],
             'sort' => isset($request['sort']) && $request['sort'] != 0
                 ? explode(',', $request['sort'])
@@ -45,7 +40,7 @@ class CategoryService extends BaseService
     {
         $agruments = $this->paginateAgrument($request);
         $cacheKey = 'pagination: ' . md5(json_encode($agruments));
-        $categories = $this->categoryRepository->pagination($agruments);
+        $categories = $this->reviewRepository->pagination($agruments);
         return $categories;
     }
 
@@ -56,12 +51,12 @@ class CategoryService extends BaseService
         try {
             $payload = $request->except(['_token']);
             $payload['slug'] = getSlug($payload['name']);
-            $category = $this->categoryRepository->create($payload);
+            $review = $this->reviewRepository->create($payload);
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            // echo $e->getMessage();die(); 
+            // echo $e->getMessage();die();
             $this->log($e);
             return false;
         }
@@ -73,7 +68,7 @@ class CategoryService extends BaseService
         try {
             $payload = $request->except(['_token', 'send', '_method']);
             $payload['slug'] = getSlug($payload['name']);
-            $category = $this->categoryRepository->update($id, $payload);
+            $review = $this->reviewRepository->update($id, $payload);
 
             DB::commit();
             return true;
@@ -88,27 +83,23 @@ class CategoryService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $category = $this->categoryRepository->findById($id);
-            if ($category->children()->count() == 0) {
-                $this->categoryRepository->delete($id);
-                DB::commit();
-                return true;
-            }
+            $this->reviewRepository->delete($id);
+            DB::commit();
+            return true;
         } catch (\Exception $e) {
             DB::rollback();
-            // echo $e->getMessage();die();
             $this->log($e);
             return false;
         }
     }
-    public function renderCategoryOptions($categories, $level = 0)
+    public function renderreviewOptions($categories, $level = 0)
     {
         $html = '';
-        foreach ($categories as $category) {
+        foreach ($categories as $review) {
             $indent = str_repeat('&nbsp;', $level * 4);
-            $html .= '<option value="' . $category->id . '">' . $indent . $category->name . '</option>';
-            if ($category->children->isNotEmpty()) {
-                $html .= $this->renderCategoryOptions($category->children, $level + 1);
+            $html .= '<option value="' . $review->id . '">' . $indent . $review->name . '</option>';
+            if ($review->children->isNotEmpty()) {
+                $html .= $this->renderreviewOptions($review->children, $level + 1);
             }
         }
         return $html;

@@ -308,24 +308,24 @@
                         if (response.data.success && response.data.customer) {
                             VDmessage.show('success', 'Đã tìm thấy khách hàng');
                             const customer = response.data.customer;
-                            
-                            // Cập nhật thông tin khách hàng
                             $('input[name="name"]').val(customer.name);
                             $('input[name="email"]').val(customer.email);
                             $('input[name="phone"]').val(customer.phone);
                             $('input[name="address"]').val(customer.address);
                             $('#customer_note').val(customer.note || '');
-                            
-                            // Kiểm tra và update các trường select
+    
                             if (customer.province_id) {
-                                $('select[name="province_id"]').val(customer.province_id).trigger('change');
+                                $('select[name="province_id"] option[value="' + customer.province_id + '"]').prop('selected', true);
                             }
+                            
                             if (customer.district_id) {
-                                $('select[name="district_id"]').val(customer.district_id).trigger('change');
+                                $('select[name="district_id"] option[value="' + customer.district_id + '"]').prop('selected', true);
                             }
+                            
                             if (customer.ward_id) {
-                                $('select[name="ward_id"]').val(customer.ward_id).trigger('change');
+                                $('select[name="ward_id"] option[value="' + customer.ward_id + '"]').prop('selected', true);
                             }
+                            
                         } else {
                             VDmessage.show('error', 'Không tồn tại khách hàng');
                             $('input[name="name"], input[name="email"], input[name="address"]').val('');
@@ -342,9 +342,8 @@
                 alert('Vui lòng nhập số điện thoại trước khi tìm kiếm.');
             }
         });
-    };
+    };    
     
-
     $(document).ready(function () {
         TGNT.select_status();
         TGNT.getProduct();

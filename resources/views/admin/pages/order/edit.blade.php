@@ -88,12 +88,11 @@
                 <!-- Địa chỉ giao hàng -->
                 @include('admin.pages.order.components.location')
                 <div class="form-group mb-3">
-                    <x-input :label="'Địa chỉ chi tiết'" name="address" :value="$user->address ?? ''" :required="false" />
-                </div>
+                    <x-input :label="'Địa chỉ chi tiết'" name="address" :value="$address" :required="false" />
+                </div>                
 
                 {{-- Thêm sản phẩm --}}
                 @include('admin.pages.order.components.add_product')
-               
 
                 <div class="card-footer">
                     <div class="text-end">

@@ -110,7 +110,7 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             new Choices('.js-choice-order');
             new Choices('.js-choice-province');
@@ -120,6 +120,6 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 
 @endsection

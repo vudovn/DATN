@@ -12,6 +12,8 @@ use App\Models\Product;
 use App\Models\User;
 use App\Repositories\Order\OrderRepository;
 use App\Repositories\Location\ProvinceRepository;
+use App\Repositories\Location\DistrictRepository;
+use App\Repositories\Location\WardRepository;
 use App\Services\Order\OrderService;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Traits\HasDynamicMiddleware;
@@ -29,6 +31,8 @@ class OrderController extends Controller  implements HasMiddleware
     protected $orderService;
     protected $orderRepository;
     protected $provinceRepository; 
+    protected $districtRepository; 
+    protected $wardRepository; 
     protected $categoryRepository;
     protected $productRepository;
 
@@ -37,6 +41,8 @@ class OrderController extends Controller  implements HasMiddleware
         OrderService $orderService,
         OrderRepository $orderRepository,
         ProvinceRepository $provinceRepository, 
+        DistrictRepository $districtRepository,
+        WardRepository $wardRepository,
         CategoryRepository $categoryRepository,
         ProductRepository $productRepository,
         )
@@ -45,6 +51,8 @@ class OrderController extends Controller  implements HasMiddleware
         $this->orderService = $orderService;
         $this->orderRepository = $orderRepository;
         $this->provinceRepository = $provinceRepository; 
+        $this->districtRepository = $districtRepository;
+        $this->wardRepository = $wardRepository;
         $this->categoryRepository = $categoryRepository;
         $this->productRepository =  $productRepository;
     }
@@ -69,6 +77,8 @@ class OrderController extends Controller  implements HasMiddleware
     public function create()
     {
         $provinces = $this->provinceRepository->getAllProvinces();
+        $districts = $this->districtRepository->getAllDistricts();
+        $wards = $this->wardRepository->getAllWards();
         $categories = $this->categoryRepository->findByField('is_room', 2)->pluck('name', 'id')->prepend('Danh mục', 0)->toArray();
         $categoryRoom = $this->categoryRepository->findByField('is_room', 1)->pluck('name', 'id')->prepend('Phòng', 0)->toArray();
         $config = $this->config();
@@ -78,6 +88,8 @@ class OrderController extends Controller  implements HasMiddleware
         $user = User::all();
         return view('admin.pages.order.create', compact(
             'provinces',
+            'districts',
+            'wards',
             'config',
             'categories',
             'categoryRoom'
@@ -97,20 +109,23 @@ class OrderController extends Controller  implements HasMiddleware
         $order = $this->orderRepository->findById($id, ['orderDetails']);
         $order_details = $order->orderDetails;
         $provinces = $this->provinceRepository->getAllProvinces();
+        $districts = $this->districtRepository->getAllDistricts();
+        $wards = $this->wardRepository->getAllWards();
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('update');
+        $address = $order->address ?? $order->user->address ?? '';
         return view('admin.pages.order.edit', compact(
             'order', 
             'order_details',
             'provinces',
+            'districts',
+            'wards',
+            'address',
             'config'
         ));
     }
 
-    public function update(UpdateOrderRequest $request, $id)
-    {
-        // dd( $request->all());
-    
+    public function update(UpdateOrderRequest $request, $id) {
         $result = $this->orderService->update($request, $id);
 
         if($result){
@@ -139,12 +154,21 @@ class OrderController extends Controller  implements HasMiddleware
         return successResponse($product->productVariants);
     }
 
-    public function searchCustomer(Request $request){
+    public function searchCustomer(Request $request) {
         $phone = $request->get('phone');
-
         $customer = Order::where('phone', $phone)->first();
-       
+    
         if ($customer) {
+            $latestOrder = Order::where('phone', $phone)
+                                ->orderBy('created_at', 'desc')
+                                ->first();
+            if ($latestOrder) {
+                $location = [
+                    'province' => $latestOrder->province_id,
+                    'district' => $latestOrder->district_id,
+                    'ward' => $latestOrder->ward_id,
+                ];
+            }
             $new = [
                 'success' => true,
                 'customer' => [
@@ -152,17 +176,16 @@ class OrderController extends Controller  implements HasMiddleware
                     'email' => $customer->email,
                     'phone' => $customer->phone,
                     'address' => $customer->address,
-                    'province_id'=> $customer->province_id,
+                    'province_id' => $customer->province_id,
                     'district_id' => $customer->district_id,
-                    'ward_id' => $customer->ward_id
+                    'ward_id' => $customer->ward_id,
+                    'location' => $location ?? null, 
                 ],
             ];
             return successResponse($new);
-
         }
-
         return errorResponse('Không tìm thấy khách hàng');
-    }
+    }    
     
     private function breadcrumb($key)
     {

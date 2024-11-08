@@ -33,10 +33,15 @@ class Product extends Model
         'updated_at'
     ];
 
+    protected $casts = [
+        'attribute' => 'json',
+    ];
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'category_product', 'product_id', 'category_id');
     }
+
 
     public function productVariants()
     {

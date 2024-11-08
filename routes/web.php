@@ -11,15 +11,23 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
+use App\Http\Controllers\Admin\CollectionController;
 
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
+use App\Http\Controllers\Client\CollectionController as ClientCollectionController;
 use App\Http\Controllers\Client\IndexController;
 
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
 
 
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
+Route::get('/account', function () {
+    return view('admin.pages.account.application.index');
+})->name('home');
 
 Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
@@ -66,7 +74,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     });
     /* ROLE ROUTE */
     Route::prefix('role')->name('role.')->group(function () {
-        Route::get('/index', [RoleController::class, 'index'])->name('index');
+        // Route::get('/index', [RoleController::class, 'index'])->name('index');
         Route::get('/create', [RoleController::class, 'create'])->name('create');
         Route::post('/store', [RoleController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit');
@@ -91,6 +99,15 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
     });
 
+    Route::prefix('collection')->name('collection.')->group(function () {
+        Route::get('/index', [CollectionController::class, 'index'])->name('index');
+        Route::get('/create', [CollectionController::class, 'create'])->name('create');
+
+        Route::post('/store', [CollectionController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [CollectionController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [CollectionController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [CollectionController::class, 'delete'])->name('delete');
+    });
     // /* ATTRIBUTE VALUE ROUTE */
     // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
     //     Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
@@ -114,7 +131,9 @@ Route::middleware(['checkPermission'])->group(function () {
         Route::put('/change/status', [AjaxDashboardController::class, 'updateStatus'])->name('ajax.dashboard.updateStatus');
     });
 });
+
 Route::get('/ajax/getLocation', [LocationController::class, 'getLocation'])->name('ajax.getLocation');
+Route::get('getProduct', [AjaxDashboardController::class, 'getProduct'])->name('getProduct');
 
 // get attribute value
 Route::get('/getAttribute', [AjaxDashboardController::class, 'getAttribute'])->name('ajax.dashboard.getAttribute');
@@ -141,11 +160,13 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 Route::get('/order-code', function () {
     return orderCode(7);
 });
+
+
 Route::get('/test', [AjaxDashboardController::class, 'test']);
 
+// =======================================================CLIENT================================================================
 // client route
 Route::prefix('/')->name('client.')->group(function () {
-
     // auth route
     Route::prefix('')->name('auth.')->group(function () {
         Route::get('dang-xuat', [ClientAuthController::class, 'login'])->name('logout');
@@ -161,20 +182,24 @@ Route::prefix('/')->name('client.')->group(function () {
     });
 
 
-
     // index route
     Route::get('/', [IndexController::class, 'home'])->name('client.home');
 
     // account route
     Route::prefix('tai-khoan')->name('account.')->group(function () {
         Route::get('/', [AccountController::class, 'index'])->name('index');
-        
+
     });
 
     // product route
-    Route::prefix('san-pham')->name('client.product.')->group(function () {
+    Route::prefix('san-pham')->name('product.')->group(function () {
         Route::get('/', [ClientProductController::class, 'index'])->name('index');
         Route::get('{slug}', [ClientProductController::class, 'detail'])->name('detail');
+    });
+    // collection route
+    Route::prefix('bo-suu-tap')->name('collection.')->group(function () {
+        Route::get('/', [ClientCollectionController::class, 'index'])->name('index');
+        Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
     });
 });
 

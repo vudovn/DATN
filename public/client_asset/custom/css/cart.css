@@ -64,6 +64,7 @@ body {
 }
 
 .cart .main-left .cart-item img {
+  aspect-ratio: 1/1;
   width: 100px;
   height: 100px;
   object-fit: cover;

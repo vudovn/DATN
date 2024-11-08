@@ -46,8 +46,6 @@ class CollectionService extends BaseService
     {
         DB::beginTransaction();
         try {
-            dd( $request );
-
             $productIds = explode(',', $request->idProduct);
             $payload = $request->except(['categoriesOther', 'categoriesRoom', '_token', 'send', 'idProduct', 'keyword']);
             $collection = $this->collectionRepository->create($payload);

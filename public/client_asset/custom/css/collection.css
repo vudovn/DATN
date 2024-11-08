@@ -1,4 +1,3 @@
-
 .collection_tgnt .slick-prev.slick-arrow,
 .slick-next.slick-arrow {
     display: none !important;
@@ -135,4 +134,65 @@
     -webkit-line-clamp: 2;
     font-size: clamp(0.8em, 1vw, 1.5em);
 }
+.collection_tgnt .detail .banner {
+    position: relative;
+}
+.collection_tgnt .detail .banner .banner-image {
+    aspect-ratio: 8/3;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: inherit;
+}
+.collection_tgnt .detail .banner .banner-caption {
+    text-align: center;
+    width: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(20px, 5vw, 70px);
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px #000;
+}
+.collection_tgnt .detail .banner .banner-description {
+    font-style: italic;
+    text-align: center;
+    font-size: clamp(15px, 3vw, 20px);
+}
+/* .collection_tgnt .detail .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
 
+.collection_tgnt .detail .custom-card:hover .btn-group {
+    opacity: 1;
+    visibility: visible;
+}
+
+.collection_tgnt .detail .btn-add-to-cart,
+.collection_tgnt .detail .btn-view-more {
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+    color: var(--base-color);
+    border: 1px solid var(--base-color) !important;
+    &:hover {
+    color: #ffffff;
+        background-color: var(--base-color) !important;
+    }
+} */
+.collection_tgnt .detail .product-of-collection .title {
+    font-weight: bold;
+    text-align: center;
+    font-size: clamp(20px, 3vw, 40px);
+}

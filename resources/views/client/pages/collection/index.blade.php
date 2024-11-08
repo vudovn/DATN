@@ -4,22 +4,22 @@
     <main>
         <!-- banner -->
         <!-- <section class="container-fluid">
-                                                                                        <div class="row">
-                                                                                            <div class="col-8 p-0">
-                                                                                                <img class="w-100" style="height: 540px;" src="/assets/image/banner/collection_banner.png" alt="">
-                                                                                            </div>
-                                                                                            <div class="col-4 p-0 position-relative">
-                                                                                                <img class="w-100" style="height: 540px;" src="/assets/image/banner/collection_banner1.png" alt="">
-                                                                                                <p class="overlay-text-center-collect">Phủ lên mọi căn phòng một phong cách nghỉ lễ vui vẻ, từ những
-                                                                                                    bộ sưu tập mới cho đến tất cả đồ trang trí lễ hội.</p>
-                                                                                                <div class="overlay-bottom">
-                                                                                                    <p class="collect-light-text">Bộ sưu tập</p>
-                                                                                                    <i class="bi bi-chevron-right"></i>
-                                                                                                    <p>Ngày lễ</p>
+                                                                                            <div class="row">
+                                                                                                <div class="col-8 p-0">
+                                                                                                    <img class="w-100" style="height: 540px;" src="/assets/image/banner/collection_banner.png" alt="">
+                                                                                                </div>
+                                                                                                <div class="col-4 p-0 position-relative">
+                                                                                                    <img class="w-100" style="height: 540px;" src="/assets/image/banner/collection_banner1.png" alt="">
+                                                                                                    <p class="overlay-text-center-collect">Phủ lên mọi căn phòng một phong cách nghỉ lễ vui vẻ, từ những
+                                                                                                        bộ sưu tập mới cho đến tất cả đồ trang trí lễ hội.</p>
+                                                                                                    <div class="overlay-bottom">
+                                                                                                        <p class="collect-light-text">Bộ sưu tập</p>
+                                                                                                        <i class="bi bi-chevron-right"></i>
+                                                                                                        <p>Ngày lễ</p>
+                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                        </div>
-                                                                                    </section> -->
+                                                                                        </section> -->
         <!-- end banner -->
 
         <section class="container collection_tgnt">
@@ -38,38 +38,17 @@
                         <h5 class="mt-1">Bộ sưu tập Thế giới nội thất</h5>
                         <hr class="border-top border-3 w-25 my-2">
                         <div class="row">
-                            @for ($i = 0; $i < 5; $i++)
+                            @foreach ($collections as $collection)
                                 <div class="col-6 col-md-12 mb-2">
-                                    <a href="">Mây mới</a>
+                                    <a href="">{{$collection->name}}</a>
                                 </div>
-                            @endfor
+                            @endforeach
                         </div>
                     </div>
                 </div>
-                <div class="col-md-9">
-                    <div class="row mt-5">
-                        @for ($j = 0; $j < 5; $j++)
-                            <div class="col-md-6 col-sm-12 mb-5">
-                                <div class="card card-blog">
-                                    <div class="card-image">
-                                        <a href="#"> <img class="img card-image-top"
-                                                src="https://www.nitori.com.vn/cdn/shop/files/250115918000-01_700x700.jpg?v=1708337884">
-                                        </a>
-                                    </div>
-                                    <div class="table mt-2 p-3">
-                                        <a href="#" class="card-caption">Quisque id elit maximus, pretium diam at
-                                            mollis elit sadsadasd ádsadasda</a>
-                                        <hr class="border-3 w-25 my-2">
-                                        <p class="card-description"> Lorem ipsum dolor sit amet, consectetur adipis
-                                            cingelit.
-                                            Etiam
-                                            lacinia elit et placerat finibus. Praesent justo metus, pharetra vel nibh
-                                            sit amet,
-                                            tincidunt posuere nulla. </p>
-                                    </div>
-                                </div>
-                            </div>
-                        @endfor
+                <div class="col-md-9 ">
+                    <div class="row mt-5 list">
+                        @include('client.pages.collection.components.list')
                     </div>
                 </div>
             </div>

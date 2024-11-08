@@ -21,8 +21,24 @@ class UpdateCollectionRequest extends FormRequest
      */
     public function rules(): array
     {
+        if (is_string($this->idProduct)) {
+            $this->merge([
+                'idProduct' => array_map('trim', explode(',', $this->idProduct))
+            ]);
+        }
         return [
-            //
+            'name' => 'required',
+            'thumbnail' => 'required',
+            'idProduct' => 'min:3',
+            // 'meta_title' => 'required',
+            // 'meta_description' => 'required',
+        ];
+    }
+    public function messages(){
+        return [
+            'name.required' => 'Không được để trống tên bộ sưu tập',
+            'thumbnail.required' => 'Hãy chọn ảnh bìa cho bộ sưu tập',
+            'idProduct.min' => 'Hãy chọn ít nhất 3 sản phẩm cho bộ sửu tập',
         ];
     }
 }

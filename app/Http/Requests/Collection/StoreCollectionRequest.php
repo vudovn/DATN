@@ -28,8 +28,6 @@ class StoreCollectionRequest extends FormRequest
         }
         return [
             'name' => 'required',
-            'short_description' => 'required',
-            'description' => 'required',
             'thumbnail' => 'required',
             'idProduct' => 'min:3',
             // 'meta_title' => 'required',
@@ -39,8 +37,6 @@ class StoreCollectionRequest extends FormRequest
     public function messages(){
         return [
             'name.required' => 'Không được để trống tên bộ sưu tập',
-            'short_description.required' => 'Không được để trống mô tả ngắn',
-            'description.required' => 'Không được để trống nội dung bộ sưu tập',
             'thumbnail.required' => 'Hãy chọn ảnh bìa cho bộ sưu tập',
             'idProduct.min' => 'Hãy chọn ít nhất 3 sản phẩm cho bộ sửu tập',
         ];

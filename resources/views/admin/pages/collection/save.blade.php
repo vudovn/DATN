@@ -71,7 +71,8 @@
                     </div>
                     <div class="col-lg-12">
                         <x-seo :value_meta_title="$collection->meta_title ?? ''" :value_meta_description="$collection->meta_description ?? ''" :value_meta_keywords="$collection->meta_keywords ?? ''" />
-                    </div>
+                    <input type="hidden" name="slug" value="{{ Str::slug($collection->name) }}">
+                        </div>
                 </div>
             </div>
             <!-- thông tin bổ sung -->

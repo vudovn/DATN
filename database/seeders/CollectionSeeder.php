@@ -12,7 +12,7 @@ class CollectionSeeder extends Seeder
         Collection::create([
             'name' => 'Bộ sưu tập mùa hè',
             'slug' => 'bo-suu-tap-mua-he',
-            'short_description' => 'Thiết kế và phong cách độc quyền cho mùa hè.',
+            'short_content' => 'Thiết kế và phong cách độc quyền cho mùa hè.',
             'content' => 'Đây là mô tả chi tiết về Bộ sưu tập mùa hè.',
             'discount' => 15.00, // Giảm giá 15%
             'thumbnail' => 'https://placehold.co/600x600?text=The Gioi \nNoi That',
@@ -24,7 +24,7 @@ class CollectionSeeder extends Seeder
         Collection::create([
             'name' => 'Bộ sưu tập mùa đông',
             'slug' => 'bo-suu-tap-mua-dong',
-            'short_description' => 'Thiết kế mùa đông ấm áp và thời trang.',
+            'short_content' => 'Thiết kế mùa đông ấm áp và thời trang.',
             'content' => 'Đây là mô tả chi tiết về Bộ sưu tập mùa đông.',
             'discount' => 10.00, // Giảm giá 10%
             'thumbnail' => 'https://placehold.co/600x600?text=The Gioi \nNoi That',
@@ -36,7 +36,7 @@ class CollectionSeeder extends Seeder
         Collection::create([
             'name' => 'Bộ sưu tập mùa xuân',
             'slug' => 'bo-suu-tap-mua-xuan',
-            'short_description' => 'Thời trang mùa xuân tươi mới và đầy màu sắc.',
+            'short_content' => 'Thời trang mùa xuân tươi mới và đầy màu sắc.',
             'content' => 'Đây là mô tả chi tiết về Bộ sưu tập mùa xuân.',
             'discount' => 5.00, // Giảm giá 5%
             'thumbnail' => 'https://placehold.co/600x600?text=The Gioi \nNoi That',

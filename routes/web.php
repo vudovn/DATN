@@ -192,12 +192,12 @@ Route::prefix('/')->name('client.')->group(function () {
     });
 
     // product route
-    Route::prefix('san-pham')->name('client.product.')->group(function () {
+    Route::prefix('san-pham')->name('product.')->group(function () {
         Route::get('/', [ClientProductController::class, 'index'])->name('index');
         Route::get('{slug}', [ClientProductController::class, 'detail'])->name('detail');
     });
     // collection route
-    Route::prefix('bo-suu-tap')->name('client.collection.')->group(function () {
+    Route::prefix('bo-suu-tap')->name('collection.')->group(function () {
         Route::get('/', [ClientCollectionController::class, 'index'])->name('index');
         Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
     });

@@ -88,17 +88,92 @@
                 <!-- Địa chỉ giao hàng -->
                 @include('admin.pages.order.components.location')
                 <div class="form-group mb-3">
-                    <x-input :label="'Địa chỉ chi tiết'" name="address" :value="$address" :required="false" />
-                </div>                
+                    <x-input :label="'Địa chỉ chi tiết'" name="address" :value="$user->address ?? ''" :required="false" />
+                </div>
 
                 {{-- Thêm sản phẩm --}}
-                @include('admin.pages.order.components.add_product')
+                <div class="filterProduct">
+                    <div class="card-header">
+                        <div class="alert alert-success" role="alert">
+                            Bạn phải thêm sản phẩm mới!
+                            <span style="cursor: pointer" onclick="toggleProductInput()"
+                                class="me-3 link-success add-product">
+                                Thêm sản phẩm
+                            </span>
+                        </div>
+                        <input type="hidden" name="idProduct" id="idProduct">
 
-                <div class="card-footer">
-                    <div class="text-end">
-                        <a href="{{ route('order.index') }}" class="btn btn-danger">Quay lại</a>
-                        <button type="submit" class="btn btn-primary">Lưu</button>
+                        <div class="card-body show-product d-none" id="productInputContainer">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 position-relative">
+                                        <!-- Ô tìm kiếm sản phẩm -->
+                                        <input type="text" class="form-control mt-3" id="product-search"
+                                            placeholder="Nhập tên sản phẩm" oninput="searchProduct(this.value)">
+                                        <!-- Danh sách sản phẩm -->
+                                        <div class="list-group position-absolute w-100 d-none" id="product-dropdown"
+                                            style="z-index: 1000;">
+                                            <!-- Danh sách kết quả sẽ được thêm vào đây -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+                <script>
+                    function toggleProductInput() {
+                        const productInput = document.getElementById('productInputContainer');
+                        productInput.classList.toggle('d-none');
+                    }
+                </script>
+
+                @php
+                    $totalAmount = 0;
+                @endphp
+                <h5 class="mt-4">Chi tiết Đơn Hàng</h5>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Số Lượng</th>
+                            <th>Giá Tiền</th>
+                            <th>Tổng Tiền</th>
+                            <th>Ngày Tạo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($order_details as $detail)
+                            @php
+                                $lineTotal = $detail->product->price * $detail->quantity;
+                                $totalAmount += $lineTotal;
+                            @endphp
+                            <tr>
+                                <td>{{ $detail->id }}</td>
+                                <td>{{ $detail->product->name }}</td>
+                                <td>
+                                    <input type="number" name="quantity[{{ $detail->id }}]" class="form-control"
+                                        value="{{ $detail->quantity }}" min="1">
+                                </td>
+                                <td>{{ number_format($detail->product->price) }} VND</td>
+                                <td>{{ number_format($lineTotal) }} VND</td>
+                                <td>{{ changeDateFormat($detail->created_at) }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <!-- Hiển thị tổng tiền -->
+                <div class="form-group mb-3">
+                    <label for="total_amount">Tổng tiền:</label>
+                    <input type="number" id="total_amount" name="total_amount" class="form-control"
+                        value="{{ $totalAmount }}">
+                </div>
+
+                <div class="text-right">
+                    <a href="{{ route('order.index') }}" class="btn btn-danger">Quay lại</a>
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
                 </div>
             </form>
         </div>

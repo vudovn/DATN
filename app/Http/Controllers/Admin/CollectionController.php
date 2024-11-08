@@ -83,7 +83,6 @@ class CollectionController extends Controller implements HasMiddleware
     }
     public function update(UpdateCollectionRequest $request, $id)
     {
-        
         $collection = $this->collectionService->update($request, $id);
         if ($collection) {
             return redirect()->route('collection.index', ['page' => $request->page])->with('success', 'Cập nhật người dùng thành công.');

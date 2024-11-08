@@ -88,10 +88,16 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
 
     /* ORDER ROUTE */
     Route::prefix('order')->name('order.')->group(function () {
-        Route::get('index', [AdminOrderController::class, 'index'])->name('index');
-        Route::get('edit/{id}', [AdminOrderController::class, 'edit'])->name('edit');
-        Route::put('update/{id}', [AdminOrderController::class, 'update'])->name('update');
-        Route::get('delete/{id}', [AdminOrderController::class, 'delete'])->name('delete');
+        Route::get('dataProduct', [OrderController::class, 'dataProduct'])->name('dataProduct');
+        Route::get('index', [OrderController::class, 'index'])->name('index');
+        Route::get('create', [OrderController::class, 'create'])->name('create');
+        Route::post('store', [OrderController::class, 'store'])->name('store');
+        Route::get('edit/{id}', [OrderController::class, 'edit'])->name('edit');
+        Route::put('update/{id}', [OrderController::class, 'update'])->name('update');
+        Route::get('delete/{id}', [OrderController::class, 'delete'])->name('delete');
+        Route::get('search_customer', [OrderController::class, 'searchCustomer'])->name('searchCustomer');
+        Route::put('payment-status/{id}', [OrderController::class, 'updatePaymentStatus'])->name('updatepayment');
+        Route::get('dataVariantsProduct/{id}', [OrderController::class, 'dataVariantsProduct'])->name('dataVariantsProduct');
     });
     /* CATEGORY ROUTE */
     Route::prefix('category')->name('category.')->group(function () {

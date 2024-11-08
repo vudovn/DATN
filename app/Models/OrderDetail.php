@@ -9,6 +9,16 @@ use PDO;
 class OrderDetail extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'order_id', 
+        'product_id', 
+        'quantity',  
+        'sku',
+        'name',
+        'price'
+    ];
+
     public function product(){
         return $this->belongsTo(Product::class, 'product_id');
     }

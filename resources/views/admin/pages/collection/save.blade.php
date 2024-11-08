@@ -21,7 +21,6 @@
                                         :required="true" />
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="short_description">Mô tả ngắn<span class="text-danger">*</span></label>
                                     <textarea class="form-control" name="short_description" id="short_description" rows="3">{{ $collection->short_description ?? old('short_description') }}</textarea>
                                     @error('short_description')
                                         <small class="error text-danger">*{{ $message }}</small>
@@ -36,6 +35,7 @@
                                 Nội dung bộ sưu tập
                             </div>
                             <x-editor :label="''" :name="'description'" :value="$collection->description ?? old('description')" class="form-control" />
+
                             @error('description')
                                 <small class="error text-danger">*{{ $message }}</small>
                             @enderror
@@ -55,7 +55,6 @@
                                 </script>
                                 <div class="card-body show-product hidden">
                                     <x-filter :model="'collection'" :options="[
-                                        // 'perpage' => generateSelect('10 hàng', __('general.perpage')),
                                         'categoriesOther' => $categories,
                                         'categoriesRoom' => $categoryRoom,
                                     ]" />
@@ -83,6 +82,7 @@
                     <div class="card-header">
                         Giảm giá
                     </div>
+
                     <div class="card-body position-relative">
                         <x-input :label="''" :name="'discount'" :class="'name-collection'" :value="$collection->discount ?? old('discount')"
                             :required="false" />
@@ -94,6 +94,7 @@
                 </div>
                 <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.publish')" :value="$collection->publish ?? old('publish')" />
             </div>
+
         </div>
     </x-form>
     <script>

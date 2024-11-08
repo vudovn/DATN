@@ -8,8 +8,8 @@
                     <label class="form-check-label" for="ustomCheckbox{{ $order->id }}"></label>
                 </div>
             </td>
-            <td>{{ $key+2 }}</td>
-            <td>{{ $order->code }}</td>
+            <td>{{ $key+1 }}</td>
+            <td><a href="{{ route('order.edit',  ['id' => $order->id]) }}">{{ $order->code }}</a></td>
             <td>{{ number_format($order->total, 0, '.', '.') }}</td>
             <td>Thanh toán khi nhận hàng</td>
             <td>

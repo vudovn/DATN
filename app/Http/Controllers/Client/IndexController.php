@@ -9,6 +9,6 @@ class IndexController extends Controller
 {
     public function home()
     {
-        return view('client.layout');
+        return view('client.pages.home.index');
     }
 }

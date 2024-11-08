@@ -1,5 +1,4 @@
 @props(['createButton', 'options', 'action', 'method', 'model'])
-
 <div class="d-flex justify-content-between animate__animated animate__fadeIn">
     <div id="filter" data-model="{{$model ?? ''}}">
         <form action="">

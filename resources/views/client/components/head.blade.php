@@ -1,6 +1,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('/client_asset/custom/css/color.css') }}" />
 <link rel="stylesheet" href="/client_asset/custom/css/footer.css" />
 <link rel="stylesheet" href="/client_asset/custom/css/header.css" />
@@ -33,7 +34,6 @@
 
 <link href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/message/message.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/message/message.js"></script>
-
 
 @if (isset($config['css']) && count($config['css']))
     @foreach ($config['css'] as $key => $val)

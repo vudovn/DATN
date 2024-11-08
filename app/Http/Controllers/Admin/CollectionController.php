@@ -59,12 +59,13 @@ class CollectionController extends Controller implements HasMiddleware
         ));
     }
     public function store(StoreCollectionRequest $request)
+    // public function store(Request $request)
     {
         $collection = $this->collectionService->create($request);
         if ($collection) {
-            return redirect()->route('collection.index')->with('success', 'Tạo người dùng mới thành công');
+            return redirect()->route('collection.index')->with('success', 'Tạo bộ sưu tập mới thành công');
         }
-        return redirect()->route('collection.index')->with('error', 'Tạo người dùng mới thất bại');
+        return redirect()->route('collection.index')->with('error', 'Tạo bộ sưu tập mới thất bại');
     }
     public function edit($id)
     {
@@ -83,7 +84,7 @@ class CollectionController extends Controller implements HasMiddleware
     public function update(UpdateCollectionRequest $request, $id)
     {
         $collection = $this->collectionService->update($request, $id);
-        if ($this->collectionService->update($request, $id)) {
+        if ($collection) {
             return redirect()->route('collection.index', ['page' => $request->page])->with('success', 'Cập nhật người dùng thành công.');
         }
         return redirect()->route('collection.index')->with('error', 'Cập nhật người dùng thất bại');

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->text('short_description')->nullable();
-            $table->longText('content')->nullable();
             $table->decimal('discount', 3, 2);
             $table->string('thumbnail');
             $table->boolean('publish')->default(2);

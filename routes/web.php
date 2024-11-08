@@ -25,9 +25,10 @@ use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('home');
+
 Route::get('/account', function () {
     return view('admin.pages.account.application.index');
 })->name('home');
@@ -118,13 +119,8 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::post('/store', [ReviewController::class, 'store'])->name('store');
         Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'destroy'])->name('delete');
     });
-    /* FORBIDDEN WORD ROUTE */
-    Route::prefix('forbiddenword')->name('CommentForbiddenWord.')->group(function () {
-        Route::get('/index', [CommentForbiddenWordController::class, 'index'])->name('index');
-        Route::get('/create', [CommentForbiddenWordController::class, 'create'])->name('create');
-        Route::post('/store', [CommentForbiddenWordController::class, 'store'])->name('store');
-        Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'delete'])->name('delete');
 
+     /* COLLECTION ROUTE */
     Route::prefix('collection')->name('collection.')->group(function () {
         Route::get('/index', [CollectionController::class, 'index'])->name('index');
         Route::get('/create', [CollectionController::class, 'create'])->name('create');
@@ -133,7 +129,14 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [CollectionController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [CollectionController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CollectionController::class, 'delete'])->name('delete');
-    });
+    });    /* FORBIDDEN WORD ROUTE */
+    Route::prefix('forbiddenword')->name('CommentForbiddenWord.')->group(function () {
+        Route::get('/index', [CommentForbiddenWordController::class, 'index'])->name('index');
+        Route::get('/create', [CommentForbiddenWordController::class, 'create'])->name('create');
+        Route::post('/store', [CommentForbiddenWordController::class, 'store'])->name('store');
+        Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'delete'])->name('delete');
+
+    
     // /* ATTRIBUTE VALUE ROUTE */
     // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
     //     Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
@@ -145,6 +148,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     //     Route::delete('/destroy/{id}', [AttributeValueController::class, 'destroy'])->name('destroy');
     // });
     /* AJAX ROUTE */
+});
 });
 
 Route::middleware(['checkPermission'])->group(function () {
@@ -229,4 +233,3 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
     });
 });
-

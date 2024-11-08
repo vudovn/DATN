@@ -57,8 +57,14 @@ class BaseRepository
         return $this->model->select($select)->where($field, $value);
     }
 
-    public function delete(int $id)
+
+    public function findByWhereIn($column, $values = [], $relation = [], $select = ['*'])
     {
+        return $this->model->select($select)->whereIn($column, $values)->with($relation)->get();
+    }
+    
+
+    public function delete(int $id){
         return $this->findById($id)->delete();
     }
 
@@ -72,12 +78,8 @@ class BaseRepository
         return $this->model->whereIn($whereInField, $whereIn)->delete();
     }
 
-    // public function findByIdLocation(
-    //     int $modelId,
-    //     array $column = ['*'],
-    //     array $relation = []
-    // ){
-    //     return $this->model->select($column)->with($relation)->findOrFail($modelId);
-    // }  cái ni t tạo hôm qua , chừ không dùng nữa !
+    public function createMany(array $payload = []){
+        return $this->model->insert($payload);
+    }
 
 }

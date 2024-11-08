@@ -56,6 +56,17 @@ return [
             ]
         ],
         [
+            'name' => 'Quản lý bộ sưu tập',
+            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-layer"></use> </svg>',
+            'route' => ['collection'],
+            'module' => [
+                [
+                    'name' => 'Danh sách bộ sưu tập',
+                    'path' => route('collection.index')
+                ]
+            ]
+        ],
+        [
             'name' => 'Quản lý đơn hàng',
             'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-box-1"></use> </svg>',
             'route' => ['order'],

@@ -1,0 +1,198 @@
+.collection_tgnt .slick-prev.slick-arrow,
+.slick-next.slick-arrow {
+    display: none !important;
+}
+
+.collection_tgnt .card-text {
+    font-size: clamp(13px, 1vw, 16px);
+}
+/* .position-relative {
+    position: relative;
+} */
+
+/* .img-custom {
+    max-height: 400px; 
+    object-fit: contain; 
+} */
+
+.overlay-text-center-collect {
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 80%;
+    color: #266728;
+    font-size: 29px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.section-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: 0;
+}
+
+.collect-item {
+    flex-direction: row;
+    display: flex;
+    width: 377px;
+    height: 70px;
+    padding: 10px 60px 0px 60px;
+    justify-content: center;
+    align-items: center;
+    border-top: 7px solid var(--cream, #f6e1c3);
+    border-bottom: 7px solid var(--cream, #f6e1c3);
+}
+
+.collect-item p {
+    font-weight: bold;
+}
+
+.collect-item img {
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+.overlay-bottom {
+    position: absolute;
+    top: 10px;
+    left: 70%;
+    transform: translateX(-50%);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #181616;
+    width: 50%;
+}
+.collect-light-text {
+    color: var(--Text-draft, #6a6a6a);
+}
+
+.overlay-bottom p,
+.overlay-bottom i {
+    margin: 0 5px;
+    font-weight: bold;
+}
+
+.overlay-bottom i {
+    font-size: 17px;
+    color: #6a6a6a;
+}
+
+.collection_tgnt .card {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    margin-bottom: 30px;
+    border-radius: 6px;
+    color: rgba(0, 0, 0, 0.87);
+    background: #fff;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14);
+}
+
+.collection_tgnt .card .card-image {
+    position: relative;
+    overflow: hidden;
+    margin: -30px 15px 0;
+    border-radius: 6px;
+    box-shadow: 0 9px 26px -12px rgba(0, 0, 0, 0.56),
+        0 4px 25px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.collection_tgnt .card .card-image img {
+    aspect-ratio: 5/3;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.collection_tgnt .card .card-caption,
+.collection_tgnt .card .card-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.collection_tgnt .card .card-caption {
+    font-weight: bold;
+    -webkit-line-clamp: 1;
+    font-size: clamp(1em, 1.1vw, 1.7em);
+}
+
+.collection_tgnt .card .card-description {
+    -webkit-line-clamp: 2;
+    font-size: clamp(0.8em, 1vw, 1.5em);
+}
+.collection_tgnt .detail .banner {
+    position: relative;
+}
+.collection_tgnt .detail .banner .banner-image {
+    aspect-ratio: 8/3;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: inherit;
+}
+.collection_tgnt .detail .banner .banner-caption {
+    text-align: center;
+    width: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(20px, 5vw, 70px);
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px #000;
+}
+.collection_tgnt .detail .banner .banner-description {
+    font-style: italic;
+    text-align: center;
+    font-size: clamp(15px, 3vw, 20px);
+}
+/* .collection_tgnt .detail .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.collection_tgnt .detail .custom-card:hover .btn-group {
+    opacity: 1;
+    visibility: visible;
+}
+
+.collection_tgnt .detail .btn-add-to-cart,
+.collection_tgnt .detail .btn-view-more {
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+    color: var(--base-color);
+    border: 1px solid var(--base-color) !important;
+    &:hover {
+    color: #ffffff;
+        background-color: var(--base-color) !important;
+    }
+} */
+.collection_tgnt .detail .product-of-collection .title {
+    font-weight: bold;
+    text-align: center;
+    font-size: clamp(20px, 3vw, 40px);
+}

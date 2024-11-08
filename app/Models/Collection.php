@@ -8,11 +8,11 @@ use App\Traits\QueryScope;
 
 class Collection extends Model
 {
-    use HasFactory, QueryScope;
+    use HasFactory,QueryScope;
     protected $fillable = [
         'name',
         'slug',
-        'short_content',
+        'short_description',
         'description',
         'thumbnail',
         'publish',
@@ -23,5 +23,9 @@ class Collection extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    ];
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'collection_product', 'collection_id', 'product_id');
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Client\AccountController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -13,12 +14,22 @@ use App\Http\Controllers\Admin\CommentForbiddenWordController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
+use App\Http\Controllers\Admin\CollectionController;
+
+use App\Http\Controllers\Client\AuthController as ClientAuthController;
+use App\Http\Controllers\Client\ProductController as ClientProductController;
+use App\Http\Controllers\Client\CollectionController as ClientCollectionController;
+use App\Http\Controllers\Client\IndexController;
 
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
 
+
 Route::get('/', function () {
     return view('welcome');
+})->name('home');
+Route::get('/account', function () {
+    return view('admin.pages.account.application.index');
 })->name('home');
 
 Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
@@ -66,7 +77,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     });
     /* ROLE ROUTE */
     Route::prefix('role')->name('role.')->group(function () {
-        Route::get('/index', [RoleController::class, 'index'])->name('index');
+        // Route::get('/index', [RoleController::class, 'index'])->name('index');
         Route::get('/create', [RoleController::class, 'create'])->name('create');
         Route::post('/store', [RoleController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit');
@@ -113,6 +124,15 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/create', [CommentForbiddenWordController::class, 'create'])->name('create');
         Route::post('/store', [CommentForbiddenWordController::class, 'store'])->name('store');
         Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'delete'])->name('delete');
+
+    Route::prefix('collection')->name('collection.')->group(function () {
+        Route::get('/index', [CollectionController::class, 'index'])->name('index');
+        Route::get('/create', [CollectionController::class, 'create'])->name('create');
+
+        Route::post('/store', [CollectionController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [CollectionController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [CollectionController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [CollectionController::class, 'delete'])->name('delete');
     });
     // /* ATTRIBUTE VALUE ROUTE */
     // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
@@ -126,6 +146,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     // });
     /* AJAX ROUTE */
 });
+
 Route::middleware(['checkPermission'])->group(function () {
     Route::prefix('{model}')->name('{model}.')->group(function () {
         Route::get('/getData', [AjaxDashboardController::class, 'getData'])->name('ajax.dashboard.getData');
@@ -136,7 +157,9 @@ Route::middleware(['checkPermission'])->group(function () {
         Route::put('/change/status', [AjaxDashboardController::class, 'updateStatus'])->name('ajax.dashboard.updateStatus');
     });
 });
+
 Route::get('/ajax/getLocation', [LocationController::class, 'getLocation'])->name('ajax.getLocation');
+Route::get('getProduct', [AjaxDashboardController::class, 'getProduct'])->name('getProduct');
 
 // get attribute value
 Route::get('/getAttribute', [AjaxDashboardController::class, 'getAttribute'])->name('ajax.dashboard.getAttribute');
@@ -145,12 +168,65 @@ Route::get('ajax/loadAttributeValue', [AjaxDashboardController::class, 'loadAttr
 
 Route::get('/admin', [AuthController::class, 'index'])->name('auth.index')->middleware('unauthenticated');
 Route::post('/admin', [AuthController::class, 'login'])->name('auth.login');
+
 Route::get('/admin/forget-password', [AuthController::class, 'forget'])->name('auth.admin.forget');
-Route::get('/admin/change-password', [AuthController::class, 'change'])->name('auth.admin.change');
+Route::post('/admin/forget-password', [AuthController::class, 'postForgetPass'])->name('auth.admin.postForgetPass');
+
+// Route để hiển thị form thay đổi mật khẩu với token và email
+Route::get('/admin/reset-password/{token}/{email}', [AuthController::class, 'resetPassword'])->name('password.reset');
+
+// Route để xử lý thay đổi mật khẩu
+Route::post('/admin/reset-password', [AuthController::class, 'postChangePass'])->name('change.password');
+
+
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
 
 
 Route::get('/order-code', function () {
     return orderCode(7);
 });
+
+
 Route::get('/test', [AjaxDashboardController::class, 'test']);
+
+// =======================================================CLIENT================================================================
+// client route
+Route::prefix('/')->name('client.')->group(function () {
+    // auth route
+    Route::prefix('')->name('auth.')->group(function () {
+        Route::get('dang-xuat', [ClientAuthController::class, 'login'])->name('logout');
+        Route::get('dang-nhap', [ClientAuthController::class, 'login'])->name('login');
+        Route::post('dang-nhap', [ClientAuthController::class, 'postLogin'])->name('post-login');
+        Route::get('dang-ky', [ClientAuthController::class, 'register'])->name('register');
+        Route::post('dang-ky', [ClientAuthController::class, 'postRegister'])->name('post-register');
+        Route::get('quen-mat-khau', [ClientAuthController::class, 'forget'])->name('forget');
+        Route::post('quen-mat-khau', [ClientAuthController::class, 'submitForgetPasswordForm'])->name('post-forget');
+        Route::get('doi-mat-khau/{user}/{token}', [ClientAuthController::class, 'change'])->name('change');
+        Route::post('doi-mat-khau/{user}/{token}', [ClientAuthController::class, 'submitChangePasswordForm'])->name('post-reset');
+        Route::get('xac-nhan-tai-khoan/{email}', [ClientAuthController::class, 'active'])->name('active');
+    });
+
+
+    // index route
+    Route::get('/', [IndexController::class, 'home'])->name('client.home');
+
+    // account route
+    Route::prefix('tai-khoan')->name('account.')->group(function () {
+        Route::get('/', [AccountController::class, 'index'])->name('index');
+
+    });
+
+    // product route
+    Route::prefix('san-pham')->name('product.')->group(function () {
+        Route::get('/', [ClientProductController::class, 'index'])->name('index');
+        Route::get('/{slug}.html', [ClientProductController::class, 'detail'])->name('detail');
+        Route::get('/ajax/get-variant', [ClientProductController::class, 'getVariant'])->name('get-variant');
+    });
+    // collection route
+    Route::prefix('bo-suu-tap')->name('collection.')->group(function () {
+        Route::get('/', [ClientCollectionController::class, 'index'])->name('index');
+        Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
+    });
+});
+

@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\CommentForbiddenWordController;
 use App\Http\Controllers\Admin\ReviewController;
-use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
 use App\Http\Controllers\Admin\CollectionController;
 

@@ -68,5 +68,12 @@ return [
             'name' => 'Đã hủy'
         ]
     ],
+
+    'actions' => [
+        0 => [
+            'id' => 'delete',
+            'name' => 'Xóa'
+        ],
+    ]
     
 ];

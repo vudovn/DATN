@@ -679,14 +679,12 @@
             variant.sku.findIndex((item) => item === sku);
         $(".variant-row").each(function (index, value) {
             let _this = $(this);
-            let variantKey = _this
-                .attr("class")
-                .match(/tr-variant-(\d+-\d+)/)[1];
+            let classMatch = _this.attr("class").match(/tr-variant-(\d+-\d+)/);
+            let variantKey = classMatch ? classMatch[1] : index;
             let dataIndex = variant.sku.findIndex((sku) =>
                 sku.includes(variantKey)
             );
-            console.log(variantKey, dataIndex);
-
+            // console.log(variantKey, dataIndex);
             if (dataIndex !== -1) {
                 let inputHiddenFields = [
                     {

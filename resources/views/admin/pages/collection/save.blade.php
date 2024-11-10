@@ -35,7 +35,6 @@
                                 Nội dung bộ sưu tập
                             </div>
                             <x-editor :label="''" :name="'description'" :value="$collection->description ?? old('description')" class="form-control" />
-
                             @error('description')
                                 <small class="error text-danger">*{{ $message }}</small>
                             @enderror
@@ -70,7 +69,7 @@
                     </div>
                     <div class="col-lg-12">
                         <x-seo :value_meta_title="$collection->meta_title ?? ''" :value_meta_description="$collection->meta_description ?? ''" :value_meta_keywords="$collection->meta_keywords ?? ''" />
-                    <input type="hidden" name="slug" value="{{ Str::slug($collection->name) }}">
+                    {{-- <input type="hidden" name="slug" value="{{ Str::slug($collection->name) }}"> --}}
                         </div>
                 </div>
             </div>

@@ -76,6 +76,25 @@ return [
                     'path' => route('order.index')
                 ]
             ]
+        ],
+        [
+            'name' => 'Quản lý phản hồi',
+            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-box-1"></use> </svg>',
+            'route' => ['order'],
+            'module' => [
+                [
+                    'name' => 'Quản lý bình luận',
+                    'path' => route('comment.index')
+                ],
+                [
+                    'name' => 'Quản lý đánh giá',
+                    'path' => route('review.index')
+                ],
+                [
+                    'name' => 'Quản lý nội dung bình luận',
+                    'path' => route('CommentForbiddenWord.index')
+                ]
+            ]
         ]
 
     ]

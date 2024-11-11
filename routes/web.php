@@ -9,7 +9,10 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\CommentController;
+use App\Http\Controllers\Admin\CommentForbiddenWordController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
 use App\Http\Controllers\Admin\CollectionController;
 
@@ -22,9 +25,10 @@ use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('home');
+
 Route::get('/account', function () {
     return view('admin.pages.account.application.index');
 })->name('home');
@@ -84,10 +88,16 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
 
     /* ORDER ROUTE */
     Route::prefix('order')->name('order.')->group(function () {
-        Route::get('index', [AdminOrderController::class, 'index'])->name('index');
-        Route::get('edit/{id}', [AdminOrderController::class, 'edit'])->name('edit');
-        Route::put('update/{id}', [AdminOrderController::class, 'update'])->name('update');
-        Route::get('delete/{id}', [AdminOrderController::class, 'delete'])->name('delete');
+        Route::get('dataProduct', [OrderController::class, 'dataProduct'])->name('dataProduct');
+        Route::get('index', [OrderController::class, 'index'])->name('index');
+        Route::get('create', [OrderController::class, 'create'])->name('create');
+        Route::post('store', [OrderController::class, 'store'])->name('store');
+        Route::get('edit/{id}', [OrderController::class, 'edit'])->name('edit');
+        Route::put('update/{id}', [OrderController::class, 'update'])->name('update');
+        Route::get('delete/{id}', [OrderController::class, 'delete'])->name('delete');
+        Route::get('search_customer', [OrderController::class, 'searchCustomer'])->name('searchCustomer');
+        Route::put('payment-status/{id}', [OrderController::class, 'updatePaymentStatus'])->name('updatepayment');
+        Route::get('dataVariantsProduct/{id}', [OrderController::class, 'dataVariantsProduct'])->name('dataVariantsProduct');
     });
     /* CATEGORY ROUTE */
     Route::prefix('category')->name('category.')->group(function () {
@@ -98,7 +108,25 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
     });
+    /* COMMENT ROUTE */
+    Route::prefix('comment')->name('comment.')->group(function () {
+        Route::get('/index', [CommentController::class, 'index'])->name('index');
+        Route::get('/create', [CommentController::class, 'create'])->name('create');
+        Route::post('/store', [CommentController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [CommentController::class, 'edit'])->name('edit');
+        Route::get('/reply/{id}', [CommentController::class, 'reply'])->name('reply');
+        Route::put('/update/{id}', [CommentController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [CommentController::class, 'delete'])->name('delete');
+    });
+    /* REVIEW ROUTE */
+    Route::prefix('review')->name('review.')->group(function () {
+        Route::get('/index', [ReviewController::class, 'index'])->name('index');
+        Route::get('/create', [ReviewController::class, 'create'])->name('create');
+        Route::post('/store', [ReviewController::class, 'store'])->name('store');
+        Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'destroy'])->name('delete');
+    });
 
+     /* COLLECTION ROUTE */
     Route::prefix('collection')->name('collection.')->group(function () {
         Route::get('/index', [CollectionController::class, 'index'])->name('index');
         Route::get('/create', [CollectionController::class, 'create'])->name('create');
@@ -107,7 +135,14 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [CollectionController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [CollectionController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CollectionController::class, 'delete'])->name('delete');
-    });
+    });    /* FORBIDDEN WORD ROUTE */
+    Route::prefix('forbiddenword')->name('CommentForbiddenWord.')->group(function () {
+        Route::get('/index', [CommentForbiddenWordController::class, 'index'])->name('index');
+        Route::get('/create', [CommentForbiddenWordController::class, 'create'])->name('create');
+        Route::post('/store', [CommentForbiddenWordController::class, 'store'])->name('store');
+        Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'delete'])->name('delete');
+
+    
     // /* ATTRIBUTE VALUE ROUTE */
     // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
     //     Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
@@ -119,6 +154,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     //     Route::delete('/destroy/{id}', [AttributeValueController::class, 'destroy'])->name('destroy');
     // });
     /* AJAX ROUTE */
+});
 });
 
 Route::middleware(['checkPermission'])->group(function () {
@@ -194,7 +230,8 @@ Route::prefix('/')->name('client.')->group(function () {
     // product route
     Route::prefix('san-pham')->name('product.')->group(function () {
         Route::get('/', [ClientProductController::class, 'index'])->name('index');
-        Route::get('{slug}', [ClientProductController::class, 'detail'])->name('detail');
+        Route::get('/{slug}', [ClientProductController::class, 'detail'])->name('detail');
+        Route::get('/ajax/get-variant', [ClientProductController::class, 'getVariant'])->name('get-variant');
     });
     // collection route
     Route::prefix('bo-suu-tap')->name('collection.')->group(function () {
@@ -202,4 +239,3 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
     });
 });
-

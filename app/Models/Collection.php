@@ -18,7 +18,12 @@ class Collection extends Model
         'publish',
         'meta_title',
         'meta_description',
+        'created_at'
     ];
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
     public function products()
     {
         return $this->belongsToMany(Product::class, 'collection_product', 'collection_id', 'product_id');

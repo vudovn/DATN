@@ -1,17 +1,16 @@
-*{
+body {
   font-family: 'Roboto', sans-serif !important;
 }
-a {
+/* a {
   color: var(--base-color) !important;
   &:hover{
     color: var(--base-color-hover) !important;
   }
-}
-.bg-stnt {
+} */
 
+.bg-stnt {
   background-color: var(--base-color) !important;
 }
-
 
 .header_search input {
   border-radius: 30px !important;

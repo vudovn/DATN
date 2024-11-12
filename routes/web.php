@@ -93,6 +93,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('create', [OrderController::class, 'create'])->name('create');
         Route::post('store', [OrderController::class, 'store'])->name('store');
         Route::get('edit/{id}', [OrderController::class, 'edit'])->name('edit');
+        Route::get('show/{id}', [OrderController::class, 'show'])->name('show');
         Route::put('update/{id}', [OrderController::class, 'update'])->name('update');
         Route::get('delete/{id}', [OrderController::class, 'delete'])->name('delete');
         Route::get('search_customer', [OrderController::class, 'searchCustomer'])->name('searchCustomer');

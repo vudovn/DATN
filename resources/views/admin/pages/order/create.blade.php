@@ -23,9 +23,8 @@
                     <div class="col-12">
                         <div class="form-group mb-3">
                             <h5>Tìm khách hàng theo số điện thoại</h5>
-                            <div class="input-group">
+                            <div class="btn-search-customer">
                                 <input type="number" class="form-control search-customer" placeholder="Nhập số điện thoại">
-                                <button type="button" class="btn btn-primary btn-search-customer">Tìm</button>
                             </div>
                         </div>
                     </div>

@@ -67,6 +67,7 @@ class OrderController extends Controller  implements HasMiddleware
             'config'
         ));
     }
+
     public function getData($request)
     {
         $orders = $this->orderService->paginate($request);
@@ -74,8 +75,7 @@ class OrderController extends Controller  implements HasMiddleware
         return view('admin.pages.order.components.table',compact('orders','config'));
     }
 
-    public function create()
-    {
+    public function create(){
         $provinces = $this->provinceRepository->getAllProvinces();
         $districts = $this->districtRepository->getAllDistricts();
         $wards = $this->wardRepository->getAllWards();
@@ -144,15 +144,29 @@ class OrderController extends Controller  implements HasMiddleware
         }
     }
 
-    public function dataProduct(){
-        $products = Product::all();
-        return successResponse($products);
+    public function dataProduct(Request $request)
+    {
+        $query = $request->query('query', '');
+        $page = $request->query('page', 1);
+        $perPage = 5; // Số lượng sản phẩm mỗi trang
+
+        $products = Product::where('name', 'like', "%$query%")
+            ->paginate($perPage);
+
+        return response()->json([
+            'data' => $products->items(),
+            'pagination' => [
+                'current_page' => $products->currentPage(),
+                'pages' => $products->lastPage(),
+            ],
+        ]);
     }
 
     public function dataVariantsProduct($id) {
         $product = $this->productRepository->findById($id, ['productVariants']);
         return successResponse($product->productVariants);
     }
+    
 
     public function searchCustomer(Request $request) {
         $phone = $request->get('phone');
@@ -187,6 +201,33 @@ class OrderController extends Controller  implements HasMiddleware
         return errorResponse('Không tìm thấy khách hàng');
     }    
     
+    public function show(string $id) {
+        $order = $this->orderRepository->findById($id, ['orderDetails']);
+        $order_details = $order->orderDetails;
+        $provinces = $this->provinceRepository->getAllProvinces();
+        $districts = $this->districtRepository->getAllDistricts();
+        $wards = $this->wardRepository->getAllWards();
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('show');
+        $address = $order->address ?? $order->user->address ?? '';
+        $ward = $order->ward ?? '';   
+        $district = $order->district ?? '';  
+        $province = $order->province ?? ''; 
+    
+        return view('admin.pages.order.show', compact(
+            'order', 
+            'order_details',
+            'provinces',
+            'districts',
+            'wards',
+            'address',
+            'ward',
+            'district',
+            'province',
+            'config'
+        ));
+    }        
+
     private function breadcrumb($key)
     {
         $breadcrumb = [
@@ -201,7 +242,11 @@ class OrderController extends Controller  implements HasMiddleware
             'create' => [
                 'name' => 'Tạo đơn hàng mới',
                 'list' => ['QL đơn hàng', 'Tạo đơn hàng']
-            ]
+            ],
+            'show' => [
+                'name' => 'Thông tin hóa đơn',
+                'list' => ['Chi tiết đơn hàng', 'Thông tin hóa đơn']
+            ], 
         ];
 
         return $breadcrumb[$key]; 

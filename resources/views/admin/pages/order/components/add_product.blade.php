@@ -12,7 +12,28 @@
         <div class="form-group mt-3 select_variant">
             {{-- nếu sản phẩm có biến thể thì nó sẽ render ra select chọn sản phẩm --}}
         </div>
-
+        <!-- Bảng Sản phẩm tìm kiếm -->
+        <div class="product-search-results">
+            <h5 class="mt-4">Danh sách sản phẩm</h5>
+            <table class="table table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" id="select-all-products">
+                        </th>
+                        <th>Hình ảnh</th>
+                        <th>SKU</th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Giá Tiền</th>
+                    </tr>
+                </thead>
+                <tbody id="product-search-results-body">
+                    <!-- Sản phẩm tìm kiếm sẽ được thêm động ở đây -->
+                </tbody>
+            </table>
+            <!-- Phân trang -->
+            <div id="product-pagination" class="pagination mt-3"></div>
+        </div>
 
         <h5 class="mt-4">Chi tiết Đơn Hàng</h5>
         <table class="table table-striped mt-3">
@@ -29,33 +50,32 @@
             </thead>
             <tbody id="product-table-body" class="product-variant">
                 @if (isset($order_details))
-                @foreach ($order_details as $detail)
-                {{-- @dd($detail->product) --}}
-                <tr data-id="{{ $detail->product->id }}">
-                    <td>
-                        <a href="{{$detail->product->thumbnail}}" data-fancybox="gallery">
-                            <img src="{{$detail->product->thumbnail}}" alt="{{$detail->name}}" class="product-thumbnail">
-                        </a>
-                    </td>
-                    <td>{{ $detail->sku }}</td>
-                    <td>{{ $detail->product->name }}</td>
-                    <td class='fix-input'>
-                        <input type="number" value="{{$detail->quantity}}" class="product-quantity form-control" data-price="{{$detail->price}}" min="1" max="5" style="width: 60px;">
-                    </td>
-                    <td>{{ formatNumber($detail->price) }}</td>
-                    <td class="total-price">{{ formatNumber($detail->price * $detail->quantity) }}</td>
-                    <td><button type="button" class="btn btn-danger btn-sm rounded delete-product-btn">Xóa</button></td>
-                    <td class="hidden">
-                        <input type="text" name="product_id[]" value="{{$detail->product->id}}">
-                        <input type="text" class="product_quantity_input" name="quantity[]" value="{{$detail->quantity}}">
-                        <input type="text"  name="price[]" value="{{$detail->price}}">
-                        <input type="text" name="name_orderDetail[]" value="{{$detail->name}}">
-                        <input type="text" name="sku[]" value="{{ $detail->sku }}">
-                        <input type="text" name="thumbnail[]" value="{{$detail->product->thumbnail}}">
-                        <input type="text" name="total[]" value="{{$detail->price * $detail->quantity}}">
-                    </td>
-                </tr>
-            @endforeach
+                    @foreach ($order_details as $detail)
+                    <tr data-id="{{ $detail->product->id }}">
+                        <td>
+                            <a href="{{$detail->product->thumbnail}}" data-fancybox="gallery">
+                                <img src="{{$detail->product->thumbnail}}" alt="{{$detail->name}}" class="product-thumbnail">
+                            </a>
+                        </td>
+                        <td>{{ $detail->sku }}</td>
+                        <td>{{ $detail->product->name }}</td>
+                        <td class='fix-input'>
+                            <input type="number" value="{{$detail->quantity}}" class="product-quantity form-control" data-price="{{$detail->price}}" min="1" max="5" style="width: 60px;">
+                        </td>
+                        <td>{{ formatNumber($detail->price) }}</td>
+                        <td class="total-price">{{ formatNumber($detail->price * $detail->quantity) }}</td>
+                        <td><button type="button" class="btn btn-danger btn-sm rounded delete-product-btn">Xóa</button></td>
+                        <td class="hidden">
+                            <input type="text" name="product_id[]" value="{{$detail->product->id}}">
+                            <input type="text" class="product_quantity_input" name="quantity[]" value="{{$detail->quantity}}">
+                            <input type="text" name="price[]" value="{{$detail->price}}">
+                            <input type="text" name="name_orderDetail[]" value="{{$detail->name}}">
+                            <input type="text" name="sku[]" value="{{ $detail->sku }}">
+                            <input type="text" name="thumbnail[]" value="{{$detail->product->thumbnail}}">
+                            <input type="text" name="total[]" value="{{$detail->price * $detail->quantity}}">
+                        </td>
+                    </tr>
+                    @endforeach
                 @endif
             </tbody>
         </table>
@@ -64,9 +84,7 @@
             <label for="total_amount">Tổng tiền: <strong class="total_amount" id="preview_totle">0</strong></label>
             <input type="hidden" id="total_amount" name="total_amount" class="form-control" value="0">
         </div>
-
     </div>
-</div>
 </div>
 
 <script>

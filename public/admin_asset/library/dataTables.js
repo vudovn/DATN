@@ -116,6 +116,7 @@
             TGNT.fetchData({ page });
         });
     };
+    
     TGNT.checkInput = () => {
         $(document).on("change", ".checkInput", function () {
             const id = $(this).data("id");

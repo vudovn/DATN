@@ -259,7 +259,8 @@ class OrderController extends Controller  implements HasMiddleware
                 ],
                 'js' => [
                     'admin_asset/library/location.js', 
-                    'admin_asset/library/order.js'
+                    'admin_asset/library/order.js',
+                    // 'admin_asset/library/dataTables_order.js'
                 ],
                 'model' => 'order'
             ];

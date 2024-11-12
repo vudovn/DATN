@@ -59,13 +59,12 @@ class CollectionController extends Controller implements HasMiddleware
         ));
     }
     public function store(StoreCollectionRequest $request)
-    // public function store(Request $request)
     {
         $collection = $this->collectionService->create($request);
         if ($collection) {
             return redirect()->route('collection.index')->with('success', 'Tạo bộ sưu tập mới thành công');
         }
-        return redirect()->route('collection.index')->with('error', 'Tạo bộ sưu tập mới thất bại');
+        return redirect()->back()->with('error', 'Tạo bộ sưu tập mới thất bại');
     }
     public function edit($id)
     {

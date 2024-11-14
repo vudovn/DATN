@@ -95,10 +95,8 @@
                 <div class="form-group mb-3">
                     <x-input :label="'Địa chỉ giao hàng'" name="address" :value="old('address')" :required="false" />
                 </div>
-
-
+              
                 @include('admin.pages.order.components.add_product')
-
                 <div class="card-footer">
                     <div class="text-end">
                         <a href="{{ route('order.index') }}" class="btn btn-danger">Quay lại</a>
@@ -109,6 +107,27 @@
         </div>
     </div>
 
+    <script>
+        let id = {!! json_encode(old('product_id', [])) !!};
+        let sku = {!! json_encode(old('sku', [])) !!};
+        let name = {!! json_encode(old('name_orderDetail', [])) !!};
+        let price = {!! json_encode(old('price', [])) !!};
+        let quantity = {!! json_encode(old('quantity', [])) !!};
+        let total = {!! json_encode(old('total', [])) !!};
+        let thumbnail = {!! json_encode(old('thumbnail', [])) !!};
+    
+        let productVariants = [];
+        for (let i = 0; i < id.length; i++) {
+            productVariants.push({
+                id: id[i],
+                sku: sku[i],
+                name: name[i],
+                price: price[i],
+                thumbnail: thumbnail[i],
+                quantity: quantity[i],
+            });
+        }
+    </script>
     {{-- <script>
         $(document).ready(function() {
             new Choices('.js-choice-order');

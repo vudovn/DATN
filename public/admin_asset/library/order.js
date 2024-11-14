@@ -4,7 +4,7 @@
     const VDmessage = new VdMessage();
 
     TGNT.select_status = () => {
-        $(document).on('focus', 'select[name="status"]', function() {
+        $(document).on('focus', 'select[name="status"]', function () {
             $(this).attr('data-original-value', $(this).val());
         });
         $(document).on("change", ".select_status", function () {
@@ -12,17 +12,17 @@
             const orderId = $(this).data("id");
             const name = $(this).attr("name");
             const old_value = $(this).attr('data-original-value');
-    
+
             if (name === 'status') {
                 const paymentStatus = $(this).parents('tr').find('select[name="payment_status"]').val();
                 if (paymentStatus === "completed") {
                     if (statusId === "delivered") {
                         $(this).parents('tr').addClass('bg-blue-100')
                             .find('input, select, button, a, ul').attr('disabled', true);
-                            $(this).parents('tr').find('.btn_delete').addClass('disabled_row');
-                            $(this).parents('tr').find('.btn_edit').addClass('disabled_row');
-                            $(this).parents('tr').find('.btn_link').addClass('disabled_row');
-                            $(this).parents('tr').find('input[type="checkbox"]').remove();
+                        $(this).parents('tr').find('.btn_delete').addClass('disabled_row');
+                        $(this).parents('tr').find('.btn_edit').addClass('disabled_row');
+                        $(this).parents('tr').find('.btn_link').addClass('disabled_row');
+                        $(this).parents('tr').find('input[type="checkbox"]').remove();
                     }
                 } else {
                     if (statusId === "delivered") {
@@ -32,7 +32,7 @@
                     }
                 }
             }
-    
+
             $.ajax({
                 url: `/order/payment-status/${orderId}`,
                 type: "PUT",

@@ -65,7 +65,7 @@
                     {{-- <p class="text-primary"><strong>Tỷ giá quy đổi:</strong> 1 USD = 23,080 VND</p> --}}
                 </div>
                 <div class="col-6 text-right">
-                    <p><strong>Cộng tiền hàng:</strong> {{ formatMoney($order->total) }}</p>
+                    <p><strong>Tổng tiền hàng:</strong> {{ formatMoney($order->total) }}</p>
                     <p><strong>% thuế GTGT:</strong> 2%</p>
                     <p><strong>Tiền thuế GTGT:</strong> {{ formatMoney($order->total * 2 / 100) }}</p>
                     <p class="font-weight-bold text-primary"><strong>Tổng tiền thanh toán : {{ formatMoney($order->total - ($order->total * 2 / 100)) }}</strong></p>

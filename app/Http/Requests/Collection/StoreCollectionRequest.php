@@ -3,12 +3,17 @@
 namespace App\Http\Requests\Collection;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class StoreCollectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
+    public function __construct(Request $request)  // Fix the typo here
+    {
+        // dd($request->all());  
+    }
     public function authorize(): bool
     {
         return true;
@@ -21,15 +26,15 @@ class StoreCollectionRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (is_string($this->idProduct)) {
+        if (is_string($this->skus)) {
             $this->merge([
-                'idProduct' => array_map('trim', explode(',', $this->idProduct))
+                'skus' => array_map('trim', explode(',', $this->skus))
             ]);
         }
         return [
             'name' => 'required',
             'thumbnail' => 'required',
-            'idProduct' => 'min:3',
+            'skus' => 'min:3',
             // 'meta_title' => 'required',
             // 'meta_description' => 'required',
         ];

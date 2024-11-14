@@ -81,7 +81,6 @@ class BaseRepository
     public function getAll() {
         return $this->model->all();
     }
-
     // public function findByIdLocation(
     //     int $modelId,
     //     array $column = ['*'],

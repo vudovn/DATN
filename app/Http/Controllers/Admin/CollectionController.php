@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Repositories\Product\ProductRepository;
+use App\Repositories\Product\ProductVariantRepository;
+use App\Repositories\Collection\CollectionProductRepository;
 use App\Repositories\Collection\CollectionRepository;
 use App\Services\Collection\CollectionService;
 use App\Http\Requests\Collection\StoreCollectionRequest;
@@ -11,6 +14,7 @@ use App\Http\Requests\Collection\UpdateCollectionRequest;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Traits\HasDynamicMiddleware;
 use App\Models\Category;
+use App\Models\CollectionProduct;
 
 class CollectionController extends Controller implements HasMiddleware
 {
@@ -21,11 +25,20 @@ class CollectionController extends Controller implements HasMiddleware
     }
     protected $collectionRepository;
     protected $collectionService;
+    protected $productRepository;
+    protected $productVariantRepository;
+    protected $collectionProductRepository;
     function __construct(
+        ProductRepository $productRepository,
+        ProductVariantRepository $productVariantRepository,
         CollectionRepository $collectionRepository,
-        CollectionService $collectionService
+        CollectionService $collectionService,
+        collectionProductRepository $collectionProductRepository,
     ) {
+        $this->productRepository = $productRepository;
+        $this->productVariantRepository = $productVariantRepository;
         $this->collectionRepository = $collectionRepository;
+        $this->collectionProductRepository = $collectionProductRepository;
         $this->collectionService = $collectionService;
     }
     public function index(Request $request)
@@ -45,6 +58,16 @@ class CollectionController extends Controller implements HasMiddleware
         $config = $this->config();
         return view('admin.pages.collection.components.table', compact('collections', 'config'));
     }
+    public function getProductPoint(Request $request)
+    {
+        $data = $this->productRepository->findByField('sku', $request->sku)->first();
+        if (empty($data->sku)) {
+            $data =  $this->productVariantRepository->findByField('sku', $request->sku)->first();
+            $data->name = $data->product->name;
+            $data->slug = $data->product->slug;
+        }
+        return $data;
+    }
     public function create()
     {
         $config = $this->config();
@@ -52,7 +75,7 @@ class CollectionController extends Controller implements HasMiddleware
         $config['method'] = 'create';
         $categories = Category::where('is_room', 2)->pluck('name', 'id')->prepend('Danh mục', 0)->toArray();
         $categoryRoom = Category::where('is_room', 1)->pluck('name', 'id')->prepend('Phòng', 0)->toArray();
-        return view('admin.pages.collection.save', compact(
+        return view('admin.pages.collection.save_demo', compact(
             'config',
             'categoryRoom',
             'categories',
@@ -72,12 +95,17 @@ class CollectionController extends Controller implements HasMiddleware
         $categories = Category::where('is_room', 2)->pluck('name', 'id')->prepend('Danh mục', 0)->toArray();
         $categoryRoom = Category::where('is_room', 1)->pluck('name', 'id')->prepend('Phòng', 0)->toArray();
         $config = $this->config();
-        $idProduct = $collection->products()->pluck('id')->toArray();
+        $skuProduct = CollectionProduct::pluck('product_sku')->toArray();
+        $skuVariant = CollectionProduct::pluck('productVariant_sku')->toArray();
+        $skus = implode(',', array_filter(array_merge($skuProduct, $skuVariant)));
         $config['breadcrumb'] = $this->breadcrumb('update');
         $config['method'] = 'edit';
-        return view('admin.pages.collection.save', compact(
+        return view('admin.pages.collection.save_demo', compact(
             'config',
-            'collection','categories','categoryRoom','idProduct'
+            'collection',
+            'categories',
+            'categoryRoom',
+            'skus'
         ));
     }
     public function update(UpdateCollectionRequest $request, $id)
@@ -115,8 +143,10 @@ class CollectionController extends Controller implements HasMiddleware
     {
         return [
             'css' => [
+                'client_asset/custom/css/collection.css',
             ],
             'js' => [
+                'admin_asset/library/collection.js',
             ],
             'model' => 'collection'
         ];

@@ -129,8 +129,8 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
      /* COLLECTION ROUTE */
     Route::prefix('collection')->name('collection.')->group(function () {
         Route::get('/index', [CollectionController::class, 'index'])->name('index');
+        Route::get('/getProductPoint', [CollectionController::class, 'getProductPoint'])->name('getProductPoint');
         Route::get('/create', [CollectionController::class, 'create'])->name('create');
-
         Route::post('/store', [CollectionController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [CollectionController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [CollectionController::class, 'update'])->name('update');

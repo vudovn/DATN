@@ -6,7 +6,7 @@ use App\Repositories\Collection\CollectionRepository;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\productVariantRepository;
 use Illuminate\Support\Facades\DB;
-class CollectionService extends BaseService
+class CollectionProductService extends BaseService
 {
     protected $collectionRepository;
     protected $productRepository;
@@ -92,35 +92,8 @@ class CollectionService extends BaseService
             $payload = $request->except(['categoriesOther', 'categoriesRoom', '_token', 'send', 'idProduct', 'keyword','_method']);
             $collection = $this->collectionRepository->findById($id);
             $this->collectionRepository->update($id, $payload);
-            foreach (explode(',',$request->skus) as $sku) {
-                $product = $this->productRepository->findByField('sku', $sku)->first();
-                $productSku = null;
-                $productVariantSku = null;
-
-                if ($product) {
-                    $productSku = $product->sku;
-                } else {
-                    $productVariant = $this->productVariantRepository->findByField('sku', $sku)->first();
-                    if ($productVariant) {
-                        $productVariantSku = $productVariant->sku;
-                    }
-                }
-                if ($productSku || $productVariantSku) {
-                    DB::table('collection_product')->updateOrInsert(
-                        [
-                            'collection_id' => $collection->id,
-                            'product_sku' => $productSku,
-                            'productVariant_sku' => $productVariantSku,
-                        ],
-                        [
-                            'collection_id' => $collection->id,
-                            'product_sku' => $productSku ?? null,
-                            'productVariant_sku' => $productVariantSku ?? null,
-                        ]
-                    );
-                }            
-            }
-            
+            $productIds = $request->idProduct;
+            $collection->products()->sync($productIds);
             DB::commit();
             return true;
         } catch (\Exception $e) {

@@ -78,10 +78,14 @@ class BaseRepository
         return $this->model->whereIn($whereInField, $whereIn)->delete();
     }
 
+
     public function getAll() {
         return $this->model->all();
     }
 
+    public function deleteManyWhere($field1, $valField1, $field2, $valField2) {
+        return $this->model->where($field1, $valField1)->where($field2, $valField2)->delete();
+    }
     // public function findByIdLocation(
     //     int $modelId,
     //     array $column = ['*'],

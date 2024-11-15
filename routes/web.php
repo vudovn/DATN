@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
 use App\Http\Controllers\Admin\CollectionController;
+use App\Http\Controllers\Admin\WishlistController;
 
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
@@ -143,7 +144,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::post('/store', [CommentForbiddenWordController::class, 'store'])->name('store');
         Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'delete'])->name('delete');
 
-    
+
     // /* ATTRIBUTE VALUE ROUTE */
     // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
     //     Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
@@ -239,4 +240,12 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('/', [ClientCollectionController::class, 'index'])->name('index');
         Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
     });
+
+        /* WISHLIST */
+        Route::prefix('yeu-thich')->name('wishlist.')->group(function () {
+            Route::get('/', [WishlistController::class, 'index'])->name('index');
+            Route::get('/add-wishlist', [WishlistController::class, 'add']);
+            Route::get('/remove-wishlist', [WishlistController::class, 'delete']);
+        });
+        
 });

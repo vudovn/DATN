@@ -23,7 +23,7 @@
                 </div>
                 <div class="product-of-collection">
                     <p class="title">Sản phẩm thuộc bộ sưu tập</p>
-                    <div class="row">
+                    {{-- <div class="row">
                         @foreach ($products as $product)
                             <div class="col-md-4 col-lg-3 col-xl-3 col-6 d-flex justify-content-center">
                                 <div class="card custom-card border-0">
@@ -32,13 +32,6 @@
                                             <img src="{{ $product->thumbnail }}" class="card-img-top" alt="...">
                                             <i class="bi bi-heart position-absolute top-0 end-0 mt-2 me-2"
                                                 style="cursor: pointer;"></i>
-                                            {{-- <div class="btn-group">
-                                                <a href=""><button
-                                                        class="btn btn-outline-danger btn-add-to-cart">THÊM VÀO
-                                                        GIỎ</button></a>
-                                                <a href="{{ route('client.product.detail', $product->slug) }}"><button
-                                                        class="btn btn-outline-danger btn-view-more">XEM THÊM</button></a>
-                                            </div> --}}
                                         </div>
                                     </a>
                                     <div class="card-body position-relative">
@@ -51,7 +44,7 @@
                                 </div>
                             </div>
                         @endforeach
-                    </div>
+                    </div> --}}
                     <div class="text-center mb-3">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -59,7 +52,7 @@
                             Thêm bộ sưu tập vào giỏ hàng
                         </button>
                     </div>
-                    @include('client.pages.collection.components.modal_product')
+                    {{-- @include('client.pages.collection.components.modal_product') --}}
                 </div>
             </div>
         </section>

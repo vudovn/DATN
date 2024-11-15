@@ -25,9 +25,9 @@ class WishlistController extends Controller
         $user = User::with('wishlists.products')->find(1);
     
         $products = [];
-        foreach ($user->wishlists as $wishlist) {
-            // dd($wishlist);
-        }
+        // foreach ($user->wishlists as $wishlist) {
+        //     dd($wishlist);
+        // }
         return view('client.pages.wishlist.wish_list', compact(
             'config',
             'products'

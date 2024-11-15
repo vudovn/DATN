@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('collection_product', function (Blueprint $table) {
+        Schema::create('collection_productVariant', function (Blueprint $table) {
             $table->unsignedBigInteger('collection_id')->nullable();
-            $table->string('product_sku')->nullable();
-            $table->string('productVariant_sku')->nullable();
+            $table->unsignedBigInteger('productVariant_id')->nullable();
 
             $table->foreign('collection_id')->references('id')->on('collections')->onDelete('cascade');
-            $table->foreign('product_sku')->references('sku')->on('products')->onDelete('cascade')->nullable();
-            $table->foreign('productVariant_sku')->references('sku')->on('product_variants')->onDelete('cascade')->nullable();
+            $table->foreign('productVariant_id')->references('id')->on('product_variants')->onDelete('cascade')->nullable();
         });
     }
 

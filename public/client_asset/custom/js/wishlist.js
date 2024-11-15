@@ -37,7 +37,7 @@
             success: function (res) {
                 console.log(res);
                 VDmessage.show('success', res.message)
-                // $(".loading_tgnt").fadeOut("slow");
+                $(".loading_tgnt").fadeOut("slow");
             },
         });
 

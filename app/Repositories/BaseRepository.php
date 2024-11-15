@@ -83,16 +83,12 @@ class BaseRepository
         return $this->model->all();
     }
 
+
     public function deleteManyWhere($field1, $valField1, $field2, $valField2) {
         return $this->model->where($field1, $valField1)->where($field2, $valField2)->delete();
     }
-    // public function findByIdLocation(
-    //     int $modelId,
-    //     array $column = ['*'],
-    //     array $relation = []
-    // ){
-    //     return $this->model->select($column)->with($relation)->findOrFail($modelId);
-    // }  cái ni t tạo hôm qua , chừ không dùng nữa !
+
+
     public function createMany(array $payload = []){
         return $this->model->insert($payload);
     }

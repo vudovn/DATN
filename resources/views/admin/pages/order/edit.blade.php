@@ -93,13 +93,6 @@
 
                 {{-- Thêm sản phẩm --}}
                 @include('admin.pages.order.components.add_product')
-
-                <div class="card-footer">
-                    <div class="text-end">
-                        <a href="{{ route('order.index') }}" class="btn btn-danger">Quay lại</a>
-                        <button type="submit" class="btn btn-primary">Lưu</button>
-                    </div>
-                </div>
             </form>
         </div>
 

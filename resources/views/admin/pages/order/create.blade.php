@@ -5,26 +5,17 @@
     <div class="card">
         <div class="card-header">
             <h4>Tạo Đơn Hàng Mới</h4>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
         </div>
 
         <div class="card-body">
-            <form action="{{ route('order.store') }}" method="POST">
+            <form method="POST" action="{{ route('order.store') }}">
                 @csrf
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group mb-3">
                             <h5>Tìm khách hàng theo số điện thoại</h5>
                             <div class="btn-search-customer">
-                                <input type="number" class="form-control search-customer" placeholder="Nhập số điện thoại">
+                                <input type="text" class="form-control search-customer" placeholder="Nhập số điện thoại">
                             </div>
                         </div>
                     </div>
@@ -95,14 +86,9 @@
                 <div class="form-group mb-3">
                     <x-input :label="'Địa chỉ giao hàng'" name="address" :value="old('address')" :required="false" />
                 </div>
-              
+     
                 @include('admin.pages.order.components.add_product')
-                <div class="card-footer">
-                    <div class="text-end">
-                        <a href="{{ route('order.index') }}" class="btn btn-danger">Quay lại</a>
-                        <button type="submit" class="btn btn-primary">Lưu</button>
-                    </div>
-                </div>
+                
             </form>
         </div>
     </div>

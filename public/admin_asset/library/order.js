@@ -199,96 +199,6 @@
         });
     };
 
-    TGNT.renderRow = (product) => {
-        let existingRow = $("#product-table-body").find(
-            `tr[data-id="${product.id}"]`
-        );
-        if (existingRow.length > 0) {
-            let currentQuantityInput = existingRow.find(".product-quantity");
-            product.quantity = parseInt(currentQuantityInput.val()) + 1;
-            currentQuantityInput.val(product.quantity);
-            let totalPrice = product.quantity * product.price;
-            existingRow
-                .find(".total-price")
-                .text(TGNT.formatNumber(totalPrice));
-        } else {
-            $("#product-table-body").append(`
-                <tr data-id="${product.id}">
-                   <td>
-                       <a href="${product.thumbnail}" data-fancybox="gallery">
-                           <img src="${product.thumbnail}" alt="${product.name
-                }" class="product-thumbnail">
-                       </a>
-                   </td>
-                    <td>${product.sku}</td>
-                    <td class="text-wrap">${product.name}</td>
-                    <td class='fix-input'>
-                        <input type="number" value="${product.quantity
-                }" class="product-quantity form-control" data-price="${product.price
-                }" min="1" max="5" style="width: 60px;">
-                    </td>
-                    <td>${TGNT.formatNumber(product.price)}</td>
-                    <td class="total-price">${TGNT.formatNumber(
-                    product.total ?? product.price * product.quantity
-                )}</td>
-                    <td><button type="button" class="btn btn-danger btn-sm rounded delete-product-btn">Xóa</button></td>
-                    <td class="hidden">
-                        <input type="text" name="product_id[]" value="${product.id
-                }">
-                        <input type="text" class="product_quantity_input" name="quantity[]" value="${product.quantity
-                }">
-                        <input type="text"  name="price[]" value="${product.price
-                }">
-                        <input type="text" name="name_orderDetail[]" value="${product.name
-                }">
-                        <input type="text" name="sku[]" value="${product.sku}">
-                        <input type="text" name="thumbnail[]" value="${product.thumbnail
-                }">
-                        <input type="text" name="total[]" value="${product.total ?? product.price
-                }">
-                    </td>
-                </tr>
-            `);
-        }
-    };
-
-    TGNT.calculateTotalAmount = () => {
-        let totalAmount = 0;
-        $("#product-table-body .total-price").each(function () {
-            let priceText = $(this)
-                .text()
-                .replace("", "")
-                .replace(/\./g, "")
-                .trim();
-            let price = parseInt(priceText);
-            totalAmount += price;
-        });
-        $("#total_amount").val(TGNT.formatNumber(totalAmount));
-        $(".total_amount").text(TGNT.formatNumber(totalAmount));
-    };
-
-    TGNT.updateQuantity = () => {
-        $(document).on("input", ".product-quantity", function () {
-            let quantity = $(this).val();
-            let price = $(this).data("price");
-            let totalPrice = quantity * price;
-
-            $(this).closest("tr").find(".product_quantity_input").val(quantity);
-            $(this)
-                .closest("tr")
-                .find(".total-price")
-                .text(TGNT.formatNumber(totalPrice));
-
-            TGNT.calculateTotalAmount();
-        });
-    };
-
-    TGNT.deleteProduct = () => {
-        $(document).on("click", ".delete-product-btn", function () {
-            $(this).closest("tr").remove();
-            TGNT.calculateTotalAmount();
-        });
-    };
 
     TGNT.checkProduct = () => {
         console.log(sku);
@@ -299,10 +209,6 @@
             });
             TGNT.calculateTotalAmount();
         }
-    };
-
-    TGNT.formatNumber = (number) => {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
 
     // =======================================================--====4
@@ -360,11 +266,7 @@
         TGNT.select_status();
         TGNT.getProduct();
         TGNT.addToTable();
-        TGNT.updateQuantity();
-        TGNT.deleteProduct();
-        TGNT.getVariant();
         TGNT.checkProduct();
-        TGNT.calculateTotalAmount();
 
         // =================
         TGNT.searchCustomer();

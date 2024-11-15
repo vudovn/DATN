@@ -88,8 +88,9 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     });
 
     /* ORDER ROUTE */
-    Route::prefix('order')->name('order.')->group(function () {
+    Route::prefix('order/')->name('order.')->group(function () {
         Route::get('dataProduct', [OrderController::class, 'dataProduct'])->name('dataProduct');
+        Route::get('getProduct', [OrderController::class, 'getProduct'])->name('getProduct');
         Route::get('index', [OrderController::class, 'index'])->name('index');
         Route::get('create', [OrderController::class, 'create'])->name('create');
         Route::post('store', [OrderController::class, 'store'])->name('store');
@@ -131,8 +132,8 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
      /* COLLECTION ROUTE */
     Route::prefix('collection')->name('collection.')->group(function () {
         Route::get('/index', [CollectionController::class, 'index'])->name('index');
+        Route::get('/getProductPoint', [CollectionController::class, 'getProductPoint'])->name('getProductPoint');
         Route::get('/create', [CollectionController::class, 'create'])->name('create');
-
         Route::post('/store', [CollectionController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [CollectionController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [CollectionController::class, 'update'])->name('update');
@@ -241,11 +242,15 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
     });
 
-        /* WISHLIST */
-        Route::prefix('yeu-thich')->name('wishlist.')->group(function () {
-            Route::get('/', [WishlistController::class, 'index'])->name('index');
-            Route::get('/add-wishlist', [WishlistController::class, 'add']);
-            Route::get('/remove-wishlist', [WishlistController::class, 'delete']);
-        });
+     /* WISHLIST */
+    Route::prefix('yeu-thich')->name('wishlist.')->group(function () {
+        Route::get('/', [WishlistController::class, 'index'])->name('index');
+        Route::get('/add-wishlist', [WishlistController::class, 'add']);
+        Route::get('/remove-wishlist', [WishlistController::class, 'delete']);
+    });
+
+    // Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
+    // Route::post('/wishlist/delete', [WishlistController::class, 'delete'])->name('wishlist.delete');
+    // Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
         
 });

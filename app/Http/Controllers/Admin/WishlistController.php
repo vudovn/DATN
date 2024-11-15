@@ -39,6 +39,7 @@ class WishlistController extends Controller
     {
         // dd($request->all());
         $userId = $request->user()->id;
+        
         if ($this->wishlistService->addWishlist($userId, $request->product_id)) {
             return successResponse(null, 'Đã thêm sản phẩm vào mục yêu thích');
         }

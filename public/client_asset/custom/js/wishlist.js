@@ -32,12 +32,12 @@
             },
             dataType: "json",
             beforeSend: function () {
-                $(".loading_tgnt").fadeIn("slow");
+                // $(".loading_tgnt").fadeIn("slow");
             },
             success: function (res) {
                 console.log(res);
                 VDmessage.show('success', res.message)
-                $(".loading_tgnt").fadeOut("slow");
+                // $(".loading_tgnt").fadeOut("slow");
             },
         });
 

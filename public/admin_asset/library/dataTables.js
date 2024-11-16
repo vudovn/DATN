@@ -28,38 +28,13 @@
         );
         // console.log(array);
         const model = TGNT.getModel();
-        const keyToCheck = "categoriesOther";
-        const url =
-            Object.values(array).length > 6
-                ? `/getProduct`
-                : `/${model}/getData`;
+        const url = `/${model}/getData`;
         $.ajax({
             type: "GET",
             url: url,
             data: { ...array, ...params },
             success: function (data) {
-                if (url.includes("getProduct")) {
-                    $("#content").html(data);
-                    array.idArray.forEach((id) => {
-                        $(".checkInput[data-id='" + id + "']").prop(
-                            "checked",
-                            true
-                        );
-                        $("#product-item" + id).css(
-                            "background-color",
-                            "#cce6e6"
-                        );
-                    });
-                    $(".countProduct").html(array.idArray.length);
-                    $(".filterProduct .title").addClass(
-                        array.idArray.length > 2
-                            ? "alert alert-primary"
-                            : "alert alert-danger"
-                    );
-                    $("#idProduct").val(array.idArray.join(","));
-                } else {
-                    $("#tbody").html(data);
-                }
+                $("#tbody").html(data);
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching data:", error);
@@ -90,19 +65,27 @@
 
     TGNT.showProduct = () => {
         const productElement = document.querySelector(".show-product");
-        if (idProduct && idProduct.length > 0) {
-            if (productElement) productElement.classList.remove("hidden");
-            $(this).css("display", "none");
-            array["idArray"] = idProduct;
-            $(".add-product").css("display", "none");
-            TGNT.fetchData(array);
-        }
+        // if (idProduct && idProduct.length > 0) {
+        //     if (productElement) productElement.classList.remove("hidden");
+        //     $(this).css("display", "none");
+        //     array["idArray"] = idProduct;
+        //     $(".add-product").css("display", "none");
+        //     TGNT.fetchData(array);
+        // }
+        // if (idVariant && idVariant.length > 0) {
+        //     if (productElement) productElement.classList.remove("hidden");
+        //     $(this).css("display", "none");
+        //     array["idArray2"] = idVariant;
+        //     $(".add-product").css("display", "none");
+        //     TGNT.fetchData(array);
+        // }
         $(".add-product").on("click", function () {
             let key = $(this).data("show");
             if (productElement) productElement.classList.remove("hidden");
             $(this).css("display", "none");
             if (key) {
                 array["idArray"] = [];
+                array["idArray2"] = [];
                 TGNT.fetchData(array);
             }
         });
@@ -115,6 +98,7 @@
             TGNT.fetchData({ page });
         });
     };
+
     TGNT.checkInput = () => {
         $(document).on("change", ".checkInput", function () {
             const id = $(this).data("id");
@@ -146,7 +130,8 @@
         TGNT.filterForm();
         TGNT.paginationForm();
         TGNT.fetchData();
-        TGNT.showProduct();
-        TGNT.checkInput();
+        // TGNT.showProduct();
+        // TGNT.checkInput();
+        // TGNT.collectionJs();
     });
 })(jQuery);

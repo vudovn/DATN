@@ -4,16 +4,20 @@ namespace App\Services\Collection;
 use App\Services\BaseService;
 use App\Repositories\Collection\CollectionRepository;
 use App\Repositories\Product\ProductRepository;
+use App\Repositories\Product\productVariantRepository;
 use Illuminate\Support\Facades\DB;
 class CollectionService extends BaseService
 {
     protected $collectionRepository;
     protected $productRepository;
+    protected $productVariantRepository;
     public function __construct(
         ProductRepository $productRepository,
+        ProductVariantRepository $productVariantRepository,
         CollectionRepository $collectionRepository
     ) {
         $this->productRepository = $productRepository;
+        $this->productVariantRepository = $productVariantRepository;
         $this->collectionRepository = $collectionRepository;
     }
     private function paginateAgrument($request)
@@ -47,8 +51,31 @@ class CollectionService extends BaseService
         DB::beginTransaction();
         try {
             $payload = $request->except(['categoriesOther', 'categoriesRoom', '_token', 'send', 'idProduct', 'keyword']);
+            if (empty($payload['slug'])) {
+                $payload['slug'] = getSlug($payload['name']);
+            }
             $collection = $this->collectionRepository->create($payload);
-            $collection->products()->attach($request->idProduct);
+            foreach ($request->skus as $sku) {
+                $product = $this->productRepository->findByField('sku', $sku)->first();
+                $productSku = null;
+                $productVariantSku = null;
+                if ($product) {
+                    $productSku = $product->sku;
+                } else {
+                    $productVariant = $this->productVariantRepository->findByField('sku', $sku)->first();
+                    if ($productVariant) {
+                        $productVariantSku = $productVariant->sku;
+                    }
+                }
+                if ($productSku || $productVariantSku) {
+                    DB::table('collection_product')->insert([
+                        'collection_id' => $collection->id,
+                        'product_sku' => $productSku ?? null,
+                        'productVariant_sku' => $productVariantSku ?? null,
+                    ]);
+                }
+            }
+            
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -65,8 +92,35 @@ class CollectionService extends BaseService
             $payload = $request->except(['categoriesOther', 'categoriesRoom', '_token', 'send', 'idProduct', 'keyword','_method']);
             $collection = $this->collectionRepository->findById($id);
             $this->collectionRepository->update($id, $payload);
-            $productIds = $request->idProduct;
-            $collection->products()->sync($productIds);
+            foreach (explode(',',$request->skus) as $sku) {
+                $product = $this->productRepository->findByField('sku', $sku)->first();
+                $productSku = null;
+                $productVariantSku = null;
+
+                if ($product) {
+                    $productSku = $product->sku;
+                } else {
+                    $productVariant = $this->productVariantRepository->findByField('sku', $sku)->first();
+                    if ($productVariant) {
+                        $productVariantSku = $productVariant->sku;
+                    }
+                }
+                if ($productSku || $productVariantSku) {
+                    DB::table('collection_product')->updateOrInsert(
+                        [
+                            'collection_id' => $collection->id,
+                            'product_sku' => $productSku,
+                            'productVariant_sku' => $productVariantSku,
+                        ],
+                        [
+                            'collection_id' => $collection->id,
+                            'product_sku' => $productSku ?? null,
+                            'productVariant_sku' => $productVariantSku ?? null,
+                        ]
+                    );
+                }            
+            }
+            
             DB::commit();
             return true;
         } catch (\Exception $e) {

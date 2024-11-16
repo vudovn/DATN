@@ -14,7 +14,10 @@ use App\Http\Controllers\Admin\CommentForbiddenWordController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
+use App\Http\Controllers\Admin\DiscountCodeController;
+
 use App\Http\Controllers\Admin\CollectionController;
+use App\Http\Controllers\Admin\WishlistController;
 
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
@@ -87,12 +90,14 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     });
 
     /* ORDER ROUTE */
-    Route::prefix('order')->name('order.')->group(function () {
+    Route::prefix('order/')->name('order.')->group(function () {
         Route::get('dataProduct', [OrderController::class, 'dataProduct'])->name('dataProduct');
+        Route::get('getProduct', [OrderController::class, 'getProduct'])->name('getProduct');
         Route::get('index', [OrderController::class, 'index'])->name('index');
         Route::get('create', [OrderController::class, 'create'])->name('create');
         Route::post('store', [OrderController::class, 'store'])->name('store');
         Route::get('edit/{id}', [OrderController::class, 'edit'])->name('edit');
+        Route::get('show/{id}', [OrderController::class, 'show'])->name('show');
         Route::put('update/{id}', [OrderController::class, 'update'])->name('update');
         Route::get('delete/{id}', [OrderController::class, 'delete'])->name('delete');
         Route::get('search_customer', [OrderController::class, 'searchCustomer'])->name('searchCustomer');
@@ -108,6 +113,16 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
     });
+
+    Route::prefix('discount')->name('discountCode.')->group(function () { 
+        Route::get('/index', [DiscountCodeController::class, 'index'])->name('index');
+        Route::get('/create', [DiscountCodeController::class, 'create'])->name('create');
+        Route::post('/store', [DiscountCodeController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [DiscountCodeController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [DiscountCodeController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [DiscountCodeController::class, 'delete'])->name('delete');
+    });
+
     /* COMMENT ROUTE */
     Route::prefix('comment')->name('comment.')->group(function () {
         Route::get('/index', [CommentController::class, 'index'])->name('index');
@@ -118,6 +133,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::put('/update/{id}', [CommentController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CommentController::class, 'delete'])->name('delete');
     });
+  
     /* REVIEW ROUTE */
     Route::prefix('review')->name('review.')->group(function () {
         Route::get('/index', [ReviewController::class, 'index'])->name('index');
@@ -129,8 +145,8 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     /* COLLECTION ROUTE */
     Route::prefix('collection')->name('collection.')->group(function () {
         Route::get('/index', [CollectionController::class, 'index'])->name('index');
+        Route::get('/getProductPoint', [CollectionController::class, 'getProductPoint'])->name('getProductPoint');
         Route::get('/create', [CollectionController::class, 'create'])->name('create');
-
         Route::post('/store', [CollectionController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [CollectionController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [CollectionController::class, 'update'])->name('update');
@@ -141,19 +157,6 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/create', [CommentForbiddenWordController::class, 'create'])->name('create');
         Route::post('/store', [CommentForbiddenWordController::class, 'store'])->name('store');
         Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'delete'])->name('delete');
-
-
-        // /* ATTRIBUTE VALUE ROUTE */
-        // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
-        //     Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
-        //     Route::get('/create', [AttributeValueController::class, 'create'])->name('create');
-        //     Route::post('/store', [AttributeValueController::class, 'store'])->name('store');
-        //     Route::get('/edit/{id}', [AttributeValueController::class, 'edit'])->name('edit');
-        //     Route::put('/update', [AttributeValueController::class, 'update'])->name('update');
-        //     Route::get('/delete/{id}', [AttributeValueController::class, 'delete'])->name('delete');
-        //     Route::delete('/destroy/{id}', [AttributeValueController::class, 'destroy'])->name('destroy');
-        // });
-        /* AJAX ROUTE */
     });
 });
 
@@ -242,4 +245,16 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('/', [ClientCollectionController::class, 'index'])->name('index');
         Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
     });
+
+     /* WISHLIST */
+    Route::prefix('yeu-thich')->name('wishlist.')->group(function () {
+        Route::get('/', [WishlistController::class, 'index'])->name('index');
+        Route::get('/add-wishlist', [WishlistController::class, 'add']);
+        Route::get('/remove-wishlist', [WishlistController::class, 'delete']);
+    });
+
+    // Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
+    // Route::post('/wishlist/delete', [WishlistController::class, 'delete'])->name('wishlist.delete');
+    // Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+        
 });

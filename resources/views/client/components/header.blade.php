@@ -31,7 +31,7 @@
                         <div class="box_right_vd align-items-center justify-content-center">
                             <!-- wishlist -->
                             <div class="list-inline-item me-7 text-center">
-                                <a href="" class="text-muted position-relative">
+                                <a href="{{ route('client.wishlist.index') }}" class="text-muted position-relative">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">

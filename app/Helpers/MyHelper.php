@@ -110,6 +110,15 @@ if (!function_exists('statusOrder')) {
     }
 }
 
+if (!function_exists('paymentStatusOrder')) {
+    function paymentStatusOrder($status)
+    {
+        $status = strtolower($status);
+        $statusList = __('order.payment_status');
+        return $statusList[$status] ?? 'Không xác định';
+    }
+}
+
 if (!function_exists('getActionRoute')) {
     function getActionRoute()
     {
@@ -136,9 +145,9 @@ if (!function_exists('getActionRoute')) {
 }
 
 if (!function_exists('orderCode')) {
-    function orderCode($id)
+    function orderCode()
     {
-        return 'TGNT' . str_pad($id, 7, '0', STR_PAD_LEFT);
+        return 'TGNT' . uniqid();
     }
 }
 
@@ -148,12 +157,22 @@ if(!function_exists('convertNumber')){
     }
 }
 
-
 if(!function_exists('formatMon')){
     function formatNumber($number){
         if($number == ''){
             return '';
         }
         return number_format($number, 0, '.', '.');
+    }
+}
+
+
+//format money vnd 
+if(!function_exists('formatMoney')){
+    function formatMoney($number){
+        if($number == ''){
+            return '';
+        }
+        return number_format($number, 0, '.', '.') . ' đ';
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use Illuminate\Http\Request;
@@ -100,6 +101,7 @@ class ProductController extends Controller implements HasMiddleware
         }
     }
 
+
     public function categories()
     {
         return [
@@ -175,4 +177,6 @@ class ProductController extends Controller implements HasMiddleware
             'model' => 'product'
         ];
     }
+
+    
 }

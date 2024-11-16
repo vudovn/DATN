@@ -1,14 +1,14 @@
 <?php  
 namespace App\Repositories\Order;
 use App\Repositories\BaseRepository;
-use App\Models\Order;
+use App\Models\OrderDetail;
 
-class OrderRepository extends BaseRepository{
+class OrderDetailsRepository extends BaseRepository{
     
     protected $model;
 
     public function __construct(
-        Order $model
+        OrderDetail $model
     ){
         $this->model = $model;
     }

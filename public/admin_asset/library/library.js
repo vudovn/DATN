@@ -80,7 +80,7 @@
         $("#checkAll").prop(
             "checked",
             checkBoxs.length &&
-                checkBoxs.filter(":checked").length === checkBoxs.length
+            checkBoxs.filter(":checked").length === checkBoxs.length
         );
     };
 
@@ -237,8 +237,8 @@
                         success: function () {
                             deleteAxis === "column"
                                 ? $(
-                                      `th[data-axis="${id}"], td[data-axis="${id}"]`
-                                  ).remove()
+                                    `th[data-axis="${id}"], td[data-axis="${id}"]`
+                                ).remove()
                                 : _this.closest("tr").remove();
                             VDmessage.show("success", "Xóa thành công!");
                         },
@@ -254,12 +254,12 @@
     TGNT.permission_to_role = () => {
         let timeout = "";
         $(document).on("click", ".permission_to_role", function () {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-            });
+            // const Toast = Swal.mixin({
+            //     toast: true,
+            //     position: "top-end",
+            //     showConfirmButton: false,
+            //     timer: 3000,
+            // });
             const _this = $(this);
             _this.attr("disabled", true);
             const permissionName = _this.attr("data-permissionName");
@@ -314,9 +314,9 @@
                     _this.removeClass("hidden");
 
                     const value = inputUpdate.val().trim();
-
+                    const model = _this.data("model");
                     $.ajax({
-                        url: "/permission/quickUpdate",
+                        url: `/${model}/quickUpdate`,
                         type: "PUT",
                         headers: {
                             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -324,7 +324,7 @@
                             ),
                         },
                         data: {
-                            model: _this.data("model"),
+                            model: model,
                             name: _this.attr("name"),
                             is_required: _this.attr("is_required"),
                             id: _this.data("id"),
@@ -404,20 +404,46 @@
         return str;
     };
 
-    $(document).ready(function () {
-        TGNT.setupAjaxHeader();
-        TGNT.changeStatusByField();
-        TGNT.checkBoxItem();
-        TGNT.checkAll();
-        TGNT.hideActions();
-        TGNT.action();
-        TGNT.delete_item();
-        TGNT.select2();
-        TGNT.tagify();
-        TGNT.sortui();
-        TGNT.requestUrl();
-        TGNT.permission_to_role();
-        TGNT.quick_update();
-        TGNT.int();
-    });
+    TGNT.select_status = () => {
+        $(document).on("change", ".select-status", function () {
+            const statusId = $(this).val();
+            const orderId = $(this).data("id");
+        
+            $.ajax({
+                url: `/orders/${orderId}/payment_status`, 
+                type: "PUT",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                },
+                data: {
+                    status_id: statusId,
+                },
+                dataType: "JSON",
+                success: () => {
+                    VDmessage.show("success", "Trạng thái đã được cập nhật!");
+                },
+                error: (xhr) => {
+                    VDmessage.show("error", xhr.responseJSON.message);
+                },
+            });
+        });
+    }
+    
+        $(document).ready(function () {
+            TGNT.setupAjaxHeader();
+            TGNT.changeStatusByField();
+            TGNT.checkBoxItem();
+            TGNT.checkAll();
+            TGNT.hideActions();
+            TGNT.action();
+            TGNT.delete_item();
+            TGNT.select2();
+            TGNT.tagify();
+            TGNT.sortui();
+            TGNT.requestUrl();
+            TGNT.permission_to_role();
+            TGNT.quick_update();
+            TGNT.int();
+            TGNT.select_status();
+        });
 })(jQuery);

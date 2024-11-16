@@ -1,6 +1,5 @@
-<?php
+<?php 
 return [
-
     'function' => [
         [
             'name' => 'Quản lý thành viên',
@@ -41,7 +40,6 @@ return [
                     'name' => 'Thuộc tính',
                     'path' => route('attributeCategory.index')
                 ]
-
             ]
         ],
         [
@@ -52,6 +50,17 @@ return [
                 [
                     'name' => 'Danh sách danh mục',
                     'path' => route('category.index')
+                ]
+            ]
+        ],
+        [
+            'name' => 'Quản lý bộ sưu tập',
+            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-layer"></use> </svg>',
+            'route' => ['collection'],
+            'module' => [
+                [
+                    'name' => 'Danh sách bộ sưu tập',
+                    'path' => route('collection.index')
                 ]
             ]
         ],
@@ -76,7 +85,25 @@ return [
                     'path' => route('discountCode.index')
                 ]
             ]
+        ],
+        [
+            'name' => 'Quản lý phản hồi',
+            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-box-1"></use> </svg>',
+            'route' => ['order'],
+            'module' => [
+                [
+                    'name' => 'Quản lý bình luận',
+                    'path' => route('comment.index')
+                ],
+                [
+                    'name' => 'Quản lý đánh giá',
+                    'path' => route('review.index')
+                ],
+                [
+                    'name' => 'Quản lý nội dung bình luận',
+                    'path' => route('CommentForbiddenWord.index')
+                ]
+            ]
         ]
-
     ]
 ];

@@ -3,9 +3,6 @@ a {
   display: inline-block;
   color: #000;
 }
-p {
-  margin: 0 !important;
-}
 .home {
   overflow: hidden;
 }

@@ -22,28 +22,31 @@ class WishlistController extends Controller
     public function index(Request $request)
     {
         $config = $this->config();
-        $user = User::with('wishlists.products')->find(1);
-    
-        $products = [];
+        $user = User::with('wishlists.product')->find(1);
+        // dd($products);
         // foreach ($user->wishlists as $wishlist) {
         //     dd($wishlist);
         // }
         return view('client.pages.wishlist.wish_list', compact(
             'config',
-            'products'
+            'user'
         ));
     }
     
-
     public function add(Request $request)
     {
-        // dd($request->all());
-        $userId = $request->user()->id;
-        
-        if ($this->wishlistService->addWishlist($userId, $request->product_id)) {
-            return successResponse(null, 'Đã thêm sản phẩm vào mục yêu thích');
+        $user = auth()->user();
+        $productId = $request->input('product_id');
+
+        $wishlist = $user->wishlists()->where('product_id', $productId)->first();
+
+        if ($wishlist) {
+            $wishlist->delete();
+            return response()->json(['message' => 'Sản phẩm đã được xoá khỏi danh sách yêu thích.']);
+        } else {
+            $user->wishlists()->create(['product_id' => $productId]);
+            return response()->json(['message' => 'Sản phẩm đã được thêm vào danh sách yêu thích.']);
         }
-        return errorResponse();
     }
 
     public function delete(Request $request)

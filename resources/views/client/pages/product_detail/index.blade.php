@@ -104,7 +104,13 @@
                     <div class="btn_spct ">
                         <button class="btn btn-stnt">Mua ngay</button>
                         <button class="btn btn-outline-stnt ms-4">Thêm vào giỏ hàng</button>
-                        <input type="checkbox" name="product_id" class="add_wishlist" data-type="add" value="{{ $product->id }}">
+                        <input 
+                            {{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id) ? 'checked' : '' }} 
+                            type="checkbox" 
+                            name="product_id" 
+                            class="add_wishlist" 
+                            data-type="{{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id) ? 'remove' : 'add' }}" 
+                            value="{{ $product->id }}">
                     </div>
                 </div>
                 <!-- end action sản phẩm -->

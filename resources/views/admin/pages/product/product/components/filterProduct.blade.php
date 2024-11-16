@@ -2,10 +2,12 @@
     <div class="row mt-3 animate__animated animate__fadeIn">
         @foreach ($products as $key => $product)
             <div class="col-md-2 p-1 product-main">
-                <label for="checkInput{{ $product->sku }}" style="cursor: pointer;">
+                <label 
+                for="{{ $product->has_attribute == 1 ? 'disabled' : 'checkInput' . $product->sku }}" 
+                style="cursor: pointer;">
                     <input type="checkbox" id="checkInput{{ $product->sku }}" class="checkInput hidden"
                         data-id="{{ $product->id }}" data-sku="{{ $product->sku }}">
-                    <div class="card" id="product-item{{ $product->sku }}">
+                    <div class="card" id="product-item{{ $product->sku }}" >
                         <img class="img card-img-top p-1" height="100" src="{{ $product->thumbnail }}"
                             alt="Card image cap">
                         <div class="card-body p-2">
@@ -18,26 +20,27 @@
                 </label>
                 <div class="product-focus row">
                     <div class="d-flex">
-                    @foreach ($product->productVariants as $variant)
-                        <div class="col-4">
-                            <label for="checkInput{{ $variant->sku }}" style="cursor: pointer;">
-                                <input type="checkbox" id="checkInput{{ $variant->sku }}" class="checkInput hidden"
-                                    data-variantid="{{ $variant->id }}" data-id="{{ $product->id }}" data-sku="{{ $variant->sku }}">
-                                <div class="card" id="product-item{{ $variant->sku }}">
-                                    <img class="img card-img-top p-1" height="100" src="{{ $variant->thumbnail }}"
-                                        alt="Card image cap">
-                                    <div class="card-body p-2">
-                                        <span class="card-title text-limit text-primary"
-                                            style="font-size: 12px">({{ $variant->title }}) /
-                                            {{ $product->name }}</span>
-                                        <p class="card-text" style="font-size: 10px">
-                                            {{ number_format($variant->price) }} đ</p>
+                        @foreach ($product->productVariants as $variant)
+                            <div class="col-4">
+                                <label for="checkInput{{ $variant->sku }}" style="cursor: pointer;">
+                                    <input type="checkbox" id="checkInput{{ $variant->sku }}" class="checkInput hidden"
+                                        data-variantid="{{ $variant->id }}" data-id="{{ $product->id }}"
+                                        data-sku="{{ $variant->sku }}">
+                                    <div class="card" id="product-item{{ $variant->sku }}">
+                                        <img class="img card-img-top p-1" height="100"
+                                            src="{{ $variant->thumbnail }}" alt="Card image cap">
+                                        <div class="card-body p-2">
+                                            <span class="card-title text-limit text-primary"
+                                                style="font-size: 12px">({{ $variant->title }}) /
+                                                {{ $product->name }}</span>
+                                            <p class="card-text" style="font-size: 10px">
+                                                {{ number_format($variant->price) }} đ</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </label>
-                        </div>
-                    @endforeach
-                </div>
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -79,7 +82,7 @@
         align-items: center;
         border-radius: 10px;
         text-align: center;
-        background-color: #ececec; 
+        background-color: #ececec;
         width: 300%;
         top: -90%;
         left: -85%;
@@ -88,3 +91,4 @@
         display: none;
     }
 </style>
+

@@ -8,7 +8,6 @@
         </div>
 
         <div class="card-body">
-
             <form action="{{ route('order.update', ['id' => $order->id]) }}" method="POST">
                 @csrf
                 @method('PUT')

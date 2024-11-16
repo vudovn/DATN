@@ -211,63 +211,73 @@
         }
     };
 
+    TGNT.select2 = () => {
+        if ($(".select2_order").length) {
+            $(".select2_order").select2({
+                theme: "bootstrap4",
+            });
+        }
+    };
+
     // =======================================================--====4
     TGNT.searchCustomer = () => {
-        $('.btn-search-customer').on('change', function () {
-            const phoneNumber = $('.search-customer').val().trim();
-
-            if (phoneNumber) {
-                $.ajax({
-                    url: `/order/search_customer`,
-                    method: 'GET',
-                    data: { phone: phoneNumber },
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response.data.success && response.data.customer) {
-                            VDmessage.show('success', 'Đã tìm thấy khách hàng');
-                            const customer = response.data.customer;
-                            $('input[name="name"]').val(customer.name);
-                            $('input[name="email"]').val(customer.email);
-                            $('input[name="phone"]').val(customer.phone);
-                            $('input[name="address"]').val(customer.address);
-                            $('#customer_note').val(customer.note || '');
-
-                            if (customer.province_id) {
-                                $('select[name="province_id"] option[value="' + customer.province_id + '"]').prop('selected', true);
+        let debounceTimer;
+        $('.search-customer').on('input', function () {
+            const phoneNumber = $(this).val().trim();
+    
+            clearTimeout(debounceTimer); // Xóa bỏ debounce trước đó nếu có
+            debounceTimer = setTimeout(() => {
+                if (phoneNumber) {
+                    $.ajax({
+                        url: `/order/search_customer`,
+                        method: 'GET',
+                        data: { phone: phoneNumber },
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.data?.success && response.data.customer) {
+                                VDmessage.show('success', 'Đã tìm thấy khách hàng');
+                                const customer = response.data.customer;
+                                $('input[name="name"]').val(customer.name || '');
+                                $('input[name="email"]').val(customer.email || '');
+                                $('input[name="phone"]').val(customer.phone || '');
+                                $('input[name="address"]').val(customer.address || '');
+                                $('#customer_note').val(customer.note || '');
+    
+                                if (customer.province_id) {
+                                    $('select[name="province_id"] option[value="' + customer.province_id + '"]').prop('selected', true);
+                                }
+    
+                                if (customer.district_id) {
+                                    $('select[name="district_id"] option[value="' + customer.district_id + '"]').prop('selected', true);
+                                }
+    
+                                if (customer.ward_id) {
+                                    $('select[name="ward_id"] option[value="' + customer.ward_id + '"]').prop('selected', true);
+                                }
+                                TGNT.select2();
+                            } else {
+                                VDmessage.show('error', 'Không tồn tại khách hàng');
                             }
-
-                            if (customer.district_id) {
-                                $('select[name="district_id"] option[value="' + customer.district_id + '"]').prop('selected', true);
-                            }
-
-                            if (customer.ward_id) {
-                                $('select[name="ward_id"] option[value="' + customer.ward_id + '"]').prop('selected', true);
-                            }
-
-                        } else {
+                            console.log(response);
+                        },
+                        error: function () {
                             VDmessage.show('error', 'Không tồn tại khách hàng');
-                            $('input[name="name"], input[name="email"], input[name="address"]').val('');
-                            $('#customer_note').val('');
-                            $('select[name="province_id"], select[name="district_id"], select[name="ward_id"]').val('').trigger('change');
                         }
-                        console.log(response);
-                    },
-                    error: function () {
-                        VDmessage.show('error', 'Không tồn tại khách hàng');
-                    }
-                });
-            } else {
-                alert('Vui lòng nhập số điện thoại trước khi tìm kiếm.');
-            }
+                    });
+                } else {
+                    VDmessage.show('warning', 'Vui lòng nhập số điện thoại trước khi tìm kiếm.');
+                }
+            }, 1000); // Debounce 500ms
         });
     };
+    
 
     $(document).ready(function () {
         TGNT.select_status();
         TGNT.getProduct();
         TGNT.addToTable();
         TGNT.checkProduct();
-
+        TGNT.select2();
         // =================
         TGNT.searchCustomer();
     });

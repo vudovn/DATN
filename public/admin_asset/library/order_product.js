@@ -39,6 +39,7 @@
             success: function (data) {
                 if (url.includes("getProduct")) {
                     $("#content").html(data);
+                    TGNT.checkData();
                     function checkAndHighlight(idsArray, dataAttr) {
                         idsArray.forEach((sku) => {
                             $(`.checkInput[${dataAttr}='${sku}']`).prop(
@@ -65,6 +66,7 @@
                 } else {
                     $("#tbody").html(data);
                 }
+                TGNT.checkProductChecked()
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching data:", error);
@@ -123,9 +125,11 @@
             TGNT.fetchData({ page });
         });
     };
+
     TGNT.checkInput = () => {
         $(document).on("change", ".checkInput", function () {
             const sku = $(this).data("sku");
+            const id_product = $(this).data('id')
             const item = $("#product-item" + sku);
             const url = "/order/getProduct";
 
@@ -140,49 +144,28 @@
                         sku: sku ?? '',
                     },
                     success: function (data) {
-                        TGNT.renderRow(data);
-                TGNT.calculateTotalAmount();
+                        TGNT.renderRow(data,id_product);
+                        TGNT.calculateTotalAmount();
                     },
                     error: function () {
                         console.log('lỗi');
 
                     }
                 });
-                item.css("background-color", "#cce6e6");
-
+                $("#product-item" + sku).css("background-color", "#cce6e6");
+                TGNT.checkProductChecked()
             } else {
                 array.idArray = array.idArray.filter((i) => i !== sku);
-                item.css("background-color", "");
+                $("#product-item" + sku).css("background-color", "");
                 TGNT.removeRow(sku);
+                TGNT.deleteV2(id_product,sku)
             }
-            $(".countProduct").html(
-                array.idArray.length
-            );
-            $(".filterProduct .title")
-                .removeClass("alert alert-primary alert-danger")
-                .addClass(
-                    array.idArray.length > 1
-                        ? "alert alert-primary"
-                        : "alert alert-danger"
-                );
             $("#skus").val(array.idArray.join(","));
 
         });
     };
-    TGNT.renderRow = (product) => {
 
-        // let existingRow = $("#product-table-body").find(
-        //     `tr[data-sku="${product.sku}"]`
-        // );
-        // if (existingRow.length > 0) {
-        //     let currentQuantityInput = existingRow.find(".product-quantity");
-        //     product.quantity = parseInt(currentQuantityInput.val()) + 1;
-        //     currentQuantityInput.val(product.quantity);
-        //     let totalPrice = product.quantity * product.price;
-        //     existingRow
-        //         .find(".total-price")
-        //         .text(TGNT.formatNumber(totalPrice));
-        // } else {
+    TGNT.renderRow = (product, id_product) => {
         if (product) {
             $("#product-table-body").append(`   
                     <tr id="product-row-${product.sku}" data-sku="${product.sku}">
@@ -204,7 +187,7 @@
                 )}</td>
                         <td><button type="button" class="btn btn-danger btn-sm rounded delete-product-btn" data-sku="${product.sku}">Xóa</button></td>
                         <td class="hidden">
-                            <input type="text" name="product_id[]" value="${product.id
+                            <input type="text" name="product_id[]" value="${id_product
                 }">
                             <input type="text" class="product_quantity_input" name="quantity[]" value="${product.quantity
                 }">
@@ -220,9 +203,10 @@
                         </td>
                     </tr>
                 `);
-            // }
+            TGNT.deleteProduct()
         }
     };
+
     TGNT.removeRow = (sku) => {
         if (sku !== undefined) {
             $.ajax({
@@ -241,24 +225,32 @@
             });
         }
     };
+
+    TGNT.deleteV2 = (id_product) =>{
+        $(`tr[data-id=${id_product}]`).remove();
+        TGNT.checkProductChecked()
+        TGNT.calculateTotalAmount();
+    }
+
     TGNT.deleteProduct = () => {
-        $(document).on("click", ".delete-product-btn", function () {
-            let _this = $(this);
-            let sku = _this.data('sku');
-            $(`#product-row-${sku}`).closest("tr").remove();
-            const item = $("#product-item" + sku);
-            $(`#checkInput${sku}`).prop("checked",false); 
-            array.idArray = array.idArray.filter((i) => i !== sku);
-            item.css("background-color", "");
-            $(".countProduct").html(
-                array.idArray.length
-            );
-            TGNT.calculateTotalAmount();
-        });
+            $('.delete-product-btn').on("click", function () {
+                let _this = $(this);
+                _this.parents('tr').remove();
+                let sku = _this.parents('tr').find('input[name="sku[]"]').val();                
+                $(`#checkInput${sku}`).prop("checked",false); 
+                array.idArray = array.idArray.filter((i) => i !== sku);
+                $("#product-item" + sku).css("background-color", "");
+                $(".countProduct").html(
+                    $('.checkInput:checked').length
+                );
+                TGNT.calculateTotalAmount();
+            });
     };
+    
     TGNT.formatNumber = (number) => {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
+    
     TGNT.calculateTotalAmount = () => {
         let totalAmount = 0;
         $("#product-table-body .total-price").each(function () {
@@ -273,6 +265,7 @@
         $("#total_amount").val(TGNT.formatNumber(totalAmount));
         $(".total_amount").text(TGNT.formatNumber(totalAmount));
     };
+
     TGNT.updateQuantity = () => {
         $(document).on("input", ".product-quantity", function () {
             let quantity = $(this).val();
@@ -288,6 +281,28 @@
             TGNT.calculateTotalAmount();
         });
     };
+
+    TGNT.checkData = () => {
+        if(typeof skuInData !== "undefined" && skuInData) {
+            skuInData.forEach(sku => {
+                $(`#checkInput${sku}`).prop("checked",true); 
+                $(`#product-item${sku}`).css(
+                    "background-color",
+                    "#cce6e6"
+                );
+
+            });
+              
+            TGNT.checkProductChecked()  
+        }
+    }
+
+    TGNT.checkProductChecked = () => {
+        $(".countProduct").html(
+            $('.checkInput:checked').length
+        );
+    }
+        
     $(document).ready(function () {
         TGNT.searchForm();
         TGNT.filterForm();
@@ -297,8 +312,8 @@
         TGNT.checkInput();
         TGNT.renderRow();
         TGNT.removeRow();
-        TGNT.removeRow();
         TGNT.deleteProduct();
         TGNT.updateQuantity();
+        TGNT.calculateTotalAmount()
     });
 })(jQuery);

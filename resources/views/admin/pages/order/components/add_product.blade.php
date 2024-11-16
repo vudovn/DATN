@@ -4,8 +4,10 @@
             'categoriesOther' => $categories ?? [],
             'categoriesRoom' => $categoryRoom ?? [],
         ]" />
-        <p class="text-primary m-0 mt-2">Đã chọn: <span class="text-danger"><span class="countProduct">0</span> sản
-                phẩm.</span></p>
+        <p class="text-primary m-0 mt-2">
+            Đã chọn: <span class="text-danger"><span class="countProduct">0</span> sản phẩm.
+            </span>
+        </p>
         <div id="content">
             @include('admin.pages.product.product.components.filterProduct')
         </div>
@@ -71,6 +73,9 @@
         </div>
     </div>
 </div>
+<script>
+    const skuInData = @json(isset($order_details) ? $order_details->pluck('sku') : '')
+</script>
 
 
 <script>

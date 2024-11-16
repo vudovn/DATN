@@ -102,7 +102,7 @@ class OrderController extends Controller  implements HasMiddleware
 
     public function store(StoreOrderRequest $request) {
 
-        // dd($request);
+        // dd($request->all());
         $order = $this->orderService->create($request);
         if ($order) {
             return redirect()->route('order.index')->with('success', 'Tạo đơn hàng mới thành công');
@@ -233,12 +233,15 @@ class OrderController extends Controller  implements HasMiddleware
         ));
     }       
     public function getProduct(Request $request){
+        // dd($request);
         $product = $this->productRepository->findByField('sku',$request->sku)->first();
         if(empty($product)){
             $product = $this->productVariantRepository->findByField('sku',$request->sku)->first();
             $product->name = $product->product->name;
             $product->slug = $product->product->slug;
-        }
+            $product->quantity = 1;
+        } 
+        $product->quantity = 1;
         return $product;
     } 
 
@@ -274,6 +277,7 @@ class OrderController extends Controller  implements HasMiddleware
                 'js' => [
                     'admin_asset/library/order_product.js', 
                     'admin_asset/library/order.js',
+                    'admin_asset/library/location.js'
                     // 'admin_asset/library/dataTables_order.js'
                 ],
                 'model' => 'order'

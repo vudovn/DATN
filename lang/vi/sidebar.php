@@ -65,6 +65,17 @@ return [
                     'path' => route('order.index')
                 ]
             ]
+        ],
+        [
+            'name' => 'Quản lý mã giảm giá',
+            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-box-1"></use> </svg>',
+            'route' => ['discount'],
+            'module' => [
+                [
+                    'name' => 'Danh sách mã giảm giá',
+                    'path' => route('discountCode.index')
+                ]
+            ]
         ]
 
     ]

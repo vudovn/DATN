@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
-
+use App\Http\Controllers\Admin\DiscountCodeController;
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\IndexController;
@@ -90,7 +90,14 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
     });
-
+    Route::prefix('discount')->name('discountCode.')->group(function () { 
+        Route::get('/index', [DiscountCodeController::class, 'index'])->name('index');
+        Route::get('/create', [DiscountCodeController::class, 'create'])->name('create');
+        Route::post('/store', [DiscountCodeController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [DiscountCodeController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [DiscountCodeController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [DiscountCodeController::class, 'delete'])->name('delete');
+    });
     // /* ATTRIBUTE VALUE ROUTE */
     // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
     //     Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');

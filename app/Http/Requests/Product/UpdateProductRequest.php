@@ -23,7 +23,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:products,name, ' . $this->id . '',
-            'sku' => 'required|unique:products,sku, ' . $this->id .'',
+            'sku' => 'required|regex:/^\S*$/|unique:products,sku, ' . $this->id . '',
             'price' => 'required',
             'quantity' => 'required',
             'category' => 'required|not_in:0',
@@ -39,6 +39,7 @@ class UpdateProductRequest extends FormRequest
             'name.required' => 'Tên sản phẩm không được để trống',
             'name.unique' => 'Tên sản phẩm đã tồn tại',
             'sku.required' => 'Mã sản phẩm không được để trống',
+            'sku.regex' => 'Mã sản phẩm không được chứa khoảng trắng',
             'sku.unique' => 'Mã sản phẩm đã tồn tại',
             'price.required' => 'Giá sản phẩm không được để trống',
             'quantity.required' => 'Số lượng sản phẩm không được để trống',

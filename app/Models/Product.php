@@ -21,6 +21,7 @@ class Product extends Model
         'thumbnail',
         'albums',
         'publish',
+        'view',
         'is_featured',
         'has_attribute',
         'attribute_category',

@@ -23,7 +23,7 @@ use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\CollectionController as ClientCollectionController;
 use App\Http\Controllers\Client\IndexController;
-
+use App\Http\Controllers\Client\CategoryController as ClientCategoryController;
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
 
@@ -142,7 +142,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'destroy'])->name('delete');
     });
 
-     /* COLLECTION ROUTE */
+    /* COLLECTION ROUTE */
     Route::prefix('collection')->name('collection.')->group(function () {
         Route::get('/index', [CollectionController::class, 'index'])->name('index');
         Route::get('/getProductPoint', [CollectionController::class, 'getProductPoint'])->name('getProductPoint');
@@ -222,12 +222,16 @@ Route::prefix('/')->name('client.')->group(function () {
 
 
     // index route
-    Route::get('/', [IndexController::class, 'home'])->name('client.home');
+    Route::get('/', [IndexController::class, 'home'])->name('home');
 
     // account route
     Route::prefix('tai-khoan')->name('account.')->group(function () {
         Route::get('/', [AccountController::class, 'index'])->name('index');
+    });
 
+    Route::prefix('danh-muc')->name('category.')->group(function () {
+        Route::get('{slug}', [ClientCategoryController::class, 'index'])->name('index');
+        Route::get('/ajax/get-product', [ClientCategoryController::class, 'getProduct'])->name('get-product');
     });
 
     // product route

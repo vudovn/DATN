@@ -151,15 +151,17 @@ if (!function_exists('orderCode')) {
     }
 }
 
-if(!function_exists('convertNumber')){
-    function convertNumber($number){
+if (!function_exists('convertNumber')) {
+    function convertNumber($number)
+    {
         return str_replace('.', '', $number);
     }
 }
 
-if(!function_exists('formatMon')){
-    function formatNumber($number){
-        if($number == ''){
+if (!function_exists('formatMon')) {
+    function formatNumber($number)
+    {
+        if ($number == '') {
             return '';
         }
         return number_format($number, 0, '.', '.');
@@ -168,11 +170,25 @@ if(!function_exists('formatMon')){
 
 
 //format money vnd 
-if(!function_exists('formatMoney')){
-    function formatMoney($number){
-        if($number == ''){
+if (!function_exists('formatMoney')) {
+    function formatMoney($number)
+    {
+        if ($number == '') {
             return '';
         }
-        return number_format($number, 0, '.', '.') . ' đ';
+        return number_format($number, 0, '.', '.');
+    }
+}
+
+// lấy danh mục phòng
+if (!function_exists('getCategory')) {
+    function getCategory($type)
+    {
+        if ($type == 'room') {
+            $categoryRepository = loadClass('Category', 'Repository');
+            return $categoryRepository->getCategoryRoom();
+        }
+        $categoryRepository = loadClass('Category', 'Repository');
+        return $categoryRepository->getCategory();
     }
 }

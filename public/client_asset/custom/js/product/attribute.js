@@ -3,14 +3,18 @@
     var TGNT = {};
     const VDmessage = new VdMessage();
 
-    // Các thuộc tính được chọn
     TGNT.selectVariantProduct = () => {
         $(".choose-attribute").on("click", function (e) {
             e.preventDefault();
             const _this = $(this);
             const attribute_id = _this.attr("data-attributeId");
             const attribute_name = _this.text();
-            _this.addClass("active").attr("disabled", true).siblings().removeClass("active").attr("disabled", false);
+            _this
+                .addClass("active")
+                .attr("disabled", true)
+                .siblings()
+                .removeClass("active")
+                .attr("disabled", false);
             // _this.closest(".attribute-item").find("span").html(attribute_name);
             TGNT.handleAttribute();
         });
@@ -39,7 +43,7 @@
                 },
                 dataType: "json",
                 beforeSend: function () {
-                    $(".loading_tgnt").fadeIn("slow");
+                    // $(".loading_tgnt").show();
                 },
                 success: function (res) {
                     TGNT.renderAlbums(res.data.albums);
@@ -92,10 +96,10 @@
     TGNT.sliderImg = () => {
         $(".thumbnail-images img").on("click", function () {
             var newImage = $(this).data("image");
-            $("#mainImage").fadeOut('slow', function () {
+            $("#mainImage").fadeOut("slow", function () {
                 $("#mainImage").attr("src", newImage);
                 $(".img_preview").attr("href", newImage);
-                $("#mainImage").fadeIn('slow');
+                $("#mainImage").fadeIn("slow");
             });
             $(".thumbnail-images img").removeClass("active");
             $(this).addClass("active");
@@ -104,7 +108,7 @@
 
     TGNT.renderAlbums = (albums) => {
         $(".gallery-container").html(albums);
-        $('.fotorama').fotorama();  
+        $(".fotorama").fotorama();
     };
 
     $(document).ready(function () {

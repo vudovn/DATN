@@ -5,7 +5,6 @@ use App\Models\Product;
 
 class ProductRepository extends BaseRepository
 {
-
     protected $model;
 
     public function __construct(
@@ -23,6 +22,22 @@ class ProductRepository extends BaseRepository
             ->paginate($params['perpage'])
         ;
     }
+
+    public function filterProductClient(array $params = [])
+    {
+        $query = $this->model
+            ->condition($params['condition'] ?? [])
+            ->keyword($params['keyword'] ?? [])
+            ->orderBy($params['sort'][0], $params['sort'][1]);
+        if (!empty($params['category_id'])) {
+            $query->whereHas('categories', function ($q) use ($params) {
+                $q->where('category_id', $params['category_id']);
+            });
+        }
+
+        return $query->paginate($params['perpage']);
+    }
+
 
 
 

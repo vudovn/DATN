@@ -106,6 +106,7 @@
         finder.resourceType = type;
         finder.selectActionFunction = function (fileUrl, data) {
             object.find("img").attr("src", fileUrl);
+            $(".image-preview").attr("src", fileUrl);
             object.siblings("input").val(fileUrl);
         };
         finder.popup();

@@ -58,9 +58,10 @@
                                 </div>
                             </div>
                             <input type="hidden" name="skus" id="skus" value="{{ $skus ?? '' }}">
+                            {{-- <div class="">btn</div> --}}
                             <div class="description_value img-cover" id="description_value">
-                                <img src="https://noithatlacgia.vn/wp-content/uploads/2022/03/slide-noithatlacgia-7.jpg"
-                                    alt="Image Map" class="image">
+                                <img src="https://placehold.co/600x600?text=The Gioi \nNoi That"
+                                    alt="Image Map" class="image-preview">
                                 <div id="renderPoints">
                                     {{-- Render mấy dấu chấm ở đây --}}
                                 </div>
@@ -107,25 +108,36 @@
         $(document).ready(function() {
             $("#discount").on("input", function() {
                 var value = $(this).val();
+                // Remove all non-numeric and non-decimal characters
                 var numericValue = value.replace(/[^0-9.]/g, "");
+    
+                // Prevent more than one decimal point
                 if ((numericValue.match(/\./g) || []).length > 1) {
                     numericValue = numericValue.substring(0, numericValue.lastIndexOf("."));
                 }
+    
+                // Limit to two decimal places
                 if (numericValue.includes(".")) {
                     var parts = numericValue.split(".");
                     numericValue = parts[0] + "." + parts[1].substring(0, 2);
                 }
+    
+                // Parse the numeric value
                 var floatValue = parseFloat(numericValue);
+    
+                // Validate the range
                 if (isNaN(floatValue)) {
                     floatValue = "";
                 } else if (floatValue > 100) {
                     floatValue = 100;
-                } else if (floatValue < 1) {
-                    floatValue = "";
+                } else if (floatValue < 0) {
+                    floatValue = 0;
                 }
-
+    
+                // Update the input field value
                 $(this).val(floatValue);
             });
-        }); <
-        />
+        });
+    </script>
+    
     @endsection

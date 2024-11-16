@@ -71,7 +71,6 @@
     };
 
     TGNT.searchForm = () => {
-
         $("#keyword").on("input", function () {
             clearTimeout(searchTimeout);
             array.keyword = $(this).val();

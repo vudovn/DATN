@@ -16,7 +16,7 @@
         <div class="col-xxl-12 d-none d-xxl-block">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('client.client.home') }}" class="text-stnt">Trang chủ</a>
+                    <li class="breadcrumb-item"><a href="{{ route('client.home') }}" class="text-stnt">Trang chủ</a>
                     </li>
                     <li class="breadcrumb-item"><a href="product.html" class="text-stnt">Sản phẩm</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ $name }}</li>
@@ -51,7 +51,7 @@
                 </div>
             </div> --}}
             <div class="col-xxl-7 col-sm-12 mb-5 gallery-container">
-                <div class="fotorama" data-nav="thumbs" data-width="100%"  data-ratio="900/600" data-allowfullscreen="true">
+                <div class="fotorama" data-nav="thumbs" data-width="100%" data-ratio="900/600" data-allowfullscreen="true">
                     @if ($albums)
                         @foreach ($albums as $album)
                             <img class="img-preview-tgnt" src="{{ $album }}" alt="{{ $product->name }}">
@@ -155,6 +155,7 @@
                 <!-- end policy sản phẩm -->
             </div>
         </div>
+        
     </section>
     <!-- end -->
 @endsection

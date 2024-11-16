@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'accepted' => ':attribute phải được chấp nhận.',
     'accepted_if' => ':attribute phải được chấp nhận khi :other là :value.',
     'active_url' => ':attribute không phải là một URL hợp lệ.',

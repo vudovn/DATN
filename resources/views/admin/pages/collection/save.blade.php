@@ -48,7 +48,7 @@
                                         <small class="error text-danger"><i data-feather="alert-octagon"></i></small>
                                     @enderror
                                 </div>
-                                <input type="hidden" name="idProduct" id="idProduct">
+                                <input type="text" name="idProduct" id="idProduct">
                                 <script>
                                     var idProduct = @json($idProduct ?? []);
                                 </script>

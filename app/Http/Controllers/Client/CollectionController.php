@@ -25,9 +25,10 @@ class CollectionController extends Controller
     {
         $config = $this->config();
         $collection =$this->collectionRepository->findByField('slug',$slug)->first();
-        $idProduct = $collection->products()->pluck('id')->toArray();
-        $products = $collection->products()->whereIn('id', $idProduct)->get();
-        return view('client.pages.collection.detail', compact('config','collection','products'));
+        // $idProduct = $collection->products()->pluck('id')->toArray();
+        // $products = $collection->products()->whereIn('id', $idProduct)->get();
+        // return view('client.pages.collection.detail', compact('config','collection','products'));
+        return view('client.pages.collection.detail', compact('config','collection'));
     }
     public function list(Request $request)
     {

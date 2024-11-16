@@ -5,15 +5,13 @@ return [
         'pending' => 'Chờ xử lý',
         'processing' => 'Đang xử lý',
         'shipped' => 'Đang giao hàng',
-        'delivered' => 'Đã giao hàng',
+        'delivered' => 'Giao hàng thành công',
         'cancelled' => 'Đã hủy',
     ],
 
     'payment_status' => [
-        'pending' => 'Đang chờ',
-        'completed' => 'Đã hoàn thành',
-        'failed' => 'Thất bại',
-        'refunded' => 'Hoàn tiền'
+        'pending' => 'Chưa thanh toán',
+        'completed' => 'Đã thanh toán'
     ],
 
     'payment_status_select' => [

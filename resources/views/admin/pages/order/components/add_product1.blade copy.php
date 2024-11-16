@@ -1,17 +1,51 @@
 <div class="filterProduct">
-    <div class="card-body show-product hidden">
-        <x-filter :model="'collection'" :options="[
-            'categoriesOther' => $categories ?? [],
-            'categoriesRoom' => $categoryRoom ?? [],
-        ]" />
-        <p class="text-primary m-0 mt-2">
-            Đã chọn: <span class="text-danger"><span class="countProduct">0</span> sản phẩm.
-            </span>
-        </p>
-        <div id="content">
-            @include('admin.pages.product.product.components.filterProduct')
+    <div class="card-body" id="productInputContainer">
+        <!-- Input tìm kiếm sản phẩm -->
+        <div class="form-group show-product" style="position: relative">
+            <input type="text" class="form-control" id="product-search" placeholder="Nhập tên sản phẩm..">
+            <div class="product-dropdown d-none" id="product-dropdown">
+                <!-- Danh sách sản phẩm sẽ được thêm động bằng JS -->
+            </div>
+        </div>
+        <script>
+            var idProduct = @json($idProduct ?? []);
+        </script>
+        <div class="filterProduct">
+            <div class="card-header">
+                <div style="background-color: #f9f9f9;">
+                    <span style="cursor: pointer" href="#" data-show="show" class="link-success add-product">
+                        Thêm sản phẩm
+                    </span>
+                </div>                             
+                @error('idProduct')
+                    <small class="error text-danger"><i data-feather="alert-octagon"></i></small>
+                @enderror
+            </div>
+            <input type="hidden" name="idProduct" id="idProduct">
+            <script>
+                var idProduct = @json($idProduct ?? []);
+            </script>
+            <div class="card-body show-product">
+                <x-filter :model="'collection'" :options="[
+                    'categoriesOther' => $categories,
+                    'categoriesRoom' => $categoryRoom,
+                ]" />
+                <p class="text-primary m-0 mt-2">
+                    Đã chọn: <span class="text-danger">
+                        <span class="countProduct">0</span>
+                        sản phẩm.</span>
+                </p>
+                <div id="content">
+                    @include('admin.pages.product.product.components.filterProduct')
+                </div>
+            </div>
         </div>
     </div>
+    
+    <div class="form-group mt-3 select_variant">
+        {{-- nếu sản phẩm có biến thể thì nó sẽ render ra select chọn sản phẩm --}}
+    </div>
+
     <h5 class="mt-4">Chi tiết Đơn Hàng</h5>
     <table class="table table-striped mt-3">
         <thead>
@@ -28,7 +62,6 @@
         <tbody id="product-table-body" class="product-variant">
             @if (isset($order_details))
                 @foreach ($order_details as $detail)
-                    {{-- @dd($detail->product) --}}
                     <tr data-id="{{ $detail->product->id }}">
                         <td>
                             <a href="{{ $detail->product->thumbnail }}" data-fancybox="gallery">
@@ -66,20 +99,10 @@
         <label for="total_amount">Tổng tiền: <strong class="total_amount" id="preview_totle">0</strong></label>
         <input type="hidden" id="total_amount" name="total_amount" class="form-control" value="0">
     </div>
-    <div class="card-footer">
-        <div class="text-end">
-            <a href="{{ route('order.index') }}" class="btn btn-danger">Quay lại</a>
-            <button type="submit" class="btn btn-primary">Lưu</button>
-        </div>
-    </div>
 </div>
-<script>
-    const skuInData = @json(isset($order_details) ? $order_details->pluck('sku') : '')
-</script>
 
 
 <script>
-    var skus = @json($skus ?? []);
     let id = {!! json_encode(old('product_id', [])) !!};
     let sku = {!! json_encode(old('sku', [])) !!};
     let name = {!! json_encode(old('name_orderDetail', [])) !!};

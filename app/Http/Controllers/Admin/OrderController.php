@@ -19,6 +19,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Traits\HasDynamicMiddleware;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Product\ProductRepository;
+use App\Repositories\Product\ProductVariantRepository;
 
 class OrderController extends Controller  implements HasMiddleware
 {
@@ -35,6 +36,7 @@ class OrderController extends Controller  implements HasMiddleware
     protected $wardRepository; 
     protected $categoryRepository;
     protected $productRepository;
+    protected $productVariantRepository;
 
     public function __construct(
         Order $order,
@@ -45,8 +47,9 @@ class OrderController extends Controller  implements HasMiddleware
         WardRepository $wardRepository,
         CategoryRepository $categoryRepository,
         ProductRepository $productRepository,
+        ProductVariantRepository $productVariantRepository,
         )
-    {
+        {
         $this->order = $order;
         $this->orderService = $orderService;
         $this->orderRepository = $orderRepository;
@@ -55,7 +58,8 @@ class OrderController extends Controller  implements HasMiddleware
         $this->wardRepository = $wardRepository;
         $this->categoryRepository = $categoryRepository;
         $this->productRepository =  $productRepository;
-    }
+        $this->productVariantRepository =  $productVariantRepository;
+        }
 
     public function index(Request $request) 
     {
@@ -67,6 +71,7 @@ class OrderController extends Controller  implements HasMiddleware
             'config'
         ));
     }
+
     public function getData($request)
     {
         $orders = $this->orderService->paginate($request);
@@ -74,8 +79,7 @@ class OrderController extends Controller  implements HasMiddleware
         return view('admin.pages.order.components.table',compact('orders','config'));
     }
 
-    public function create()
-    {
+    public function create(){
         $provinces = $this->provinceRepository->getAllProvinces();
         $districts = $this->districtRepository->getAllDistricts();
         $wards = $this->wardRepository->getAllWards();
@@ -98,6 +102,7 @@ class OrderController extends Controller  implements HasMiddleware
 
     public function store(StoreOrderRequest $request) {
 
+        // dd($request->all());
         $order = $this->orderService->create($request);
         if ($order) {
             return redirect()->route('order.index')->with('success', 'Tạo đơn hàng mới thành công');
@@ -144,15 +149,29 @@ class OrderController extends Controller  implements HasMiddleware
         }
     }
 
-    public function dataProduct(){
-        $products = Product::all();
-        return successResponse($products);
+    public function dataProduct(Request $request)
+    {
+        $query = $request->query('query', '');
+        $page = $request->query('page', 1);
+        $perPage = 5; // Số lượng sản phẩm mỗi trang
+
+        $products = Product::where('name', 'like', "%$query%")
+            ->paginate($perPage);
+
+        return response()->json([
+            'data' => $products->items(),
+            'pagination' => [
+                'current_page' => $products->currentPage(),
+                'pages' => $products->lastPage(),
+            ],
+        ]);
     }
 
     public function dataVariantsProduct($id) {
         $product = $this->productRepository->findById($id, ['productVariants']);
         return successResponse($product->productVariants);
     }
+    
 
     public function searchCustomer(Request $request) {
         $phone = $request->get('phone');
@@ -187,6 +206,45 @@ class OrderController extends Controller  implements HasMiddleware
         return errorResponse('Không tìm thấy khách hàng');
     }    
     
+    public function show(string $id) {
+        $order = $this->orderRepository->findById($id, ['orderDetails']);
+        $order_details = $order->orderDetails;
+        $provinces = $this->provinceRepository->getAllProvinces();
+        $districts = $this->districtRepository->getAllDistricts();
+        $wards = $this->wardRepository->getAllWards();
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('show');
+        $address = $order->address ?? $order->user->address ?? '';
+        $ward = $order->ward ?? '';   
+        $district = $order->district ?? '';  
+        $province = $order->province ?? ''; 
+    
+        return view('admin.pages.order.show', compact(
+            'order', 
+            'order_details',
+            'provinces',
+            'districts',
+            'wards',
+            'address',
+            'ward',
+            'district',
+            'province',
+            'config'
+        ));
+    }       
+    public function getProduct(Request $request){
+        // dd($request);
+        $product = $this->productRepository->findByField('sku',$request->sku)->first();
+        if(empty($product)){
+            $product = $this->productVariantRepository->findByField('sku',$request->sku)->first();
+            $product->name = $product->product->name;
+            $product->slug = $product->product->slug;
+            $product->quantity = 1;
+        } 
+        $product->quantity = 1;
+        return $product;
+    } 
+
     private function breadcrumb($key)
     {
         $breadcrumb = [
@@ -201,7 +259,11 @@ class OrderController extends Controller  implements HasMiddleware
             'create' => [
                 'name' => 'Tạo đơn hàng mới',
                 'list' => ['QL đơn hàng', 'Tạo đơn hàng']
-            ]
+            ],
+            'show' => [
+                'name' => 'Thông tin hóa đơn',
+                'list' => ['Chi tiết đơn hàng', 'Thông tin hóa đơn']
+            ], 
         ];
 
         return $breadcrumb[$key]; 
@@ -213,8 +275,10 @@ class OrderController extends Controller  implements HasMiddleware
                     'admin_asset/css/order.css'
                 ],
                 'js' => [
-                    'admin_asset/library/location.js', 
-                    'admin_asset/library/order.js'
+                    'admin_asset/library/order_product.js', 
+                    'admin_asset/library/order.js',
+                    'admin_asset/library/location.js'
+                    // 'admin_asset/library/dataTables_order.js'
                 ],
                 'model' => 'order'
             ];

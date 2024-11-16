@@ -72,7 +72,10 @@ class OrderService extends BaseService
 
     private function storeOrder($request)
     {
-        $payload = $request->only(['name', 'phone', 'email', 'province_id', 'district_id', 'ward_id', 'address', 'note', 'status', 'payment_status', 'total_amount', 'fee_ship']);
+        $payload = $request->only(['name', 'phone', 'email', 
+                                    'province_id', 'district_id', 'ward_id', 
+                                    'address', 'note', 'status', 'payment_status', 
+                                    'total_amount', 'fee_ship']);
         $payload['total'] = $this->filterPrice($payload['total_amount']);
         $payload['code'] = orderCode();
         $payload['user_id'] = auth()->user()->id;

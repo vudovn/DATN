@@ -58,9 +58,10 @@
                                 </div>
                             </div>
                             <input type="hidden" name="skus" id="skus" value="{{ $skus ?? '' }}">
+                            {{-- <div class="">btn</div> --}}
                             <div class="description_value img-cover" id="description_value">
-                                <img src="https://noithatlacgia.vn/wp-content/uploads/2022/03/slide-noithatlacgia-7.jpg"
-                                    alt="Image Map" class="image">
+                                <img src="https://placehold.co/600x600?text=The Gioi \nNoi That"
+                                    alt="Image Map" class="image-preview">
                                 <div id="renderPoints">
                                     {{-- Render mấy dấu chấm ở đây --}}
                                 </div>

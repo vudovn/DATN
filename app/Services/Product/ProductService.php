@@ -208,7 +208,7 @@ class ProductService extends BaseService
                 } else {
                     $payload[$key] = $payload[$field];
                 }
-            } 
+            }
         }
 
         if (!$request->has('has_attribute')) {
@@ -246,6 +246,38 @@ class ProductService extends BaseService
             $this->log($e);
             return false;
         }
+    }
+
+
+    private function paginateAgrumentClient($request, $isFilter = false)
+    {
+        $defaultSort = ['id', 'asc'];
+        $defaultPerPage = $isFilter ? 12 : 10;
+
+        return [
+            'keyword' => [
+                'search' => $request['keyword'] ?? '',
+                'field' => $isFilter ? ['name'] : ['name'],
+            ],
+            'condition' => [
+                'publish' => 1,
+            ],
+            'relation' => $isFilter ? [
+                'categories' => $request['categories'] ?? null,
+            ] : [],
+            'sort' => isset($request['sort']) && $request['sort'] != 0
+                ? explode(',', $request['sort'])
+                : $defaultSort,
+            'perpage' => (int) ($request['perpage'] ?? $defaultPerPage),
+            'category_id' => $request['category_id'],
+        ];
+    }
+    public function paginateClient($request)
+    {
+        $agruments = $this->paginateAgrumentClient($request);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $users = $this->productRepository->filterProductClient($agruments);
+        return $users;
     }
 
 

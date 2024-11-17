@@ -24,14 +24,14 @@
                         </div>
                     </div>
                     <div class="col-md-6 text-center">
-                        <a href="{{ route('client.client.home') }}"><img class="logo_vd_top"
-                                src="/client_asset/image/logo.png" alt="logo_sieuthinoithat" /></a>
+                        <a href="{{ route('client.home') }}"><img class="logo_vd_top" src="/client_asset/image/logo.png"
+                                alt="logo_sieuthinoithat" /></a>
                     </div>
                     <div class="col-md-3">
                         <div class="box_right_vd align-items-center justify-content-center">
                             <!-- wishlist -->
                             <div class="list-inline-item me-7 text-center">
-                                <a href="" class="text-muted position-relative">
+                                <a href="{{ route('client.wishlist.index') }}" class="text-muted position-relative">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
@@ -214,30 +214,13 @@
                                         data-bs-toggle="dropdown" aria-expanded="false">Sản phẩm</a>
                                     <div class="dropdown-menu pb-0">
                                         <div class="row p-2 p-lg-4 menu_drop_vd">
-                                            <div class="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                            </div>
-                                            <div class="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                            </div>
-                                            <div class="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                            </div>
-                                            <div class="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                <a class="dropdown-item text-center" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                            </div>
+                                            {{-- format bằng cách nào --}}
+                                            @foreach (getCategory('other') as $item)
+                                                <div class="col-lg-3 col-12 mb-4 mb-lg-0">
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
+                                                </div>
+                                            @endforeach
                                         </div>
                                         <div class="menu_drop_img_vd">
                                             <div class="">
@@ -258,15 +241,15 @@
                                         </div>
                                     </div>
                                 </li>
-
                                 <li class="nav-item dropdown w-100 w-lg-auto menu_drop_vd">
                                     <a class="nav-link dropdown-toggle" href="#" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Collection</a>
+                                        data-bs-toggle="dropdown" aria-expanded="false">Phòng</a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="">Adu hacker</a></li>
-                                        <li><a class="dropdown-item" href="">Adu hacker</a></li>
-                                        <li><a class="dropdown-item" href="">Adu hacker</a></li>
-                                        <li><a class="dropdown-item" href="">Adu hacker</a></li>
+                                        @foreach (getCategory('room') as $item)
+                                            <li><a class="dropdown-item"
+                                                    href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </li>
                             </ul>

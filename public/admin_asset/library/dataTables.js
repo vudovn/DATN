@@ -99,6 +99,32 @@
         });
     };
 
+    TGNT.checkInput = () => {
+        $(document).on("change", ".checkInput", function () {
+            const id = $(this).data("id");
+            const item = $("#product-item" + id);
+            if ($(this).prop("checked")) {
+                if (!array.idArray.includes(id)) {
+                    array.idArray.push(id);
+                    item.css("background-color", "#cce6e6");
+                }
+            } else {
+                item.css("background-color", "");
+                array.idArray = array.idArray.filter((i) => i !== id);
+            }
+            $(".countProduct").html(array.idArray.length);
+            $(".filterProduct .title")
+                .removeClass("alert alert-primary alert-danger")
+                .addClass(
+                    array.idArray.length > 2
+                        ? "alert alert-primary"
+                        : "alert alert-danger"
+                );
+            $("#idProduct").val(array.idArray.join(","));
+            
+        });
+    };
+
     $(document).ready(function () {
         TGNT.searchForm();
         TGNT.filterForm();

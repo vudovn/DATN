@@ -100,9 +100,6 @@ class ProductController extends Controller
                 // 'client_asset/custom/js/product/attribute_hex.min.js',
                 'client_asset/custom/js/addToCart.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.min.js',
-
-            ],
-            'model' => 'product'
         ];
     }
 

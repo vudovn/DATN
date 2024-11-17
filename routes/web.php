@@ -19,6 +19,8 @@ use App\Http\Controllers\Admin\CollectionController;
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\CollectionController as ClientCollectionController;
+use App\Http\Controllers\Client\CommentController as ClientCommentController;
+use App\Http\Controllers\Client\CartController as ClientCartController;
 use App\Http\Controllers\Client\IndexController;
 
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
@@ -126,7 +128,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'destroy'])->name('delete');
     });
 
-     /* COLLECTION ROUTE */
+    /* COLLECTION ROUTE */
     Route::prefix('collection')->name('collection.')->group(function () {
         Route::get('/index', [CollectionController::class, 'index'])->name('index');
         Route::get('/getProductPoint', [CollectionController::class, 'getProductPoint'])->name('getProductPoint');
@@ -142,19 +144,19 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::post('/store', [CommentForbiddenWordController::class, 'store'])->name('store');
         Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'delete'])->name('delete');
 
-    
-    // /* ATTRIBUTE VALUE ROUTE */
-    // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
-    //     Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
-    //     Route::get('/create', [AttributeValueController::class, 'create'])->name('create');
-    //     Route::post('/store', [AttributeValueController::class, 'store'])->name('store');
-    //     Route::get('/edit/{id}', [AttributeValueController::class, 'edit'])->name('edit');
-    //     Route::put('/update', [AttributeValueController::class, 'update'])->name('update');
-    //     Route::get('/delete/{id}', [AttributeValueController::class, 'delete'])->name('delete');
-    //     Route::delete('/destroy/{id}', [AttributeValueController::class, 'destroy'])->name('destroy');
-    // });
-    /* AJAX ROUTE */
-});
+
+        // /* ATTRIBUTE VALUE ROUTE */
+        // Route::prefix('product/attribute-value')->name('product.attributeValue.')->group(function () {
+        //     Route::get('/index/{attribute_id}', [AttributeValueController::class, 'index'])->name('index');
+        //     Route::get('/create', [AttributeValueController::class, 'create'])->name('create');
+        //     Route::post('/store', [AttributeValueController::class, 'store'])->name('store');
+        //     Route::get('/edit/{id}', [AttributeValueController::class, 'edit'])->name('edit');
+        //     Route::put('/update', [AttributeValueController::class, 'update'])->name('update');
+        //     Route::get('/delete/{id}', [AttributeValueController::class, 'delete'])->name('delete');
+        //     Route::delete('/destroy/{id}', [AttributeValueController::class, 'destroy'])->name('destroy');
+        // });
+        /* AJAX ROUTE */
+    });
 });
 
 Route::middleware(['checkPermission'])->group(function () {
@@ -232,6 +234,11 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('/', [ClientProductController::class, 'index'])->name('index');
         Route::get('/{slug}', [ClientProductController::class, 'detail'])->name('detail');
         Route::get('/ajax/get-variant', [ClientProductController::class, 'getVariant'])->name('get-variant');
+    });
+    // comment route
+    Route::prefix('gio-hang')->name('gio-hang.')->group(function () {
+        Route::get('/', [ClientCartController::class, 'index'])->name('index');
+        Route::post('/store', [ClientCartController::class, 'store'])->name('store');
     });
     // collection route
     Route::prefix('bo-suu-tap')->name('collection.')->group(function () {

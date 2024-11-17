@@ -6,6 +6,7 @@
         $name = $product->name;
         $price = $product->price;
         $discount = $product->discount;
+        $priceDiscount = ($price - ($price * $discount) / 100);
         $albums = json_decode($product->albums);
         $description = $product->description;
         $category = $product->categories;
@@ -96,14 +97,21 @@
                     <div class="quantity_spct mb-xxl-0 mb-3">
                         <div class="input-group input-spinner">
                             <input type="button" value="-" class="button-minus btn btn-sm" data-field="quantity">
-                            <input type="number" step="1" max="3" value="1" name="quantity"
+                            <input type="number" step="1" max="3" value="1" name="quantity" id="quantity"
                                 class="quantity-field form-control-sm form-input">
                             <input type="button" value="+" class="button-plus btn btn-sm" data-field="quantity">
                         </div>
                     </div>
                     <div class="btn_spct ">
-                        <button class="btn btn-stnt">Mua ngay</button>
-                        <button class="btn btn-outline-stnt ms-4">Thêm vào giỏ hàng</button>
+                        <button class="btn btn-stnt buyNow" data-id="{{$product->id}}">Mua ngay</button>
+                        <button class="btn btn-outline-stnt ms-4 addToCart">Thêm vào giỏ hàng</button>
+                        <div class="hidden">
+                            <input type="hidden" name="price" id="price" value="{{$priceDiscount}}">
+                            {{-- <input type="hidden" name="total_price" id="total_price" value="{{$priceDiscount * $priceDiscount}}"> --}}
+                            {{-- <input type="hidden" name="" id=""> --}}
+                            {{-- <input type="hidden" name="" id=""> --}}
+                            {{-- <input type="hidden" name="" id=""> --}}
+                        </div>
                     </div>
                 </div>
                 <!-- end action sản phẩm -->

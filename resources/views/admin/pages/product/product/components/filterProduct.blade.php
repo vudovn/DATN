@@ -8,7 +8,7 @@
                     <div class="card" id="product-item{{ $product->sku }}">
                         <img class="img card-img-top p-1" height="100" src="{{ $product->thumbnail }}"
                             alt="Card image cap">
-                        <div class="card-body p-2">
+                        <div class="card-body p-2"> 
                             <span class="card-title text-limit text-primary"
                                 style="font-size: 12px">{{ $product->name }}</span>
                             <p class="card-text" style="font-size: 10px">{{ number_format($product->price) }} đ</p>

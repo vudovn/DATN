@@ -57,7 +57,7 @@
                         .removeClass("alert alert-primary alert-danger")
                         .addClass(
                             `alert ${
-                                array.idArray.length > 3
+                                array.idArray.length > 1
                                     ? "alert-primary"
                                     : "alert-danger"
                             }`

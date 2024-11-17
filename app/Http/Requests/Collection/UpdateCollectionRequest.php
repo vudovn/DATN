@@ -29,7 +29,7 @@ class UpdateCollectionRequest extends FormRequest
         return [
             'name' => 'required',
             'thumbnail' => 'required',
-            'idProduct' => 'min:3',
+            'idProduct' => 'min:2',
             // 'meta_title' => 'required',
             // 'meta_description' => 'required',
         ];

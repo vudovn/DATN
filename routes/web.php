@@ -22,6 +22,8 @@ use App\Http\Controllers\Admin\WishlistController;
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\CollectionController as ClientCollectionController;
+use App\Http\Controllers\Client\CommentController as ClientCommentController;
+use App\Http\Controllers\Client\CartController as ClientCartController;
 use App\Http\Controllers\Client\IndexController;
 use App\Http\Controllers\Client\CategoryController as ClientCategoryController;
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
@@ -157,6 +159,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/create', [CommentForbiddenWordController::class, 'create'])->name('create');
         Route::post('/store', [CommentForbiddenWordController::class, 'store'])->name('store');
         Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'delete'])->name('delete');
+
     });
 });
 
@@ -239,6 +242,11 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('/', [ClientProductController::class, 'index'])->name('index');
         Route::get('/{slug}', [ClientProductController::class, 'detail'])->name('detail');
         Route::get('/ajax/get-variant', [ClientProductController::class, 'getVariant'])->name('get-variant');
+    });
+    // comment route
+    Route::prefix('gio-hang')->name('gio-hang.')->group(function () {
+        Route::get('/', [ClientCartController::class, 'index'])->name('index');
+        Route::post('/store', [ClientCartController::class, 'store'])->name('store');
     });
     // collection route
     Route::prefix('bo-suu-tap')->name('collection.')->group(function () {

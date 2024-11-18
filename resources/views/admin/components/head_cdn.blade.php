@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/css/style-preset.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/select2/css/select2.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/css/customize.css"> 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/css/customize.css">
 
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/js/jquery-3.1.1.min.js"></script>
 

@@ -1,0 +1,768 @@
+[33mcommit 7f7c44310b0c837d1c8881c9847323d5dcdc5655[m[33m ([m[1;36mHEAD -> [m[1;32mmanage-comments[m[33m)[m
+Author: khvi <khanhvi12344321@gmail.com>
+Date:   Sun Nov 3 01:23:11 2024 +0700
+
+    Commit manage-comments 3/11
+
+[33mcommit e26544b91714e95716a3ab63a9a50eb641b09691[m[33m ([m[1;32mdevelop_tame[m[33m)[m
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Thu Oct 24 08:39:16 2024 +0700
+
+    Update dataTables.js
+
+[33mcommit 503aa46fbbe587ed2c586cce5882b00b8ec1411a[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Wed Oct 23 17:44:57 2024 +0700
+
+    update user
+
+[33mcommit c909588b0629234c2b420c2ae57aed219782ea13[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 23 12:02:02 2024 +0700
+
+    OKE
+
+[33mcommit e1130fbf7fdb5bb306a405137efb22a22c4c12a7[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 23 10:02:10 2024 +0700
+
+    OKE
+
+[33mcommit cadf54547c2f0923eda5b074acc0d15f5f73eac1[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Wed Oct 23 09:34:14 2024 +0700
+
+    fix quickUpdate
+
+[33mcommit e5479e49fa51791938bb34c3f899479a5d574727[m
+Merge: 6835e2cb 6085a63e
+Author: Ninn <thq11304@gmail.com>
+Date:   Wed Oct 23 08:47:55 2024 +0700
+
+    Merge branch 'main' of https://github.com/vudevweb/DATN into develop_tame
+
+[33mcommit 6835e2cb872f4239feb48f8cf8f0aa6bd23f0907[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Wed Oct 23 08:44:39 2024 +0700
+
+    23-10
+
+[33mcommit 6085a63e6f8819158c2d6d5549767ef739469d26[m
+Merge: 5463cffc f71482f9
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 23 08:37:56 2024 +0700
+
+    Merge pull request #20 from vudevweb/develop_tame
+    
+    Develop tame
+
+[33mcommit f71482f9daa49c1de6fda5f898c90365ff1ea712[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 23 00:24:51 2024 +0700
+
+    animation + performence
+
+[33mcommit 8807e40022b112a487063ff27600528ed9788302[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 22 22:26:12 2024 +0700
+
+    NEW
+
+[33mcommit 5463cffcf5e89562d0382d0809e010ac0367130a[m
+Merge: cbf3f991 be5e5cf2
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 22 21:48:27 2024 +0700
+
+    Merge pull request #19 from vudevweb/develop_tame
+    
+    Develop tame
+
+[33mcommit be5e5cf208b904fa4db53f376434c680f994510d[m
+Merge: bb4e2f8e 93a01572
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 22 16:47:53 2024 +0700
+
+    ok
+
+[33mcommit bb4e2f8ebd015220a141f4d7bfc2f35d21f111c7[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 22 16:44:17 2024 +0700
+
+    OKE
+
+[33mcommit 93a015728a04a6712e30f9376d0571f7eed73e09[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Tue Oct 22 16:40:48 2024 +0700
+
+    okela
+
+[33mcommit 0e9d9576ab793f5f2db1f58dd5679e85bcb7ab05[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Tue Oct 22 16:07:56 2024 +0700
+
+    okela
+
+[33mcommit 22eba300a3557809ebc741e1097249a3f311f499[m
+Merge: 96ee14b7 d940c9cc
+Author: Ninn <thq11304@gmail.com>
+Date:   Tue Oct 22 15:57:21 2024 +0700
+
+    Merge branch 'develop_tame' of https://github.com/vudevweb/DATN into develop_tame
+
+[33mcommit 96ee14b7c455a40813505b1d4d72d047fc5af310[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Tue Oct 22 15:53:53 2024 +0700
+
+    okela
+
+[33mcommit d940c9cc232056998c5e5b080c7c033814046683[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 22 15:49:18 2024 +0700
+
+    oke
+
+[33mcommit 510bb1cdf0d00f33b0de02dc2a9fbfc7fb42aebd[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 22 15:17:59 2024 +0700
+
+    ok
+
+[33mcommit dbf7a85b3c5627ad9cba1f7cc6dc7e074ded7ca7[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 22 14:36:26 2024 +0700
+
+    B
+
+[33mcommit 0318efe9a32b12388c99eea2c7de671ce6fb4af3[m
+Merge: a0e9bee7 6597316a
+Author: Ninn <thq11304@gmail.com>
+Date:   Tue Oct 22 13:46:24 2024 +0700
+
+    Merge branch 'develop_tame' of https://github.com/vudevweb/DATN into develop_tame
+
+[33mcommit a0e9bee7bd36dad62a4d7da5be68d0ab30245699[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Tue Oct 22 13:43:09 2024 +0700
+
+    chắc ổn
+
+[33mcommit 6597316a2817ba324cf12d87f04b198ceea021ea[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 22 13:40:51 2024 +0700
+
+    ok
+
+[33mcommit 2c0dfd395cb4c19707894da3d755807a384a331e[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 22 13:36:16 2024 +0700
+
+    ok
+
+[33mcommit cbf3f9910baf7c70580120bd400d9abb05fc6db5[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 4ffbfb1c 950be71c
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 22 12:09:33 2024 +0700
+
+    Merge pull request #18 from vudevweb/develop_tame
+    
+    Develop tame
+
+[33mcommit 950be71c23bba5e6b9363d511b85d100ad1b9a78[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 22 11:59:24 2024 +0700
+
+    OKEEEEEEEEEEEEEEEEEE
+
+[33mcommit 0827b61acd17a18b71f2cd3f51e133308bc762a0[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 22 11:58:22 2024 +0700
+
+    UPDATE : DATABASE + MODEL + SERVICE + REPOSITORY + ROUTE .....
+
+[33mcommit 2d7b1ee33c8cb8be6e84741063b4754aec6bd5d7[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Mon Oct 21 22:43:50 2024 +0700
+
+    OKE LA
+
+[33mcommit b9e8f3a019e67c856b4fc2dcf62dd6ef6ce4d356[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Mon Oct 21 19:15:07 2024 +0700
+
+    Đã thêm các thay đổi
+
+[33mcommit 8e9820445639d7261f4ed692fa6c85a2d86ac619[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Sun Oct 20 14:23:16 2024 +0700
+
+    tame
+
+[33mcommit 72d8035d2597eb59612a3ce75b49321b61467011[m
+Merge: 03516245 7f1e97d9
+Author: NinWeb <thq11304@gmail.com>
+Date:   Sat Oct 19 14:04:25 2024 +0700
+
+    Merge pull request #17 from vudevweb/feature/manage-categories
+    
+    Feature/manage categories
+
+[33mcommit 7f1e97d98cfd3593299174e5dcf2494723253a08[m[33m ([m[1;31morigin/feature/manage-categories[m[33m)[m
+Merge: 9f658a9a 03516245
+Author: NinWeb <thq11304@gmail.com>
+Date:   Sat Oct 19 14:04:16 2024 +0700
+
+    Merge branch 'develop_tame' into feature/manage-categories
+
+[33mcommit 0351624578218707f3da9e2a7d484984d9836dd8[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Sat Oct 19 14:00:21 2024 +0700
+
+    ổn
+
+[33mcommit 0a9c3c01657d17b9a2329c3d7ecb7cb39ba428bd[m
+Merge: 50ec7c75 42a8f972
+Author: Ninn <thq11304@gmail.com>
+Date:   Sat Oct 19 10:04:31 2024 +0700
+
+    Merge branch 'develop_tame' of https://github.com/vudevweb/DATN into develop_tame
+
+[33mcommit 50ec7c751089c6f68a4970a09afc244059b6fd54[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Sat Oct 19 10:01:22 2024 +0700
+
+    tame
+
+[33mcommit 42a8f97206342278917d4daa0dae9990c471516f[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Sat Oct 19 09:45:01 2024 +0700
+
+    OKE
+
+[33mcommit 3ab5921686187244847aa6bcc51b1f6572e3e488[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Sat Oct 19 09:44:17 2024 +0700
+
+    OKE
+
+[33mcommit d03a2d92a85950093ef881988d7cc4a54caad895[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Fri Oct 18 16:03:41 2024 +0700
+
+    oke
+
+[33mcommit f4e9d32fe2c71ae8e30a17e8ca8d899c2992250b[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Fri Oct 18 13:55:17 2024 +0700
+
+    OKE
+
+[33mcommit f77dc6ffc68168203bf5c678af588c62a7deb51a[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Fri Oct 18 11:27:23 2024 +0700
+
+    check
+
+[33mcommit b856f1eaf78b8bbb5142ba6f43e1b16f9fe59416[m
+Merge: a028e287 400aae7f
+Author: NinWeb <thq11304@gmail.com>
+Date:   Fri Oct 18 11:07:54 2024 +0700
+
+    Merge pull request #16 from vudevweb/feature_orders
+    
+    Feature orders
+
+[33mcommit 400aae7ff6e3377d39a650c17ebb9c63b7739d0e[m
+Merge: 63c4d546 a028e287
+Author: NinWeb <thq11304@gmail.com>
+Date:   Fri Oct 18 11:07:46 2024 +0700
+
+    Merge branch 'develop_tame' into feature_orders
+
+[33mcommit a028e28785acba1e6aab82356083ce9829d0d2f4[m
+Merge: 623ea975 56bce55d
+Author: NinWeb <thq11304@gmail.com>
+Date:   Fri Oct 18 11:03:55 2024 +0700
+
+    Merge pull request #15 from vudevweb/feature/account_management
+    
+    Feature/account management
+
+[33mcommit 56bce55dbc067d3175ef021967366d5780f3fb09[m[33m ([m[1;31morigin/feature/account_management[m[33m)[m
+Merge: 42948e8f 623ea975
+Author: NinWeb <thq11304@gmail.com>
+Date:   Fri Oct 18 11:03:47 2024 +0700
+
+    Merge branch 'develop_tame' into feature/account_management
+
+[33mcommit 623ea975c616f10bd59bb152bdb20e9abc26cf53[m
+Merge: 3dbabda6 f1e71b69
+Author: NinWeb <thq11304@gmail.com>
+Date:   Fri Oct 18 11:01:47 2024 +0700
+
+    Merge pull request #14 from vudevweb/feature_permission
+    
+    Feature permission
+
+[33mcommit f1e71b691c916e0f14c9698243904639479055b7[m[33m ([m[1;31morigin/feature_permission[m[33m)[m
+Merge: 160a29f9 3dbabda6
+Author: NinWeb <thq11304@gmail.com>
+Date:   Fri Oct 18 11:01:35 2024 +0700
+
+    Merge branch 'develop_tame' into feature_permission
+
+[33mcommit 3dbabda650f57c254b1204fb14294f80cdfae81f[m
+Merge: c9dd6b76 ddb02b87
+Author: NinWeb <thq11304@gmail.com>
+Date:   Fri Oct 18 10:54:33 2024 +0700
+
+    Merge pull request #13 from vudevweb/Product_and_Attribute
+    
+    Product and attribute
+
+[33mcommit 160a29f97438bdc660661a35a2a0a9fea8730dfa[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Fri Oct 18 10:48:04 2024 +0700
+
+    90% permission
+
+[33mcommit a6132abd004ce26bbf434bbab08b208ddddfe529[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Fri Oct 18 10:34:22 2024 +0700
+
+    done permission
+
+[33mcommit 42948e8f02e09040d3f52d5feb5ad2db308c3cb3[m
+Author: Bui Tuyet Ngan <buituyetngan5904@gmail.com>
+Date:   Fri Oct 18 09:46:29 2024 +0700
+
+    feature/account_management
+
+[33mcommit 63c4d5466eec5b08c82b06b78e35230bdd17498a[m
+Author: aginCoder <phamgiaan545@gmail.com>
+Date:   Thu Oct 17 23:11:13 2024 +0700
+
+    fix lai ít cho đúng
+
+[33mcommit ddb02b87b28d7caab0e71410eb3216f8adf8861d[m[33m ([m[1;31morigin/Product_and_Attribute[m[33m)[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Thu Oct 17 20:30:05 2024 +0700
+
+    8h29 17/10
+
+[33mcommit 9f658a9ae5ac7bdf3e67650f599a40b11cb54810[m[33m ([m[1;32mfeature/manage-categories[m[33m)[m
+Author: khvi <khanhvi12344321@gmail.com>
+Date:   Wed Oct 16 13:25:28 2024 +0700
+
+    Commit các file của Quản lý danh mục
+
+[33mcommit 698ad186fc204d162e2ebbd1088de1efba4bf4a9[m
+Merge: 9fabbf17 c9dd6b76
+Author: khvi <khanhvi12344321@gmail.com>
+Date:   Wed Oct 16 13:15:15 2024 +0700
+
+    commit
+
+[33mcommit f6ea4b4cf1c852e7bc0cff09427817e98182d0e6[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 15 10:28:18 2024 +0700
+
+    70%
+
+[33mcommit 1fe6b172485af70f8520f046acd7f6e7aa88f944[m[33m ([m[1;31morigin/feature_orders[m[33m)[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Sun Oct 13 12:19:54 2024 +0700
+
+    FIX 1 ÍT
+
+[33mcommit 132a8e4db73f6862b4f21c7d1db502552ce4aa5a[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Sun Oct 13 11:20:21 2024 +0700
+
+    OKE
+
+[33mcommit f641a4023c51bd10a8b7beb5bb1c52d6ad25fdfe[m
+Author: aginCoder <phamgiaan545@gmail.com>
+Date:   Sat Oct 12 19:28:51 2024 +0700
+
+    done orders + reviews
+
+[33mcommit 9527c932dc9d3cb0bfeef05a20b5dc835ab6df51[m
+Author: aginCoder <phamgiaan545@gmail.com>
+Date:   Thu Oct 10 23:00:06 2024 +0700
+
+    Done funtion manage orders admin + StatisTical(total sp,user,review,order)
+
+[33mcommit 8fb433dc8c7a130a576d394dc3dee7f6067d6175[m
+Merge: fd637e4a c9dd6b76
+Author: Bui Tuyet Ngan <buituyetngan5904@gmail.com>
+Date:   Thu Oct 10 20:55:04 2024 +0700
+
+    them file
+
+[33mcommit 9fabbf17dea20a48a6a5e68a1eebe360dd471ca9[m
+Author: khvi <khanhvi12344321@gmail.com>
+Date:   Thu Oct 10 20:54:38 2024 +0700
+
+    Lưu thay đổi trong library.js trước khi merge
+
+[33mcommit 01650c1580e13799bc37e66aa6a172c72899953e[m
+Author: aginCoder <phamgiaan545@gmail.com>
+Date:   Thu Oct 10 15:26:35 2024 +0700
+
+    order
+
+[33mcommit 4ffbfb1c68176dec1d2c0c18a23be8dd6270ab5d[m
+Merge: 080bc439 c9dd6b76
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Thu Oct 10 10:55:08 2024 +0700
+
+    Merge pull request #11 from vudevweb/develop
+    
+    Develop
+
+[33mcommit c9dd6b76ebf2ddab19f0c3d0b8356ad33c8d1a20[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mfeature/manage-comment[m[33m, [m[1;32mdevelop[m[33m)[m
+Merge: 2ae9f9ad a341799a
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Thu Oct 10 10:28:26 2024 +0700
+
+    Merge pull request #10 from vudevweb/Product_And_Attribute
+    
+    FIX DATABASE
+
+[33mcommit a341799a3f998713af584a86eb06f58d096ab491[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Thu Oct 10 10:24:20 2024 +0700
+
+    OKE
+
+[33mcommit 080bc439736e40a53788127724d23172c52e7f78[m
+Merge: a927a24f 2ae9f9ad
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Thu Oct 10 09:34:47 2024 +0700
+
+    Merge pull request #9 from vudevweb/develop
+    
+    Develop
+
+[33mcommit 2ae9f9adcf2dfdc229c346f1e96d992d5a83d0a4[m
+Merge: 3fe8b9c9 c0ff79a0
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Thu Oct 10 08:36:57 2024 +0700
+
+    Merge pull request #8 from vudevweb/Product_And_Attribute
+    
+    okeeee
+
+[33mcommit c0ff79a0dba1f91409179028fa051a805090777c[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Thu Oct 10 08:35:56 2024 +0700
+
+    okeeee
+
+[33mcommit 3fe8b9c9e66fb29d8b6b0c03a2391efab2550092[m
+Merge: 10cb4f34 fcb1f4f1
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 9 19:01:18 2024 +0700
+
+    Merge pull request #7 from vudevweb/fix_bug_from_develop
+    
+    FIX LANG
+
+[33mcommit fcb1f4f1c2c3a3143e2ea8b7f67c36633a84423e[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 9 18:59:41 2024 +0700
+
+    FIX LANG
+
+[33mcommit cb28274c0e1692fa7cd4c0344bc87b89894a1943[m
+Merge: 91213b4b 10cb4f34
+Author: khvi <khanhvi12344321@gmail.com>
+Date:   Wed Oct 9 16:48:22 2024 +0700
+
+    Merge remote-tracking branch 'origin/develop' into feature/manage-categories
+
+[33mcommit 91213b4b210b723df14c05a3defadc551a8e4340[m
+Author: khvi <khanhvi12344321@gmail.com>
+Date:   Wed Oct 9 16:47:47 2024 +0700
+
+    Lưu các thay đổi danhmuc trước khi merge
+
+[33mcommit fd637e4ae587c6bda6e9adae750fd7182c1f174b[m
+Merge: 3f24e7d9 10cb4f34
+Author: Bui Tuyet Ngan <buituyetngan5904@gmail.com>
+Date:   Wed Oct 9 16:11:55 2024 +0700
+
+    pull code mới
+
+[33mcommit 3f24e7d98b98932468673e3ecc1711d85d9deb5a[m
+Author: Bui Tuyet Ngan <buituyetngan5904@gmail.com>
+Date:   Wed Oct 9 16:09:18 2024 +0700
+
+    new edit
+
+[33mcommit a927a24f55efa822defbfa62c7407b08bbb1cc14[m
+Merge: 7cd174c0 10cb4f34
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 9 15:33:47 2024 +0700
+
+    Merge pull request #5 from vudevweb/develop
+    
+    Develop
+
+[33mcommit 10cb4f34e10a3af8f199cf50f031399c442dc9b0[m
+Merge: e775cee3 d7ac3607
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 9 15:19:32 2024 +0700
+
+    Merge branch 'develop' of https://github.com/vudevweb/DATN into develop
+
+[33mcommit e775cee324407ff912bbc8f9a9ae92fe1433233e[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 9 15:19:29 2024 +0700
+
+    OKE
+
+[33mcommit 7cd174c0f7f8f8b1ef75aa4cad867cad0fe9d8ea[m
+Merge: 001a989f d4ae556e
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 9 15:17:15 2024 +0700
+
+    Merge pull request #6 from vudevweb/fix_ui
+    
+    Fix UI
+
+[33mcommit d4ae556ed3a2ebf9a7b18d20d86e07095886d60f[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 9 15:16:37 2024 +0700
+
+    FIX UI
+
+[33mcommit d7ac36073b453a6d6d0685b51cd4c037a997d5ed[m
+Merge: 2080a578 a6341521
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 9 12:11:34 2024 +0700
+
+    Merge pull request #4 from vudevweb/fix_ui
+    
+    FIX UI
+
+[33mcommit a63415212413414e5291ee024ac0f7f65751336a[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 9 12:10:44 2024 +0700
+
+    FIX UI
+
+[33mcommit 001a989f4593a86f3b6144e63e78484fbaab1ed0[m
+Merge: d9e78a32 2080a578
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 9 10:36:33 2024 +0700
+
+    Merge pull request #3 from vudevweb/develop
+    
+    Develop
+
+[33mcommit 2080a578547fc999813ae99b204ce91f8526046e[m
+Merge: b4e121bf 245f6e62
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 9 10:35:55 2024 +0700
+
+    Merge pull request #2 from vudevweb/fix_ui
+    
+    FIX UI
+
+[33mcommit 245f6e62a4d070642d4c40498ab946bc00028b14[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 9 09:37:25 2024 +0700
+
+    FIX UI
+
+[33mcommit b4e121bfb54c5bedcce3e6c85dc49f11e8f5b1df[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Wed Oct 9 08:25:00 2024 +0700
+
+    fix ui
+
+[33mcommit f9e7824a70ee167b00dc7413b37cd6cb92a155c1[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 8 23:44:07 2024 +0700
+
+    UPDATE UI
+
+[33mcommit d68ec34e1160d1a07ecb8ba0b658db10cb75bc99[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 8 21:05:30 2024 +0700
+
+    oke
+
+[33mcommit a078412a77378cb31e7db5c89c0e0490be41e096[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 8 16:37:27 2024 +0700
+
+    oke
+
+[33mcommit 28da002f9fee14b43c6ff371fe662c7898c96a16[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 8 10:24:38 2024 +0700
+
+    oke
+
+[33mcommit 7e9ad9400558ca7f8d5ab680e67fb23af30ebcb5[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 8 10:08:56 2024 +0700
+
+    OKE
+
+[33mcommit 1baf08db11f7367d8b4ef9b5e5dc7d2a48a901ce[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 8 00:40:17 2024 +0700
+
+    oke
+
+[33mcommit f680d8e87e72dcb1102e6701d17de8a877d5a5f4[m
+Merge: 920478f0 b213a345
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 8 00:35:38 2024 +0700
+
+    Merge branch 'develop' of https://github.com/vudevweb/DATN into develop
+
+[33mcommit 920478f0378122b09a940fe85b3db24753c7511e[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Tue Oct 8 00:35:33 2024 +0700
+
+    OKE LUÔN
+
+[33mcommit b213a3451c8688a4b67ed869880f0c504c988fb8[m
+Merge: cdced818 2f074628
+Author: Vũ Đỗ <vudo.contact.vn@gmail.com>
+Date:   Mon Oct 7 23:17:30 2024 +0700
+
+    Merge pull request #1 from vudevweb/database
+    
+    Database
+
+[33mcommit c91d61497a6e054326d0b12d88e780a6c08a5cb9[m
+Merge: cdced818 2f074628
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Mon Oct 7 23:07:18 2024 +0700
+
+    Merge branch 'database' of https://github.com/vudevweb/DATN into develop
+
+[33mcommit cdced818f1cc459a682f468dfee8fdc6e6fa689e[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Mon Oct 7 23:06:49 2024 +0700
+
+    OKE
+
+[33mcommit 2f074628ae80c604e494c62cba0f6df5440479e7[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Mon Oct 7 23:04:53 2024 +0700
+
+    update DB
+
+[33mcommit 303f24722947b395773fd43dd945abfc28234da1[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Mon Oct 7 18:08:40 2024 +0700
+
+    oke
+
+[33mcommit 78f4be5f828721a4b6c46f95df1258a3496cbb2d[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Mon Oct 7 18:06:08 2024 +0700
+
+    oke
+
+[33mcommit 97d92ee28336d54c038f922bb0e2eaed29c89587[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Mon Oct 7 15:45:59 2024 +0700
+
+    done database
+
+[33mcommit 781b7e60ed93c1147368ba1ff8e04c9173c8822b[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Mon Oct 7 15:07:05 2024 +0700
+
+    done database
+
+[33mcommit b3de0ff94dcde9e30de624272e0bc9020a9855ca[m
+Author: Ninn <thq11304@gmail.com>
+Date:   Mon Oct 7 15:04:44 2024 +0700
+
+    done database
+
+[33mcommit baca58abd68450fabc18247db37d5ab91f8addb2[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Sun Oct 6 23:12:47 2024 +0700
+
+    OKE
+
+[33mcommit a82598974b9780a6bf6c11aa354b44c001796bcc[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Sun Oct 6 22:41:10 2024 +0700
+
+    oke
+
+[33mcommit f45cfa92837ced9c02f27b8f105cf34874fcb293[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Sun Oct 6 20:44:20 2024 +0700
+
+    oke
+
+[33mcommit a0144089f6974081d683a4c384b8a08e405617d0[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Sun Oct 6 19:10:28 2024 +0700
+
+    OKE
+
+[33mcommit d9e78a325829a6933a855da8cf07e391c0ca1be5[m[33m ([m[1;32mmain[m[33m)[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Sun Oct 6 16:29:51 2024 +0700
+
+    BIG UPDATE
+
+[33mcommit 6adcecbc60499365ab95a48c9ef347110f33c5f7[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Sun Oct 6 16:27:40 2024 +0700
+
+    xóa hết
+
+[33mcommit d56e9be3f9198a5d599a36a5183c5a552c73cb0a[m
+Author: vudevweb <vudo.contact.vn@gmail.com>
+Date:   Sun Oct 6 16:25:19 2024 +0700
+
+    Your commit message
+
+[33mcommit 3b7978cf1a610d464b21bdeeab4be54ce17e4bc5[m
+Author: Nguyen Cong Tuan <chandanv1010@gmail.com>
+Date:   Tue Sep 24 18:53:19 2024 +0700
+
+    Update Something
+
+[33mcommit f524fe9d09a7e476edc53f18d61b2e2300426584[m
+Author: Nguyen Cong Tuan <chandanv1010@gmail.com>
+Date:   Tue Sep 24 12:25:17 2024 +0700
+
+    Update
+
+[33mcommit 72b6e1772f7c9c4bf3e41a5548cf680f2ec2d15a[m
+Author: Nguyen Cong Tuan <chandanv1010@gmail.com>
+Date:   Sun Sep 22 18:24:37 2024 +0700
+
+    Update
+
+[33mcommit 68b552af45afc31f7e652259bf9238ebc8d9ae68[m
+Author: Nguyen Cong Tuan <chandanv1010@gmail.com>
+Date:   Sat Sep 21 18:01:05 2024 +0700
+
+    Delete User
+
+[33mcommit 3a1856a22e8bbdad82929feb4b9cfc39a8052261[m
+Author: Nguyen Cong Tuan <chandanv1010@gmail.com>
+Date:   Sat Sep 21 16:38:27 2024 +0700
+
+    Update User
+
+[33mcommit 3bc5590c6f3f09bdd6cc286801679273b51f73bf[m
+Author: Nguyen Cong Tuan <chandanv1010@gmail.com>
+Date:   Thu Sep 19 07:27:14 2024 +0700
+
+    Initial Project

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\QueryScope;
+
 class Product extends Model
 {
     use HasFactory, QueryScope;
@@ -51,5 +52,9 @@ class Product extends Model
     public function collections()
     {
         return $this->belongsToMany(Collection::class, 'collection_product', 'product_id', 'collection_id');
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

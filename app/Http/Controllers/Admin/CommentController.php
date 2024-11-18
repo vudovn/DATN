@@ -77,10 +77,6 @@ class CommentController extends Controller
         if (!Auth::check()) {
             return redirect()->back()->withErrors('Bạn cần đăng nhập để bình luận.');
         }
-        if ($this->commentService->isUserBanned(Auth::user())) {
-            $time = Auth::user()->ban_expires_at;
-            return redirect()->route('comment.create')->with('error', 'Bạn đã bị cấm bình luận đến ' . $time);
-        }
         if ($this->commentService->create($request)) {
             return redirect()->route('comment.create')->with('success', 'Bình luận thành công');
         }

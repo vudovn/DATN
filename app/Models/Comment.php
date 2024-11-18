@@ -42,10 +42,10 @@ class Comment extends Model
     {
         return $this->hasMany(Comment::class, 'parent_id')->whereNull('deleted_at');
     }
-    // public function countReplies()
-    // {
-    //     return $this->replies()->count();
-    // }
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
     public function countReplies()
     {
         $total = $this->replies()->count();

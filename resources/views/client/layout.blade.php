@@ -18,8 +18,7 @@
     @include('client.components.modal')
     @include('client.components.alert')
     @include('client.components.script')
-    <script src="/client_asset/custom/js/product/search.js"></script>
-    <script src="/client_asset/custom/js/wishlist.js"></script>
+
 </body>
 
 </html>

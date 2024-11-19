@@ -80,7 +80,7 @@
         $("#checkAll").prop(
             "checked",
             checkBoxs.length &&
-            checkBoxs.filter(":checked").length === checkBoxs.length
+                checkBoxs.filter(":checked").length === checkBoxs.length
         );
     };
 
@@ -117,10 +117,7 @@
                 let ids = TGNT.getIds();
 
                 if (ids.length === 0) {
-                    VDmessage.show(
-                        "warning",
-                        "Chưa có hàng nào được chọn!"
-                    );
+                    VDmessage.show("warning", "Chưa có hàng nào được chọn!");
                     return false;
                 }
 
@@ -237,8 +234,8 @@
                         success: function () {
                             deleteAxis === "column"
                                 ? $(
-                                    `th[data-axis="${id}"], td[data-axis="${id}"]`
-                                ).remove()
+                                      `th[data-axis="${id}"], td[data-axis="${id}"]`
+                                  ).remove()
                                 : _this.closest("tr").remove();
                             VDmessage.show("success", "Xóa thành công!");
                         },
@@ -408,12 +405,14 @@
         $(document).on("change", ".select-status", function () {
             const statusId = $(this).val();
             const orderId = $(this).data("id");
-        
+
             $.ajax({
-                url: `/orders/${orderId}/payment_status`, 
+                url: `/orders/${orderId}/payment_status`,
                 type: "PUT",
                 headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
                 },
                 data: {
                     status_id: statusId,
@@ -427,23 +426,34 @@
                 },
             });
         });
-    }
-    
-        $(document).ready(function () {
-            TGNT.setupAjaxHeader();
-            TGNT.changeStatusByField();
-            TGNT.checkBoxItem();
-            TGNT.checkAll();
-            TGNT.hideActions();
-            TGNT.action();
-            TGNT.delete_item();
-            TGNT.select2();
-            TGNT.tagify();
-            TGNT.sortui();
-            TGNT.requestUrl();
-            TGNT.permission_to_role();
-            TGNT.quick_update();
-            TGNT.int();
-            TGNT.select_status();
+    };
+
+    TGNT.clipboard = () => {
+        $(document).on("click", ".clipboard", function () {
+            const _this = $(this);
+            const text = $(_this.data("clipboard-target")).text();
+            console.log(text);
+            navigator.clipboard.writeText(text);
+            VDmessage.show("success", "Đã copy thành công!");
         });
+    };
+
+    $(document).ready(function () {
+        TGNT.setupAjaxHeader();
+        TGNT.changeStatusByField();
+        TGNT.checkBoxItem();
+        TGNT.checkAll();
+        TGNT.hideActions();
+        TGNT.action();
+        TGNT.delete_item();
+        TGNT.select2();
+        TGNT.tagify();
+        TGNT.sortui();
+        TGNT.requestUrl();
+        TGNT.permission_to_role();
+        TGNT.quick_update();
+        TGNT.int();
+        TGNT.select_status();
+        TGNT.clipboard();
+    });
 })(jQuery);

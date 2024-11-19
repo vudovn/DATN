@@ -6,7 +6,7 @@
         $name = $product->name;
         $price = $product->price;
         $discount = $product->discount;
-        $priceDiscount = ($price - ($price * $discount) / 100);
+        $priceDiscount = $price - ($price * $discount) / 100;
         $albums = json_decode($product->albums);
         $description = $product->description;
         $category = $product->categories;
@@ -97,30 +97,55 @@
                     <div class="quantity_spct mb-xxl-0 mb-3">
                         <div class="input-group input-spinner">
                             <input type="button" value="-" class="button-minus btn btn-sm" data-field="quantity">
-                            <input type="number" step="1" max="3" value="1" name="quantity" id="quantity"
-                                class="quantity-field form-control-sm form-input">
+                            <input type="number" step="1" max="3" value="1" name="quantity"
+                                id="quantity" class="quantity-field form-control-sm form-input">
                             <input type="button" value="+" class="button-plus btn btn-sm" data-field="quantity">
                         </div>
                     </div>
-                    <div class="btn_spct ">
-                        <button class="btn btn-stnt buyNow" data-id="{{$product->id}}">Mua ngay</button>
+                    <div class="btn_spct">
+                        <button class="btn btn-stnt buyNow" data-id="{{ $product->id }}">Mua ngay</button>
                         <button class="btn btn-outline-stnt ms-4 addToCart">Thêm vào giỏ hàng</button>
+                        <button class="btn btn-link p-0 ms-3">
+                            <label for="like{{ $product->id }}" style="cursor: pointer"
+                                title="Thêm sản phẩm vào mục yêu thích"
+                                class="animate__animated animate__bounceIn like_action con-like">
+                                <input
+                                    {{ auth()->check() &&auth()->user()->wishlists->contains('product_id', $product->id)? 'checked': '' }}
+                                    class="like action_wishlist" id="like{{ $product->id }}" data-id="{{ $product->id }}"
+                                    type="checkbox" value="{{ $product->id }}">
+                                <div class="checkmark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="outline" viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z">
+                                        </path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="filled" viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z">
+                                        </path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" class="celebrate">
+                                        <polygon class="poly" points="10,10 20,20"></polygon>
+                                        <polygon class="poly" points="10,50 20,50"></polygon>
+                                        <polygon class="poly" points="20,80 30,70"></polygon>
+                                        <polygon class="poly" points="90,10 80,20"></polygon>
+                                        <polygon class="poly" points="90,50 80,50"></polygon>
+                                        <polygon class="poly" points="80,80 70,70"></polygon>
+                                    </svg>
+                                </div>
+                            </label>
+                        </button>
                         <div class="hidden">
-                            <input type="hidden" name="price" id="price" value="{{$priceDiscount}}">
-                            {{-- <input type="hidden" name="total_price" id="total_price" value="{{$priceDiscount * $priceDiscount}}"> --}}
-                            {{-- <input type="hidden" name="" id=""> --}}
-                            {{-- <input type="hidden" name="" id=""> --}}
-                            {{-- <input type="hidden" name="" id=""> --}}
+                            <input type="hidden" name="price" id="price" value="{{ $priceDiscount }}">
                         </div>
-                        <input 
-                            {{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id) ? 'checked' : '' }} 
-                            type="checkbox" 
-                            name="product_id" 
-                            class="add_wishlist" 
-                            data-type="{{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id) ? 'remove' : 'add' }}" 
-                            value="{{ $product->id }}">
+
+                        {{-- <input
+                            {{ auth()->check() &&auth()->user()->wishlists->contains('product_id', $product->id)? 'checked': '' }}
+                            type="checkbox" name="add_wishlist" class="add_wishlist" value="{{ $product->id }}"> --}}
+                    </div>
+                    <!-- end action sản phẩm -->
                 </div>
-                <!-- end action sản phẩm -->
+
             </div>
             <div class="col-xxl-12 col-sm-12 mb-5">
                 <!-- policy sản phẩm -->
@@ -146,7 +171,8 @@
                         <!-- vận chuyển -->
                         <li class="nav-item" role="presentation">
                             <a class="nav-link fs-xxl-5 fw-bold pb-2" id="pills-comment-tab" data-bs-toggle="pill"
-                                href="#pills-comment" role="tab" aria-controls="pills-comment" aria-selected="false">
+                                href="#pills-comment" role="tab" aria-controls="pills-comment"
+                                aria-selected="false">
                                 Bình luận
                             </a>
                         </li>
@@ -169,7 +195,7 @@
                 <!-- end policy sản phẩm -->
             </div>
         </div>
-        
+
     </section>
     <!-- end -->
 @endsection

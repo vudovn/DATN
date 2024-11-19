@@ -9,7 +9,10 @@
                 </a>
                 <label for="like{{ $item->id }}" style="cursor: pointer" title="Thêm sản phẩm vào mục yêu thích"
                     class="animate__animated animate__bounceIn like_action con-like position-absolute top-0 end-0 mt-4 me-8">
-                    <input class="like" id="like{{ $item->id }}" data-id="{{ $item->id }}" type="checkbox">
+                    <input
+                        {{ auth()->check() &&auth()->user()->wishlists->contains('product_id', $item->id)? 'checked': '' }}
+                        class="like action_wishlist" id="like{{ $item->id }}" value="{{ $item->id }}"
+                        data-id="{{ $item->id }}" type="checkbox">
                     <div class="checkmark">
                         <svg xmlns="http://www.w3.org/2000/svg" class="outline" viewBox="0 0 24 24">
                             <path
@@ -46,32 +49,5 @@
 </div>
 
 <style>
-    .listProduct .item img {
-        width: 100%;
-        filter: drop-shadow(0 50px 20px #0009);
-    }
 
-    .like_action {
-        display: none;
-    }
-
-    .product_item:hover .like_action {
-        display: block;
-    }
-
-    .listProduct .item {
-        background-color: #EEEEE6;
-        padding: 20px;
-        border-radius: 20px;
-    }
-
-    .listProduct .item h2 {
-        font-weight: 500;
-        font-size: large;
-    }
-
-    .listProduct .item .price {
-        letter-spacing: 4px;
-        font-size: small;
-    }
 </style>

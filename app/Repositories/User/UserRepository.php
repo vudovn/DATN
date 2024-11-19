@@ -33,5 +33,9 @@ class UserRepository extends BaseRepository{
                     ->paginate($params['perpage']);       
     }
 
+    public function totalCustomer(){
+        return $this->model->whereDoesntHave('roles')->count();
+    }
+
 
 }

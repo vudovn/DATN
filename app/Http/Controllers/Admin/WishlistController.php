@@ -32,21 +32,34 @@ class WishlistController extends Controller
             'user'
         ));
     }
-    
-    public function add(Request $request)
+
+    public function action(Request $request)
     {
         $user = auth()->user();
         $productId = $request->input('product_id');
-
         $wishlist = $user->wishlists()->where('product_id', $productId)->first();
-
         if ($wishlist) {
             $wishlist->delete();
-            return response()->json(['message' => 'Sản phẩm đã được xoá khỏi danh sách yêu thích.']);
+            $count = $user->wishlists()->count();
+            $data = [
+                'count' => $count,
+            ];
+            return successResponse($data, 'Đã xóa sản phẩm ra khỏi mục yêu thích');
         } else {
             $user->wishlists()->create(['product_id' => $productId]);
-            return response()->json(['message' => 'Sản phẩm đã được thêm vào danh sách yêu thích.']);
+            $count = $user->wishlists()->count();
+            $data = [
+                'count' => $count,
+            ];
+            return successResponse($data, 'Đã thêm sản phẩm vào mục yêu thích');
         }
+    }
+    public function count(Request $request)
+    {
+        $user = auth()->user();
+        $productId = $request->input('product_id');
+        $count = $user->wishlists()->count();
+        return successResponse($count, 'Đã thêm sản phẩm vào mục yêu thích');
     }
 
     public function delete(Request $request)
@@ -65,7 +78,7 @@ class WishlistController extends Controller
                 'client_asset/custom/css/wishlist.css'
             ],
             'js' => [
-                'client_asset/custom/js/wishlist.js'
+
             ],
             'model' => 'user'
         ];

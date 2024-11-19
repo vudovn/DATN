@@ -30,7 +30,9 @@ class User extends Authenticatable
         'province_id',
         'district_id',
         'ward_id',
-        'publish'
+        'publish',
+        'is_banned',
+        'ban_expires_at'
     ];
     public $timestamps = true;
 
@@ -67,8 +69,10 @@ class User extends Authenticatable
     }
 
 
+
     // public function sendPasswordResetNotification($token)
     // {
     //     $this->notify(new CustomResetPasswordNotification($token));
     // }
+
 }

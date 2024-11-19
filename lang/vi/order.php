@@ -5,8 +5,32 @@ return [
         'pending' => 'Chờ xử lý',
         'processing' => 'Đang xử lý',
         'shipped' => 'Đang giao hàng',
-        'delivered' => 'Đã giao hàng',
+        'delivered' => 'Giao hàng thành công',
         'cancelled' => 'Đã hủy',
+    ],
+
+    'payment_status' => [
+        'pending' => 'Chưa thanh toán',
+        'completed' => 'Đã thanh toán'
+    ],
+
+    'payment_status_select' => [
+        0 => [
+            'id' => 'pending',
+            'name' => 'Đang chờ',
+        ],
+        1 => [
+            'id' => 'completed',
+            'name' => 'Đã hoàn thành',
+        ],
+        2 => [
+            'id' => 'failed',
+            'name' => 'Thất bại',
+        ],
+        3 => [
+            'id' => 'refunded',
+            'name' => 'Hoàn tiền',
+        ]
     ],
 
     'sort' => [
@@ -42,5 +66,12 @@ return [
             'name' => 'Đã hủy'
         ]
     ],
+
+    'actions' => [
+        0 => [
+            'id' => 'delete',
+            'name' => 'Xóa'
+        ],
+    ]
     
 ];

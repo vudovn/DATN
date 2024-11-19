@@ -21,8 +21,17 @@ class CategoryRepository extends BaseRepository{
         return $this->model->where('publish',1)->get();
     }
 
-   
-    
+    public function getCategoryRoom(){
+        return $this->model->where('publish',1)->where('is_room',1)->get();
+    }
+
+    public function getCategory(){
+        return $this->model->where('publish',1)->where('is_room',2)->get();
+    }
+
+    public function searchCategory($keyword){
+        return $this->model->where('name', 'like', '%' . $keyword . '%')->where('publish', 1)->get();
+    }
 
 
 }

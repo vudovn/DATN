@@ -26,11 +26,12 @@
                 </td>
             </tr>`
         );
-
+        // console.log(array);
         const model = TGNT.getModel();
+        const url = `/${model}/getData`;
         $.ajax({
             type: "GET",
-            url: `/${model}/getData`,
+            url: url,
             data: { ...array, ...params },
             success: function (data) {
                 $("#tbody").html(data);
@@ -45,27 +46,46 @@
     };
 
     TGNT.searchForm = () => {
-        $("#keyword").on("input", function (e) {
-            console.log("input");
-            
-            let _this = $(this);
-            let keyword = _this.val();
-            if (keyword !== undefined) {
-                array["keyword"] = keyword;
-            }
+        $("#keyword").on("input", function () {
             clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(function () {
-                TGNT.fetchData({ keyword });
-            }, 500);
+            array.keyword = $(this).val();
+            searchTimeout = setTimeout(
+                () => TGNT.fetchData({ keyword: array.keyword }),
+                500
+            );
         });
     };
 
     TGNT.filterForm = () => {
         $(".filter-option").on("change", function () {
-            let key = $(this).attr("name");
-            let value = $(this).val();
+            array[$(this).attr("name")] = $(this).val();
+            TGNT.fetchData(array);
+        });
+    };
+
+    TGNT.showProduct = () => {
+        const productElement = document.querySelector(".show-product");
+        // if (idProduct && idProduct.length > 0) {
+        //     if (productElement) productElement.classList.remove("hidden");
+        //     $(this).css("display", "none");
+        //     array["idArray"] = idProduct;
+        //     $(".add-product").css("display", "none");
+        //     TGNT.fetchData(array);
+        // }
+        // if (idVariant && idVariant.length > 0) {
+        //     if (productElement) productElement.classList.remove("hidden");
+        //     $(this).css("display", "none");
+        //     array["idArray2"] = idVariant;
+        //     $(".add-product").css("display", "none");
+        //     TGNT.fetchData(array);
+        // }
+        $(".add-product").on("click", function () {
+            let key = $(this).data("show");
+            if (productElement) productElement.classList.remove("hidden");
+            $(this).css("display", "none");
             if (key) {
-                array[key] = value;
+                array["idArray"] = [];
+                array["idArray2"] = [];
                 TGNT.fetchData(array);
             }
         });
@@ -79,11 +99,39 @@
         });
     };
 
+    TGNT.checkInput = () => {
+        $(document).on("change", ".checkInput", function () {
+            const id = $(this).data("id");
+            const item = $("#product-item" + id);
+            if ($(this).prop("checked")) {
+                if (!array.idArray.includes(id)) {
+                    array.idArray.push(id);
+                    item.css("background-color", "#cce6e6");
+                }
+            } else {
+                item.css("background-color", "");
+                array.idArray = array.idArray.filter((i) => i !== id);
+            }
+            $(".countProduct").html(array.idArray.length);
+            $(".filterProduct .title")
+                .removeClass("alert alert-primary alert-danger")
+                .addClass(
+                    array.idArray.length > 2
+                        ? "alert alert-primary"
+                        : "alert alert-danger"
+                );
+            $("#idProduct").val(array.idArray.join(","));
+            
+        });
+    };
+
     $(document).ready(function () {
         TGNT.searchForm();
         TGNT.filterForm();
         TGNT.paginationForm();
         TGNT.fetchData();
+        // TGNT.showProduct();
+        // TGNT.checkInput();
+        // TGNT.collectionJs();
     });
-
 })(jQuery);

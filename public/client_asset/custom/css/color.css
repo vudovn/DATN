@@ -356,7 +356,7 @@ a:hover {
 
 /* heart */
 .con-like {
-    --red: rgb(255, 50, 50);
+    --red: var(--base-color);
     position: relative;
     width: 20px;
     height: 20px;

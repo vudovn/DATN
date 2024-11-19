@@ -22,22 +22,26 @@ class ProductService extends BaseService
     }
 
 
-    private function paginateAgrument($request)
+    private function paginateAgrument($request, $isFilter = false)
     {
+        $defaultSort = ['id', 'asc'];
+        $defaultPerPage = $isFilter ? 12 : 10;
+
         return [
             'keyword' => [
                 'search' => $request['keyword'] ?? '',
-                'field' => ['name', 'sku', 'description', 'price']
+                'field' => $isFilter ? ['name'] : ['name', 'sku', 'description', 'price'],
             ],
             'condition' => [
-                'publish' => isset($request['publish'])
-                    ? (int) $request['publish']
-                    : null,
+                'publish' => $isFilter ? 1 : (isset($request['publish']) ? (int) $request['publish'] : null),
             ],
+            'relation' => $isFilter ? [
+                'categories' => $request['categories'] ?? null,
+            ] : [],
             'sort' => isset($request['sort']) && $request['sort'] != 0
                 ? explode(',', $request['sort'])
-                : ['id', 'asc'],
-            'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
+                : $defaultSort,
+            'perpage' => (int) ($request['perpage'] ?? $defaultPerPage),
         ];
     }
 
@@ -48,7 +52,13 @@ class ProductService extends BaseService
         $users = $this->productRepository->pagination($agruments);
         return $users;
     }
-
+    public function findProduct($request)
+    {
+        $agruments = $this->paginateAgrument($request, true);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $data = $this->productRepository->filterProduct($agruments);
+        return $data;
+    }
     public function create($request)
     {
         DB::beginTransaction();
@@ -85,9 +95,10 @@ class ProductService extends BaseService
                 $variant->delete();
             });
 
-            if ($request->has('has_attribute')) {
+            if ($request->has('has_attribute') && $request->attributeValue) {
                 $this->createVariant($product, $request);
             }
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -135,15 +146,24 @@ class ProductService extends BaseService
         }
         return $comebines;
     }
+
+    private function sortVariantId($variantId)
+    {
+        $extract = explode(',', $variantId);
+        sort($extract, SORT_NUMERIC);
+        return implode(',', $extract);
+    }
     private function createVariantArray(array $payload)
     {
         $variant = [];
         if (isset($payload['variant']['sku']) && count($payload['variant']['sku'])) {
             foreach ($payload['variant']['sku'] as $key => $value) {
+                $vid = $payload['productVariantValue']['id'][$key] ?? '';
+                $productVariantValue = $this->sortVariantId($vid);
                 $variant[] = [
-                    'code' => $payload['productVariantValue']['id'][$key] ?? '',
+                    'code' => $productVariantValue,
                     'sku' => $value,
-                    'title' => $payload['productVariantValue']['name'][$key]?? '',
+                    'title' => $payload['productVariantValue']['name'][$key] ?? '',
                     'price' => convertNumber($payload['variant']['price'][$key]) ?? 0,
                     'quantity' => convertNumber($payload['variant']['quantity'][$key]) ?? 0,
                     'albums' => json_encode($payload['variant']['albums'][$key] ?? [], JSON_UNESCAPED_UNICODE),
@@ -171,12 +191,11 @@ class ProductService extends BaseService
         $payload = $request->except(['_token', 'send']);
         $payload['price'] = convertNumber($payload['price']);
         $payload['quantity'] = convertNumber($payload['quantity']);
-        
 
         if (empty($payload['slug'])) {
             $payload['slug'] = getSlug($payload['name']);
         }
-        
+
         foreach (['albums', 'attributeCatalogue', 'attributeValue', 'variant'] as $field) {
             if ($request->has($field) && isset($payload[$field])) {
                 $key = match ($field) {
@@ -184,31 +203,36 @@ class ProductService extends BaseService
                     'attributeValue' => 'attribute',
                     default => $field,
                 };
-                $payload[$key] = $this->formatJson($payload[$field]);
+                if ($field !== 'attributeValue') {
+                    $payload[$key] = $this->formatJson($payload[$field]);
+                } else {
+                    $payload[$key] = $payload[$field];
+                }
             }
         }
-        if(!$request->has('has_attribute')) {
+
+        if (!$request->has('has_attribute')) {
             $payload['has_attribute'] = 2;
-            // $payload['attribute_category'] = null;
-            // $payload['attribute'] = null;
-            // $payload['variant'] = null;
+            $payload['attribute_category'] = null;
+            $payload['attribute'] = null;
+            $payload['variant'] = null;
         }
         // dd($payload);
         return $payload;
     }
-    
+
     private function createProduct($request)
     {
         $payload = $this->processPayload($request);
         return $this->productRepository->create($payload);
     }
-    
+
     private function updateProduct($product, $request)
     {
         $payload = $this->processPayload($request);
         return $this->productRepository->update($product->id, $payload);
     }
-    
+
     public function delete($id)
     {
         DB::beginTransaction();
@@ -222,6 +246,38 @@ class ProductService extends BaseService
             $this->log($e);
             return false;
         }
+    }
+
+
+    private function paginateAgrumentClient($request, $isFilter = false)
+    {
+        $defaultSort = ['id', 'asc'];
+        $defaultPerPage = $isFilter ? 12 : 10;
+
+        return [
+            'keyword' => [
+                'search' => $request['keyword'] ?? '',
+                'field' => $isFilter ? ['name'] : ['name'],
+            ],
+            'condition' => [
+                'publish' => 1,
+            ],
+            'relation' => $isFilter ? [
+                'categories' => $request['categories'] ?? null,
+            ] : [],
+            'sort' => isset($request['sort']) && $request['sort'] != 0
+                ? explode(',', $request['sort'])
+                : $defaultSort,
+            'perpage' => (int) ($request['perpage'] ?? $defaultPerPage),
+            'category_id' => $request['category_id'],
+        ];
+    }
+    public function paginateClient($request)
+    {
+        $agruments = $this->paginateAgrumentClient($request);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $users = $this->productRepository->filterProductClient($agruments);
+        return $users;
     }
 
 

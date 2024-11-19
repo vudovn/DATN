@@ -21,6 +21,7 @@ use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\CollectionController as ClientCollectionController;
 use App\Http\Controllers\Client\IndexController;
+use App\Http\Controllers\Client\AboutController;
 
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -240,6 +241,11 @@ Route::prefix('/')->name('client.')->group(function () {
     Route::prefix('bo-suu-tap')->name('collection.')->group(function () {
         Route::get('/', [ClientCollectionController::class, 'index'])->name('index');
         Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
+    });
+
+    // about route
+    Route::prefix('gioi-thieu')->name('about.')->group(function () {
+        Route::get('/', [AboutController::class, 'index'])->name('index');
     });
 
      /* WISHLIST */

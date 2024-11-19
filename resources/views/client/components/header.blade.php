@@ -206,7 +206,7 @@
                                 </li>
 
                                 <li class="nav-item w-100 w-lg-auto">
-                                    <a class="nav-link" href="">Giới thiệu</a>
+                                    <a class="nav-link" href="{{ route('client.about.index') }}">Giới thiệu</a>
                                 </li>
 
                                 <li class="nav-item dropdown w-100 w-lg-auto dropdown-fullwidth">

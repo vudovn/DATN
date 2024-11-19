@@ -110,8 +110,9 @@
                 ];
             })->values());
 
+           
     var attributeValue =
-        `{{ base64_encode(json_encode(old('attributeValue') ?? (isset($product->attribute) ? json_decode($product->attribute, true) : []))) }}`;
+        `{{ base64_encode(json_encode(old('attributeValue') ?? (isset($product->attribute) ? $product->attribute : []))) }}`;
     var variant =
         `{{ base64_encode(json_encode(old('variant') ?? (isset($product->variant) ? json_decode($product->variant, true) : []))) }}`;
 </script>

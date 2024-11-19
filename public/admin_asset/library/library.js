@@ -117,10 +117,7 @@
                 let ids = TGNT.getIds();
 
                 if (ids.length === 0) {
-                    VDmessage.show(
-                        "warning",
-                        "Chưa có hàng nào được chọn!"
-                    );
+                    VDmessage.show("warning", "Chưa có hàng nào được chọn!");
                     return false;
                 }
 
@@ -254,12 +251,12 @@
     TGNT.permission_to_role = () => {
         let timeout = "";
         $(document).on("click", ".permission_to_role", function () {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-            });
+            // const Toast = Swal.mixin({
+            //     toast: true,
+            //     position: "top-end",
+            //     showConfirmButton: false,
+            //     timer: 3000,
+            // });
             const _this = $(this);
             _this.attr("disabled", true);
             const permissionName = _this.attr("data-permissionName");
@@ -314,9 +311,9 @@
                     _this.removeClass("hidden");
 
                     const value = inputUpdate.val().trim();
-
+                    const model = _this.data("model");
                     $.ajax({
-                        url: "/permission/quickUpdate",
+                        url: `/${model}/quickUpdate`,
                         type: "PUT",
                         headers: {
                             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -324,7 +321,7 @@
                             ),
                         },
                         data: {
-                            model: _this.data("model"),
+                            model: model,
                             name: _this.attr("name"),
                             is_required: _this.attr("is_required"),
                             id: _this.data("id"),
@@ -404,6 +401,43 @@
         return str;
     };
 
+    TGNT.select_status = () => {
+        $(document).on("change", ".select-status", function () {
+            const statusId = $(this).val();
+            const orderId = $(this).data("id");
+
+            $.ajax({
+                url: `/orders/${orderId}/payment_status`,
+                type: "PUT",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+                data: {
+                    status_id: statusId,
+                },
+                dataType: "JSON",
+                success: () => {
+                    VDmessage.show("success", "Trạng thái đã được cập nhật!");
+                },
+                error: (xhr) => {
+                    VDmessage.show("error", xhr.responseJSON.message);
+                },
+            });
+        });
+    };
+
+    TGNT.clipboard = () => {
+        $(document).on("click", ".clipboard", function () {
+            const _this = $(this);
+            const text = $(_this.data("clipboard-target")).text();
+            console.log(text);
+            navigator.clipboard.writeText(text);
+            VDmessage.show("success", "Đã copy thành công!");
+        });
+    };
+
     $(document).ready(function () {
         TGNT.setupAjaxHeader();
         TGNT.changeStatusByField();
@@ -419,5 +453,7 @@
         TGNT.permission_to_role();
         TGNT.quick_update();
         TGNT.int();
+        TGNT.select_status();
+        TGNT.clipboard();
     });
 })(jQuery);

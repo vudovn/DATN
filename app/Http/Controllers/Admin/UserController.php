@@ -13,6 +13,7 @@ use App\Repositories\Location\ProvinceRepository;
 use Spatie\Permission\Models\Role;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Traits\HasDynamicMiddleware;
+
 class UserController extends Controller implements HasMiddleware
 {
     use HasDynamicMiddleware;

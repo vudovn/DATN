@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Ajax;
 use App\Http\Controllers\Controller;
 use App\Repositories\Attribute\AttributeCategoryRepository;
 use App\Repositories\Attribute\AttributeRepository;
+use App\Services\Product\ProductService;
 
 use Illuminate\Http\Request;
 class AjaxController extends Controller
@@ -11,12 +12,15 @@ class AjaxController extends Controller
 
     protected $attributeCategoryRepository;
     protected $attributeRepository;
+    protected $productService;
     public function __construct(
         AttributeCategoryRepository $attributeCategoryRepository,
-        AttributeRepository $attributeRepository
+        AttributeRepository $attributeRepository,
+        ProductService $productService,
     ) {
         $this->attributeCategoryRepository = $attributeCategoryRepository;
         $this->attributeRepository = $attributeRepository;
+        $this->productService = $productService;
     }
     public function getData(Request $request)
     {
@@ -25,6 +29,24 @@ class AjaxController extends Controller
         $Controller = "\\App\\Http\\Controllers\\admin\\" . ucfirst($model) . "Controller";
         $data = app($Controller)->getData($request);
         return $data;
+    }
+    public function getProduct(Request $request)
+    {
+        $array = $request->query();
+        foreach ($request->query() as $key => $value) {
+            $keyParts = preg_split('/(?=[A-Z])/', $key);
+            if (count($keyParts) > 1) {
+                $firstKey = $keyParts[0];
+                if (!isset($array[$firstKey])) {
+                    $array[$firstKey] = [];
+                }
+                if ($value != 0) {
+                    $array[$firstKey][] = $value;
+                }
+            }
+        }
+        $products = $this->productService->findProduct($array);
+        return view('admin.pages.product.product.components.filterProduct', compact('products'));
     }
     public function updateStatus(Request $request)
     {

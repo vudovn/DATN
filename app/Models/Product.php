@@ -21,6 +21,7 @@ class Product extends Model
         'thumbnail',
         'albums',
         'publish',
+        'view',
         'is_featured',
         'has_attribute',
         'attribute_category',
@@ -33,14 +34,23 @@ class Product extends Model
         'updated_at'
     ];
 
+    protected $casts = [
+        'attribute' => 'json',
+    ];
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'category_product', 'product_id', 'category_id');
     }
+
 
     public function productVariants()
     {
         return $this->hasMany(ProductVariant::class, 'product_id', 'id');
     }
 
+    public function collections()
+    {
+        return $this->belongsToMany(Collection::class, 'collection_product', 'product_id', 'collection_id');
+    }
 }

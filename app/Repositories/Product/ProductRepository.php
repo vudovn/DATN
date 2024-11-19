@@ -38,7 +38,15 @@ class ProductRepository extends BaseRepository
         return $query->paginate($params['perpage']);
     }
 
+    public function totalProduct()
+    {
+        return $this->model->count();
+    }
 
+    public function searchProduct($keyword)
+    {
+        return $this->model->where('name', 'like', '%' . $keyword . '%')->where('publish', 1)->get();
+    }
 
 
 

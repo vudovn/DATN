@@ -244,9 +244,11 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('/ajax/get-variant', [ClientProductController::class, 'getVariant'])->name('get-variant');
     });
     // comment route
-    Route::prefix('gio-hang')->name('gio-hang.')->group(function () {
+    Route::prefix('gio-hang')->name('cart.')->group(function () {
         Route::get('/', [ClientCartController::class, 'index'])->name('index');
+        Route::get('/count', [ClientCartController::class, 'count'])->name('count');
         Route::post('/store', [ClientCartController::class, 'store'])->name('store');
+        Route::post('/remove', [ClientCartController::class, 'remove'])->name('remove');
     });
     // collection route
     Route::prefix('bo-suu-tap')->name('collection.')->group(function () {

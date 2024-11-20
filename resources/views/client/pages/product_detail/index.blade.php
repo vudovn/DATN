@@ -103,8 +103,8 @@
                         </div>
                     </div>
                     <div class="btn_spct ">
-                        <button class="btn btn-stnt buyNow" data-id="{{$product->id}}">Mua ngay</button>
-                        <button class="btn btn-outline-stnt ms-4 addToCart">Thêm vào giỏ hàng</button>
+                        <button class="btn btn-stnt buyNow" data-id="{{$product->id}}" data-sku="{{$product->sku}}">Mua ngay</button>
+                        <button class="btn btn-outline-stnt ms-4 addToCart" data-id="{{$product->id}}" data-sku="{{$product->sku}}">Thêm vào giỏ hàng</button>
                         <div class="hidden">
                             <input type="hidden" name="price" id="price" value="{{$priceDiscount}}">
                             {{-- <input type="hidden" name="total_price" id="total_price" value="{{$priceDiscount * $priceDiscount}}"> --}}
@@ -112,13 +112,13 @@
                             {{-- <input type="hidden" name="" id=""> --}}
                             {{-- <input type="hidden" name="" id=""> --}}
                         </div>
-                        <input 
+                        {{-- <input 
                             {{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id) ? 'checked' : '' }} 
                             type="checkbox" 
                             name="product_id" 
                             class="add_wishlist" 
                             data-type="{{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id) ? 'remove' : 'add' }}" 
-                            value="{{ $product->id }}">
+                            value="{{ $product->id }}"> --}}
                 </div>
                 <!-- end action sản phẩm -->
             </div>

@@ -1,4 +1,4 @@
-<nav class="pc-sidebar">
+<nav class="pc-sidebar" style="z-index: 1 !important">
     <div class="navbar-wrapper">
         <div class="m-header">
             <a href="{{ route('dashboard.index') }}" class="b-brand text-primary">

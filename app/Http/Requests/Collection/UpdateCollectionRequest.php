@@ -21,15 +21,15 @@ class UpdateCollectionRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (is_string($this->idProduct)) {
+        if (is_string($this->skus)) {
             $this->merge([
-                'idProduct' => array_map('trim', explode(',', $this->idProduct))
+                'skus' => array_map('trim', explode(',', $this->skus))
             ]);
         }
         return [
             'name' => 'required',
             'thumbnail' => 'required',
-            'idProduct' => 'min:2',
+            'skus' => 'min:2',
             // 'meta_title' => 'required',
             // 'meta_description' => 'required',
         ];

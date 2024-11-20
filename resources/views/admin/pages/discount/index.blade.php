@@ -1,14 +1,11 @@
 @extends('admin.layout')
 
 @section('template')
-
     <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
 
     <div class="card">
         <div class="card-header">
-            <x-filter
-            :model="$config['model']"
-            :createButton="[
+            <x-filter :model="$config['model']" :createButton="[
                 'label' => '',
                 'route' => $config['model'] . '.create',
             ]" :options="[
@@ -30,9 +27,8 @@
                                 </div>
                             </th>
                             <th>ID</th>
-                            <th>Mã</th>
-                            <th>Tiêu đề</th>
-                            <th>Giảm giá theo</th>
+                            <th>Chi tiết</th>
+                            <th>Lượt sữ dụng</th>
                             <th>Ngày bắt đầu</th>
                             <th>Ngày kết thúc</th>
                             <th class="text-center">Trạng thái</th>
@@ -51,5 +47,4 @@
         </div>
     </div>
     <input type="hidden" name="model" id="model" value="{{ ucfirst($config['model']) }}">
-
 @endsection

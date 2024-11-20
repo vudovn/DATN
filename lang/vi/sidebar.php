@@ -1,4 +1,4 @@
-<?php 
+<?php
 return [
     'function' => [
         [
@@ -77,7 +77,7 @@ return [
         ],
         [
             'name' => 'Quản lý mã giảm giá',
-            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-box-1"></use> </svg>',
+            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-dollar-square"></use> </svg>',
             'route' => ['discount'],
             'module' => [
                 [
@@ -88,7 +88,7 @@ return [
         ],
         [
             'name' => 'Quản lý phản hồi',
-            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-box-1"></use> </svg>',
+            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-message-2"></use> </svg>',
             'route' => ['order'],
             'module' => [
                 [

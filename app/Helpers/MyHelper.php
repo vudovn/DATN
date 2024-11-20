@@ -192,3 +192,39 @@ if (!function_exists('getCategory')) {
         return $categoryRepository->getCategory();
     }
 }
+
+//tính tăng trưởng
+if (!function_exists('growthRate')) {
+    function growthRate($current, $previous)
+    {
+        if ($previous == 0) {
+            return 0;
+        }
+        // làm tròn 2 chữ số thập phân
+        return round((($current - $previous) / $previous) * 100, 2);
+    }
+}
+
+//tính tăng trưởng
+if (!function_exists('growthRateHtml')) {
+    function growthRateHtml($value)
+    {
+        if ($value > 0) {
+            return '<span class="text-success fw-medium" data-bs-toggle="tooltip" data-bs-title="Tăng trưởng so với tháng trước"><i class="ti ti-arrow-up-right"></i>' . $value . '%</span>';
+        } elseif ($value < 0) {
+            return '<span class="text-danger fw-medium" data-bs-toggle="tooltip" data-bs-title="Giảm so với tháng trước">' . $value . '%</span>';
+        } else {
+            return '<span class="text-dark fw-medium" data-bs-toggle="tooltip" data-bs-title="Không thay đổi so với tháng trước"><i class="ti ti-arrow-down-left"></i>' . $value . '%</span>';
+        }
+    }
+}
+
+//check ngày hết hạn
+if (!function_exists('checkExpiredDate')) {
+    function checkExpiredDate($endDate)
+    {
+        $now = Carbon::now();
+        $end = Carbon::parse($endDate);
+        return $now->gt($end);
+    }
+}

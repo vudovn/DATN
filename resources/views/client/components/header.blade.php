@@ -40,8 +40,8 @@
                                         </path>
                                     </svg>
                                     <span
-                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
-                                        1
+                                        class="wishlist_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
+                                        0
                                         <span class="visually-hidden">unread messages</span>
                                     </span>
                                     <div class="list_icon_text_vd">
@@ -62,8 +62,8 @@
                                         <path d="M16 10a4 4 0 0 1-8 0"></path>
                                     </svg>
                                     <span
-                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
-                                        1
+                                        class="cart_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
+                                        0
                                         <span class="visually-hidden">unread messages</span>
                                     </span>
                                     <div class="list_icon_text_vd">
@@ -121,11 +121,11 @@
                         <a href=""><img class="logo_vd" src="/client_asset/image/logo.png"
                                 alt="logo_sieuthinoithat" /></a>
                     </div>
-                    <div class="col-xxl-6 col-lg-5 d-none d-lg-block">
+                    <div class="col-xxl-6 col-lg-5 d-none d-lg-block" style="position: relative">
                         <form action="" method="get" class="header_search">
                             <div class="input-group justify-content-center">
-                                <input style="max-width: 500px" name="q" class="form-control rounded"
-                                    type="text" placeholder="Tìm kiếm sản phẩm..." />
+                                <input style="max-width: 500px" id="search_on" name="q"
+                                    class="form-control rounded" type="text" placeholder="Tìm kiếm sản phẩm..." />
                                 <span class="input-group-append">
                                     <button typre="submit"
                                         class="btn bg-white border border-start-0 ms-n10 rounded-0 rounded-end">
@@ -139,6 +139,17 @@
                                         </svg>
                                     </button>
                                 </span>
+                            </div>
+                            <div class="search_out card card-body p-0" id="search_out">
+                                <div class="search_header d-flex justify-content-between" id="search_header">
+                                    <!-- render status từ api -->
+                                </div>
+                                <div class="search_heading" id="search_heading">
+                                    <!--  -->
+                                </div>
+                                <div class="search_result" id="search_result">
+                                    <!-- render bài viết từ api -->
+                                </div>
                             </div>
                         </form>
                     </div>

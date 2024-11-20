@@ -34,3 +34,5 @@
 
 <script src="/client_asset/custom/js/library.js"></script>
 <script src="/client_asset/custom/js/addToCart.js"></script>
+<script src="/client_asset/custom/js/product/search.js"></script>
+<script src="/client_asset/custom/js/wishlist.js"></script>

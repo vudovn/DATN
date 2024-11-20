@@ -75,7 +75,8 @@
                             <!-- tài khoản -->
                             <div
                                 class="list-inline-item me-7   @if (!Auth::check()) me-lg-0 @endif text-center">
-                                <a href="{{ route('client.account.index') }}" class="text-muted">
+                                <a href="{{ Auth()->check() ? route('client.account.index') : route('client.auth.login') }}"
+                                    class="text-muted">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">

@@ -11,6 +11,7 @@
         $description = $product->description;
         $category = $product->categories;
         $attributeCategory = $product->attribute_category;
+        $shortContent = $product->short_content;
     @endphp
 
     <section class="product_ct container animate__animated animate__fadeIn">
@@ -25,33 +26,7 @@
             </nav>
         </div>
         <div class="row">
-            {{-- <div class="col-xxl-6 col-sm-12 mb-5 gallery-container">
-                <div class="row ">
-                    <div class="col-md-12 text-center overflow-hidden rounded">
-                        <div class="bg-secondary overflow-hidden rounded">
-                            @if ($albums)
-                                <a href="{{ $albums[0] }}" class="img_preview" data-fancybox="gallery">
-                                    <img id="mainImage" src="{{ $albums[0] }}" class="product-image img-fluid rounded"
-                                        alt="Main Product Image">
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12 text-center thumbnail-images">
-                        <!-- Thumbnail images -->
-                        @if ($albums)
-                            @foreach ($albums as $key => $album)
-                                <img src="{{ $album }}" alt="{{ $product->name }}"
-                                    class="img-thumbnail {{ $key == 0 ? 'active' : '' }}" data-image="{{ $album }}"
-                                    alt="{{ $product->name }}">
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
-            </div> --}}
-            <div class="col-xxl-7 col-sm-12 mb-5 gallery-container">
+            <div class="col-xxl-6 col-sm-12 mb-5 gallery-container">
                 <div class="fotorama" data-nav="thumbs" data-width="100%" data-ratio="900/600" data-allowfullscreen="true">
                     @if ($albums)
                         @foreach ($albums as $album)
@@ -60,7 +35,7 @@
                     @endif
                 </div>
             </div>
-            <div class="col-xxl-5 col-sm-12 mb-5">
+            <div class="col-xxl-6 col-sm-12 mb-5">
                 <div class="title_spct mb-7">
                     <h2 class="product-title">{{ $name }}
                     </h2>
@@ -75,9 +50,12 @@
                         <span class="price_base_spct text-danger price">{{ formatMoney($price) }}</span>
                     @endif
                 </div>
-
+                {{-- Mô tả ngắn --}}
+                <div class="short_content">
+                    <p>{{ $shortContent }}</p>
+                </div>
                 <!-- info sản phẩm -->
-                <div class="info_spct mt-7">
+                <div class="info_spct mt-5">
                     @include('client.pages.product_detail.components.variant')
                     <div class="mb-xxl-7 mb-2">
                         <strong>Danh mục: </strong>
@@ -111,8 +89,8 @@
                                 class="animate__animated animate__bounceIn like_action con-like">
                                 <input
                                     {{ auth()->check() &&auth()->user()->wishlists->contains('product_id', $product->id)? 'checked': '' }}
-                                    class="like action_wishlist" id="like{{ $product->id }}" data-id="{{ $product->id }}"
-                                    type="checkbox" value="{{ $product->id }}">
+                                    class="like action_wishlist" id="like{{ $product->id }}"
+                                    data-id="{{ $product->id }}" type="checkbox" value="{{ $product->id }}">
                                 <div class="checkmark">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="outline" viewBox="0 0 24 24">
                                         <path

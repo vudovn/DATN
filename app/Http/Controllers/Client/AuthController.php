@@ -68,7 +68,7 @@ class AuthController extends Controller
         // Validate email và mật khẩu
         $request->validate([
             'email' => 'required|email|exists:users,email',
-            'password' => 'required|min:6'
+            'password' => 'required'
         ], [
             'email.required' => 'Vui lòng nhập email',
             'email.exists' => 'Email không tồn tại trong hệ thống',

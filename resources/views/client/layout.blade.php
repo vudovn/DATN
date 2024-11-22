@@ -11,7 +11,7 @@
 <body>
     @include('client.components.loading')
     @include('client.components.header')
-    <main class="m-0">
+    <main class="m-0 pt-2">
         @yield('content')
     </main>
     @include('client.components.footer')

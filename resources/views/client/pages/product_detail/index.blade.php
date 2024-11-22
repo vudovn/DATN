@@ -13,7 +13,9 @@
         $attributeCategory = $product->attribute_category;
         $shortContent = $product->short_content;
     @endphp
-
+    <script>
+        const product_id = {{ $product->id ?? 0 }};
+    </script>
     <section class="product_ct container animate__animated animate__fadeIn">
         <div class="col-xxl-12 d-none d-xxl-block">
             <nav aria-label="breadcrumb">
@@ -60,7 +62,7 @@
                     <div class="mb-xxl-7 mb-2">
                         <strong>Danh mục: </strong>
                         @foreach ($category as $item)
-                            <a href="{{ $item->slug }}" class="cate_ctsp">
+                            <a href="{{ route('client.category.index',$item->slug) }}" class="cate_ctsp">
                                 <span class="badge bg-light text-dark product_ct_badge">
                                     {{ $item->name }}
                                 </span>
@@ -75,7 +77,7 @@
                     <div class="quantity_spct mb-xxl-0 mb-3">
                         <div class="input-group input-spinner">
                             <input type="button" value="-" class="button-minus btn btn-sm" data-field="quantity">
-                            <input type="number" step="1" max="3" value="1" name="quantity"
+                            <input type="number" step="1" min="1" max="3" value="1" name="quantity"
                                 id="quantity" class="quantity-field form-control-sm form-input">
                             <input type="button" value="+" class="button-plus btn btn-sm" data-field="quantity">
                         </div>
@@ -146,14 +148,6 @@
                                 Chính sách
                             </a>
                         </li>
-                        <!-- vận chuyển -->
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link fs-xxl-5 fw-bold pb-2" id="pills-comment-tab" data-bs-toggle="pill"
-                                href="#pills-comment" role="tab" aria-controls="pills-comment"
-                                aria-selected="false">
-                                Bình luận
-                            </a>
-                        </li>
                         <!-- đánh giá -->
                         <li class="nav-item" role="presentation">
                             <a class="nav-link fs-xxl-5 fw-bold pb-2" id="pills-rate-tab" data-bs-toggle="pill"
@@ -168,6 +162,8 @@
                         @include('client.pages.product_detail.components.tab.tab_policy')
                         @include('client.pages.product_detail.components.tab.tab_rate')
                         @include('client.pages.product_detail.components.tab.tab_comment')
+                        <div class="tab-pane fade" id="pills-rate" role="tabpanel" aria-labelledby="pills-rate-tab">
+                        </div>
                     </div>
                 </div>
                 <!-- end policy sản phẩm -->

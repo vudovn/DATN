@@ -1,5 +1,5 @@
     <!-- header -->
-    <header class="header_vd">
+    <header class="header_vd border-bottom" style="box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;">
         <!-- header top -->
         <div class="py-1 pt-xxl-6">
             <div class="overflow-hidden">
@@ -176,7 +176,7 @@
         </div>
 
         <!-- menu -->
-        <nav class="navbar navbar-expand-lg navbar-light navbar-default py-0 pb-lg-4"
+        <nav class="navbar navbar-expand-lg navbar-light navbar-default py-0 pb-lg-2"
             aria-label="Offcanvas navbar large">
             <div class="container">
                 <div class="offcanvas offcanvas-start" tabindex="-1" id="navbar-default"

@@ -342,6 +342,7 @@
                 });
             if ($(".updateVariantRow").length == 0) {
                 parents.after(TGNT.renderUpdateVariantHtml(variantData));
+                TGNT.sortui();
             }
         });
     };
@@ -804,6 +805,11 @@
                 }
             }
         });
+    };
+
+    TGNT.sortui = () => {
+        $("#sortableVariant").sortable();
+        $("#sortableVariant").disableSelection();
     };
 
     $(document).ready(function () {

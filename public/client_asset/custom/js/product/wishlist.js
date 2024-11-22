@@ -8,6 +8,14 @@
             const _this = $(this);
             const productId = _this.val();
             const dataType = _this.data("type");
+            if (_this.data("login") == false) {
+                VDmessage.show(
+                    "error",
+                    "Vui lòng đăng nhập để thực hiện chức năng này"
+                );
+                _this.prop("checked", false);
+                return;
+            }
             let url = "/yeu-thich/ajax/action-wishlist";
             $.ajax({
                 url: url,
@@ -34,13 +42,12 @@
             type: "GET",
             dataType: "json",
             success: function (res) {
-                console.log(res);
                 $(".wishlist_count").text(res.data);
             },
         });
     };
+
     $(document).ready(function () {
         TGNT.check();
-        TGNT.countWishList();
     });
 })(jQuery);

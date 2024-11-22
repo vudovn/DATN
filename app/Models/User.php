@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\CustomResetPasswordNotification;
 
 
-class User extends Authenticatable 
+class User extends Authenticatable
 {
     use HasFactory, Notifiable, QueryScope, HasRoles;
 
@@ -62,10 +62,25 @@ class User extends Authenticatable
     {
         return $this->hasMany(Wishlist::class);
     }
-  
+
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'province_id', 'code');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district_id', 'code');
+    }
+
+    public function ward()
+    {
+        return $this->belongsTo(Ward::class, 'ward_id', 'code');
     }
 
 

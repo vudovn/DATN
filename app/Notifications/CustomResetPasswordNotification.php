@@ -20,7 +20,7 @@ class CustomResetPasswordNotification extends Notification
      */
     public function __construct($token)
     {
-       $this->token = $token;
+        $this->token = $token;
     }
 
     /**
@@ -42,11 +42,11 @@ class CustomResetPasswordNotification extends Notification
             'token' => $this->token,
             'email' => $notifiable->getEmailForPasswordReset(),
         ]));
-       
+
         // Mail::to($notifiable->email)->send(new CustomResetPasswordMail($notifiable, $resetUrl));
         // Dispatch job để gửi email trong background
-        return (new CustomResetPasswordMail($notifiable, $resetUrl))->to($notifiable->email);
-        // SendResetPasswordEmail::dispatch($notifiable, $resetUrl);
+        // return (new CustomResetPasswordMail($notifiable, $resetUrl))->to($notifiable->email);
+        SendResetPasswordEmail::dispatch($notifiable, $resetUrl);
     }
 
     /**

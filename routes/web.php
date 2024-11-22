@@ -232,6 +232,7 @@ Route::prefix('/')->name('client.')->group(function () {
     // account route
     Route::prefix('tai-khoan')->name('account.')->group(function () {
         Route::get('/', [AccountController::class, 'index'])->name('index');
+        Route::post('ajax/edit-acccount', [AccountController::class, 'editAccount'])->name('edit-acccount');
     });
 
     Route::prefix('danh-muc')->name('category.')->group(function () {
@@ -245,6 +246,8 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('/{slug}', [ClientProductController::class, 'detail'])->name('detail');
         Route::get('/ajax/get-variant', [ClientProductController::class, 'getVariant'])->name('get-variant');
         Route::get('/ajax/search-product', [ClientProductController::class, 'searchProduct'])->name('get-variant');
+        Route::get('/ajax/get-review', [ClientProductController::class, 'getReview'])->name('get-review');
+        Route::post('/ajax/add-review', [ClientProductController::class, 'addReview'])->name('add-review');
     });
     // comment route
     Route::prefix('gio-hang')->name('gio-hang.')->group(function () {

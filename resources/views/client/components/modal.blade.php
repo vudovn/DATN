@@ -89,17 +89,17 @@
                     <div class="form-group mb-3">
                         <label for="name" class="form-label ms-3">Họ & Tên</label>
                         <input name="name" type="text" class="form-control rounded-5" placeholder=""
-                            id="name" value="{{ $user->name }}">
+                            id="name" value="{{ $user->name ?? '' }}">
                     </div>
                     <div class="form-group mb-3">
                         <label for="name" class="form-label ms-3">Số điện thoại</label>
                         <input name="phone" id="phone" type="number" class="form-control rounded-5"
-                            placeholder="" id="phone" value="{{ $user->phone }}">
+                            placeholder="" id="phone" value="{{ $user->phone ?? '' }}">
                     </div>
                     <div class="form-group mb-3">
                         <label for="email" class="form-label ms-3">Email</label>
                         <input name="email" type="email" class="form-control rounded-5"
-                            placeholder="Email của bạn" id="email" value="{{ $user->email }}">
+                            placeholder="Email của bạn" id="email" value="{{ $user->email ?? '' }}">
                     </div>
                     <div class="form-group row">
                         <div class="col-6">
@@ -107,10 +107,14 @@
                             <select name="province_id" id="province"
                                 class="rounded-5 form-control select2 province location" data-target="districts">
                                 <option value="" disabled selected>Chọn tỉnh/Thành phố</option>
-                                @foreach ($provinces as $province)
-                                    <option value="{{ $province->code }}"
-                                        @if ($user->province_id == $province->code) selected @endif>{{ $province->name }}</option>
-                                @endforeach
+                                @if (isset($provinces))
+                                    @foreach ($provinces as $province)
+                                        <option value="{{ $province->code }}"
+                                            @if ($user->province_id == $province->code) selected @endif>{{ $province->name }}
+                                        </option>
+                                    @endforeach
+
+                                @endif
                             </select>
                         </div>
                         <div class="col-6 mb-3">

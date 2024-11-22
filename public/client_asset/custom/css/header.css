@@ -352,3 +352,21 @@ body {
     letter-spacing: 4px;
     font-size: small;
 }
+
+/* pagination */
+.page-item.active .page-link {
+    background-color: var(--base-color) !important;
+    color: white !important;
+    border-color: var(--base-bg) !important;
+}
+
+.page-item .page-link:hover {
+    background-color: var(--base-color-hover) !important;
+    color: white !important;
+    border-color: var(--base-bg) !important;
+}
+.page-item .page-link:focus {
+    background-color: var(--base-bg);
+    box-shadow: var(--base-color-hover);
+    color: white !important;
+}

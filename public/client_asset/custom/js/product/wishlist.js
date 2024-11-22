@@ -49,6 +49,5 @@
 
     $(document).ready(function () {
         TGNT.check();
-        TGNT.countWishList();
     });
 })(jQuery);

@@ -9,6 +9,7 @@ use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Attribute\AttributeCategoryRepository;
 use App\Repositories\Attribute\AttributeRepository;
 use App\Repositories\Product\ProductVariantRepository;
+use App\Repositories\Review\ReviewRepository;
 class ProductController extends Controller
 {
     protected $productRepository;
@@ -16,18 +17,21 @@ class ProductController extends Controller
     protected $attributeCategoryRepository;
     protected $attributeRepository;
     protected $productVariantRepository;
+    protected $reviewRepository;
     public function __construct(
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository,
         AttributeCategoryRepository $attributeCategoryRepository,
         AttributeRepository $attributeRepository,
-        ProductVariantRepository $productVariantRepository
+        ProductVariantRepository $productVariantRepository,
+        ReviewRepository $reviewRepository
     ) {
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
         $this->attributeCategoryRepository = $attributeCategoryRepository;
         $this->attributeRepository = $attributeRepository;
         $this->productVariantRepository = $productVariantRepository;
+        $this->reviewRepository = $reviewRepository;
     }
     public function index()
     {
@@ -82,11 +86,20 @@ class ProductController extends Controller
     }
 
 
-    public function getComment($product_id)
+    public function getReview(Request $request)
     {
-        $product = $this->productRepository->findById($product_id, ['comments'], ['name']);
-        $comments = $product->comments;
-        return successResponse($comments);
+        $rating = $this->reviewRepository->getRatingDetails($request->product_id);
+        $reviewForProduct = $this->reviewRepository->getReviews($request->product_id);
+        $html = view('client.pages.product_detail.components.api.review', compact('reviewForProduct', 'rating'))->render();
+        return successResponse($html);
+    }
+
+    public function addReview(Request $request)
+    {
+        $payload = $request->all();
+        $payload['user_id'] = auth()->id();
+        $create = $this->reviewRepository->create($payload);
+        return successResponse(null, 'Đánh giá sản phẩm thành công!');
     }
 
     public function searchProduct(Request $request)

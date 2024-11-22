@@ -24,4 +24,10 @@ class Review extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    // get review children
+    public function children()
+    {
+        return $this->hasMany(Review::class, 'parent_id');
+    }
 }

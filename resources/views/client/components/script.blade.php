@@ -31,8 +31,20 @@
         $(".loading_tgnt").fadeOut("slow");
     });
 </script>
-
+@if (Auth::check())
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "/yeu-thich/ajax/count-wishlist",
+                type: "GET",
+                dataType: "json",
+                success: function(res) {
+                    $(".wishlist_count").text(res.data);
+                },
+            });
+        });
+    </script>
+@endif
 <script src="/client_asset/custom/js/library.js"></script>
 <script src="/client_asset/custom/js/product/search.js"></script>
-<script src="/client_asset/custom/js/wishlist.js"></script>
-{{-- <script src="https://scripts.sirv.com/sirvjs/v3/sirv.js"></script> --}}
+<script src="/client_asset/custom/js/product/wishlist.js"></script>

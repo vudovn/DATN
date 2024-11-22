@@ -131,7 +131,7 @@
             const sku = $(this).data("sku");
             const id_product = $(this).data('id')
             const item = $("#product-item" + sku);
-            const url = "/order/getProduct";
+            const url = "/admin/order/getProduct";
 
             if ($(this).prop("checked")) {
                 if (!array.idArray.includes(sku) && sku) {
@@ -211,7 +211,7 @@
         if (sku !== undefined) {
             $.ajax({
                 type: "GET",
-                url: "/order/getProduct",
+                url: "/admin/order/getProduct",
                 data: {
                     sku: sku ? sku : "",
                 },

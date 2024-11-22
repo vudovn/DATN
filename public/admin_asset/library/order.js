@@ -34,7 +34,7 @@
             }
 
             $.ajax({
-                url: `/order/payment-status/${orderId}`,
+                url: `/admin/order/payment-status/${orderId}`,
                 type: "PUT",
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -76,7 +76,7 @@
                         );
 
                     $.ajax({
-                        url: `/order/dataProduct`,
+                        url: `/admin/order/dataProduct`,
                         method: "GET",
                         dataType: "json",
                         success: function (data) {
@@ -103,7 +103,7 @@
             let name = _this.data("name");
 
             $.ajax({
-                url: `/order/dataVariantsProduct/${productId}`,
+                url: `/admin/order/dataVariantsProduct/${productId}`,
                 method: "GET",
                 dataType: "json",
                 success: function (data) {
@@ -229,7 +229,7 @@
             debounceTimer = setTimeout(() => {
                 if (phoneNumber) {
                     $.ajax({
-                        url: `/order/search_customer`,
+                        url: `/admin/order/search_customer`,
                         method: 'GET',
                         data: { phone: phoneNumber },
                         dataType: 'json',

@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Log;
 class AuthController extends Controller
 {
 
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
 
     public function index()
@@ -49,19 +51,18 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|email|exists:users'
-        ],[
+        ], [
             'email.required' => 'Vui lòng nhập email',
             'email.email' => 'Email không đúng định dạng',
             'email.exists' => 'Email không tồn tại trong hệ thống'
 
-    ]);
-    
+        ]);
+
         $status = Password::sendResetLink($request->only('email'));
         if ($status === Password::RESET_LINK_SENT) {
             return back()->with('success', __($status));
         } else {
             return back()->with('error', __($status));
-
         }
     }
 

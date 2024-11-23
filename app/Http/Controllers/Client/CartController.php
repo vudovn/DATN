@@ -80,7 +80,7 @@ class CartController extends Controller
             ],
             'js' => [
                 "https://freshcart.codescandy.com/assets/libs/rater-js/index.js",
-                "client_asset/custom/js/cart.js",
+                "client_asset/custom/js/cart/cart.js",
             ],
             'model' => 'cart'
         ];

@@ -70,6 +70,7 @@ class CollectionController extends Controller implements HasMiddleware
             if ($data && $data->product) {
                 $data->name = $data->product->name ?? '';
                 $data->slug = $data->product->slug ?? '';
+                $data->thumbnail = explode(',', json_decode($data->albums))[0] ?? '';
                 $category = $data->product->categories->where('is_room', 2)->first();
                 $data->category = $category ? strtolower($category->name) : '';
             }

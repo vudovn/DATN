@@ -175,7 +175,7 @@
             if (sku.length > 0) {
                 $.ajax({
                     type: "GET",
-                    url: "/collection/getProductPoint",
+                    url: "/admin/collection/getProductPoint",
                     data: {
                         sku: sku ? sku : "",
                     },
@@ -227,7 +227,7 @@
         if (sku !== undefined) {
             $.ajax({
                 type: "GET",
-                url: "/collection/getProductPoint",
+                url: "/admin/collection/getProductPoint",
                 data: {
                     sku: sku ? sku : "",
                 },

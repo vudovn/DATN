@@ -23,11 +23,11 @@
                     </span>
                 </div>
                 <div class="order-actions d-flex gap-2">
-                    <button class="btn btn-outline-secondary btn-sm" aria-label="View Order Details">
+                    <button onclick="alert('chưa làm!')" class="btn btn-outline-secondary btn-sm" aria-label="View Order Details">
                         Xem Chi Tiết Đơn Hàng
                     </button>
                     @if ($item->status == 'pending')
-                        <button data-idOrder="{{ $item->id }}" class="cancelOrder btn btn-outline-danger btn-sm"
+                        <button onclick="alert('chưa làm!')" data-idOrder="{{ $item->id }}" class="cancelOrder btn btn-outline-danger btn-sm"
                             aria-label="Cancel Order">
                             Hủy Đơn Hàng
                         </button>

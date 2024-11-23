@@ -104,14 +104,14 @@
                     </div>
 
                     <div class="btn_spct">
-                        <button class="btn btn-stnt buyNow" data-id="{{ $product->id }}">Mua ngay</button>
-                        <button class="btn btn-outline-stnt ms-4 addToCart">Thêm vào giỏ hàng</button>
+                        <button class="btn btn-stnt buyNow" data-id="{{ $product->id }}" data-sku="{{ $product->sku }}">Mua ngay</button>
+                        <button class="btn btn-outline-stnt ms-4 addToCart" data-id="{{ $product->id }}" data-sku="{{ $product->sku }}">Thêm vào giỏ hàng</button>
                         <button class="btn btn-link p-0 ms-3">
                             <label for="like{{ $product->id }}" style="cursor: pointer"
                                 title="Thêm sản phẩm vào mục yêu thích"
                                 class="animate__animated animate__bounceIn like_action con-like">
                                 <input
-                                    {{ auth()->check() &&auth()->user()->wishlists->contains('product_id', $product->id)? 'checked': '' }}
+                                    {{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id)? 'checked': '' }}
                                     class="like action_wishlist" id="like{{ $product->id }}" data-id="{{ $product->id }}"
                                     type="checkbox" value="{{ $product->id }}">
                                 <div class="checkmark">

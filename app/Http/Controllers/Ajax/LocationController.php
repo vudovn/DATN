@@ -32,9 +32,10 @@ class LocationController extends Controller {
             $html = $this->renderHtml($province->districts); 
         } else if ($get['target'] == 'wards') {
             
-           
+           if(isset($get['data']['location_id'])){
             $district = $this->districtRepository->findById($get['data']['location_id'],  ['wards'],['code', 'name']); 
             $html = $this->renderHtml($district->wards, '[Chọn Phường/Xã]'); 
+           }
         }
         $response = [
             'html' => $html

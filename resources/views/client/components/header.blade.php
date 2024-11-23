@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 text-center">
-                        <a href="{{ route('client.home') }}"><img class="logo_vd_top" src="/client_asset/image/logo.png"
+                        <a href="{{ route('client.home') }}"><img class="logo_vd_top" src="/logoTGNT.png" width="150"
                                 alt="logo_sieuthinoithat" /></a>
                     </div>
                     <div class="col-md-3">
@@ -90,10 +90,10 @@
                             </div>
 
                             <!-- đăng xuất -->
-                            @if (Auth::check())
+                            @auth
                                 <div class="list-inline-item me-7 me-lg-0 text-center">
-                                    <a href="{{ route('client.auth.logout') }}" class="text-muted"
-                                        data-bs-toggle="modal" data-bs-target="#userModal">
+                            <a href="{{ route('client.auth.logout') }}" class="text-muted">
+
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
@@ -105,9 +105,9 @@
                                         <div class="list_icon_text_vd">
                                             <small>Đăng xuất</small>
                                         </div>
-                                    </a>
+                            </a>
                                 </div>
-                            @endif
+                            @endauth
                         </div>
                     </div>
                 </div>

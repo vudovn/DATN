@@ -1,4 +1,3 @@
-<<<<<<<<< Temporary merge branch 1
 // (function ($) {
 //     "use strict";
 //     var TGNT = {};
@@ -274,7 +273,6 @@
 //         TGNT.formatDateTime();
 //     });
 // })(jQuery);
-=========
 (function ($) {
     "use strict";
     var TGNT = {};
@@ -358,4 +356,3 @@
         TGNT.add_review();
     });
 })(jQuery);
->>>>>>>>> Temporary merge branch 2

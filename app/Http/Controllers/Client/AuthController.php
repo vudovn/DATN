@@ -167,5 +167,8 @@ class AuthController extends Controller
         return redirect()->route('client.auth.login')->with('success', 'Kích hoạt thành công');
     }
 
-    public function logout() {}
+    public function logout() {
+        Auth::logout();
+        return redirect()->route('client.auth.login');
+    }
 }

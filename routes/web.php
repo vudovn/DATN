@@ -212,10 +212,10 @@ Route::get('/test', [AjaxDashboardController::class, 'test']);
 
 // =======================================================CLIENT================================================================
 // client route
+route::middleware('preventBackHistory')->group(function () {
 Route::prefix('/')->name('client.')->group(function () {
     // auth route
     Route::prefix('')->name('auth.')->group(function () {
-        Route::get('dang-xuat', [ClientAuthController::class, 'login'])->name('logout');
         Route::get('dang-nhap', [ClientAuthController::class, 'login'])->name('login');
         Route::post('dang-nhap', [ClientAuthController::class, 'postLogin'])->name('post-login');
         Route::get('dang-ky', [ClientAuthController::class, 'register'])->name('register');
@@ -225,6 +225,7 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('doi-mat-khau/{user}/{token}', [ClientAuthController::class, 'change'])->name('change');
         Route::post('doi-mat-khau/{user}/{token}', [ClientAuthController::class, 'submitChangePasswordForm'])->name('post-reset');
         Route::get('xac-nhan-tai-khoan/{email}', [ClientAuthController::class, 'active'])->name('active');
+        Route::get('dang-xuat', [ClientAuthController::class, 'logout'])->name('logout');
     });
 
     // index route
@@ -284,4 +285,5 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('/ajax/count-wishlist', [WishlistController::class, 'count']);
     });
 
+});
 });

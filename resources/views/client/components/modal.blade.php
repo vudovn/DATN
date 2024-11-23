@@ -88,41 +88,43 @@
                 <div class="modal-body">
                     <div class="form-group mb-3">
                         <label for="name" class="form-label ms-3">Họ & Tên</label>
-                        <input name="name" type="text" class="form-control rounded-5" placeholder=""
-                            id="name" value="{{ $user->name }}">
+                        <input name="name" type="text" class="form-control " placeholder=""
+                            id="name" value="{{ $user->name ?? '' }}">
                     </div>
                     <div class="form-group mb-3">
                         <label for="name" class="form-label ms-3">Số điện thoại</label>
-                        <input name="phone" id="phone" type="number" class="form-control rounded-5"
-                            placeholder="" id="phone" value="{{ $user->phone }}">
+                        <input name="phone" id="phone" type="number" class="form-control "
+                            placeholder="" id="phone" value="{{ $user->phone ?? '' }}">
                     </div>
                     <div class="form-group mb-3">
                         <label for="email" class="form-label ms-3">Email</label>
-                        <input name="email" type="email" class="form-control rounded-5"
-                            placeholder="Email của bạn" id="email" value="{{ $user->email }}">
+                        <input name="email" type="email" class="form-control "
+                            placeholder="Email của bạn" id="email" value="{{ $user->email ?? '' }}">
                     </div>
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="email" class="form-label ms-3">Tỉnh/thành phố</label>
                             <select name="province_id" id="province"
-                                class="rounded-5 form-control select2 province location" data-target="districts">
+                                class=" form-control select2 province location" data-target="districts">
                                 <option value="" disabled selected>Chọn tỉnh/Thành phố</option>
-                                @foreach ($provinces as $province)
-                                    <option value="{{ $province->code }}"
-                                        @if ($user->province_id == $province->code) selected @endif>{{ $province->name }}</option>
-                                @endforeach
+                                @if (isset($provinces))
+                                    @foreach ($provinces as $province)
+                                        <option value="{{ $province->code }}"
+                                            @if ($user->province_id == $province->code) selected @endif>{{ $province->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                         <div class="col-6 mb-3">
                             <label for="email" class="form-label ms-3">Quận/Huyện</label>
                             <select name="district_id" id="district"
-                                class="rounded-5 form-control select2 districts location" data-target="wards">
-
+                                class=" form-control select2 districts location" data-target="wards">
                             </select>
                         </div>
                         <div class="col-12">
                             <label for="email" class="form-label ms-3">Phường/Xã</label>
-                            <select name="ward_id" id="ward" class="form-control wards select2 rounded-5">
+                            <select name="ward_id" id="ward" class="form-control wards select2 ">
 
                             </select>
                         </div>
@@ -130,6 +132,47 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-tgnt saveEditAccount">Lưu</button>
+                </div>
+                <script>
+                    var province_id = '{{ isset($user->province_id) ? $user->province_id : old('province_id') }}'
+                    var district_id = '{{ isset($user->district_id) ? $user->district_id : old('district_id') }}'
+                    var ward_id = '{{ isset($user->ward_id) ? $user->ward_id : old('ward_id') }}'
+                </script>
+            </form>
+        </div>
+    </div>
+
+    {{-- change pass --}}
+    <div class="modal fade" id="changePass" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form action="{{ route('client.account.change-pass-acccount') }}" class="modal-content change-pass-account-form">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Thay đổi mật khẩu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label for="password_old" class="form-label ms-3">Mật khẩu cũ</label>
+                        <input name="password_old" placeholder="******************" type="password" class="form-control" 
+                            id="name">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password" class="form-label ms-3">Mật khẩu mới</label>
+                        <input name="password" placeholder="******************" type="password" class="form-control" 
+                            id="name">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password_c" class="form-label ms-3">Xác nhận mật khẩu</label>
+                        <input name="password_c" placeholder="******************" type="password" class="form-control" 
+                            id="name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-tgnt changePassAccount">Lưu</button>
                 </div>
                 <script>
                     var province_id = '{{ isset($user->province_id) ? $user->province_id : old('province_id') }}'

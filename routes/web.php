@@ -233,6 +233,9 @@ Route::prefix('/')->name('client.')->group(function () {
     Route::prefix('tai-khoan')->name('account.')->group(function () {
         Route::get('/', [AccountController::class, 'index'])->name('index');
         Route::post('ajax/edit-acccount', [AccountController::class, 'editAccount'])->name('edit-acccount');
+        Route::post('ajax/change-pass-acccount', [AccountController::class, 'changePassAccount'])->name('change-pass-acccount');
+        Route::get('ajax/get-order-all', [AccountController::class, 'getOrderAll'])->name('get-order-all');
+        Route::get('ajax/get-order-by-status/{status}', [AccountController::class, 'getOrderByStatus'])->name('get-order-by-status');
     });
 
     Route::prefix('danh-muc')->name('category.')->group(function () {

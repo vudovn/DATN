@@ -48,3 +48,4 @@
 <script src="/client_asset/custom/js/library.js"></script>
 <script src="/client_asset/custom/js/product/search.js"></script>
 <script src="/client_asset/custom/js/product/wishlist.js"></script>
+<script src="/client_asset/custom/js/cart/addToCart.js"></script>

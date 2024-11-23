@@ -3,251 +3,101 @@
 @section('content')
     <section class="cart">
         <!-- <div>
-                    <img src="/assets/image/banner/banner_product (1).png" alt="" width="100%"
-                        style="filter:brightness(0.8);">
-                </div> -->
+                <img src="/assets/image/banner/banner_product (1).png" alt="" width="100%"
+                    style="filter:brightness(0.8);">
+            </div> -->
         <div class="container my-lg-5">
             <div class="row">
                 <p class="fs-1 fw-bold cart-title">Giỏ hàng</p>
                 <div class="main-left col-xxl-8 col-md-12 col-sm-12">
-                    <p class="fs-6 my-3">Bạn đang có <span class="fw-bold">1 sản phẩm</span> trong giỏ hàng</p>
-                    <div class="cart-taskbar my-3 d-flex justify-content-between">
-                        <div class="checkbox-wrapper-27">
-                            <label class="checkbox">
-                                <input type="checkbox" checked>
-                                <span class="checkbox__icon"></span>
-                                <span class="text">Chọn tất cả</span>
-                            </label>
-                        </div>
-                        <div class="cart-taskbar d-grid gap-2 d-flex justify-content-end">
-                            <form action="">
-                                <button class=" me-md-2" type="button"><i class="bi bi-trash"></i> Xoá</button>
-                            </form>
-                            <form action="">
-                                <button class="" type="button"><i class="bi bi-heart"></i> Yêu thích</button>
-                            </form>
-                        </div>
-                    </div>
+                    <hr class="border-4 w-25 fw-bold mt-0">
                     <div class="cart-container">
-                        <div class="cart-item">
-                            <div class="cart-item-check">
+                        @if ($products !== [])
+                            <p class="fs-6 my-3">Bạn đang có <span class="fw-bold">{{count($products)}} sản phẩm</span> trong giỏ hàng</p>
+                            <div class="cart-taskbar my-3 d-flex justify-content-between">
                                 <div class="checkbox-wrapper-27">
                                     <label class="checkbox">
-                                        <input type="checkbox">
+                                        <input type="checkbox" checked>
                                         <span class="checkbox__icon"></span>
+                                        <span class="text">Chọn tất cả</span>
                                     </label>
                                 </div>
+                                <div class="cart-taskbar d-grid gap-2 d-flex justify-content-end">
+                                    <form action="">
+                                        <button class=" me-md-2" type="button"><i class="bi bi-trash"></i> Xoá</button>
+                                    </form>
+                                    <form action="">
+                                        <button class="" type="button"><i class="bi bi-heart"></i> Yêu thích</button>
+                                    </form>
+                                </div>
                             </div>
-                            <img alt="Black and white striped ceramic plate" height="100"
-                                src="https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474117AbK/anh-meme-hoi-cham-cute-nhat_034728404.jpg"
-                                width="100" />
-                            <div class="cart-item-details">
-                                <div class="cart-item-title">
-                                    Đĩa Sứ BLACK-&amp;-WHITE Hoa Văn Đen Trắng
-                                </div>
-                                <div class="cart-item-subtitle">
-                                    Sọc ngang đen trắng / Dia:21cm
-                                </div>
-                                <div class="d-xxl-flex">
-                                    <div class="cart-item-price">
-                                        74,500₫
+                            <div class="line-y">
+                                @foreach ($products as $key => $value)
+                                    <div class="cart-item" id="cart-item-{{ $value->idCart }}">
+                                        <div class="cart-item-check">
+                                            <div class="checkbox-wrapper-27">
+                                                <label class="checkbox">
+                                                    <input type="checkbox">
+                                                    <span class="checkbox__icon"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <img alt="Black and white striped ceramic plate" height="100"
+                                            src="{{ $value->thumbnail }}" width="100" />
+                                        <div class="cart-item-details">
+                                            <div class="cart-item-title">
+                                                {{ $value->name }}
+                                            </div>
+                                            <div class="d-xxl-flex">
+                                                @if (isset($value->discount) && $value->discount !== 0)
+                                                    <div class="cart-item-price">
+                                                        {{ ($value->price * 100) / $value->discount }}₫
+                                                    </div>
+                                                    <div class="cart-item-old-price m-xxl-2 m-md-0">
+                                                        {{ $value->price }}₫
+                                                    </div>
+                                                @else
+                                                    <div class="cart-item-price">
+                                                        {{ $value->price }}₫
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="cart-item-subtitle">
+                                            @if (isset($value->title))
+                                                <button class="text-muted btn btn-link p-0">Phân loại hàng: <br>
+                                                    {{ $value->title }}</button>
+                                            @endif
+                                        </div>
+                                        <div class="pe-xxl-5">
+                                            <div class="cart-item-total text-center">
+                                                74,500₫
+                                            </div>
+                                            <div class="input-group input-spinner d-flex">
+                                                <input type="button" value="-" class="button-minus btn btn-sm"
+                                                    data-field="quantity">
+                                                <input type="number" step="1" max="3" value="1"
+                                                    name="quantity" class="quantity-field form-control-sm form-input">
+                                                <input type="button" value="+" class="button-plus btn btn-sm"
+                                                    data-field="quantity">
+                                            </div>
+                                        </div>
+                                        <div class="cart-item-remove">
+                                            <button type="button" data-id="{{ $value->idCart }}"
+                                                class="btn btn-link p-0 text-danger" id="removeItem"
+                                                style="text-decoration: none;" href="">x</button>
+                                        </div>
                                     </div>
-                                    <div class="cart-item-old-price m-xxl-2 m-md-0">
-                                        149,000₫
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
-                            <div class="pe-xxl-5">
-                                <div class="cart-item-total text-center">
-                                    74,500₫
-                                </div>
-                                <div class="input-group input-spinner d-flex">
-                                    <input type="button" value="-" class="button-minus btn btn-sm"
-                                        data-field="quantity">
-                                    <input type="number" step="1" max="3" value="1" name="quantity"
-                                        class="quantity-field form-control-sm form-input">
-                                    <input type="button" value="+" class="button-plus btn btn-sm"
-                                        data-field="quantity">
-                                </div>
+                        @else
+                            <div class="container cart-no-item text-center mb-4">
+                                <img src="https://live-mmb-public.s3.ap-south-1.amazonaws.com/assets/img/empty-cart.png"
+                                    alt="" width="35%">
+                                <p class="text-muted fw-bold mb-3">Giỏ hàng của bạn còn trống</p>
+                                <a class="btn btn-tgnt w-25" href="{{ route('client.home') }}">Mua ngay</a>
                             </div>
-                            <div class="cart-item-remove">
-                                <a href="">x</a>
-                            </div>
-                        </div>
-                        <div class="cart-item">
-                            <div class="cart-item-check">
-                                <div class="checkbox-wrapper-27">
-                                    <label class="checkbox">
-                                        <input type="checkbox">
-                                        <span class="checkbox__icon"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <img alt="Wooden dining chair" height="100"
-                                src="https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/185857/Originals/meme-het-cuu%20(1).jpg"
-                                width="100" />
-                            <div class="cart-item-details">
-                                <div class="cart-item-title">
-                                    Ghế Ăn Gỗ Sồi HARRIS
-                                </div>
-                                <div class="d-xxl-flex">
-                                    <div class="cart-item-price">
-                                        2,490,000₫
-                                    </div>
-                                    <div class="cart-item-old-price m-xxl-2 m-md-0">
-                                        3,149,000₫
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pe-xxl-5">
-                                <div class="cart-item-price text-center">
-                                    2,490,000₫
-                                </div>
-                                <div class="input-group input-spinner d-flex">
-                                    <input type="button" value="-" class="button-minus btn btn-sm"
-                                        data-field="quantity">
-                                    <input type="number" step="1" max="3" value="1" name="quantity"
-                                        class="quantity-field form-control-sm form-input">
-                                    <input type="button" value="+" class="button-plus btn btn-sm"
-                                        data-field="quantity">
-                                </div>
-                            </div>
-                            <div class="cart-item-remove">
-                                <a href="">x</a>
-                            </div>
-                        </div>
-                        <div class="cart-item">
-                            <div class="cart-item-check">
-                                <div class="checkbox-wrapper-27">
-                                    <label class="checkbox">
-                                        <input type="checkbox">
-                                        <span class="checkbox__icon"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <img alt="Wooden dining chair" height="100"
-                                src="https://i.pinimg.com/236x/0f/3f/eb/0f3feb96466565cc39d182dc3808085d.jpg"
-                                width="100" />
-                            <div class="cart-item-details">
-                                <div class="cart-item-title">
-                                    Ghế Ăn Gỗ Sồi HARRIS
-                                </div>
-                                <div class="d-xxl-flex">
-                                    <div class="cart-item-price">
-                                        2,490,000₫
-                                    </div>
-                                    <div class="cart-item-old-price m-xxl-2 m-md-0">
-                                        3,149,000₫
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pe-xxl-5">
-                                <div class="cart-item-price text-center">
-                                    2,490,000₫
-                                </div>
-                                <div class="input-group input-spinner d-flex">
-                                    <input type="button" value="-" class="button-minus btn btn-sm"
-                                        data-field="quantity">
-                                    <input type="number" step="1" max="3" value="1" name="quantity"
-                                        class="quantity-field form-control-sm form-input">
-                                    <input type="button" value="+" class="button-plus btn btn-sm"
-                                        data-field="quantity">
-                                </div>
-                            </div>
-                            <div class="cart-item-remove">
-                                <a href="">x</a>
-                            </div>
-                        </div>
-                        <div class="cart-item">
-                            <div class="cart-item-check">
-                                <div class="checkbox-wrapper-27">
-                                    <label class="checkbox">
-                                        <input type="checkbox">
-                                        <span class="checkbox__icon"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <img alt="Black and white striped ceramic plate" height="100"
-                                src="https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474117AbK/anh-meme-hoi-cham-cute-nhat_034728404.jpg"
-                                width="100" />
-                            <div class="cart-item-details">
-                                <div class="cart-item-title">
-                                    Đĩa Sứ BLACK-&amp;-WHITE Hoa Văn Đen Trắng
-                                </div>
-                                <div class="cart-item-subtitle">
-                                    Sọc ngang đen trắng / Dia:21cm
-                                </div>
-                                <div class="d-xxl-flex">
-                                    <div class="cart-item-price">
-                                        74,500₫
-                                    </div>
-                                    <div class="cart-item-old-price m-xxl-2 m-md-0">
-                                        149,000₫
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pe-xxl-5">
-                                <div class="cart-item-total text-center">
-                                    74,500₫
-                                </div>
-                                <div class="input-group input-spinner d-flex">
-                                    <input type="button" value="-" class="button-minus btn btn-sm"
-                                        data-field="quantity">
-                                    <input type="number" step="1" max="3" value="1" name="quantity"
-                                        class="quantity-field form-control-sm form-input">
-                                    <input type="button" value="+" class="button-plus btn btn-sm"
-                                        data-field="quantity">
-                                </div>
-                            </div>
-                            <div class="cart-item-remove">
-                                <a href="">x</a>
-                            </div>
-                        </div>
-                        <div class="cart-item">
-                            <div class="cart-item-check">
-                                <div class="checkbox-wrapper-27">
-                                    <label class="checkbox">
-                                        <input type="checkbox">
-                                        <span class="checkbox__icon"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <img alt="Black and white striped ceramic plate" height="100"
-                                src="https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474117AbK/anh-meme-hoi-cham-cute-nhat_034728404.jpg"
-                                width="100" />
-                            <div class="cart-item-details">
-                                <div class="cart-item-title">
-                                    Đĩa Sứ BLACK-&amp;-WHITE Hoa Văn Đen Trắng
-                                </div>
-                                <div class="cart-item-subtitle">
-                                    Sọc ngang đen trắng / Dia:21cm
-                                </div>
-                                <div class="d-xxl-flex">
-                                    <div class="cart-item-price">
-                                        74,500₫
-                                    </div>
-                                    <div class="cart-item-old-price m-xxl-2 m-md-0">
-                                        149,000₫
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pe-xxl-5">
-                                <div class="cart-item-total text-center">
-                                    74,500₫
-                                </div>
-                                <div class="input-group input-spinner d-flex">
-                                    <input type="button" value="-" class="button-minus btn btn-sm"
-                                        data-field="quantity">
-                                    <input type="number" step="1" max="3" value="1" name="quantity"
-                                        class="quantity-field form-control-sm form-input">
-                                    <input type="button" value="+" class="button-plus btn btn-sm"
-                                        data-field="quantity">
-                                </div>
-                            </div>
-                            <div class="cart-item-remove">
-                                <a href="">x</a>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="main-right col-xxl-4 col-md-12 col-12 border border-2 rounded h-100">
@@ -319,20 +169,7 @@
                                 <a href="">
                                     <div>
                                         <img class="img-fluid" data-img-hover="/assets/image/footer/pic1.png"
-                                            src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg" class="product-image img-fluid" />
-                                    </div>
-                                </a>
-                                <a href="" class="title_product">
-                                    <h6 class="mt-2">Gather Couch</h6>
-                                </a>
-                                <p>12,300,000 đ</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
-                            <div class="product-card">
-                                <a href="">
-                                    <div>
-                                        <img class="img-fluid" src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
+                                            src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
                                             class="product-image img-fluid" />
                                     </div>
                                 </a>
@@ -346,7 +183,8 @@
                             <div class="product-card">
                                 <a href="">
                                     <div>
-                                        <img class="img-fluid" src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
+                                        <img class="img-fluid"
+                                            src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
                                             class="product-image img-fluid" />
                                     </div>
                                 </a>
@@ -360,7 +198,23 @@
                             <div class="product-card">
                                 <a href="">
                                     <div>
-                                        <img class="img-fluid" src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
+                                        <img class="img-fluid"
+                                            src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
+                                            class="product-image img-fluid" />
+                                    </div>
+                                </a>
+                                <a href="" class="title_product">
+                                    <h6 class="mt-2">Gather Couch</h6>
+                                </a>
+                                <p>12,300,000 đ</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
+                            <div class="product-card">
+                                <a href="">
+                                    <div>
+                                        <img class="img-fluid"
+                                            src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
                                             class="product-image img-fluid" />
                                     </div>
                                 </a>
@@ -378,7 +232,8 @@
                             <div class="product-card">
                                 <a href="">
                                     <div>
-                                        <img src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg" class="product-image img-fluid" />
+                                        <img src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
+                                            class="product-image img-fluid" />
                                     </div>
                                 </a>
                                 <a href="" class="title_product">
@@ -391,7 +246,8 @@
                             <div class="product-card">
                                 <a href="">
                                     <div>
-                                        <img src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg" class="product-image img-fluid" />
+                                        <img src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
+                                            class="product-image img-fluid" />
                                     </div>
                                 </a>
                                 <a href="" class="title_product">
@@ -404,7 +260,8 @@
                             <div class="product-card">
                                 <a href="">
                                     <div>
-                                        <img src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg" class="product-image img-fluid" />
+                                        <img src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
+                                            class="product-image img-fluid" />
                                     </div>
                                 </a>
                                 <a href="" class="title_product">
@@ -417,7 +274,8 @@
                             <div class="product-card">
                                 <a href="">
                                     <div>
-                                        <img src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg" class="product-image img-fluid" />
+                                        <img src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
+                                            class="product-image img-fluid" />
                                     </div>
                                 </a>
                                 <a href="" class="title_product">

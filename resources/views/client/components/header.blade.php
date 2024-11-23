@@ -52,7 +52,7 @@
 
                             <!-- giỏ hàng -->
                             <div class="list-inline-item me-7 text-center">
-                                <a class="text-muted position-relative">
+                                <a class="text-muted position-relative" href="{{route('client.cart.index')}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
@@ -258,7 +258,8 @@
                                         data-bs-toggle="dropdown" aria-expanded="false">Phòng</a>
                                     <ul class="dropdown-menu">
                                         @foreach (getCategory('room') as $item)
-                                            <li><a class="dropdown-item"
+                                            <li>
+                                                <a class="dropdown-item"
                                                     href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
                                             </li>
                                         @endforeach

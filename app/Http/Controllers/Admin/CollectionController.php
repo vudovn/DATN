@@ -61,10 +61,18 @@ class CollectionController extends Controller implements HasMiddleware
     public function getProductPoint(Request $request)
     {
         $data = $this->productRepository->findByField('sku', $request->sku)->first();
+        if($data){
+            $category = $data->categories->where('is_room', 2)->first();
+            $data->category = $category ? strtolower($category->name) : '';
+        }
         if (empty($data->sku)) {
             $data = $this->productVariantRepository->findByField('sku', $request->sku)->first();
-            $data->name = $data->product->name;
-            $data->slug = $data->product->slug;
+            if ($data && $data->product) {
+                $data->name = $data->product->name ?? '';
+                $data->slug = $data->product->slug ?? '';
+                $category = $data->product->categories->where('is_room', 2)->first();
+                $data->category = $category ? strtolower($category->name) : '';
+            }
         }
         return $data;
     }

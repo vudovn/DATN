@@ -82,15 +82,21 @@
                             <input type="button" value="+" class="button-plus btn btn-sm" data-field="quantity">
                         </div>
                     </div>
-<div class="btn_spct ">
-    <button class="btn btn-stnt buyNow" data-id="{{$product->id}}" data-sku="{{$product->sku}}">Mua ngay</button>
-    <button class="btn btn-outline-stnt ms-4 addToCart" data-id="{{$product->id}}" data-sku="{{$product->sku}}">Thêm vào giỏ hàng</button>
+<<<<<<<<< Temporary merge branch 1
+                    <div class="btn_spct ">
+                        <button class="btn btn-stnt buyNow" data-id="{{$product->id}}" data-sku="{{$product->sku}}">Mua ngay</button>
+                        <button class="btn btn-outline-stnt ms-4 addToCart" data-id="{{$product->id}}" data-sku="{{$product->sku}}">Thêm vào giỏ hàng</button>
+=========
+                    <div class="btn_spct">
+                        <button class="btn btn-stnt buyNow" data-id="{{ $product->id }}">Mua ngay</button>
+                        <button class="btn btn-outline-stnt ms-4 addToCart">Thêm vào giỏ hàng</button>
                         <button class="btn btn-link p-0 ms-3">
                             <label for="like{{ $product->id }}" style="cursor: pointer"
                                 title="Thêm sản phẩm vào mục yêu thích"
                                 class="animate__animated animate__bounceIn like_action con-like">
                                 <input
-                                    {{ auth()->check() &&auth()->user()->wishlists->contains('product_id', $product->id)? 'checked': '' }}
+
+                                    {{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id)? 'checked': '' }}
                                     class="like action_wishlist" id="like{{ $product->id }}"
                                     data-id="{{ $product->id }}" type="checkbox" value="{{ $product->id }}">
                                 <div class="checkmark">
@@ -115,16 +121,11 @@
                                 </div>
                             </label>
                         </button>
-
+>>>>>>>>> Temporary merge branch 2
                         <div class="hidden">
                             <input type="hidden" name="price" id="price" value="{{ $priceDiscount }}">
                         </div>
-
-                        {{-- <input
-                            {{ auth()->check() &&auth()->user()->wishlists->contains('product_id', $product->id)? 'checked': '' }}
-                            type="checkbox" name="add_wishlist" class="add_wishlist" value="{{ $product->id }}"> --}}
-                    </div>
-                    <!-- end action sản phẩm -->
+<<<<<<<<< Temporary merge branch 1
                         {{-- <input 
                             {{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id) ? 'checked' : '' }} 
                             type="checkbox" 
@@ -132,6 +133,14 @@
                             class="add_wishlist" 
                             data-type="{{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id) ? 'remove' : 'add' }}" 
                             value="{{ $product->id }}"> --}}
+=========
+
+                        {{-- <input
+                            {{ auth()->check() &&auth()->user()->wishlists->contains('product_id', $product->id)? 'checked': '' }}
+                            type="checkbox" name="add_wishlist" class="add_wishlist" value="{{ $product->id }}"> --}}
+                    </div>
+                    <!-- end action sản phẩm -->
+>>>>>>>>> Temporary merge branch 2
                 </div>
 
             </div>

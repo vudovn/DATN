@@ -10,6 +10,7 @@
             let quantity = $("#quantity").val();
             let price = $("#price").val();
             let url = "/gio-hang/store";
+
             $.ajax({
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -29,27 +30,26 @@
                         "success",
                         "Thêm sản phẩm vào giỏ hàng thành công"
                     );
+                    TGNT.cartCount();
                 },
                 error: function (data) {},
             });
         });
     };
     TGNT.cartCount = () => {
-        let _this = $(this);
         let url = "/gio-hang/count";
         $.ajax({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
-            type: "POST",
+            type: "GET",
             url: url,
             success: function (data) {
-                VDmessage.show(
-                    "success",
-                    "Thêm sản phẩm vào giỏ hàng thành công"
-                );
+                $(".cart_count").html(data);
             },
-            error: function (data) {},
+            error: function (data) {
+                console.log("Lỗi");
+            },
         });
     };
     $(document).ready(function () {
@@ -57,3 +57,4 @@
         TGNT.cartCount();
     });
 })(jQuery);
+

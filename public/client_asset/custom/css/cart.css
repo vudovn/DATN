@@ -75,7 +75,7 @@ body {
     margin-right: 7px;
 }
 .cart .main-left .cart-item-details {
-    flex: 0.7;
+    flex: 0.6;
 }
 .cart .main-left .cart-item-title {
     font-size: clamp(10px, 1vw, 45px);
@@ -88,7 +88,8 @@ body {
     letter-spacing: -0.8px;
 }
 .cart .main-left .cart-item-subtitle {
-    flex: 0.3;
+    z-index: 2;
+    flex: 0.4;
     color: #888;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -121,10 +122,9 @@ body {
     color: var(--base-color);
 }
 .cart .main-left .cart-item-quantity {
-    display: flex;
-    align-items: center;
+    z-index: 1;
 }
-.cart .main-left .cart-item-quantity button {
+/* .cart .main-left .cart-item-quantity button {
     background-color: #fff;
     border: 1px solid #ccc;
     padding: 5px 10px;
@@ -135,7 +135,7 @@ body {
     text-align: center;
     border: 1px solid #ccc;
     margin: 0 5px;
-}
+} */
 /* ---------------- INPUT QUANTITY ---------------- */
 .input-spinner input[type="button"] {
     height: auto !important;
@@ -177,6 +177,7 @@ body {
     font-weight: bold;
     font-size: clamp(13px, 1.2vw, 20px);
 }
+
 .cart .main-right .cart-delivery-title {
     font-size: clamp(13px, 1.3vw, 20px);
     font-weight: bold;
@@ -237,7 +238,24 @@ body {
     color: #ffffff;
     transition: all 0.3s ease;
 }
-
+.open-box-variant {
+    text-decoration: none;
+}
+.box-variant {
+    /* aspect-ratio: 2/1; */
+    position: absolute;
+    left: 40%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    white-space: nowrap;
+    padding: 15px;
+    background-color: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
 /* ======================== MOBLIE ============================================== */
 @media (max-width: 768px) {
     /* .row > * {

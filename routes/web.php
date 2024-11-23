@@ -24,6 +24,7 @@ use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\CollectionController as ClientCollectionController;
 use App\Http\Controllers\Client\CommentController as ClientCommentController;
 use App\Http\Controllers\Client\CartController as ClientCartController;
+use App\Http\Controllers\Client\CheckoutController as ClientCheckoutController;
 use App\Http\Controllers\Client\IndexController;
 use App\Http\Controllers\Client\CategoryController as ClientCategoryController;
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
@@ -252,12 +253,23 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('/ajax/get-review', [ClientProductController::class, 'getReview'])->name('get-review');
         Route::post('/ajax/add-review', [ClientProductController::class, 'addReview'])->name('add-review');
     });
-    // comment route
+    // cart route
     Route::prefix('gio-hang')->name('cart.')->group(function () {
         Route::get('/', [ClientCartController::class, 'index'])->name('index');
+        Route::get('/listCart', [ClientCartController::class, 'listCart'])->name('listCart');
+        Route::get('/getProduct', [ClientCartController::class, 'getProduct'])->name('getProduct');
         Route::get('/count', [ClientCartController::class, 'count'])->name('count');
         Route::post('/store', [ClientCartController::class, 'store'])->name('store');
         Route::post('/remove', [ClientCartController::class, 'remove'])->name('remove');
+        Route::post('/updateQuantity', [ClientCartController::class, 'updateQuantity'])->name('updateQuantity');
+        Route::post('/changeVariant', [ClientCartController::class, 'changeVariant'])->name('changeVariant');
+        Route::post('/addDiscount', [ClientCartController::class, 'addDiscount'])->name('addDiscount');
+        Route::post('/applyDiscount', [ClientCartController::class, 'applyDiscount'])->name('applyDiscount');
+        Route::post('/totalCart', [ClientCartController::class, 'totalCart'])->name('totalCart');
+    });
+    // checkout route
+    Route::prefix('thanh-toan')->name('checkout.')->group(function () {
+        Route::get('/', [ClientCheckoutController::class, 'index'])->name('index');
     });
     // collection route
     Route::prefix('bo-suu-tap')->name('collection.')->group(function () {

@@ -88,17 +88,18 @@
                 <div class="modal-body">
                     <div class="form-group mb-3">
                         <label for="name" class="form-label ms-3">Họ & Tên</label>
-                        <input name="name" type="text" class="form-control " placeholder=""
+                        <input name="name" type="text" class="form-control rounded-5" placeholder=""
                             id="name" value="{{ $user->name ?? '' }}">
                     </div>
                     <div class="form-group mb-3">
                         <label for="name" class="form-label ms-3">Số điện thoại</label>
-                        <input name="phone" id="phone" type="number" class="form-control "
+
+                        <input name="phone" id="phone" type="number" class="form-control rounded-5"
                             placeholder="" id="phone" value="{{ $user->phone ?? '' }}">
                     </div>
                     <div class="form-group mb-3">
                         <label for="email" class="form-label ms-3">Email</label>
-                        <input name="email" type="email" class="form-control "
+                        <input name="email" type="email" class="form-control rounded-5"
                             placeholder="Email của bạn" id="email" value="{{ $user->email ?? '' }}">
                     </div>
                     <div class="form-group row">

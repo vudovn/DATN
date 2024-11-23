@@ -21,6 +21,7 @@
                                         :required="true" />
                                 </div>
                                 <div class="form-group mb-3">
+                                    <label for="">Mô tả ngắn:</label>
                                     <textarea class="form-control" name="short_description" id="short_description" rows="3">{{ $collection->short_description ?? old('short_description') }}</textarea>
                                     @error('short_description')
                                         <small class="error text-danger">*{{ $message }}</small>

@@ -264,6 +264,9 @@
                                         @endforeach
                                     </ul>
                                 </li>
+                                <li class="nav-item w-100 w-lg-auto">
+                                    <a class="nav-link" href="{{route('client.collection.index')}}">Bộ sưu tập</a>
+                                </li>
                             </ul>
                         </div>
                         <!-- end menu -->

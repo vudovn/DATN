@@ -6,7 +6,7 @@
 <script src="https://freshcart.codescandy.com/assets/libs/simplebar/dist/simplebar.min.js"></script>
 <script src="https://freshcart.codescandy.com/assets/js/vendors/countdown.js"></script>
 <script src="https://freshcart.codescandy.com/assets/js/vendors/jquery.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/select2/js/select2.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/client_asset/library/bootstrap5.3/dist/js/theme.min.js">
 </script>
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library//client_asset/library/smoothscroll/SmoothScroll.js">

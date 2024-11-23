@@ -11,8 +11,11 @@
         $description = $product->description;
         $category = $product->categories;
         $attributeCategory = $product->attribute_category;
+        $shortContent = $product->short_content;
     @endphp
-
+    <script>
+        const product_id = {{ $product->id ?? 0 }};
+    </script>
     <section class="product_ct container animate__animated animate__fadeIn">
         <div class="col-xxl-12 d-none d-xxl-block">
             <nav aria-label="breadcrumb">
@@ -25,33 +28,7 @@
             </nav>
         </div>
         <div class="row">
-            {{-- <div class="col-xxl-6 col-sm-12 mb-5 gallery-container">
-                <div class="row ">
-                    <div class="col-md-12 text-center overflow-hidden rounded">
-                        <div class="bg-secondary overflow-hidden rounded">
-                            @if ($albums)
-                                <a href="{{ $albums[0] }}" class="img_preview" data-fancybox="gallery">
-                                    <img id="mainImage" src="{{ $albums[0] }}" class="product-image img-fluid rounded"
-                                        alt="Main Product Image">
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12 text-center thumbnail-images">
-                        <!-- Thumbnail images -->
-                        @if ($albums)
-                            @foreach ($albums as $key => $album)
-                                <img src="{{ $album }}" alt="{{ $product->name }}"
-                                    class="img-thumbnail {{ $key == 0 ? 'active' : '' }}" data-image="{{ $album }}"
-                                    alt="{{ $product->name }}">
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
-            </div> --}}
-            <div class="col-xxl-7 col-sm-12 mb-5 gallery-container">
+            <div class="col-xxl-6 col-sm-12 mb-5 gallery-container">
                 <div class="fotorama" data-nav="thumbs" data-width="100%" data-ratio="900/600" data-allowfullscreen="true">
                     @if ($albums)
                         @foreach ($albums as $album)
@@ -60,7 +37,7 @@
                     @endif
                 </div>
             </div>
-            <div class="col-xxl-5 col-sm-12 mb-5">
+            <div class="col-xxl-6 col-sm-12 mb-5">
                 <div class="title_spct mb-7">
                     <h2 class="product-title">{{ $name }}
                     </h2>
@@ -75,14 +52,17 @@
                         <span class="price_base_spct text-danger price">{{ formatMoney($price) }}</span>
                     @endif
                 </div>
-
+                {{-- Mô tả ngắn --}}
+                <div class="short_content">
+                    <p>{{ $shortContent }}</p>
+                </div>
                 <!-- info sản phẩm -->
-                <div class="info_spct mt-7">
+                <div class="info_spct mt-5">
                     @include('client.pages.product_detail.components.variant')
                     <div class="mb-xxl-7 mb-2">
                         <strong>Danh mục: </strong>
                         @foreach ($category as $item)
-                            <a href="{{ $item->slug }}" class="cate_ctsp">
+                            <a href="{{ route('client.category.index',$item->slug) }}" class="cate_ctsp">
                                 <span class="badge bg-light text-dark product_ct_badge">
                                     {{ $item->name }}
                                 </span>
@@ -97,7 +77,7 @@
                     <div class="quantity_spct mb-xxl-0 mb-3">
                         <div class="input-group input-spinner">
                             <input type="button" value="-" class="button-minus btn btn-sm" data-field="quantity">
-                            <input type="number" step="1" max="3" value="1" name="quantity"
+                            <input type="number" step="1" min="1" max="3" value="1" name="quantity"
                                 id="quantity" class="quantity-field form-control-sm form-input">
                             <input type="button" value="+" class="button-plus btn btn-sm" data-field="quantity">
                         </div>
@@ -111,9 +91,10 @@
                                 title="Thêm sản phẩm vào mục yêu thích"
                                 class="animate__animated animate__bounceIn like_action con-like">
                                 <input
+
                                     {{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id)? 'checked': '' }}
-                                    class="like action_wishlist" id="like{{ $product->id }}" data-id="{{ $product->id }}"
-                                    type="checkbox" value="{{ $product->id }}">
+                                    class="like action_wishlist" id="like{{ $product->id }}"
+                                    data-id="{{ $product->id }}" type="checkbox" value="{{ $product->id }}">
                                 <div class="checkmark">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="outline" viewBox="0 0 24 24">
                                         <path
@@ -176,14 +157,6 @@
                                 Chính sách
                             </a>
                         </li>
-                        <!-- vận chuyển -->
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link fs-xxl-5 fw-bold pb-2" id="pills-comment-tab" data-bs-toggle="pill"
-                                href="#pills-comment" role="tab" aria-controls="pills-comment"
-                                aria-selected="false">
-                                Bình luận
-                            </a>
-                        </li>
                         <!-- đánh giá -->
                         <li class="nav-item" role="presentation">
                             <a class="nav-link fs-xxl-5 fw-bold pb-2" id="pills-rate-tab" data-bs-toggle="pill"
@@ -198,6 +171,8 @@
                         @include('client.pages.product_detail.components.tab.tab_policy')
                         @include('client.pages.product_detail.components.tab.tab_rate')
                         @include('client.pages.product_detail.components.tab.tab_comment')
+                        <div class="tab-pane fade" id="pills-rate" role="tabpanel" aria-labelledby="pills-rate-tab">
+                        </div>
                     </div>
                 </div>
                 <!-- end policy sản phẩm -->

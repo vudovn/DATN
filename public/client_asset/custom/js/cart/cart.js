@@ -268,3 +268,4 @@
         TGNT.updateTotalCart();
     });
 })(jQuery);
+

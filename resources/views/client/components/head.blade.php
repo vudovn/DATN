@@ -21,14 +21,11 @@
 <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/gh/vudevweb/my-library//client_asset/library/animate/animate.min.css" />
 <!-- slick slide -->
-<link rel="stylesheet" type="text/css"
-    href="https://freshcart.codescandy.com/assets/libs/slick-carousel/slick/slick.css" />
-<link rel="stylesheet" type="text/css"
-    href="https://freshcart.codescandy.com/assets/libs/slick-carousel/slick/slick-theme.css" />
-
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/client_asset/library/bootstrap5.3/dist/css/owl.carousel.min.css" />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/select2/css/select2.min.css">
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/js/jquery-3.1.1.min.js"></script>
 
 <link href="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/fancybox/fancybox.css" rel="stylesheet">

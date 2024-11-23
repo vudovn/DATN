@@ -7,9 +7,9 @@
 <script src="https://freshcart.codescandy.com/assets/js/vendors/countdown.js"></script>
 <script src="https://freshcart.codescandy.com/assets/js/vendors/jquery.min.js"></script>
 
-<script src="\client_asset\library\bootstrap5.3\dist\js\theme.min.js"></script>
-{{-- <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/client_asset/library/bootstrap5.3/dist/js/theme.min.js">
-</script> --}}
+<script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/select2/js/select2.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/client_asset/library/bootstrap5.3/dist/js/theme.min.js">
+</script>
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library//client_asset/library/smoothscroll/SmoothScroll.js">
 </script>
 <script type="https://cdn.jsdelivr.net/gh/vudevweb/my-library/text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -32,8 +32,21 @@
         $(".loading_tgnt").fadeOut("slow");
     });
 </script>
-
+@if (Auth::check())
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "/yeu-thich/ajax/count-wishlist",
+                type: "GET",
+                dataType: "json",
+                success: function(res) {
+                    $(".wishlist_count").text(res.data);
+                },
+            });
+        });
+    </script>
+@endif
 <script src="/client_asset/custom/js/library.js"></script>
 <script src="/client_asset/custom/js/cart/addToCart.js"></script>
 <script src="/client_asset/custom/js/product/search.js"></script>
-<script src="/client_asset/custom/js/wishlist.js"></script>
+<script src="/client_asset/custom/js/product/wishlist.js"></script>

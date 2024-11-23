@@ -95,6 +95,15 @@ class OrderRepository extends BaseRepository
         return response()->json($result);
     }
 
+    public function getOrdersByStatus($userId, $status, $paginate = 10)
+    {
+        return $this->model->where('status', $status)->where('user_id', $userId)->with('orderDetails')->get();
+    }
+
+    public function getOrdersByUser($userId)
+    {
+        return $this->model->where('user_id', $userId)->with('orderDetails')->get();
+    }
 
 
 

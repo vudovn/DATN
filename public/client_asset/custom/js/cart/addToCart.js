@@ -10,6 +10,7 @@
             let quantity = $("#quantity").val();
             let price = $("#price").val();
             let url = "/gio-hang/store";
+
             $.ajax({
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -56,3 +57,4 @@
         TGNT.cartCount();
     });
 })(jQuery);
+

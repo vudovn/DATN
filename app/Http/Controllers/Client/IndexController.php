@@ -16,8 +16,22 @@ class IndexController extends Controller
     public function home()
     {
         $categoryRoom = $this->categoryRepository->getCategoryRoom();
-        return view('client.pages.home.index',compact(
+        $config = $this->config();
+        return view('client.pages.home.index', compact(
             'categoryRoom',
+            'config'
         ));
+
+    }
+
+    private function config()
+    {
+        return [
+            'css' => [],
+            'js' => [
+                "client_asset/custom/js/home.js",
+            ],
+            'model' => ''
+        ];
     }
 }

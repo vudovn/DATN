@@ -11,10 +11,14 @@
 <body>
     @include('client.components.loading')
     @include('client.components.header')
-    <main class="m-0">
+    <main class="m-0 pt-2">
         @yield('content')
     </main>
-    @include('client.components.footer')
+    
+    {{-- include footer nếu có route('client.account.index') --}}
+    @if (!Route::currentRouteName() == 'client.account.index')
+        @include('client.components.footer')
+    @endif
     @include('client.components.modal')
     @include('client.components.alert')
     @include('client.components.script')

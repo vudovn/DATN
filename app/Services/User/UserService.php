@@ -93,11 +93,7 @@ class UserService extends BaseService
             $payload = $request->except(['_token', 'send', '_method']);
             $user = $this->userRepository->update($id, $payload);
             $findUser = $this->userRepository->findById($id);
-            if (isset($payload['roles'])) {
-                $findUser->syncRoles($request->input('roles'));
-            }
-            // $findUser->syncRoles($request->input('roles')); // Đồng bộ vai trò
-
+            $findUser->syncRoles($request->input('roles')); // Đồng bộ vai trò
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -121,6 +117,27 @@ class UserService extends BaseService
             // echo $e->getMessage();die();
             $this->log($e);
             return false;
+        }
+    }
+
+    public function editAccount($request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $payload = $request->except(['_token', 'send', '_method']);
+            $user = $this->userRepository->update($id, $payload);
+            $findUser = $this->userRepository->findById($id);
+            if($request->has('roles')){
+                $findUser->syncRoles($request->input('roles'));
+            }
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+            die();
+            // $this->log($e);
+            // return false;
         }
     }
 

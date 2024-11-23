@@ -44,10 +44,6 @@
                         res.message
                     );
                     if (res.status) {
-                        form.find("input").each(function () {
-                            const input = $(this);
-                            originalValues[input.attr("name")] = input.val();
-                        });
                         $(".info_account").html(res.data);
                     }
                 },
@@ -136,7 +132,7 @@
     // order
     let searchTimeout = "";
     let array = {
-        perpage: 3,
+        perpage: 5,
         sort: "id,asc",
         keyword: null,
         page: 1,

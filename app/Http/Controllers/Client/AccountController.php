@@ -67,7 +67,7 @@ class AccountController extends Controller
 
     public function editAccount(Request $request)
     {
-        $user = $this->userService->update($request, auth()->id());
+        $user = $this->userService->editAccount($request, auth()->id());
         if ($user) {
             $dataUser = $this->userRepository->findById(auth()->id(), ['province', 'district', 'ward']);
             return successResponse($this->renderHtml($dataUser), 'Cập nhật tài khoản thành công');

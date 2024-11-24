@@ -1,6 +1,6 @@
 <!--
      ----------------------------------------------
-    |          Đừng Bao Giờ Đi Ăn 1 Mình!          |
+    |          Bạn muốn gì ở tôi!          |
      ----------------------------------------------
             \   ^__^
              \  (oo)\_______
@@ -22,8 +22,8 @@
     @include('admin.components.sidebar')
     @include('admin.components.nav')
 
-    <div class="pc-container">
-        <div class="pc-content">
+    <div class="pc-container" style="z-index: 1 !important">
+        <div class="pc-content" >
             @yield('template')
             <input type="hidden" name="model" id="model" value="{{ ucfirst($config['model'] ?? 'model') }}">
         </div>

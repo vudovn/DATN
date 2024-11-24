@@ -21,6 +21,7 @@
                                         :required="true" />
                                 </div>
                                 <div class="form-group mb-3">
+                                    <label for="short_description">Mô tả ngắn:</label>
                                     <textarea class="form-control" name="short_description" id="short_description" rows="3">{{ $collection->short_description ?? old('short_description') }}</textarea>
                                     @error('short_description')
                                         <small class="error text-danger">*{{ $message }}</small>
@@ -35,16 +36,17 @@
                                 Nội dung bộ sưu tập
                             </div>
                             <div class="filterProduct">
-                                <div class="card-header">
-                                    <div class="title alert alert-danger" style="transition: background-color 0.3s ease;"
-                                        role="alert">Bạn phải thêm ít nhất là 3 sản phẩm mới hoàn thành bộ sưu tập! <span
+                                <div class="card-header pb-0">
+                                    <div class="title alert alert-danger align-items-center"
+                                        style="transition: background-color 0.3s ease;" role="alert">
+                                        @error('skus')
+                                            <small class="error text-danger"><i data-feather="alert-octagon"></i></small>
+                                        @enderror
+                                        Bạn phải thêm ít nhất 2 sản phẩm mới hoàn thành bộ sưu tập! <span
                                             style="cursor: pointer" href="#" data-show="show"
-                                            class="me-3 link-success add-product">Thêm sản phẩm</span></div>
-                                    @error('skus')
-                                        <small class="error text-danger"><i data-feather="alert-octagon"></i></small>
-                                    @enderror
+                                            class="me-3 link-success add-product">Thêm sản phẩm</span>
+                                    </div>
                                 </div>
-
                                 <div class="card-body show-product hidden">
                                     <x-filter :model="'collection'" :options="[
                                         'categoriesOther' => $categories,
@@ -57,24 +59,31 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="skus" id="skus" value="{{ $skus ?? '' }}">
                             {{-- <div class="">btn</div> --}}
+                            <button type="button" class="image-target-cus btn btn-link">Chọn ảnh</button>
                             <div class="description_value img-cover" id="description_value">
-                                <img src="https://placehold.co/600x600?text=The Gioi \nNoi That"
-                                    alt="Image Map" class="image-preview">
+                                <img src="https://placehold.co/600x600?text=The Gioi \nNoi That" alt="Image Map"
+                                    class="image-preview">
                                 <div id="renderPoints">
                                     {{-- Render mấy dấu chấm ở đây --}}
                                 </div>
+                                <input type="hidden" name="skus" id="skus" value="{{ $skus ?? '' }}">
                             </div>
-
+                            <script>
+                                var skus = @json($skus ?? []);
+                            </script>
                             @error('description')
                                 <small class="error text-danger">*{{ $message }}</small>
                             @enderror
-                            <textarea class="hidden" name="description" cols="30" rows="10" id="point_value">{{ $collection->description ?? '' }}</textarea>
+                            <textarea class="hidden" name="description" cols="30" rows="10" id="point_value">
+                                {{ $collection->description ?? old('description', '') }}
+                            </textarea>
+                            <x-editor :label="''" :name="'description_text'" :value="$collection->description_text ?? old('description_text')" class="form-control" />
+                            @error('description_text')
+                                <small class="error text-danger">*{{ $message }}</small>
+                            @enderror
                         </div>
-                        <script>
-                            var skus = @json($skus ?? []);
-                        </script>
+
                     </div>
                     <div class="col-lg-12">
                         <x-seo :value_meta_title="$collection->meta_title ?? ''" :value_meta_description="$collection->meta_description ?? ''" :value_meta_keywords="$collection->meta_keywords ?? ''" />
@@ -110,21 +119,21 @@
                 var value = $(this).val();
                 // Remove all non-numeric and non-decimal characters
                 var numericValue = value.replace(/[^0-9.]/g, "");
-    
+
                 // Prevent more than one decimal point
                 if ((numericValue.match(/\./g) || []).length > 1) {
                     numericValue = numericValue.substring(0, numericValue.lastIndexOf("."));
                 }
-    
+
                 // Limit to two decimal places
                 if (numericValue.includes(".")) {
                     var parts = numericValue.split(".");
                     numericValue = parts[0] + "." + parts[1].substring(0, 2);
                 }
-    
+
                 // Parse the numeric value
                 var floatValue = parseFloat(numericValue);
-    
+
                 // Validate the range
                 if (isNaN(floatValue)) {
                     floatValue = "";
@@ -133,11 +142,10 @@
                 } else if (floatValue < 0) {
                     floatValue = 0;
                 }
-    
+
                 // Update the input field value
                 $(this).val(floatValue);
             });
         });
     </script>
-    
-    @endsection
+@endsection

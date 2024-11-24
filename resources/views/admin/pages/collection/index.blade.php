@@ -30,11 +30,12 @@
                                 <label class="form-check-label" for="checkAll"></label>
                             </div>
                         </th>
-                        <th>ID</th>
+                        <th>STT</th>
                         <th>Ảnh bìa</th>
                         <th>Tên bộ sưu tập</th>
                         <th>Mô tả</th>
                         <th class="text-center">Ngày tạo</th>
+                        <th class="text-center">Ngày cập nhật</th>
                         <th class="text-center">Trạng thái</th>
                         <th class="text-center">Hành động</th>
                     </tr>

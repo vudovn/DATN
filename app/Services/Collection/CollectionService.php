@@ -89,14 +89,17 @@ class CollectionService extends BaseService
     {
         DB::beginTransaction();
         try {
+            DB::table('collection_product')->where('collection_id', $id)->delete();
             $payload = $request->except(['categoriesOther', 'categoriesRoom', '_token', 'send', 'idProduct', 'keyword','_method']);
             $collection = $this->collectionRepository->findById($id);
+            if (empty($payload['slug'])) {
+                $payload['slug'] = getSlug($payload['name']);
+            }
             $this->collectionRepository->update($id, $payload);
-            foreach (explode(',',$request->skus) as $sku) {
+            foreach ($request->skus as $sku) {
                 $product = $this->productRepository->findByField('sku', $sku)->first();
                 $productSku = null;
                 $productVariantSku = null;
-
                 if ($product) {
                     $productSku = $product->sku;
                 } else {
@@ -106,12 +109,7 @@ class CollectionService extends BaseService
                     }
                 }
                 if ($productSku || $productVariantSku) {
-                    DB::table('collection_product')->updateOrInsert(
-                        [
-                            'collection_id' => $collection->id,
-                            'product_sku' => $productSku,
-                            'productVariant_sku' => $productVariantSku,
-                        ],
+                    DB::table('collection_product')->insert(
                         [
                             'collection_id' => $collection->id,
                             'product_sku' => $productSku ?? null,

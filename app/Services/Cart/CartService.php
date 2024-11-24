@@ -19,18 +19,18 @@ class CartService extends BaseService
     protected $cartRepository;
     protected $userRepository;
     protected $productRepository;
-    protected $ProductVariantRepository;
+    protected $productVariantRepository;
 
     public function __construct(
         CartRepository $cartRepository,
         UserRepository $userRepository,
         ProductRepository $productRepository,
-        ProductRepository $ProductVariantRepository,
+        ProductVariantRepository $productVariantRepository,
     ) {
         $this->cartRepository = $cartRepository;
         $this->userRepository = $userRepository;
         $this->productRepository = $productRepository;
-        $this->ProductVariantRepository = $ProductVariantRepository;
+        $this->productVariantRepository = $productVariantRepository;
     }
 
     private function paginateAgrument($request)
@@ -53,18 +53,28 @@ class CartService extends BaseService
     {
         DB::beginTransaction();
         try {
-            // $payload = $request->except(['_token', 'send']);
-            $payload = $request->all();
+            $payload = $request->except(['_token', 'send']);
             $payload['user_id'] = Auth::id();
             $payload['quantity'] = (int) $payload['quantity'];
             $payload['id'] = (int) $payload['id'];
             $payload['price'] = (int) $payload['price'];
-            $payload['total_price'] = (int) $payload['price'] * $payload['quantity'];
-            $product = $this->productRepository->findByField('sku', $payload['sku'])->first();
-            dd($payload);
-
-            dd($payload);
-            $cart = $this->cartRepository->create($payload);
+            // Tìm giỏ hàng của người dùng
+            $cart = $this->cartRepository->findByField('user_id', $payload['user_id'])->get();
+            // Biến cờ để kiểm tra sản phẩm đã tồn tại hay chưa
+            $found = false;
+            foreach ($cart as $value) {
+                if ($value->sku === $payload['sku']) {
+                    // Nếu sản phẩm đã tồn tại, cộng dồn số lượng
+                    $value->quantity += $payload['quantity'];
+                    $value->save();
+                    $found = true; // Đánh dấu đã xử lý
+                    break; // Thoát khỏi vòng lặp sau khi tìm thấy
+                }
+            }
+            // Nếu sản phẩm chưa tồn tại, thêm mới vào giỏ hàng
+            if (!$found) {
+                $this->cartRepository->create($payload);
+            }
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -77,8 +87,8 @@ class CartService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $payload = $request->except(['_token', 'send', '_method']);
-            $comment = $this->commentRepository->update($id, $payload);
+            $payload = $request->except(['_token', 'send', '_method','idCart']);
+            $comment = $this->cartRepository->update($id, $payload);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -94,7 +104,7 @@ class CartService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $this->commentRepository->delete($id);
+            $this->cartRepository->delete($id);
             DB::commit();
             return true;
         } catch (\Exception $e) {

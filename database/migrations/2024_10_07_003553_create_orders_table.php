@@ -19,11 +19,11 @@ class CreateOrdersTable extends Migration
             $table->string('address');
             $table->text('note')->nullable();
             $table->json('cart');
-            $table->decimal('total', 15, 2);
+            $table->decimal('total', 15, 0);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('status')->default('pending');
             $table->tinyInteger('payment_status')->default(2); // 2 = chưa thanh toán, 1 = đã thanh toán
-            $table->decimal('fee_ship', 15, 2)->nullable();
+            $table->decimal('fee_ship', 15, 0)->nullable();
             $table->timestamps();
             
 

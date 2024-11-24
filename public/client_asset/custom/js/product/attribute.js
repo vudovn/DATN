@@ -56,7 +56,10 @@
 
     TGNT.renderInfo = (data) => {
         $(".product-title").html(`${data.name} (${data.title}) `);
-        $(".buyNow").attr('data-sku',`${data.sku}`);
+        if(data.sku){
+            $(".buyNow").attr('data-sku',`${data.sku}`);
+            $(".addToCart").attr('data-sku',`${data.sku}`);
+        }
         if (data.discount > 0) {
             $(".product-price").html(`
                      <span

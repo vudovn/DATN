@@ -6,6 +6,7 @@
 <script src="https://freshcart.codescandy.com/assets/libs/simplebar/dist/simplebar.min.js"></script>
 <script src="https://freshcart.codescandy.com/assets/js/vendors/countdown.js"></script>
 <script src="https://freshcart.codescandy.com/assets/js/vendors/jquery.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/select2/js/select2.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/client_asset/library/bootstrap5.3/dist/js/theme.min.js">
 </script>
@@ -48,3 +49,5 @@
 <script src="/client_asset/custom/js/library.js"></script>
 <script src="/client_asset/custom/js/product/search.js"></script>
 <script src="/client_asset/custom/js/product/wishlist.js"></script>
+<script src="/client_asset/custom/js/cart/addToCart.js"></script>
+

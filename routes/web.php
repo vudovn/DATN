@@ -24,6 +24,7 @@ use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\CollectionController as ClientCollectionController;
 use App\Http\Controllers\Client\CommentController as ClientCommentController;
 use App\Http\Controllers\Client\CartController as ClientCartController;
+use App\Http\Controllers\Client\CheckoutController as ClientCheckoutController;
 use App\Http\Controllers\Client\IndexController;
 use App\Http\Controllers\Client\CategoryController as ClientCategoryController;
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
@@ -211,10 +212,10 @@ Route::get('/test', [AjaxDashboardController::class, 'test']);
 
 // =======================================================CLIENT================================================================
 // client route
+route::middleware('preventBackHistory')->group(function () {
 Route::prefix('/')->name('client.')->group(function () {
     // auth route
     Route::prefix('')->name('auth.')->group(function () {
-        Route::get('dang-xuat', [ClientAuthController::class, 'login'])->name('logout');
         Route::get('dang-nhap', [ClientAuthController::class, 'login'])->name('login');
         Route::post('dang-nhap', [ClientAuthController::class, 'postLogin'])->name('post-login');
         Route::get('dang-ky', [ClientAuthController::class, 'register'])->name('register');
@@ -224,6 +225,7 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('doi-mat-khau/{user}/{token}', [ClientAuthController::class, 'change'])->name('change');
         Route::post('doi-mat-khau/{user}/{token}', [ClientAuthController::class, 'submitChangePasswordForm'])->name('post-reset');
         Route::get('xac-nhan-tai-khoan/{email}', [ClientAuthController::class, 'active'])->name('active');
+        Route::get('dang-xuat', [ClientAuthController::class, 'logout'])->name('logout');
     });
 
     // index route
@@ -252,10 +254,23 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('/ajax/get-review', [ClientProductController::class, 'getReview'])->name('get-review');
         Route::post('/ajax/add-review', [ClientProductController::class, 'addReview'])->name('add-review');
     });
-    // comment route
-    Route::prefix('gio-hang')->name('gio-hang.')->group(function () {
+    // cart route
+    Route::prefix('gio-hang')->name('cart.')->group(function () {
         Route::get('/', [ClientCartController::class, 'index'])->name('index');
+        Route::get('/listCart', [ClientCartController::class, 'listCart'])->name('listCart');
+        Route::get('/getProduct', [ClientCartController::class, 'getProduct'])->name('getProduct');
+        Route::get('/count', [ClientCartController::class, 'count'])->name('count');
         Route::post('/store', [ClientCartController::class, 'store'])->name('store');
+        Route::post('/remove', [ClientCartController::class, 'remove'])->name('remove');
+        Route::post('/updateQuantity', [ClientCartController::class, 'updateQuantity'])->name('updateQuantity');
+        Route::post('/changeVariant', [ClientCartController::class, 'changeVariant'])->name('changeVariant');
+        Route::post('/addDiscount', [ClientCartController::class, 'addDiscount'])->name('addDiscount');
+        Route::post('/applyDiscount', [ClientCartController::class, 'applyDiscount'])->name('applyDiscount');
+        Route::post('/totalCart', [ClientCartController::class, 'totalCart'])->name('totalCart');
+    });
+    // checkout route
+    Route::prefix('thanh-toan')->name('checkout.')->group(function () {
+        Route::get('/', [ClientCheckoutController::class, 'index'])->name('index');
     });
     // collection route
     Route::prefix('bo-suu-tap')->name('collection.')->group(function () {
@@ -270,4 +285,5 @@ Route::prefix('/')->name('client.')->group(function () {
         Route::get('/ajax/count-wishlist', [WishlistController::class, 'count']);
     });
 
+});
 });

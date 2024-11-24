@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 text-center">
-                        <a href="{{ route('client.home') }}"><img class="logo_vd_top" src="/client_asset/image/logo.png"
+                        <a href="{{ route('client.home') }}"><img class="logo_vd_top" src="/logoTGNT.png" width="150"
                                 alt="logo_sieuthinoithat" /></a>
                     </div>
                     <div class="col-md-3">
@@ -52,7 +52,7 @@
 
                             <!-- giỏ hàng -->
                             <div class="list-inline-item me-7 text-center">
-                                <a class="text-muted position-relative">
+                                <a class="text-muted position-relative" href="{{route('client.cart.index')}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
@@ -90,10 +90,10 @@
                             </div>
 
                             <!-- đăng xuất -->
-                            @if (Auth::check())
+                            @auth
                                 <div class="list-inline-item me-7 me-lg-0 text-center">
-                                    <a href="{{ route('client.auth.logout') }}" class="text-muted"
-                                        data-bs-toggle="modal" data-bs-target="#userModal">
+                            <a href="{{ route('client.auth.logout') }}" class="text-muted">
+
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
@@ -105,9 +105,9 @@
                                         <div class="list_icon_text_vd">
                                             <small>Đăng xuất</small>
                                         </div>
-                                    </a>
+                            </a>
                                 </div>
-                            @endif
+                            @endauth
                         </div>
                     </div>
                 </div>
@@ -258,11 +258,15 @@
                                         data-bs-toggle="dropdown" aria-expanded="false">Phòng</a>
                                     <ul class="dropdown-menu">
                                         @foreach (getCategory('room') as $item)
-                                            <li><a class="dropdown-item"
+                                            <li>
+                                                <a class="dropdown-item"
                                                     href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
                                             </li>
                                         @endforeach
                                     </ul>
+                                </li>
+                                <li class="nav-item w-100 w-lg-auto">
+                                    <a class="nav-link" href="{{route('client.collection.index')}}">Bộ sưu tập</a>
                                 </li>
                             </ul>
                         </div>

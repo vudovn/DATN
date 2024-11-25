@@ -1,5 +1,5 @@
 @if (isset($categories) && count($categories))
-    @foreach ($categories as $category)
+    @foreach ($categories as $key => $category)
         @if ($category->parent_id == null)
             <tr class="animate__animated animate__fadeIn">
                 <td class="">
@@ -9,7 +9,7 @@
                         <label class="form-check-label" for="ustomCheckbox{{ $category->id }}"></label>
                     </div>
                 </td>
-                <td>{{ $category->id }}</td>
+                <td>{{ $key + 1 }}</td>
                 <td>
                     <a data-fancybox="gallery" href="{{ $category->thumbnail }}">
                         <img loading="lazy" width="50" class="rounded" src="{{ $category->thumbnail }}"

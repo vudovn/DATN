@@ -228,3 +228,12 @@ if (!function_exists('checkExpiredDate')) {
         return $now->gt($end);
     }
 }
+
+// lấy danh mục thuộc tính
+if (!function_exists('getAttributeCategory')) {
+    function getAttributeCategory()
+    {
+        $data = loadClass('AttributeCategory', 'Repository');
+        return $data->getAllWith();
+    }
+}

@@ -211,6 +211,20 @@ class OrderService extends BaseService
         return $result;
     }
 
+    public function cancelOrder($id)
+    {
+        DB::beginTransaction();
+        try {
+            $update = $this->orderRepository->update($id, ['status' => 'cancelled']);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
+            return false;
+        }
+    }
+
 
 
 }

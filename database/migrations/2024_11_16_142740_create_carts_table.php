@@ -20,7 +20,7 @@ return new class extends Migration
             // $table->string('sku')->unique();
             $table->string('sku'); 
             $table->integer('quantity')->default(1); 
-            $table->decimal('price', 12, 0); 
+            // $table->decimal('price', 12, 0);
             // $table->decimal('total_price', 10, 2); 
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 

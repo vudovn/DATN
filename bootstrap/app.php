@@ -8,8 +8,8 @@ use App\Http\Middleware\UnAuthenticated;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
+        web: __DIR__ . '/../routes/web.php',
+        commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
@@ -21,6 +21,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'unauthenticated' => UnAuthenticated::class,
             'checkPermission' => App\Http\Middleware\CheckPermission::class,
             'preventBackHistory' => App\Http\Middleware\RevalidateBackHistory::class,
+            'clientAuth' => App\Http\Middleware\ClientAuthMiddleware::class,
+            'clientLogin' => App\Http\Middleware\ClientLoginMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -204,6 +204,71 @@
         });
     };
 
+    TGNT.checkOrder = () => {
+        const exampleModal = document.getElementById("orderDetail");
+        if (exampleModal) {
+            exampleModal.addEventListener("show.bs.modal", (event) => {
+                const button = event.relatedTarget;
+                const orderId = button.getAttribute("data-order-id");
+                const url = button.getAttribute("data-order-url");
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    data: { id: orderId },
+                    dataType: "json",
+                    beforeSend: function () {
+                        $(".order_detail_html").html(
+                            `
+                                <div class="text-center" style="padding-top: 300px !important; padding-bottom: 300px !important">
+                                    <div class="spinner-border text-tgnt" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            `
+                        );
+                    },
+                    success: function (res) {
+                        $(".order_detail_html").html(res.data);
+                    },
+                });
+            });
+        }
+    };
+
+    TGNT.checkCancel = () => {
+        const exampleModal = document.getElementById("orderCancel");
+        if (exampleModal) {
+            exampleModal.addEventListener("show.bs.modal", (event) => {
+                const button = event.relatedTarget;
+                const orderId = button.getAttribute("data-order-id");
+                const url = button.getAttribute("data-order-url");
+
+                // Gỡ sự kiện click trước khi gắn lại
+                $(".cancelOrder")
+                    .off("click")
+                    .on("click", function () {
+                        $.ajax({
+                            url: url,
+                            type: "GET",
+                            data: { id: orderId },
+                            dataType: "json",
+                            beforeSend: function () {},
+                            success: function (res) {
+                                VDmessage.show(
+                                    res.status ? "success" : "error",
+                                    res.message
+                                );
+                                if (res.status) {
+                                    TGNT.loadOrderAll(array);
+                                    $("#orderCancel").modal("hide");
+                                }
+                            },
+                        });
+                    });
+            });
+        }
+    };
+
     $(document).ready(function () {
         TGNT.editUser();
         TGNT.changePassUser();
@@ -211,5 +276,7 @@
         TGNT.paginationForm();
         TGNT.loadOrderAll(array);
         TGNT.orderStatus();
+        TGNT.checkOrder();
+        TGNT.checkCancel();
     });
 })(jQuery);

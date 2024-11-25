@@ -19,7 +19,8 @@
                 @else
                     <div class="col-12">
                         <div class="text-center">
-                            <img src="https://live-mmb-public.s3.ap-south-1.amazonaws.com/assets/img/empty-cart.png"
+                            <img class="mb-3 mb-3" width="100"
+                                src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/orderlist/5fafbb923393b712b964.png"
                                 alt="">
                             <p>Chưa có sản phẩm yêu thích nào!</p>
                             <a class="btn btn-tgnt" href="{{ route('client.home') }}">Thêm ngay</a>
@@ -29,7 +30,8 @@
             @else
                 <div class="col-12">
                     <div class="text-center">
-                        <img src="https://live-mmb-public.s3.ap-south-1.amazonaws.com/assets/img/empty-cart.png"
+                        <img class="mb-3 mb-3" width="100"
+                            src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/orderlist/5fafbb923393b712b964.png"
                             alt="">
                         <p class="text-tgnt">Bạn cần phải đăng nhập, để xem được sản phẩm yêu thích của mình !</p>
                         <a class="btn btn-tgnt" href="{{ route('client.auth.login') }}">Đăng nhập ngay</a>

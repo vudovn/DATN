@@ -11,6 +11,7 @@
         keyword: null,
         filter: null,
         category_id: null,
+        attribute_id: [],
         page: 1,
     };
 
@@ -19,17 +20,27 @@
             clearTimeout(searchTimeout);
             array.keyword = $(this).val();
             array.page = 1;
-            searchTimeout = setTimeout(
-                () => TGNT.getData(array),
-                500
-            );
+            searchTimeout = setTimeout(() => TGNT.getData(array), 500);
         });
     };
 
     TGNT.selectForm = () => {
         $(".filter-option").on("change", function () {
-            array[$(this).attr("name")] = $(this).val();
+            const fieldName = $(this).attr("name");
+            const value = $(this).val();
+
+            if (fieldName === "attribute_id") {
+                const id = $(this).attr("id").split("-")[1];
+                if (value != 0) {
+                    array.attribute_id[id] = value;
+                } else {
+                    delete array.attribute_id[id];
+                }
+            } else {
+                array[fieldName] = value;
+            }
             array.page = 1;
+            console.log(array);
             TGNT.getData(array);
         });
     };
@@ -42,12 +53,17 @@
             type: "GET",
             data: params,
             beforeSend: function () {
-                $(".loading_tgnt").fadeIn("slow");
+                $(".product_container").html(`
+                            <div class="text-center" style="padding-top: 100px !important; padding-bottom: 100px !important">
+                                    <div class="spinner-border text-tgnt" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                            </div>
+                    `);
             },
             success: function (res) {
                 console.log(res);
                 $(".product_container").html(res.data);
-                $(".loading_tgnt").fadeOut("slow");
             },
         });
     };
@@ -57,7 +73,7 @@
             event.preventDefault();
             let page = $(this).attr("href").split("page=")[1];
             array.page = page;
-            TGNT.getData(array); 
+            TGNT.getData(array);
         });
     };
 

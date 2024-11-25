@@ -306,6 +306,10 @@ body {
     }
 }
 
+.navbar-default .dropdown-menu {
+    transition: all 0.1s ease-in !important;
+}
+
 /* ======== */
 .listProduct .item img {
     width: 100%;

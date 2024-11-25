@@ -105,8 +105,8 @@
                     <div class="form-group row">
                         <div class="col-6">
                             <label for="email" class="form-label ms-3">Tỉnh/thành phố</label>
-                            <select name="province_id" id="province"
-                                class=" form-control select2 province location" data-target="districts">
+                            <select name="province_id" id="province" class=" form-control select2 province location"
+                                data-target="districts">
                                 <option value="" disabled selected>Chọn tỉnh/Thành phố</option>
                                 @if (isset($provinces))
                                     @foreach ($provinces as $province)
@@ -147,7 +147,8 @@
     <div class="modal fade" id="changePass" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <form action="{{ route('client.account.change-pass-acccount') }}" class="modal-content change-pass-account-form">
+            <form action="{{ route('client.account.change-pass-acccount') }}"
+                class="modal-content change-pass-account-form">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalCenterTitle">Thay đổi mật khẩu</h5>
@@ -158,18 +159,18 @@
                 <div class="modal-body">
                     <div class="form-group mb-3">
                         <label for="password_old" class="form-label ms-3">Mật khẩu cũ</label>
-                        <input name="password_old" placeholder="******************" type="password" class="form-control" 
-                            id="name">
+                        <input name="password_old" placeholder="******************" type="password"
+                            class="form-control" id="password_old" autocomplete="current-password">
                     </div>
                     <div class="form-group mb-3">
                         <label for="password" class="form-label ms-3">Mật khẩu mới</label>
-                        <input name="password" placeholder="******************" type="password" class="form-control" 
-                            id="name">
+                        <input name="password" placeholder="******************" type="password" class="form-control"
+                            id="password" autocomplete="new-password">
                     </div>
                     <div class="form-group mb-3">
                         <label for="password_c" class="form-label ms-3">Xác nhận mật khẩu</label>
-                        <input name="password_c" placeholder="******************" type="password" class="form-control" 
-                            id="name">
+                        <input name="password_c" placeholder="******************" type="password"
+                            class="form-control" id="password_c" autocomplete="new-password">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -181,5 +182,41 @@
                     var ward_id = '{{ isset($user->ward_id) ? $user->ward_id : old('ward_id') }}'
                 </script>
             </form>
+        </div>
+    </div>
+
+    {{-- Chi tiết đơn hàng --}}
+    <div class="modal fade" id="orderDetail" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content change-pass-account-form">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body order_detail_html"
+                    style="position: relative;transition: all 0.1s ease-in !important">
+                    {{-- js render --}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="orderCancel" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content change-pass-account-form">
+                <div class="modal-body p-5">
+                    <div class="text-center">
+                        <h5 class="text-dark">Bạn có chắc chắn muốn hủy đơn hàng này?</h5>
+                    </div>
+                    <div class="text-center mt-5">
+                        <button class="btn btn-sm btn-outline-tgnt" data-bs-dismiss="modal" aria-label="Close">Quay
+                            lại</button>
+                        <button class="cancelOrder btn btn-sm btn-tgnt">Xác nhận</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>

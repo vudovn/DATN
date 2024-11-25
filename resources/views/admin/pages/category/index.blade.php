@@ -32,7 +32,6 @@
                             <th>ID</th>
                             <th>Hình ảnh</th>
                             <th>Tên danh mục</th>
-                            <th>Phòng</th>
                             <th>Ngày tạo</th>
                             <th class="text-center">Trạng thái</th>
                             <th class="text-center">Hành động</th>

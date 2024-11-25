@@ -1,5 +1,5 @@
 <tr>
-    <td> 
+    <td>
         <div class="form-check">
             <input class="form-check-input input-primary input-checkbox checkbox-item"
                 type="checkbox" id="customCheckbox{{ $child->id }}"
@@ -13,16 +13,11 @@
         <a data-fancybox="gallery" href="{{ $child->thumbnail }}">
             <img loading="lazy" width="50" class="rounded" src="{{ $child->thumbnail }}" alt="{{ $child->name }}">
         </a>
-    </td>    
+    </td>
     <td>
         <span class="row-name">{{ $char }}{{ $child->name }}</span>
-    </td>          
-    @if($child->is_room == 2)
-        <td>Phòng</td>
-    @else
-        <td>Danh mục khác</td>
-    @endif                        
-    <td>{{ changeDateFormat($child->created_at) }}</td>                  
+    </td>
+    <td>{{ changeDateFormat($child->created_at) }}</td>
     <td class="text-center">
         <x-switchvip :value="$child" :model="ucfirst($config['model'])" />
     </td>
@@ -35,10 +30,10 @@
                     <i class="ti ti-edit-circle f-18"></i>
                 </a>
             </li>
-            <x-delete :id="$child->id" :model="ucfirst($config['model'])"/>     
-        </ul>  
+            <x-delete :id="$child->id" :model="ucfirst($config['model'])"/>
+        </ul>
     </td>
 </tr>
-@foreach($child->children as $child)   
-    @include('admin.pages.category.components.child', ['char' => $char .' |-- '])                              
-@endforeach    
+@foreach($child->children as $child)
+    @include('admin.pages.category.components.child', ['char' => $char .' |-- '])
+@endforeach

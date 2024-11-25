@@ -19,11 +19,6 @@
                 <td>
                     <span class="row-name">{{ $category->name }}</span>
                 </td>
-                @if ($category->is_room == 1)
-                    <td>Phòng</td>
-                @else
-                    <td>Danh mục khác</td>
-                @endif
                 <td>{{ changeDateFormat($category->created_at) }}</td>
                 <td class="text-center">
                     <x-switchvip :value="$category" :model="ucfirst($config['model'])" />

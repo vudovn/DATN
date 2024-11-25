@@ -1,5 +1,3 @@
-.search_tgnt {
-}
 /* sarch  */
 
 @keyframes search_anm {
@@ -30,7 +28,7 @@
     z-index: 9999;
 }
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 0px;
 }
 /* Track */
 ::-webkit-scrollbar-track {

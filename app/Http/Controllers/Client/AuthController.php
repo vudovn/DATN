@@ -108,14 +108,14 @@ class AuthController extends Controller
             'email.email' => 'Email không đúng định dạng',
             'email.exists' => 'Email không tồn tại trong hệ thống',
         ]);
-       
+
         $token = strtoupper(Str::random(10));
         $payload = [
             'remember_token' => $token
         ];
         // dd($payload);
         $user = $this->userRepository->findByField('email', $request->email)->first();
-        $update = $this->userRepository->updateByWhereIn('email', [$request->email], $payload );
+        $update = $this->userRepository->updateByWhereIn('email', [$request->email], $payload);
         Mail::send('client.emails.reset-password-client', ['user' => $user, 'token' => $token], function ($email) use ($user) {
             $email->subject('Thế giới nội thất - Đặt lại mật khẩu');
             $email->to($user->email, $user->name);
@@ -143,16 +143,16 @@ class AuthController extends Controller
             'password.confirmed' => 'Xác nhận mật khẩu không khớp',
         ]);
         // dd($user, $token, $request->all());
-        
+
         if ($user && $user->remember_token === $token) {
             $update = $user->update([
                 'password' => Hash::make($request->password),
-                'remember_token' => null, 
+                'remember_token' => null,
             ]);
-    
+
             return redirect()->route('client.auth.login')->with('success', 'Đặt lại mật khẩu thành công');
         }
-    
+
         return back()->withErrors(['token' => 'Token không hợp lệ hoặc đã hết hạn.']);
     }
 
@@ -167,8 +167,9 @@ class AuthController extends Controller
         return redirect()->route('client.auth.login')->with('success', 'Kích hoạt thành công');
     }
 
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
-        return redirect()->route('client.auth.login');
+        return redirect()->route('client.auth.login')->with('success', 'Đăng xuất thành công');
     }
 }

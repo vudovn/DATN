@@ -16,7 +16,10 @@
     <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
     <div class="row">
         @include('admin.pages.dashboard.components.box')
-        {{-- Biểu đồ --}}
-        @include('admin.pages.dashboard.components.chart')
+
+        {{-- Thống kê --}}
+        @include('admin.pages.dashboard.components.total')
+        @include('admin.pages.dashboard.components.customer')
+        @include('admin.pages.dashboard.components.product')
     </div>
 @endsection

@@ -119,6 +119,21 @@ class AccountController extends Controller
         return successResponse(view('client.pages.account.components.api.orderItem', compact('orders', 'paginate'))->render());
     }
 
+    public function getOrderDetail(Request $request)
+    {
+        $order = $this->orderRepository->findById($request->id, ['orderDetails.product', 'district', 'ward', 'province']);
+        return successResponse(view('client.pages.account.components.api.orderDetail', compact('order'))->render());
+    }
+
+    public function cancelOrder(Request $request)
+    {
+        $result = $this->orderService->cancelOrder($request->id);
+        if ($result) {
+            return successResponse('', 'Hủy đơn hàng thành công');
+        }
+        return errorResponse('Hủy đơn hàng thất bại');
+    }
+
 
 
 

@@ -12,8 +12,8 @@
             </td>
             <td>{{ $user->id }}</td>
             <td>
-                <a href="{{ $user->avatar }}" data-fancybox="gallery">
-                    <img loading="lazy" width="50" class="rounded" src="{{ $user->avatar }}"
+                <a href="https://ui-avatars.com/api/?background=random&name={{ $user->name }}" data-fancybox="gallery">
+                    <img loading="lazy" width="50" class="rounded" src="https://ui-avatars.com/api/?background=random&name={{ $user->name }}"
                         alt="{{ $user->name }}">
                 </a>
             </td>

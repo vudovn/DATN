@@ -270,12 +270,14 @@ class ProductService extends BaseService
                 : $defaultSort,
             'perpage' => (int) ($request['perpage'] ?? $defaultPerPage),
             'category_id' => $request['category_id'],
+            'attribute_id' => $request['attribute_id'] ?? [],
         ];
     }
     public function paginateClient($request)
     {
         $agruments = $this->paginateAgrumentClient($request);
         $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $agruments['attribute_id'] = array_values(array_filter($agruments['attribute_id']));
         $users = $this->productRepository->filterProductClient($agruments);
         return $users;
     }

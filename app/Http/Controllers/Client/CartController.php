@@ -70,11 +70,15 @@ class CartController extends Controller
     }
     public function store(Request $request)
     {
-        $data = $this->cartService->create($request);
-        if ($data) {
-            return successResponse('', 'Thêm sản phẩm vào giỏ hàng thành công');
+        if (Auth::check()) {
+            $data = $this->cartService->create($request);
+            if ($data) {
+                return successResponse('', 'Thêm sản phẩm vào giỏ hàng thành công');
+            }
+            return errorResponse('Thêm sản phẩm vào giỏ hàng thất bại');
+        } else {
+            return errorResponse('Bạn phải đăng nhập');
         }
-        return errorResponse('Thêm sản phẩm vào giỏ hàng thất bại');
     }
     public function remove(Request $request)
     {

@@ -10,7 +10,6 @@
             let quantity = $("#quantity").val();
             let price = $("#price").val();
             let url = "/gio-hang/store";
-
             $.ajax({
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -32,7 +31,12 @@
                     );
                     TGNT.cartCount();
                 },
-                error: function (data) {},
+                error: function (data) {
+                    VDmessage.show(
+                        "error",
+                        "Chức năng của người đăng nhập!"
+                    );
+                },
             });
         });
     };

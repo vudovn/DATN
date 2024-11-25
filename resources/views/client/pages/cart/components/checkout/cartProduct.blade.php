@@ -16,11 +16,21 @@
                                 <img src="{{ $product->thumbnail }}" alt="{{ $product->name }}"width="50">
                             </a>
                         </td>
-                        <td class="position-relative">
+                        <td class="name position-relative">
                             {{ $product->name }}
                             <span class="quantity btn btn-tgnt">{{ formatNumber($product->quantityCart) }}</span>
                         </td>
                     </tr>
+ 
+                    <div class="hidden">
+                        <input type="hidden" name="product_id[]" value="{{$product->product->id ?? $product->id}}">
+                        <input type="hidden" name="quantity[]" value="{{$product->quantityCart}}">
+                        <input type="hidden" name="price[]" value="{{$product->price}}">
+                        <input type="hidden" name="name_orderDetail[]" value="{{ $product->name }}{{ isset($product->title) ? ' (' . $product->title.')' : '' }}">
+                        <input type="hidden" name="sku[]" value="{{$product->product->sku ?? $product->sku}}">
+                        <input type="hidden" name="thumbnail[]" value="{{$product->thumbnail}}">
+                        {{-- <input type="hidden" name="total[]" value="{{$product->price * $product->quantityCart}}"> --}}
+                    </div>
                 @endforeach
             @endif
         </tbody>
@@ -33,7 +43,9 @@
         td {
             text-align: center;
             padding: 10px 0 !important;
-            ;
+        }
+        .name{
+            padding-right: 40px !important;
         }
 
         .quantity {
@@ -43,3 +55,24 @@
             transform: translate(-0%, -50%);
         }
     </style>
+    <script>
+        let id = {!! json_encode(old('product_id', [])) !!};
+        let sku = {!! json_encode(old('sku', [])) !!};
+        let name = {!! json_encode(old('name_orderDetail', [])) !!};
+        let price = {!! json_encode(old('price', [])) !!};
+        let quantity = {!! json_encode(old('quantity', [])) !!};
+        let total = {!! json_encode(old('total', [])) !!};
+        let thumbnail = {!! json_encode(old('thumbnail', [])) !!};
+    
+        // let productVariants = [];
+        // for (let i = 0; i < id.length; i++) {
+        //     productVariants.push({
+        //         id: id[i],
+        //         sku: sku[i],
+        //         name: name[i],
+        //         price: price[i],
+        //         thumbnail: thumbnail[i],
+        //         quantity: quantity[i],
+        //     });
+        // }
+    </script>

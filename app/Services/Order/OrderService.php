@@ -88,7 +88,6 @@ class OrderService extends BaseService
         $payload['total'] = $this->filterPrice($payload['total_amount']);
         $payload['code'] = orderCode();
         $payload['user_id'] = auth()->user()->id;
-        // dd($payload);
         return $this->orderRepository->create($payload);
     }
 

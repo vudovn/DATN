@@ -1,6 +1,7 @@
 @extends('client.layout')
 
 @section('content')
+{{-- <div style="height: 1000px; width:100px"></div> --}}
     <section class="checkout">
         <div class="container my-lg-5">
             <div class="row">
@@ -34,7 +35,8 @@
                             <div class="col-6">
                                 <!-- Phương Thức Thanh Toán -->
                                 <div class="form-group mb-3">
-                                    <label for="payment_method">Phương Thức Thanh Toán: <span class="text-danger">*</span></label>
+                                    <label for="payment_method">Phương Thức Thanh Toán: <span
+                                            class="text-danger">*</span></label>
                                     <input type="text" id="payment_method" name="payment_method" class="form-control"
                                         value="{{ $user->payment_method ?? 'Đợi có dữ liệu bảng phương thức thanh toán' }}">
                                 </div>
@@ -97,8 +99,8 @@
 @endsection
 <style>
     .cart-total {
-    color: var(--base-color);
-    font-weight: bold;
-   font-size: clamp(13px, 1.2vw, 20px);
-} 
+        color: var(--base-color);
+        font-weight: bold;
+        font-size: clamp(13px, 1.2vw, 20px);
+    }
 </style>

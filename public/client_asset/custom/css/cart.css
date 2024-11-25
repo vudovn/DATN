@@ -1,7 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-}
+
 .cart a {
     color: var(--base-color);
 }
@@ -25,12 +22,7 @@ input[type="number"] {
 .cart p {
     margin: 0;
 }
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    /* padding: 20px; */
-}
+
 .cart .cart-title {
     color: var(--base-color);
 }

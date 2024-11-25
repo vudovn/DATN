@@ -8,8 +8,8 @@
                 <div class="main-left col-xxl-8 col-md-12 col-sm-12">
                     <hr class="border-4 w-25 fw-bold mt-0">
                     <div class="cart-container">
-                        @if ($products !== [])
-                            <p class="fs-6 my-3">Bạn đang có <span class="fw-bold cart_count">{{ count($products) }}</span> sản phẩm
+                        @if ($carts !== [])
+                            <p class="fs-6 my-3">Bạn đang có <span class="fw-bold cart_count">{{ $carts->count() }}</span> sản phẩm
                                 trong giỏ hàng</p>
                             <div class="cart-taskbar my-3 d-flex justify-content-between">
                                 <div class="checkbox-wrapper-27">
@@ -30,6 +30,7 @@
                             </div>
                             <div class="list-cart line-y" id="list-cart">
                                 {{-- Render product in cart --}}
+                                {!! $listCart !!}
                             </div>
                         @else
                             <div class="container cart-no-item text-center mb-4">

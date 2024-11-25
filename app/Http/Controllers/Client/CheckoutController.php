@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\Cart\CartRepository;
 use App\Services\Cart\CartService;
+use App\Services\Order\OrderService;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Discount\DiscountCodeRepository;
 use App\Repositories\Location\ProvinceRepository;
@@ -16,6 +17,7 @@ class CheckoutController extends Controller
 {
     protected $cartRepository;
     protected $cartService;
+    protected $orderService;
     protected $userRepository;
     protected $discountCodeRepository;
     protected $provinceRepository;
@@ -25,6 +27,7 @@ class CheckoutController extends Controller
     public function __construct(
         CartRepository $cartRepository,
         CartService $cartService,
+        OrderService $orderService,
         UserRepository $userRepository,
         DiscountCodeRepository $discountCodeRepository,
         ProvinceRepository $provinceRepository,
@@ -32,6 +35,7 @@ class CheckoutController extends Controller
         WardRepository $wardRepository,
     ) {
         $this->cartService = $cartService;
+        $this->orderService = $orderService;
         $this->userRepository = $userRepository;
         $this->provinceRepository = $provinceRepository;
         $this->discountCodeRepository = $discountCodeRepository;
@@ -46,7 +50,6 @@ class CheckoutController extends Controller
         }
         $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
         $products = $this->cartService->fetchCartData($carts)['cart'];
-        dd($products);
         $total = $this->cartService->fetchCartData($carts)['total'];
         $provinces = $this->provinceRepository->getAllProvinces();
         $districts = $this->districtRepository->getAllDistricts();
@@ -80,6 +83,14 @@ class CheckoutController extends Controller
             }
         }
         return $data;
+    }
+    public function store(Request $request) {
+
+        $order = $this->orderService->create($request);
+        if ($order) {
+            return redirect()->route('order.index')->with('success', 'Tạo đơn hàng mới thành công');
+        } 
+        return redirect()->route('order.index')->with('Error', 'Tạo đơn hàng mới thất bại');
     }
     private function config()
     {

@@ -63,7 +63,6 @@
                                 <a class="btn btn-tgnt w-25" href="${homeUrl}">Mua ngay</a>
                             </div>`);
                     $('.checkout-cart').addClass('disabled-link')
-
                 }else{
                     $('.checkout-cart').removeClass('disabled-link')
                 }

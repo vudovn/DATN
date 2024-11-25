@@ -274,6 +274,7 @@ route::middleware('preventBackHistory')->group(function () {
         Route::get('/', [ClientCheckoutController::class, 'index'])->name('index');
         Route::post('/addDiscount', [ClientCheckoutController::class, 'addDiscount'])->name('addDiscount');
         Route::post('/applyDiscount', [ClientCheckoutController::class, 'applyDiscount'])->name('applyDiscount');
+        Route::post('/store', [ClientCheckoutController::class, 'store'])->name('store');
     });
     // collection route
     Route::prefix('bo-suu-tap')->name('collection.')->group(function () {

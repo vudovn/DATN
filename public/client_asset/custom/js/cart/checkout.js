@@ -106,14 +106,16 @@
                     $("#cart-total-discount").html(
                         TGNT.formatNumber(afterDiscount)
                     );
-                    $("#cart-total-discount-input").val(afterDiscount);
+                    // $("#total-cart-input").val(afterDiscount);
+                    $("#total-cart-input").val(TGNT.formatNumber(afterDiscount));
                 },
                 error: function (data) {},
             });
         } else {
             $("#save-price").html("");
             $("#cart-total-discount").html($("#cart-total").text());
-            $("#cart-total-discount-input").val($("#cart-total-input").val());
+            $("#total-cart-input").val($("#cart-total").text());
+            // $("#total-cart-input").val($("#cart-total-input").val());
         }
     };
     TGNT.removeDiscount = () => {
@@ -143,7 +145,8 @@
             success: function (data) {
                 let price = $("#cart-total-input").val();
                 $("#cart-total-discount").html(TGNT.formatNumber(data));
-                $("#cart-total-discount-input").val(data);
+                $("#total-cart-input").val(TGNT.formatNumber(data));
+                // $("#total-cart-input").val(data);
                 let allDiscount = $(".list-discount").find(".discount");
                 if (allDiscount.length > 0) {
                     TGNT.applyDiscount();
@@ -159,6 +162,7 @@
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
     $(document).ready(function () {
+        TGNT.updateTotalCart();
         TGNT.addDiscount();
         TGNT.removeDiscount();
     });

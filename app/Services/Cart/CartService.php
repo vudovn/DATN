@@ -109,7 +109,8 @@ class CartService extends BaseService
             return false;
         }
     }
-    public function getCart($carts){
+    public function getCart($carts)
+    {
         $products = [];
         foreach ($carts as $key => $value) {
             $data = $this->productRepository->findByField('sku', $value->sku)->first();
@@ -120,7 +121,8 @@ class CartService extends BaseService
         }
         return $products;
     }
-    public function fetchCartData($carts){
+    public function fetchCartData($carts)
+    {
         $products = [];
         $total = 0;
         foreach ($carts as $value) {
@@ -163,7 +165,7 @@ class CartService extends BaseService
                 if (isset($data->albums) && !empty($data->albums)) {
                     $albums = json_decode($data->albums, true);
                     if (isset($albums) && !empty($albums)) {
-                        $data->thumbnail = explode(',', $albums)[0] ?? '';
+                        $data->thumbnail = explode(',', $albums)[0] ?? 'https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That';
                     }
                 }
                 $category = $data->product->categories->where('is_room', 2)->first();
@@ -172,8 +174,9 @@ class CartService extends BaseService
         }
         return $data;
     }
- 
-    public function getTotalCart($carts){
+
+    public function getTotalCart($carts)
+    {
         $total = 0;
         foreach ($carts as $value) {
             $data = $this->productRepository->findByField('sku', $value->sku)->first();

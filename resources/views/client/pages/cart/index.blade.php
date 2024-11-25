@@ -1,6 +1,9 @@
 @extends('client.layout')
 
 @section('content')
+<script>
+    let homeUrl = @json(route('client.home'));
+</script>
     <section class="cart">
         <div class="container my-lg-5">
             <div class="row">
@@ -8,7 +11,7 @@
                 <div class="main-left col-xxl-8 col-md-12 col-sm-12">
                     <hr class="border-4 w-25 fw-bold mt-0">
                     <div class="cart-container">
-                        @if ($carts !== [])
+                        @if (isset($carts) && $carts->count() > 0)
                             <p class="fs-6 my-3">Bạn đang có <span class="fw-bold cart_count">{{ $carts->count() }}</span> sản phẩm
                                 trong giỏ hàng</p>
                             <div class="cart-taskbar my-3 d-flex justify-content-between">
@@ -39,6 +42,7 @@
                                 <p class="text-muted fw-bold mb-3">Giỏ hàng của bạn còn trống</p>
                                 <a class="btn btn-tgnt w-25" href="{{ route('client.home') }}">Mua ngay</a>
                             </div>
+                            
                         @endif
                     </div>
                 </div>
@@ -85,9 +89,12 @@
                             <a href="{{ route('client.home') }}" class="cart-back btn btn-outline-tgnt w-50 ms-2">Tiếp tục
                                 mua hàng</a>
                             <div class="value-cart">
-                                <input type="hidden" class="total-cart-input" value="">
+                                <input type="hidden" class="total-cart-input" value="" >
                             </div>
-                            <a href="{{route('client.checkout.index')}}" type="button" class="checkout-cart btn btn-tgnt w-50 ms-2">Đặt hàng</a>
+                            <a href="{{ $carts->count() > 0 ? route('client.checkout.index') : 'javascript:void(0);' }}" 
+                                class="checkout-cart btn btn-tgnt w-50 ms-2">
+                                 Đặt hàng
+                             </a>
                     </div>
                 </div>
             </div>

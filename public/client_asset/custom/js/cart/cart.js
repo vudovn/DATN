@@ -2,7 +2,6 @@
     "use strict";
     var TGNT = {};
     const VDmessage = new VdMessage();
-
     TGNT.loadCart = () => {
         $(".list-cart").html(
             `
@@ -30,7 +29,6 @@
             },
         });
     };
-
     TGNT.getProduct = (id) => {
         return new Promise((resolve, reject) => {
             $.ajax({
@@ -46,7 +44,6 @@
             });
         });
     };
-
     TGNT.cartCount = () => {
         let url = "/gio-hang/count";
         $.ajax({
@@ -63,8 +60,12 @@
                                 <img src="https://live-mmb-public.s3.ap-south-1.amazonaws.com/assets/img/empty-cart.png"
                                     alt="" width="35%">
                                 <p class="text-muted fw-bold mb-3">Giỏ hàng của bạn còn trống</p>
-                                <a class="btn btn-tgnt w-25" href="{{ route('client.home') }}">Mua ngay</a>
+                                <a class="btn btn-tgnt w-25" href="${homeUrl}">Mua ngay</a>
                             </div>`);
+                    $('.checkout-cart').addClass('disabled-link')
+
+                }else{
+                    $('.checkout-cart').removeClass('disabled-link')
                 }
             },
             error: function (data) {
@@ -72,7 +73,6 @@
             },
         });
     };
-
     TGNT.showVariant = () => {
         $(document).on("click", ".open-box-variant", function (e) {
             e.stopPropagation();
@@ -144,14 +144,14 @@
             n = t.getAttribute("data-field"),
             o = t.closest("div").querySelector('input[name="' + n + '"]'),
             a = parseInt(o.value, 10) || 0;
-        if (t.classList.contains("button-plus")) {
+        if (t.classList.contains("btn-plus")) {
             if (a < 10) {
                 o.value = a + 1;
                 return true;
             } else{
                 return false;
             }
-        } else if (t.classList.contains("button-minus")) {
+        } else if (t.classList.contains("btn-minus")) {
             if (a > 1) {
                 o.value = a - 1;
                 return true;
@@ -162,7 +162,7 @@
     };
     TGNT.updateTotalByQuantity = () => {
         let timeUpdate = {};
-        $(document).on("click", ".button-plus, .button-minus", function (e) {
+        $(document).on("click", ".btn-plus, .btn-minus", function (e) {
             let checkQuantity = TGNT.updateQuantity(e);
             const _this = $(this)
                 .closest(".input-group")
@@ -217,10 +217,7 @@
                 $("#cart-total-input").val(data);
                 $("#cart-total-discount").html(TGNT.formatNumber(data));
                 $("#cart-total-discount-input").val(data);
-                // let allDiscount = $(".list-discount").find(".discount");
-                // if (allDiscount.length > 0) {
-                //     TGNT.applyDiscount();
-                // }
+                
             },
             error: function () {
                 console.log("lỗi");
@@ -236,7 +233,6 @@
             let _this = $(this);
             let id = _this.data("id");
             let skuProduct = _this.attr("data-productSku");
-            let divSku = $(`.cart-item[data-productSku="${skuProduct}"]`);
             let url = "/gio-hang/remove";
             $.ajax({
                 headers: {
@@ -252,6 +248,7 @@
                 success: function (data) {
                     VDmessage.show("success", "Đã xoá sản phẩm khỏi giỏ hàng");
                     $(`#cart-item-${id}`).remove();
+                    let divSku = $(`.cart-item[data-productSku="${skuProduct}"]`);
                     divSku.each(function () {
                         let id = $(this).data("id");
                         TGNT.getProduct(id)

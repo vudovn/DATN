@@ -154,31 +154,6 @@
             },
         });
     };
-    TGNT.addressSelect = () => {
-        $(".address-select").on("click", function () {
-            TGNT.loadAddressSelect($(this).data("status"), $(this).data("url"));
-        });
-    };
-    TGNT.loadAddressSelect = (status, url) => {
-        $.ajax({
-            url: url,
-            type: "GET",
-            beforeSend: function () {
-                $(`.list_${status}`).html(
-                    `
-                        <div class="text-center pt-10">
-                            <div class="spinner-border text-tgnt" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    `
-                );
-            },
-            success: function (res) {
-                $(`.list-${status}`).html(res.data);
-            },
-        });
-    };
     TGNT.formatNumber = (number) => {
         number = Math.floor(number);
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");

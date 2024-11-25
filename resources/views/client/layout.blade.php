@@ -19,6 +19,7 @@
     @if (!Route::currentRouteName() == 'client.account.index')
         @include('client.components.footer')
     @endif
+    @include('client.components.footer')
     @include('client.components.modal')
     @include('client.components.alert')
     @include('client.components.script')

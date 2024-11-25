@@ -176,8 +176,9 @@ if (!function_exists('formatMoney')) {
         if ($number == '') {
             return '';
         }
-        return number_format($number, 0, '.', '.');
+        return number_format(ceil($number), 0, '.', '.');
     }
+    
 }
 
 // lấy danh mục phòng

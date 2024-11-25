@@ -143,17 +143,23 @@
         if (t.classList.contains("button-plus")) {
             if (a < 10) {
                 o.value = a + 1;
+                return true;
+            } else{
+                return false;
             }
         } else if (t.classList.contains("button-minus")) {
             if (a > 1) {
                 o.value = a - 1;
+                return true;
+            } else{
+                return false;
             }
         }
     };
     TGNT.updateTotalByQuantity = () => {
         let timeUpdate = {};
         $(document).on("click", ".button-plus, .button-minus", function (e) {
-            TGNT.updateQuantity(e);
+            let checkQuantity = TGNT.updateQuantity(e);
             const _this = $(this)
                 .closest(".input-group")
                 .find(".quantity-field");
@@ -161,30 +167,32 @@
             const quantity = _this.val();
             const price = $(`#origin-price-${idCart}-input`).val();
             let url = "gio-hang/updateQuantity";
-            clearTimeout(timeUpdate);
-            timeUpdate = setTimeout(function () {
-                $.ajax({
-                    headers: {
-                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                            "content"
-                        ),
-                    },
-                    type: "POST",
-                    url: url,
-                    data: {
-                        quantity,
-                        idCart,
-                    },
-                    success: function (data) {
-                        TGNT.updateTotalItem(idCart, quantity, price);
-                        TGNT.updateTotalCart();
-                        VDmessage.show("success", "Cập nhật số lượng");
-                    },
-                    error: function (data) {
-                        console.log("lỗi");
-                    },
-                });
-            }, 500);
+            if(checkQuantity){
+                clearTimeout(timeUpdate);
+                timeUpdate = setTimeout(function () {
+                    $.ajax({
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
+                        },
+                        type: "POST",
+                        url: url,
+                        data: {
+                            quantity,
+                            idCart,
+                        },
+                        success: function (data) {
+                            TGNT.updateTotalItem(idCart, quantity, price);
+                            TGNT.updateTotalCart();
+                            VDmessage.show("success", "Cập nhật số lượng");
+                        },
+                        error: function (data) {
+                            console.log("lỗi");
+                        },
+                    });
+                }, 500);
+            }
         });
     };
     TGNT.updateTotalItem = (idCart, quantity, price) => {
@@ -216,7 +224,7 @@
         });
     };
     TGNT.formatNumber = (number) => {
-        number = Math.floor(number);
+        number = Math.ceil(number);
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
     TGNT.removeCart = () => {
@@ -264,7 +272,6 @@
         TGNT.showVariant();
         TGNT.updateTotalByQuantity();
         TGNT.changeVariant();
-    
         TGNT.updateTotalCart();
     });
 })(jQuery);

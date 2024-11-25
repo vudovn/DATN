@@ -39,7 +39,19 @@
             success: function (data) {
                 if (url.includes("getProduct")) {
                     $("#content").html(data);
-                    TGNT.checkAndHighlight(array.idArray);
+                    function checkAndHighlight(idsArray, dataAttr) {
+                        idsArray.forEach((sku) => {
+                            $(`.checkInput[${dataAttr}='${sku}']`).prop(
+                                "checked",
+                                true
+                            );
+                            $(`#product-item${sku}`).css(
+                                "background-color",
+                                "#cce6e6"
+                            );
+                        });
+                    }
+                    checkAndHighlight(array.idArray, "data-sku");
                     $(".countProduct").html(array.idArray.length);
                     $(".filterProduct .title")
                         .removeClass("alert alert-primary alert-danger")
@@ -63,28 +75,7 @@
             },
         });
     };
-    TGNT.checkAndHighlight = (idsArray) => {
-        idsArray.forEach((sku) => {
-            $(`#checkInput${sku}`).prop("checked", true);
-            $(`#product-item${sku}`).css("background-color", "#cce6e6");
-        });
-        function countVariant() {
-            $('.product-main').each(function () {
-                if ($(this).find('.product-focus').length > 0) {
-                    let countVariant = $(this).find('.product-focus .checkInput:checked').length;
-                    if (countVariant > 0) {
-                        $(this).find('.countVariant').html(`<span class="text-muted">${countVariant}</span>`);
-                        $(this).find('.product-item').css('background-color', '#cce6e6'); 
-                    } else {
-                        $(this).find('.countVariant').html('');
-                        $(this).find('.product-item').css('background-color', ''); 
-                    }
-                } 
-            });
-        }
-        countVariant();
-        $('.checkInput').on('change', countVariant);
-    };
+
     TGNT.searchForm = () => {
         $("#keyword").on("input", function () {
             clearTimeout(searchTimeout);

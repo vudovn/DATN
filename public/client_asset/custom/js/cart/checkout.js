@@ -4,7 +4,7 @@
     const VDmessage = new VdMessage();
     TGNT.addDiscount = () => {
         $(document).on("click", ".apply-discount", function () {
-            let url = "/gio-hang/addDiscount";
+            let url = "/thanh-toan/addDiscount";
             let code = $(".code-discount").val();
             let checkCode = $(".list-discount").find(`#discount-${code}`);
             if (checkCode.length == 0) {
@@ -60,7 +60,7 @@
             codeExists.push($(this).data("code"));
         });
 
-        let url = "/gio-hang/applyDiscount";
+        let url = "/thanh-toan/applyDiscount";
         console.log(codeExists);
         if (allDiscount.length > 0) {
             $.ajax({
@@ -151,6 +151,31 @@
             },
             error: function () {
                 console.log("lỗi");
+            },
+        });
+    };
+    TGNT.addressSelect = () => {
+        $(".address-select").on("click", function () {
+            TGNT.loadAddressSelect($(this).data("status"), $(this).data("url"));
+        });
+    };
+    TGNT.loadAddressSelect = (status, url) => {
+        $.ajax({
+            url: url,
+            type: "GET",
+            beforeSend: function () {
+                $(`.list_${status}`).html(
+                    `
+                        <div class="text-center pt-10">
+                            <div class="spinner-border text-tgnt" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    `
+                );
+            },
+            success: function (res) {
+                $(`.list-${status}`).html(res.data);
             },
         });
     };

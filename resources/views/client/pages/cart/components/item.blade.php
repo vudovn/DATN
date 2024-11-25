@@ -14,7 +14,7 @@
                 src="{{ $product->thumbnail }}" width="100" />
             <div class="cart-item-details">
                 <div class="cart-item-title">
-                    <a href="{{route('client.product.detail', $product->slug ?? $product->product->slug)}}">{{ $product->name }}</a>
+                    <a href="{{route('client.product.detail', $product->slug ?? $product->product->slug)}}">{{ $product->name }}</a> <span class="badge text-bg-warning text-dark">- {{ $product->discount }}%</span>
                 </div>
                 <div class="d-xxl-flex">
                     @if (isset($product->discount) && $product->discount !== 0)

@@ -1,44 +1,41 @@
 @if (isset($products) && count($products))
     <div class="row mt-3 animate__animated animate__fadeIn">
         @foreach ($products as $key => $product)
-            <div class="col-md-2 col-4 p-1 product-main">
-                <div class="" style="z-index:1">
+            <div class="col-md-2 col-4 p-1 product-main" id="product-main-{{ $product->sku }}">
                     <label for="{{ $product->has_attribute == 1 ? 'disabled' : 'checkInput' . $product->sku }}"
-                        style="cursor: pointer;">
+                        style="cursor: pointer">
                         <input type="checkbox" id="checkInput{{ $product->sku }}" class="checkInput hidden"
                             data-id="{{ $product->id }}" data-sku="{{ $product->sku }}">
-                        <div class="card" id="product-item{{ $product->sku }}">
+                        <div class="card product-item m-0" id="product-item{{ $product->sku }}">
                             <img class="img card-img-top p-1" height="100" src="{{ $product->thumbnail }}"
                                 alt="Card image cap">
                             <div class="card-body p-2">
                                 <span class="card-title text-limit text-primary"
                                     style="font-size: 12px">{{ $product->name }}</span>
                                 <p class="card-text" style="font-size: 10px">{{ number_format($product->price) }} đ</p>
-                                {{-- <p class="card-text" style="font-size: 10px">{{ $product->publish }}</p> --}}
                             </div>
                         </div>
+                        <p class="countVariant"></p>
                     </label>
-                </div>
-                @if (count($product->productVariants) > 0)
-                    <div class="product-focus d-flex flex-column" style="z-index: 20;">
-                        @foreach ($product->productVariants as $variant)
-                            <div class="col-4 w-100">
-                                <label for="checkInput{{ $variant->sku }}" style="cursor: pointer;" class="w-100">
-                                    <input type="checkbox" id="checkInput{{ $variant->sku }}" class="checkInput hidden"
-                                        data-variantid="{{ $variant->id }}" data-id="{{ $product->id }}"
-                                        data-sku="{{ $variant->sku }}">
-                                    <div class="card m-0 p-2 w-100" id="product-item{{ $variant->sku }}"
-                                        data-parentSku="{{ $product->sku }}">
-                                        <span class="card-title text-limit text-primary"
-                                            style="font-size: 12px">({{ $variant->title }})</span>
-                                        <p class="card-text" style="font-size: 10px">
-                                            {{ number_format($variant->price) }} đ</p>
-                                    </div>
-                                </label>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
+                    @if (count($product->productVariants) > 0)
+                        <div class="product-focus d-flex flex-column" style="z-index: 20;">
+                            @foreach ($product->productVariants as $variant)
+                                <div class="w-100">
+                                    <label for="checkInput{{ $variant->sku }}" style="cursor: pointer;" class="w-100">
+                                        <input type="checkbox" id="checkInput{{ $variant->sku }}"
+                                            class="checkInput hidden" data-variantid="{{ $variant->id }}"
+                                            data-sku="{{ $variant->sku }}" data-skuParent="{{ $product->sku }}">
+                                        <div class="card m-0 p-2 w-100" id="product-item{{ $variant->sku }}">
+                                            <span class="card-title text-limit text-primary"
+                                                style="font-size: 12px">({{ $variant->title }})</span>
+                                            <p class="card-text" style="font-size: 10px">
+                                                {{ number_format($variant->price) }} đ</p>
+                                        </div>
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
             </div>
         @endforeach
         {!! $products->links('pagination::bootstrap-4') !!}
@@ -77,7 +74,17 @@
             transition: opacity 0.4s ease, top 0.4s ease;
         }
     }
-
+    .countVariant {
+        position: absolute;
+        top: 0%;
+        right: 0%;
+        transform: translate(-50%, -50%);
+        & span{
+            background-color: rgb(240, 218, 74);
+            padding:5px;
+            border-radius: 10px;
+        }
+    }
     .product-focus {
         visibility: hidden;
         opacity: 0;
@@ -89,7 +96,7 @@
         padding: 5px;
         width: 100%;
         height: 90%;
-        top: 0%;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         overflow: scroll;

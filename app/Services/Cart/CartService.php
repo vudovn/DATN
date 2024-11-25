@@ -58,20 +58,16 @@ class CartService extends BaseService
             $payload['quantity'] = (int) $payload['quantity'];
             $payload['id'] = (int) $payload['id'];
             $payload['price'] = (int) $payload['price'];
-            // Tìm giỏ hàng của người dùng
             $cart = $this->cartRepository->findByField('user_id', $payload['user_id'])->get();
-            // Biến cờ để kiểm tra sản phẩm đã tồn tại hay chưa
             $found = false;
             foreach ($cart as $value) {
                 if ($value->sku === $payload['sku']) {
-                    // Nếu sản phẩm đã tồn tại, cộng dồn số lượng
                     $value->quantity += $payload['quantity'];
                     $value->save();
-                    $found = true; // Đánh dấu đã xử lý
-                    break; // Thoát khỏi vòng lặp sau khi tìm thấy
+                    $found = true;
+                    break;
                 }
             }
-            // Nếu sản phẩm chưa tồn tại, thêm mới vào giỏ hàng
             if (!$found) {
                 $this->cartRepository->create($payload);
             }
@@ -87,7 +83,7 @@ class CartService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $payload = $request->except(['_token', 'send', '_method','idCart']);
+            $payload = $request->except(['_token', 'send', '_method', 'idCart']);
             $comment = $this->cartRepository->update($id, $payload);
             DB::commit();
             return true;
@@ -113,4 +109,81 @@ class CartService extends BaseService
             return false;
         }
     }
+    public function getCart($carts){
+        $products = [];
+        foreach ($carts as $key => $value) {
+            $data = $this->productRepository->findByField('sku', $value->sku)->first();
+            if (empty($data)) {
+                $data = $this->productVariantRepository->findByField('sku', $value->sku)->first();
+            }
+            $products[] = $data;
+        }
+        return $products;
+    }
+    public function fetchCartData($carts){
+        $products = [];
+        $total = 0;
+        foreach ($carts as $value) {
+            $data = $this->productRepository->findByField('sku', $value->sku)->first();
+            if (isset($data)) {
+                $data->quantityCart = $value->quantity ?? '';
+            }
+            if (empty($data)) {
+                $data = $this->productVariantRepository->findByField('sku', $value->sku)->first();
+                $data->discount = $data->product->discount;
+                $data->name = $data->product->name;
+                $data->quantityCart = $value->quantity;
+                if (isset($data->albums) && !empty($data->albums)) {
+                    $albums = json_decode($data->albums, true);
+                    if (isset($albums) && !empty($albums)) {
+                        $data->thumbnail = explode(',', $albums)[0] ?? '';
+                    }
+                }
+            }
+            $cart[] = $data;
+            $total += ($data->price - ($data->price * $data->discount) / 100) * $data->quantityCart;
+        }
+        return ['cart' => $cart, 'total' => $total];
+    }
+    public function getProduct($item)
+    {
+        if (isset($item)) {
+            $data = $this->productRepository->findByField('sku', $item->sku)->first();
+            if (isset($data)) {
+                $data->idCart = $item->id ?? "";
+                $data->quantityCart = $item->quantity ?? '';
+            }
+            if (empty($data)) {
+                $data = $this->productVariantRepository->findByField('sku', $item->sku)->first();
+                $data->idCart = $item->id ?? '';
+                $data->quantityCart = $item->quantity ?? '';
+                $data->discount = $data->product->discount ?? '';
+                $data->name = $data->product->name ?? '';
+                $data->slug = $data->product->slug ?? '';
+                if (isset($data->albums) && !empty($data->albums)) {
+                    $albums = json_decode($data->albums, true);
+                    if (isset($albums) && !empty($albums)) {
+                        $data->thumbnail = explode(',', $albums)[0] ?? '';
+                    }
+                }
+                $category = $data->product->categories->where('is_room', 2)->first();
+                $data->category = $category ? strtolower($category->name) : '';
+            }
+        }
+        return $data;
+    }
+ 
+    public function getTotalCart($carts){
+        $total = 0;
+        foreach ($carts as $value) {
+            $data = $this->productRepository->findByField('sku', $value->sku)->first();
+            if (empty($data)) {
+                $data = $this->productVariantRepository->findByField('sku', $value->sku)->first();
+            }
+            $discount = $data->discount ?? $data->product->discount;
+            $total += ((int) $data->price - ((int) $data->price * $discount) / 100) * (int) $value->quantity;
+        }
+        return $total;
+    }
+
 }

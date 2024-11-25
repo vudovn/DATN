@@ -1,5 +1,5 @@
 @if (isset($discountCodes) && count($discountCodes))
-    @foreach ($discountCodes as $discount)
+    @foreach ($discountCodes as $key => $discount)
         <tr class="animate__animated animate__fadeIn">
             <td>
                 <div class="form-check">
@@ -8,7 +8,7 @@
                     <label class="form-check-label" for="customCheckbox{{ $discount->id }}"></label>
                 </div>
             </td>
-            <td>{{ $discount->id }}</td>
+            <td>{{ $key+1 }}</td>
             <td>
                 <div class="discount mb-0 alert {{ checkExpiredDate($discount->end_date) ? 'alert-secondary' : 'alert-primary' }} d-flex justify-content-between align-items-center"
                     role="alert">

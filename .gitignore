@@ -5,7 +5,7 @@
 # /public/storage
 # /storage/*.key
 # /vendor
-# .env
+.env
 # .env.backup
 # .env.production
 # .phpactor.json
@@ -16,6 +16,6 @@
 # npm-debug.log
 # yarn-error.log
 # /.fleet
-# /.idea
+/.idea
 # /.vscode
 # /.zed

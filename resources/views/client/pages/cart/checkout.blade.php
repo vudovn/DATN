@@ -1,6 +1,7 @@
 @extends('client.layout')
 
 @section('content')
+{{-- <div style="height: 1000px; width:100px"></div> --}}
     <section class="checkout">
         <div class="container my-lg-5">
             <div class="row">

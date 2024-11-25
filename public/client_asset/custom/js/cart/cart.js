@@ -2,10 +2,11 @@
     "use strict";
     var TGNT = {};
     const VDmessage = new VdMessage();
+
     TGNT.loadCart = () => {
         $(".list-cart").html(
             `
-                <div class="text-center mt-5">
+                <div class="text-center py-5">
                     <div class="spinner-border" style="color:#a84448" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
@@ -29,6 +30,7 @@
             },
         });
     };
+
     TGNT.getProduct = (id) => {
         return new Promise((resolve, reject) => {
             $.ajax({
@@ -44,6 +46,7 @@
             });
         });
     };
+
     TGNT.cartCount = () => {
         let url = "/gio-hang/count";
         $.ajax({
@@ -69,6 +72,7 @@
             },
         });
     };
+
     TGNT.showVariant = () => {
         $(document).on("click", ".open-box-variant", function (e) {
             e.stopPropagation();
@@ -267,7 +271,7 @@
     };
 
     $(document).ready(function () {
-        TGNT.loadCart();
+        // TGNT.loadCart();
         TGNT.removeCart();
         TGNT.showVariant();
         TGNT.updateTotalByQuantity();

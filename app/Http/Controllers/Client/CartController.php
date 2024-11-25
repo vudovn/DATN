@@ -37,21 +37,55 @@ class CartController extends Controller
     {
         $config = $this->config();
         $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
-        $products = $this->cartService->fetchCartData($carts)['cart'];
-        return view('client.pages.cart.index', compact('config', 'products'));
+
+        $listCart = '';
+        foreach ($carts as $cart) {
+            $listCart .= $this->getProductV2($cart);
+        }
+        return view('client.pages.cart.index', compact(
+            'config',
+            'carts',
+            'listCart'
+        ));
     }
+
     public function listCart(Request $request)
     {
         $data = $this->cartRepository->findByField('user_id', Auth::id())->get();
         return $data;
     }
+
     public function getProduct(Request $request)
     {
         $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
-        $itemCart = $this->cartRepository->findById($request->id);
-        $zIndex = 1000 - $itemCart->id;
-        $product = $this->cartService->getProduct($itemCart);
-        return view('client.pages.cart.components.item', compact('product', 'carts', 'zIndex'))->render();
+        $z = 1000;
+        $cart = $this->cartRepository->findById($request->id);
+        if (isset($cart)) {
+            $zIndex = $z - $cart->id;
+            $data = $this->productRepository->findByField('sku', $cart->sku)->first();
+            if (isset($data)) {
+                $data->idCart = $cart->id ?? "";
+                $data->quantityCart = $cart->quantity ?? '';
+            }
+            if (empty($data)) {
+                $data = $this->productVariantRepository->findByField('sku', $cart->sku)->first();
+                $data->idCart = $cart->id ?? '';
+                $data->quantityCart = $cart->quantity ?? '';
+                $data->discount = $data->product->discount ?? '';
+                $data->name = $data->product->name ?? '';
+                $data->slug = $data->product->slug ?? '';
+                if (isset($data->albums) && !empty($data->albums)) {
+                    $albums = json_decode($data->albums, true);
+                    if (isset($albums) && !empty($albums)) {
+                        $data->thumbnail = explode(',', $albums)[0] ?? 'https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That';
+                    }
+                }
+                $category = $data->product->categories->where('is_room', 2)->first();
+                $data->category = $category ? strtolower($category->name) : '';
+            }
+            $product = $data;
+            return view('client.pages.cart.components.item', compact('product', 'carts', 'zIndex'))->render();
+        }
     }
     public function count()
     {
@@ -114,4 +148,38 @@ class CartController extends Controller
             'model' => 'cart'
         ];
     }
-}
+
+    public function getProductV2($data)
+    {
+        $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
+        $z = 1000;
+        $cart = $this->cartRepository->findById($data->id);
+        if (isset($cart)) {
+            $zIndex = $z - $cart->id;
+            $data = $this->productRepository->findByField('sku', $cart->sku)->first();
+            if (isset($data)) {
+                $data->idCart = $cart->id ?? "";
+                $data->quantityCart = $cart->quantity ?? '';
+            }
+            if (empty($data)) {
+                $data = $this->productVariantRepository->findByField('sku', $cart->sku)->first();
+                $data->idCart = $cart->id ?? '';
+                $data->quantityCart = $cart->quantity ?? '';
+                $data->discount = $data->product->discount ?? '';
+                $data->name = $data->product->name ?? '';
+                $data->slug = $data->product->slug ?? '';
+                if (isset($data->albums) && !empty($data->albums)) {
+                    $albums = json_decode($data->albums, true);
+                    if (isset($albums) && !empty($albums)) {
+                        $data->thumbnail = explode(',', $albums)[0] ?? 'https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That';
+                    }
+                }
+                $category = $data->product->categories->where('is_room', 2)->first();
+                $data->category = $category ? strtolower($category->name) : '';
+            }
+            $product = $data;
+            return view('client.pages.cart.components.item', compact('product', 'carts', 'zIndex'))->render();
+        }
+    }
+
+

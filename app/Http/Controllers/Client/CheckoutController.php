@@ -84,6 +84,7 @@ class CheckoutController extends Controller
     {
         return [
             'css' => [
+                
             ],
             'js' => [
                 "https://freshcart.codescandy.com/assets/libs/rater-js/index.js",

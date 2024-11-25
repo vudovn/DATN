@@ -1,14 +1,11 @@
 @extends('admin.layout')
 
 @section('template')
-
     <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
 
     <div class="card">
         <div class="card-header">
-            <x-filter
-            :model="$config['model']"
-            :options="[
+            <x-filter :model="$config['model']" :options="[
                 'actions' => generateSelect('Hành động', __('general.actions')),
                 'perpage' => generateSelect('10 hàng', __('general.perpage')),
                 'sort' => generateSelect('Sắp xếp', __('general.sort')),
@@ -25,14 +22,14 @@
                                     <label class="form-check-label" for="checkAll"></label>
                                 </div>
                             </th>
-                            <th>ID</th>
-                        <th>Ảnh đại diện</th>
-                        <th>Tên người dùng</th>
-                        <th>Nội dung đánh giá</th>
-                        <th>Đánh giá</th>
-                        <th>Sản phẩm</th>
-                        <th>Ngày đánh giá</th>
-                        <th class="text-center">Hành động</th>
+                            <th>STT</th>
+                            <th>Ảnh đại diện</th>
+                            <th>Tên người dùng</th>
+                            <th>Nội dung đánh giá</th>
+                            <th>Đánh giá</th>
+                            <th>Sản phẩm</th>
+                            <th>Ngày đánh giá</th>
+                            <th class="text-center">Hành động</th>
                         </tr>
                     </thead>
                     <tbody id="tbody">
@@ -47,5 +44,4 @@
         </div>
     </div>
     <input type="hidden" name="model" id="model" value="{{ ucfirst($config['model']) }}">
-
 @endsection

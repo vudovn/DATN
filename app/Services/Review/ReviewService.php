@@ -27,7 +27,7 @@ class ReviewService extends BaseService
         return [
             'keyword' => [
                 'search' => $request['keyword'] ?? '',
-                'field' => ['name']
+                'field' => ['name'],
             ],
             'sort' => isset($request['sort']) && $request['sort'] != 0
                 ? explode(',', $request['sort'])

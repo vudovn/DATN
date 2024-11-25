@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Repositories\Product;
+
 use App\Repositories\BaseRepository;
 use App\Models\Product;
 
@@ -45,9 +47,12 @@ class ProductRepository extends BaseRepository
 
     public function searchProduct($keyword)
     {
-        return $this->model->where('name', 'like', '%' . $keyword . '%')->where('publish', 1)->get();
+        return $this->model
+            ->where(function ($query) use ($keyword) {
+                $query->where('name', 'like', '%' . $keyword . '%')
+                    ->orWhere('sku', 'like', '%' . $keyword . '%');
+            })
+            ->where('publish', 1)
+            ->get();
     }
-
-
-
 }

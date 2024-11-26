@@ -33,6 +33,7 @@ use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
 
 
+
 // Route::get('/', function () {
 //     return view('welcome');
 // })->name('home');

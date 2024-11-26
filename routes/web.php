@@ -296,6 +296,11 @@ route::middleware('preventBackHistory')->group(function () {
             Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
         });
 
+        // about route
+        Route::prefix('gioi-thieu')->name('about.')->group(function () {
+            Route::get('/', [AboutController::class, 'index'])->name('index');
+        });
+
         /* WISHLIST */
         Route::prefix('yeu-thich')->name('wishlist.')->group(function () {
             Route::get('/', [WishlistController::class, 'index'])->name('index');

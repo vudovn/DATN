@@ -24,6 +24,7 @@
                 <div class="col-6">
                     <h6 class="text-primary">Thông tin người mua hàng (Buyer):</h6>
                     <p class="mb-1"><strong>Họ & Tên:</strong> {{ $order->name }}</p>
+                    <p class="mb-1"><strong>Số điện thoại:</strong> {{ $order->phone }}</p>
                     <p class="mb-1"><strong>Địa chỉ:</strong> {{ $order->address }}, {{$order->ward->name}}, {{$order->district->name}}, {{$order->province->name}}</p>
                     <p class="mb-1"><strong>Hình thức thanh toán:</strong> {{ $order->payment_method }}</p>
                 </div>

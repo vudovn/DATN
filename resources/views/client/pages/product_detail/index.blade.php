@@ -124,6 +124,7 @@
                             type="checkbox" 
                             name="product_id" 
                             class="add_wishlist" 
+                            class="like"
                             data-type="{{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id) ? 'remove' : 'add' }}" 
                             value="{{ $product->id }}"> --}}
 

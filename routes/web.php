@@ -33,6 +33,7 @@ use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
 
 
+
 // Route::get('/', function () {
 //     return view('welcome');
 // })->name('home');
@@ -294,6 +295,11 @@ route::middleware('preventBackHistory')->group(function () {
         Route::prefix('bo-suu-tap')->name('collection.')->group(function () {
             Route::get('/', [ClientCollectionController::class, 'index'])->name('index');
             Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
+        });
+
+        // about route
+        Route::prefix('gioi-thieu')->name('about.')->group(function () {
+            Route::get('/', [IndexController::class, 'about'])->name('index');
         });
 
         /* WISHLIST */

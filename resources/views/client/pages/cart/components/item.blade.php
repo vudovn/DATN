@@ -16,7 +16,7 @@
             <div class="cart-item-title">
                 <a
                     href="{{ route('client.product.detail', $product->slug ?? $product->product->slug) }}">{{ $product->name }}</a>
-                <span class="badge text-bg-warning text-dark">- {{ $product->discount }}%</span>
+                <span class="badge bg-light-warning text-dark-warning">- {{ $product->discount }}%</span>
             </div>
             <div class="d-xxl-flex">
                 @if (isset($product->discount) && $product->discount !== 0)

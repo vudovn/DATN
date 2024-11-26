@@ -10,7 +10,6 @@
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/js/plugins/feather.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/choices/choices.min.js"></script>
 
-
 <script src="{{ asset('admin_asset/plugins/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('admin_asset/plugins/ckfinder/ckfinder.js') }}"></script>
 <script src="{{ asset('admin_asset/library/finder.js')}}"></script>

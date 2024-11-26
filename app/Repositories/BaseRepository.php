@@ -52,11 +52,10 @@ class BaseRepository
         return $this->model->select($select)->with($relation)->find($id);
     }
 
-    public function findByField(string $field, $value, array $select = ['*'])
+    public function findByField(string $field, $value, array $select = ['*'], $relation = [])
     {
-        return $this->model->select($select)->where($field, $value);
+        return $this->model->select($select)->where($field, $value)->with($relation);
     }
-
 
     public function findByWhereIn($column, $values = [], $relation = [], $select = ['*'])
     {

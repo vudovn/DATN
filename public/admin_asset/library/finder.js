@@ -85,6 +85,13 @@
             TGNT.browseServerAvatar(input, type);
         });
     };
+    TGNT.uploadImageAvatarCus = () => {
+        $(".image-target-cus").click(function () {
+            let input = $(this);
+            let type = "Images";
+            TGNT.browseServerAvatarCus(input, type);
+        });
+    };
 
     TGNT.setupCkFinder2 = (object, type) => {
         if (typeof type == "undefined") {
@@ -106,6 +113,18 @@
         finder.resourceType = type;
         finder.selectActionFunction = function (fileUrl, data) {
             object.find("img").attr("src", fileUrl);
+            object.siblings("input").val(fileUrl);
+        };
+        finder.popup();
+    };
+    TGNT.browseServerAvatarCus = (object, type) => {
+        if (typeof type == "undefined") {
+            type = "Images";
+        }
+        var finder = new CKFinder();
+        finder.resourceType = type;
+        finder.selectActionFunction = function (fileUrl, data) {
+            $(".image-preview").attr("src", fileUrl);
             object.siblings("input").val(fileUrl);
         };
         finder.popup();
@@ -181,6 +200,7 @@
         TGNT.uploadImageToInput();
         TGNT.setupCkeditor();
         TGNT.uploadImageAvatar();
+        TGNT.uploadImageAvatarCus();
         TGNT.multipleUploadImageCkeditor();
         TGNT.uploadAlbum();
         TGNT.deletePicture();

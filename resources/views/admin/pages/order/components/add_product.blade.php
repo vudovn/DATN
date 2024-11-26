@@ -37,7 +37,7 @@
                             </a>
                         </td>
                         <td>{{ $detail->sku }}</td>
-                        <td>{{ $detail->product->name }}</td>
+                        <td class="text-wrap">{{ $detail->name }}</td>
                         <td class='fix-input'>
                             <input type="number" value="{{ $detail->quantity }}" class="product-quantity form-control"
                                 data-price="{{ $detail->price }}" min="1" max="5" style="width: 60px;">
@@ -47,14 +47,13 @@
                         <td><button type="button" class="btn btn-danger btn-sm rounded delete-product-btn">Xóa</button>
                         </td>
                         <td class="hidden">
-                            <input type="text" name="product_id[]" value="{{ $detail->product->id }}">
+                            <input type="text" name="product_id[]" value="{{ $detail->product_id }}">
                             <input type="text" class="product_quantity_input" name="quantity[]"
                                 value="{{ $detail->quantity }}">
                             <input type="text" name="price[]" value="{{ $detail->price }}">
                             <input type="text" name="name_orderDetail[]" value="{{ $detail->name }}">
                             <input type="text" name="sku[]" value="{{ $detail->sku }}">
                             <input type="text" name="thumbnail[]" value="{{ $detail->product->thumbnail }}">
-                            <input type="text" name="total[]" value="{{ $detail->price * $detail->quantity }}">
                         </td>
                     </tr>
                 @endforeach
@@ -73,6 +72,7 @@
         </div>
     </div>
 </div>
+<input type="hidden" name="skus" value="@json(isset($order_details) ? $order_details->pluck('sku') : '') "id="" />
 <script>
     const skuInData = @json(isset($order_details) ? $order_details->pluck('sku') : '')
 </script>
@@ -85,18 +85,17 @@
     let name = {!! json_encode(old('name_orderDetail', [])) !!};
     let price = {!! json_encode(old('price', [])) !!};
     let quantity = {!! json_encode(old('quantity', [])) !!};
-    let total = {!! json_encode(old('total', [])) !!};
     let thumbnail = {!! json_encode(old('thumbnail', [])) !!};
 
-    let productVariants = [];
+    let productOld = [];
     for (let i = 0; i < id.length; i++) {
-        productVariants.push({
+        productOld.push({
             id: id[i],
             sku: sku[i],
             name: name[i],
             price: price[i],
             thumbnail: thumbnail[i],
-            quantity: quantity[i],
+            quantityOld: quantity[i],
         });
     }
 </script>

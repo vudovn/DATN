@@ -15,8 +15,8 @@ class CreateOrderDetailsTable extends Migration
             $table->string('sku')->nullable();
             $table->string('name');
             $table->integer('quantity');
-            $table->decimal('price', 15, 2);
-            $table->decimal('discount', 15, 2)->default(0);
+            $table->decimal('price', 15, 0);
+            $table->decimal('discount', 15, 0)->default(0);
             $table->json('options')->nullable();
             $table->timestamps();
 

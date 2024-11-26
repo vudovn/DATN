@@ -34,7 +34,7 @@ class StoreCollectionRequest extends FormRequest
         return [
             'name' => 'required',
             'thumbnail' => 'required',
-            'skus' => 'min:3',
+            'skus' => 'min:2',
             // 'meta_title' => 'required',
             // 'meta_description' => 'required',
         ];

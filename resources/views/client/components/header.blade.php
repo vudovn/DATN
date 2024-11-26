@@ -1,5 +1,5 @@
     <!-- header -->
-    <header class="header_vd">
+    <header class="header_vd border-bottom" style="box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;">
         <!-- header top -->
         <div class="py-1 pt-xxl-6">
             <div class="overflow-hidden">
@@ -24,8 +24,8 @@
                         </div>
                     </div>
                     <div class="col-md-6 text-center">
-                        <a href="{{ route('client.client.home') }}"><img class="logo_vd_top"
-                                src="/client_asset/image/logo.png" alt="logo_sieuthinoithat" /></a>
+                        <a href="{{ route('client.home') }}"><img class="logo_vd_top" src="/logoTGNT.png" width="150"
+                                alt="logo_sieuthinoithat" /></a>
                     </div>
                     <div class="col-md-3">
                         <div class="box_right_vd align-items-center justify-content-center">
@@ -40,8 +40,8 @@
                                         </path>
                                     </svg>
                                     <span
-                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
-                                        1
+                                        class="wishlist_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
+                                        0
                                         <span class="visually-hidden">unread messages</span>
                                     </span>
                                     <div class="list_icon_text_vd">
@@ -52,7 +52,7 @@
 
                             <!-- giỏ hàng -->
                             <div class="list-inline-item me-7 text-center">
-                                <a class="text-muted position-relative">
+                                <a class="text-muted position-relative" href="{{route('client.cart.index')}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
@@ -62,8 +62,8 @@
                                         <path d="M16 10a4 4 0 0 1-8 0"></path>
                                     </svg>
                                     <span
-                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
-                                        1
+                                        class="cart_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
+                                        0
                                         <span class="visually-hidden">unread messages</span>
                                     </span>
                                     <div class="list_icon_text_vd">
@@ -75,7 +75,8 @@
                             <!-- tài khoản -->
                             <div
                                 class="list-inline-item me-7   @if (!Auth::check()) me-lg-0 @endif text-center">
-                                <a href="{{ route('client.account.index') }}" class="text-muted">
+                                <a href="{{ Auth()->check() ? route('client.account.index') : route('client.auth.login') }}"
+                                    class="text-muted">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
@@ -89,10 +90,10 @@
                             </div>
 
                             <!-- đăng xuất -->
-                            @if (Auth::check())
+                            @auth
                                 <div class="list-inline-item me-7 me-lg-0 text-center">
-                                    <a href="{{ route('client.auth.logout') }}" class="text-muted"
-                                        data-bs-toggle="modal" data-bs-target="#userModal">
+                            <a href="{{ route('client.auth.logout') }}" class="text-muted">
+
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
@@ -104,9 +105,9 @@
                                         <div class="list_icon_text_vd">
                                             <small>Đăng xuất</small>
                                         </div>
-                                    </a>
+                            </a>
                                 </div>
-                            @endif
+                            @endauth
                         </div>
                     </div>
                 </div>
@@ -121,11 +122,11 @@
                         <a href=""><img class="logo_vd" src="/client_asset/image/logo.png"
                                 alt="logo_sieuthinoithat" /></a>
                     </div>
-                    <div class="col-xxl-6 col-lg-5 d-none d-lg-block">
+                    <div class="col-xxl-6 col-lg-5 d-none d-lg-block" style="position: relative">
                         <form action="" method="get" class="header_search">
                             <div class="input-group justify-content-center">
-                                <input style="max-width: 500px" name="q" class="form-control rounded"
-                                    type="text" placeholder="Tìm kiếm sản phẩm..." />
+                                <input style="max-width: 500px" id="search_on" name="q"
+                                    class="form-control rounded" type="text" placeholder="Tìm kiếm sản phẩm..." />
                                 <span class="input-group-append">
                                     <button typre="submit"
                                         class="btn bg-white border border-start-0 ms-n10 rounded-0 rounded-end">
@@ -139,6 +140,17 @@
                                         </svg>
                                     </button>
                                 </span>
+                            </div>
+                            <div class="search_out card card-body p-0" id="search_out">
+                                <div class="search_header d-flex justify-content-between" id="search_header">
+                                    <!-- render status từ api -->
+                                </div>
+                                <div class="search_heading" id="search_heading">
+                                    <!--  -->
+                                </div>
+                                <div class="search_result" id="search_result">
+                                    <!-- render bài viết từ api -->
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -164,7 +176,7 @@
         </div>
 
         <!-- menu -->
-        <nav class="navbar navbar-expand-lg navbar-light navbar-default py-0 pb-lg-4"
+        <nav class="navbar navbar-expand-lg navbar-light navbar-default py-0 pb-lg-2"
             aria-label="Offcanvas navbar large">
             <div class="container">
                 <div class="offcanvas offcanvas-start" tabindex="-1" id="navbar-default"
@@ -214,30 +226,13 @@
                                         data-bs-toggle="dropdown" aria-expanded="false">Sản phẩm</a>
                                     <div class="dropdown-menu pb-0">
                                         <div class="row p-2 p-lg-4 menu_drop_vd">
-                                            <div class="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                            </div>
-                                            <div class="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                            </div>
-                                            <div class="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                            </div>
-                                            <div class="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                <a class="dropdown-item text-center" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                                <a class="dropdown-item" href="/danh-muc">Adu hacker</a>
-                                            </div>
+                                            {{-- format bằng cách nào --}}
+                                            @foreach (getCategory('other') as $item)
+                                                <div class="col-lg-3 col-12 mb-4 mb-lg-0">
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
+                                                </div>
+                                            @endforeach
                                         </div>
                                         <div class="menu_drop_img_vd">
                                             <div class="">
@@ -258,16 +253,20 @@
                                         </div>
                                     </div>
                                 </li>
-
                                 <li class="nav-item dropdown w-100 w-lg-auto menu_drop_vd">
                                     <a class="nav-link dropdown-toggle" href="#" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Collection</a>
+                                        data-bs-toggle="dropdown" aria-expanded="false">Phòng</a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="">Adu hacker</a></li>
-                                        <li><a class="dropdown-item" href="">Adu hacker</a></li>
-                                        <li><a class="dropdown-item" href="">Adu hacker</a></li>
-                                        <li><a class="dropdown-item" href="">Adu hacker</a></li>
+                                        @foreach (getCategory('room') as $item)
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
+                                            </li>
+                                        @endforeach
                                     </ul>
+                                </li>
+                                <li class="nav-item w-100 w-lg-auto">
+                                    <a class="nav-link" href="{{route('client.collection.index')}}">Bộ sưu tập</a>
                                 </li>
                             </ul>
                         </div>

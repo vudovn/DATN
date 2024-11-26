@@ -151,15 +151,17 @@ if (!function_exists('orderCode')) {
     }
 }
 
-if(!function_exists('convertNumber')){
-    function convertNumber($number){
+if (!function_exists('convertNumber')) {
+    function convertNumber($number)
+    {
         return str_replace('.', '', $number);
     }
 }
 
-if(!function_exists('formatMon')){
-    function formatNumber($number){
-        if($number == ''){
+if (!function_exists('formatMon')) {
+    function formatNumber($number)
+    {
+        if ($number == '') {
             return '';
         }
         return number_format($number, 0, '.', '.');
@@ -168,11 +170,71 @@ if(!function_exists('formatMon')){
 
 
 //format money vnd 
-if(!function_exists('formatMoney')){
-    function formatMoney($number){
-        if($number == ''){
+if (!function_exists('formatMoney')) {
+    function formatMoney($number)
+    {
+        if ($number == '') {
             return '';
         }
-        return number_format($number, 0, '.', '.') . ' đ';
+        return number_format(ceil($number), 0, '.', '.');
+    }
+    
+}
+
+// lấy danh mục phòng
+if (!function_exists('getCategory')) {
+    function getCategory($type)
+    {
+        if ($type == 'room') {
+            $categoryRepository = loadClass('Category', 'Repository');
+            return $categoryRepository->getCategoryRoom();
+        }
+        $categoryRepository = loadClass('Category', 'Repository');
+        return $categoryRepository->getCategory();
+    }
+}
+
+//tính tăng trưởng
+if (!function_exists('growthRate')) {
+    function growthRate($current, $previous)
+    {
+        if ($previous == 0) {
+            return 0;
+        }
+        // làm tròn 2 chữ số thập phân
+        return round((($current - $previous) / $previous) * 100, 2);
+    }
+}
+
+//tính tăng trưởng
+if (!function_exists('growthRateHtml')) {
+    function growthRateHtml($value)
+    {
+        if ($value > 0) {
+            return '<span class="text-success fw-medium" data-bs-toggle="tooltip" data-bs-title="Tăng trưởng so với tháng trước"><i class="ti ti-arrow-up-right"></i>' . $value . '%</span>';
+        } elseif ($value < 0) {
+            return '<span class="text-danger fw-medium" data-bs-toggle="tooltip" data-bs-title="Giảm so với tháng trước">' . $value . '%</span>';
+        } else {
+            return '<span class="text-dark fw-medium" data-bs-toggle="tooltip" data-bs-title="Không thay đổi so với tháng trước"><i class="ti ti-arrow-down-left"></i>' . $value . '%</span>';
+        }
+    }
+}
+
+//check ngày hết hạn
+if (!function_exists('checkExpiredDate')) {
+    function checkExpiredDate($endDate)
+    {
+        $now = Carbon::now();
+        $end = Carbon::parse($endDate);
+        return $now->gt($end);
+    }
+}
+
+// lấy danh mục thuộc tính
+if (!function_exists('getAttributeCategory')) {
+    function getAttributeCategory()
+    {
+        $data = loadClass('AttributeCategory', 'Repository');
+        return $data->getAllWith();
     }
 }

@@ -61,10 +61,19 @@ class CollectionController extends Controller implements HasMiddleware
     public function getProductPoint(Request $request)
     {
         $data = $this->productRepository->findByField('sku', $request->sku)->first();
+        if($data){
+            $category = $data->categories->where('is_room', 2)->first();
+            $data->category = $category ? strtolower($category->name) : '';
+        }
         if (empty($data->sku)) {
-            $data =  $this->productVariantRepository->findByField('sku', $request->sku)->first();
-            $data->name = $data->product->name;
-            $data->slug = $data->product->slug;
+            $data = $this->productVariantRepository->findByField('sku', $request->sku)->first();
+            if ($data && $data->product) {
+                $data->name = $data->product->name ?? '';
+                $data->slug = $data->product->slug ?? '';
+                $data->thumbnail = explode(',', json_decode($data->albums))[0] ?? '';
+                $category = $data->product->categories->where('is_room', 2)->first();
+                $data->category = $category ? strtolower($category->name) : '';
+            }
         }
         return $data;
     }
@@ -92,14 +101,13 @@ class CollectionController extends Controller implements HasMiddleware
     public function edit($id)
     {
         $collection = $this->collectionRepository->findById($id);
-        $categories = Category::where('is_room', 2)->pluck('name', 'id')->prepend('Danh mục', 0)->toArray();
-        $categoryRoom = Category::where('is_room', 1)->pluck('name', 'id')->prepend('Phòng', 0)->toArray();
-        $config = $this->config();
-        $skuProduct = CollectionProduct::pluck('product_sku')->toArray();
-        $skuVariant = CollectionProduct::pluck('productVariant_sku')->toArray();
-        $skus = implode(',', array_filter(array_merge($skuProduct, $skuVariant)));
-        $config['breadcrumb'] = $this->breadcrumb('update');
-        $config['method'] = 'edit';
+        $categories = $this->getCategories(2, 'Danh mục');
+        $categoryRoom = $this->getCategories(1, 'Phòng');
+        $skus = $this->getSkus($id);
+        $config = array_merge($this->config(), [
+            'breadcrumb' => $this->breadcrumb('update'),
+            'method' => 'edit',
+        ]);
         return view('admin.pages.collection.save_demo', compact(
             'config',
             'collection',
@@ -108,6 +116,7 @@ class CollectionController extends Controller implements HasMiddleware
             'skus'
         ));
     }
+
     public function update(UpdateCollectionRequest $request, $id)
     {
         $collection = $this->collectionService->update($request, $id);
@@ -115,6 +124,29 @@ class CollectionController extends Controller implements HasMiddleware
             return redirect()->route('collection.index', ['page' => $request->page])->with('success', 'Cập nhật người dùng thành công.');
         }
         return redirect()->route('collection.index')->with('error', 'Cập nhật người dùng thất bại');
+    }
+    
+    private function getCategories($isRoom, $defaultLabel)
+    {
+        return Category::where('is_room', $isRoom)
+            ->pluck('name', 'id')
+            ->prepend($defaultLabel, 0)
+            ->toArray();
+    }
+
+    private function getSkus($collectionId)
+    {
+        $skuProduct = $this->collectionProductRepository
+            ->findByField('collection_id', $collectionId)
+            ->pluck('product_sku')
+            ->toArray();
+
+        $skuVariant = $this->collectionProductRepository
+            ->findByField('collection_id', $collectionId)
+            ->pluck('productVariant_sku')
+            ->toArray();
+
+        return implode(',', array_filter(array_merge($skuProduct, $skuVariant)));
     }
     private function breadcrumb($key)
     {

@@ -19,10 +19,11 @@
                     <p class="banner-description">{{ $collection->short_description }}</p>
                 </div>
                 <div class="content">
-                    {!! $collection->description !!}
+                    {!! $collection->description_text !!}
                 </div>
                 <div class="product-of-collection">
                     <p class="title">Sản phẩm thuộc bộ sưu tập</p>
+                    {!! $collection->description !!}
                     {{-- <div class="row">
                         @foreach ($products as $product)
                             <div class="col-md-4 col-lg-3 col-xl-3 col-6 d-flex justify-content-center">
@@ -45,14 +46,14 @@
                             </div>
                         @endforeach
                     </div> --}}
-                    <div class="text-center mb-3">
+                    <div class="text-center my-3">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
                             Thêm bộ sưu tập vào giỏ hàng
                         </button>
                     </div>
-                    {{-- @include('client.pages.collection.components.modal_product') --}}
+                    @include('client.pages.collection.components.modal_product')
                 </div>
             </div>
         </section>

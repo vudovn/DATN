@@ -1,5 +1,5 @@
 @if (isset($reviews) && count($reviews))
-    @foreach ($reviews as $review)
+    @foreach ($reviews as $key => $review)
         <tr class="animate__animated animate__fadeInDown animate__faster">
             <td class="">
                 <div class="form-check">
@@ -8,7 +8,7 @@
                     <label class="form-check-label" for="ustomCheckbox{{ $review->id }}"></label>
                 </div>
             </td>
-            <td>{{ $review->id }}</td>
+            <td>{{ $key+1 }}</td>
             <td>
                 <a href="{{ $review->user->avatar }}" data-fancybox="gallery">
                     <img loading="lazy" width="50" class="rounded" src="{{ $review->user->avatar }}" alt="{{ $review->user->name }}">

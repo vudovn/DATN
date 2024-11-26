@@ -3,24 +3,6 @@
 
 <head>
     <title>Đăng nhập</title>
-    <!-- [Meta] -->
-    {{-- <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="icon" href="{{ asset('admin_asset/images/favicon.svg') }}" type="image/x-icon" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/inter/inter.css') }}" id="main-font-link" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/phosphor/duotone/style.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/tabler-icons.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/feather.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/fontawesome.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/fonts/material.css') }}" />
-    <link rel="stylesheet" href="{{ asset('admin_asset/css/style.css') }}" id="main-style-link" />
-    <script src="{{ asset('admin_asset/js/tech-stack.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('admin_asset/css/style-preset.css') }}" />
-    <script src="{{ asset('admin_asset/js/jquery-3.1.1.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.css') }}">
-    <script src="{{ asset('admin_asset/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('admin_asset/library/cusSweetAlert.js') }}"></script> --}}
     @include('admin.components.head_cdn')
 </head>
 
@@ -42,7 +24,7 @@
                 <div class="card my-5">
                     <form action="{{ route('auth.login') }}" method="POST" class="card-body">
                         @csrf
-                        <div class="text-center">
+                        {{-- <div class="text-center">
                             <a href="#">
                                 <img src="{{ asset('admin_asset/images/logo-dark.svg') }}" alt="img" />
                             </a>
@@ -63,11 +45,11 @@
                                     <span>Đăng nhập bằng Google</span>
                                 </button>
                             </div>
-                        </div>
-                        <div class="saprator my-3">
+                        </div> --}}
+                        {{-- <div class="saprator my-3">
                             <span>HOẶC</span>
-                        </div>
-                        <h4 class="text-center f-w-500 mb-3">Đăng nhập bằng email của bạn</h4>
+                        </div> --}}
+                        <h4 class="text-center f-w-500 mb-3">Đăng nhập vào trang quản trị</h4>
                         <div class="mb-3">
                             <input type="text" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror"
                                 id="floatingInput" placeholder="Địa chỉ email" />
@@ -91,10 +73,10 @@
                         <div class="d-grid mt-4">
                             <button type="submit" name="send" class="btn btn-primary">Đăng nhập</button>
                         </div>
-                        <div class="d-flex justify-content-between align-items-end mt-4">
+                        {{-- <div class="d-flex justify-content-between align-items-end mt-4">
                             <h6 class="f-w-500 mb-0">Bạn chưa có tài khoản?</h6>
                             <a href="#" class="link-primary">Tạo tài khoản</a>
-                        </div>
+                        </div> --}}
                     </form>
                 </div>
             </div>

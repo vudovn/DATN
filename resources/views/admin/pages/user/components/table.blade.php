@@ -1,5 +1,5 @@
 @if (isset($users) && count($users))
-    @foreach ($users as $user)
+    @foreach ($users as $key => $user)
         <tr class="animate__animated animate__fadeIn">
             <td class="">
                 @if ($user->id != auth()->id() && !$user->hasRole('Super Admin'))
@@ -10,10 +10,10 @@
                     </div>
                 @endif
             </td>
-            <td>{{ $user->id }}</td>
+            <td>{{ $key + 1 }}</td>
             <td>
-                <a href="{{ $user->avatar }}" data-fancybox="gallery">
-                    <img loading="lazy" width="50" class="rounded" src="{{ $user->avatar }}"
+                <a href="https://ui-avatars.com/api/?background=random&name={{ $user->name }}" data-fancybox="gallery">
+                    <img loading="lazy" width="50" class="rounded" src="https://ui-avatars.com/api/?background=random&name={{ $user->name }}"
                         alt="{{ $user->name }}">
                 </a>
             </td>

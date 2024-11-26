@@ -28,9 +28,6 @@ use App\Http\Controllers\Client\CommentController as ClientCommentController;
 use App\Http\Controllers\Client\CartController as ClientCartController;
 use App\Http\Controllers\Client\CheckoutController as ClientCheckoutController;
 use App\Http\Controllers\Client\IndexController;
-
-use App\Http\Controllers\Client\AboutController;
-
 use App\Http\Controllers\Client\CategoryController as ClientCategoryController;
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -307,33 +304,4 @@ route::middleware('preventBackHistory')->group(function () {
         });
 
     });
-
-    // product route
-    Route::prefix('san-pham')->name('product.')->group(function () {
-        Route::get('/', [ClientProductController::class, 'index'])->name('index');
-        Route::get('/{slug}', [ClientProductController::class, 'detail'])->name('detail');
-        Route::get('/ajax/get-variant', [ClientProductController::class, 'getVariant'])->name('get-variant');
-    });
-    // collection route
-    Route::prefix('bo-suu-tap')->name('collection.')->group(function () {
-        Route::get('/', [ClientCollectionController::class, 'index'])->name('index');
-        Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
-    });
-
-    // about route
-    Route::prefix('gioi-thieu')->name('about.')->group(function () {
-        Route::get('/', [AboutController::class, 'index'])->name('index');
-    });
-
-     /* WISHLIST */
-    Route::prefix('yeu-thich')->name('wishlist.')->group(function () {
-        Route::get('/', [WishlistController::class, 'index'])->name('index');
-        Route::get('/add-wishlist', [WishlistController::class, 'add']);
-        Route::get('/remove-wishlist', [WishlistController::class, 'delete']);
-    });
-
-    // Route::post('/wishlist/add', [WishlistController::class, 'add'])->name('wishlist.add');
-    // Route::post('/wishlist/delete', [WishlistController::class, 'delete'])->name('wishlist.delete');
-    // Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
-        
 });

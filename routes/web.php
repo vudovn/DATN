@@ -33,6 +33,7 @@ use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
 
 
+
 // Route::get('/', function () {
 //     return view('welcome');
 // })->name('home');
@@ -298,7 +299,7 @@ route::middleware('preventBackHistory')->group(function () {
 
         // about route
         Route::prefix('gioi-thieu')->name('about.')->group(function () {
-            Route::get('/', [AboutController::class, 'index'])->name('index');
+            Route::get('/', [IndexController::class, 'about'])->name('index');
         });
 
         /* WISHLIST */

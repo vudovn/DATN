@@ -111,7 +111,7 @@ class OrderController extends Controller  implements HasMiddleware
     }
 
     public function edit(string $id){
-        $order = $this->orderRepository->findById($id, ['orderDetails']);
+        $order = $this->orderRepository->findById($id, ['orderDetails.product']);
         $order_details = $order->orderDetails;
         $provinces = $this->provinceRepository->getAllProvinces();
         $districts = $this->districtRepository->getAllDistricts();
@@ -237,12 +237,13 @@ class OrderController extends Controller  implements HasMiddleware
         $product = $this->productRepository->findByField('sku',$request->sku)->first();
         if(empty($product)){
             $product = $this->productVariantRepository->findByField('sku',$request->sku)->first();
-            $product->name = $product->product->name;
+            $product->name = $product->product->name . ' - ' . $product->title;
             $product->slug = $product->product->slug;
+            $product->thumbnail = $product->product->thumbnail;
             $product->quantity = 1;
         } 
         $product->quantity = 1;
-        return $product;
+        return successResponse($product);
     } 
 
     private function breadcrumb($key)

@@ -39,20 +39,35 @@
             success: function (data) {
                 if (url.includes("getProduct")) {
                     $("#content").html(data);
+                    TGNT.checkData();
+                    function checkAndHighlight(idsArray, dataAttr) {
+                        idsArray.forEach((sku) => {
+                            $(`.checkInput[${dataAttr}='${sku}']`).prop(
+                                "checked",
+                                true
+                            );
+                            $(`#product-item${sku}`).css(
+                                "background-color",
+                                "#cce6e6"
+                            );
+                        });
+                    }
+                    checkAndHighlight(array.idArray, "data-sku");
                     $(".countProduct").html(array.idArray.length);
                     $(".filterProduct .title")
                         .removeClass("alert alert-primary alert-danger")
                         .addClass(
                             `alert ${
-                                array.idArray.length > 1
+                                array.idArray.length > 3
                                     ? "alert-primary"
                                     : "alert-danger"
                             }`
                         );
-                    TGNT.checkAndHighlight(array.idArray);
+                    $("#skus").val(array.idArray.join(","));
                 } else {
                     $("#tbody").html(data);
                 }
+                TGNT.checkProductChecked();
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching data:", error);
@@ -61,39 +76,6 @@
                 );
             },
         });
-    };
-
-    TGNT.checkAndHighlight = (idsArray) => {
-        idsArray.forEach((sku) => {
-            $(`#checkInput${sku}`).prop("checked", true);
-            $(`#product-item${sku}`).css("background-color", "#cce6e6");
-        });
-        function countVariant() {
-            $(".product-main").each(function () {
-                if ($(this).find(".product-focus").length > 0) {
-                    let countVariant = $(this).find(
-                        ".product-focus .checkInput:checked"
-                    ).length;
-                    if (countVariant > 0) {
-                        $(this)
-                            .find(".countVariant")
-                            .html(
-                                `<span class="text-muted">${countVariant}</span>`
-                            );
-                        $(this)
-                            .find(".product-item")
-                            .css("background-color", "#cce6e6");
-                    } else {
-                        $(this).find(".countVariant").html("");
-                        $(this)
-                            .find(".product-item")
-                            .css("background-color", "");
-                    }
-                }
-            });
-        }
-        countVariant();
-        $(".checkInput").on("change", countVariant);
     };
 
     TGNT.searchForm = () => {
@@ -116,19 +98,25 @@
 
     TGNT.showProduct = () => {
         const productElement = document.querySelector(".show-product");
-        if (typeof skuInData !== "undefined" && skuInData.length > 0) {
-            array["idArray"] = skuInData;
-            if (productElement) productElement.classList.remove("hidden");
-            $(this).css("display", "none");
-            $(".add-product").css("display", "none");
-            TGNT.fetchData(array);
-        } else {
-            $(".add-product").on("click", function () {});
-            if (productElement) productElement.classList.remove("hidden");
-            array["idArray"] = [];
-            array["idArray2"] = [];
-            TGNT.fetchData(array);
-        }
+        // if (skus && skus.length > 0) {
+        //     array["idArray"] = skus.split(",");
+        //     var point_value = $('#point_value').val();
+        //     $("#description_value").html(point_value);
+        //     if (productElement) productElement.classList.remove("hidden");
+        //     $(this).css("display", "none");
+        //     $(".add-product").css("display", "none");
+        //     TGNT.fetchData(array);
+        // }
+
+        // $(".add-product").on("click", function () {
+        // let key = $(this).data("show");
+        if (productElement) productElement.classList.remove("hidden");
+        $(this).css("display", "none");
+        // if (key) {
+        array["idArray"] = [];
+        TGNT.fetchData(array);
+        // }
+        // });
     };
 
     TGNT.paginationForm = () => {
@@ -142,55 +130,43 @@
     TGNT.checkInput = () => {
         $(document).on("change", ".checkInput", function () {
             const sku = $(this).data("sku");
+            const id_product = $(this).data("id");
+            console.log(id_product);
             const item = $("#product-item" + sku);
+            const url = "/admin/order/getProduct";
 
             if ($(this).prop("checked")) {
                 if (!array.idArray.includes(sku) && sku) {
                     array.idArray.push(sku);
-                    item.css("background-color", "#cce6e6");
                 }
-                TGNT.addPoint(sku);
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: {
+                        sku: sku ?? "",
+                    },
+                    success: function (data) {
+                        TGNT.renderRow(data, id_product);
+                        TGNT.calculateTotalAmount();
+                    },
+                    error: function () {
+                        console.log("lỗi");
+                    },
+                });
+                $("#product-item" + sku).css("background-color", "#cce6e6");
+                TGNT.checkProductChecked();
             } else {
                 array.idArray = array.idArray.filter((i) => i !== sku);
-                item.css("background-color", "");
+                $("#product-item" + sku).css("background-color", "");
+                TGNT.removeRow(sku);
+                TGNT.deleteV2(id_product, sku);
             }
-            $(".countProduct").html(array.idArray.length);
-            $(".filterProduct .title")
-                .removeClass("alert alert-primary alert-danger")
-                .addClass(
-                    array.idArray.length > 1
-                        ? "alert alert-primary"
-                        : "alert alert-danger"
-                );
             $("#skus").val(array.idArray.join(","));
         });
     };
 
-    TGNT.addPoint = (sku) => {
-        if (sku !== undefined) {
-            if (sku.length > 0) {
-                $.ajax({
-                    type: "GET",
-                    url: "/admin/order/getProduct",
-                    data: {
-                        sku: sku ? sku : "",
-                    },
-                    success: function (data) {
-                        TGNT.renderRow(data.data);
-                    },
-                    error: function (xhr, status, error) {
-                        console.log("lỗi");
-                    },
-                });
-            } else {
-                $("#renderPoints").html("");
-            }
-        }
-    };
-
-    TGNT.renderRow = (product) => {
+    TGNT.renderRow = (product, id_product) => {
         if (product) {
-            const product_id = product.product_id ?? product.id;
             $("#product-table-body").append(`   
                     <tr id="product-row-${product.sku}" data-sku="${
                 product.sku
@@ -205,15 +181,13 @@
                            </a>
                        </td>
                         <td>${product.sku}</td> 
-                        <td class="text-wrap">
-                            ${product.name}
-                        </td>
+                        <td class="text-wrap">${product.name} ${
+                product.title !== undefined ? " - " + product.title : ""
+            }</td>
                         <td class='fix-input'>
-                            <input type="number" value="${
-                                product.quantityOld ?? 1
-                            }" class="product-quantity form-control" data-price="${
-                product.price
-            }" min="1" max="5" style="width: 60px;">
+                            <input type="number" value="1" class="product-quantity form-control" data-price="${
+                                product.price
+                            }" min="1" max="5" style="width: 60px;">
                         </td> 
                         <td>${TGNT.formatNumber(product.price)}</td>
                         <td class="total-price">${TGNT.formatNumber(
@@ -223,9 +197,9 @@
                             product.sku
                         }">Xóa</button></td>
                         <td class="hidden">
-                            <input type="text" name="product_id[]" value="${product_id}">
+                            <input type="text" name="product_id[]" value="${id_product}">
                             <input type="text" class="product_quantity_input" name="quantity[]" value="${
-                                product.quantityOld ?? 1
+                                product.quantity
                             }">
                             <input type="text"  name="price[]" value="${
                                 product.price
@@ -239,12 +213,41 @@
                             <input type="text" name="thumbnail[]" value="${
                                 product.thumbnail
                             }">
+                            <input type="text" name="total[]" value="${
+                                product.total ?? product.price * 1
+                            }">
                         </td>
                     </tr>
                 `);
             TGNT.deleteProduct();
         }
     };
+
+    TGNT.removeRow = (sku) => {
+        if (sku !== undefined) {
+            $.ajax({
+                type: "GET",
+                url: "/admin/order/getProduct",
+                data: {
+                    sku: sku ? sku : "",
+                },
+                success: function (data) {
+                    $(`#product-row-${data.sku}`).closest("tr").remove();
+                    TGNT.calculateTotalAmount();
+                },
+                error: function (xhr, status, error) {
+                    console.log("lỗi");
+                },
+            });
+        }
+    };
+
+    TGNT.deleteV2 = (id_product) => {
+        $(`tr[data-id=${id_product}]`).remove();
+        TGNT.checkProductChecked();
+        TGNT.calculateTotalAmount();
+    };
+
     TGNT.deleteProduct = () => {
         $(".delete-product-btn").on("click", function () {
             let _this = $(this);
@@ -252,12 +255,12 @@
             let sku = _this.parents("tr").find('input[name="sku[]"]').val();
             $(`#checkInput${sku}`).prop("checked", false);
             array.idArray = array.idArray.filter((i) => i !== sku);
-            TGNT.checkAndHighlight(array.idArray);
             $("#product-item" + sku).css("background-color", "");
             $(".countProduct").html($(".checkInput:checked").length);
             TGNT.calculateTotalAmount();
         });
     };
+
     TGNT.formatNumber = (number) => {
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
@@ -293,15 +296,19 @@
         });
     };
 
-    TGNT.checkOld = () => {
-        if (typeof productOrder !== "undefined" && productOrder.length > 0) {
-            productOrder.forEach((product) => {
-                TGNT.renderRow(product);
-                array.idArray.push(product.sku);
+    TGNT.checkData = () => {
+        if (typeof skuInData !== "undefined" && skuInData) {
+            skuInData.forEach((sku) => {
+                $(`#checkInput${sku}`).prop("checked", true);
+                $(`#product-item${sku}`).css("background-color", "#cce6e6");
             });
-            TGNT.checkAndHighlight(array.idArray);
-            TGNT.calculateTotalAmount();
+
+            TGNT.checkProductChecked();
         }
+    };
+
+    TGNT.checkProductChecked = () => {
+        $(".countProduct").html($(".checkInput:checked").length);
     };
 
     $(document).ready(function () {
@@ -311,10 +318,10 @@
         TGNT.fetchData();
         TGNT.showProduct();
         TGNT.checkInput();
-        TGNT.addPoint();
-        TGNT.updateQuantity();
+        TGNT.renderRow();
+        TGNT.removeRow();
         TGNT.deleteProduct();
+        TGNT.updateQuantity();
         TGNT.calculateTotalAmount();
-        TGNT.checkOld();
     });
 })(jQuery);

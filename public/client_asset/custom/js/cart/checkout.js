@@ -19,34 +19,39 @@
                     data: {
                         code,
                     },
-                    success: function (data) {
-                        if (data) {
+                    success: function (e) {
+                        if (e.data) {
                             $(".list-discount").append(`
-                                <div class="discount mb-2 alert alert-success position-relative" id="discount-${data.code}" data-code="${data.code}"
+                                <div class="discount mb-2 alert alert-success position-relative" id="discount-${e.data.code}" data-code="${e.data.code}"
                                     role="alert">
                                     <div class="discount-inner">
                                         <p class="discount-code mb-1">
                                             <span class="text-uppercase">Mã giảm giá</span>:
-                                            <b id="pc-clipboard-${data.id}">${data.code}</b>
+                                            <b id="pc-clipboard-${e.data.id}">${e.data.code}</b>
                                         </p>
                                         <p class="discount-desc text-muted mb-0">
-                                            ${data.title}
+                                            ${e.data.title}
                                         </p>
                                     </div>
-                                    <div class="remove-discount position-absolute btn btn-outline-tgnt p-2" id="remove-discount-${data.code}" data-code="${data.code}"
+                                    <div class="remove-discount position-absolute btn btn-outline-tgnt p-2" id="remove-discount-${e.data.code}" data-code="${e.data.code}"
                                     style="top:50%; right:10%; transform: translate(40%, -50%);">x</div>
                                 </div>
                                 `);
-
                             TGNT.applyDiscount();
                         } else {
                             VDmessage.show(
                                 "error",
-                                "Mã giảm giá không khả dụng"
+                                "Mã giảm giá đã sử dụng hoặc không tồn tại"
                             );
                         }
                     },
-                    error: function (data) {},
+                    error: function (data) {
+                        // VDmessage.show(
+                        //     "error",
+                        //     "Mã giảm giá không khả dụng"
+                        // );
+                        console.log("Lỗi ối dồi ôi");
+                    },
                 });
             } else {
                 VDmessage.show("warning", "Mã giảm giá đang sử dụng");
@@ -59,9 +64,7 @@
         allDiscount.each(function () {
             codeExists.push($(this).data("code"));
         });
-
         let url = "/thanh-toan/applyDiscount";
-        console.log(codeExists);
         if (allDiscount.length > 0) {
             $.ajax({
                 headers: {
@@ -91,6 +94,16 @@
                             }
                             price = afterDiscount;
                             savePriceT += parseFloat(savePrice);
+                            VDmessage.show("success", "Đã dùng mã giảm giá");
+                            let currentArray = $(`.discount-code`).val()
+                                ? JSON.parse($(`.discount-code`).val())
+                                : [];
+                            if (!currentArray.includes(e.id)) {
+                                currentArray.push(e.id);
+                            }
+                            $(`.discount-code`).val(
+                                JSON.stringify(currentArray)
+                            );
                         } else {
                             $(`#discount-${e.code}`).remove();
                             TGNT.updateTotalCart();
@@ -107,7 +120,12 @@
                         TGNT.formatNumber(afterDiscount)
                     );
                     // $("#total-cart-input").val(afterDiscount);
-                    $("#total-cart-input").val(TGNT.formatNumber(afterDiscount));
+                    $("#total-cart-input").val(
+                        TGNT.formatNumber(afterDiscount)
+                    );
+                    $(".total-cart-input").val(
+                        TGNT.formatNumber(afterDiscount)
+                    );
                 },
                 error: function (data) {},
             });

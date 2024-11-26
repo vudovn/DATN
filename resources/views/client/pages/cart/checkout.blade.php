@@ -86,10 +86,12 @@
                                 đơn hàng</a>
                             <div class="value-cart">
                             </div>
-                            <button type="submit" class="checkout-cart btn btn-tgnt w-50 ms-2">Thanh toán </button>
+                            <button type="submit" class="checkout-cart btn btn-tgnt w-50 ms-2">Đặt hàng</button>
                             <div class="hidden">
-                                <input type="hidden" name="email" value="{{$user->email}}"> 
-                                <input type="hidden" name="total_amount" class="total-cart-input" value="{{$total}}"> 
+                                <input type="hidden" name="discountCode" class="discount-code" value="">
+                                <input type="hidden" name="total_amount" class="total-cart-input"
+                                    value="{{ $total }}">
+                                <input type="hidden" name="email" value="{{ $user->email }}">
                                 <input type="hidden" name="status" value="pending">
                                 <input type="hidden" name="payment_status" value="pending">
                             </div>
@@ -99,7 +101,7 @@
             </div>
         </form>
     </section>
-    
+
 
     <style>
         .cart-total {
@@ -108,5 +110,4 @@
             font-size: clamp(13px, 1.2vw, 20px);
         }
     </style>
-    
 @endsection

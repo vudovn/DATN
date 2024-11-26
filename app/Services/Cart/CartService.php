@@ -7,6 +7,8 @@ use App\Repositories\Cart\CartRepository;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductVariantRepository;
+use App\Repositories\Discount\DiscountCodeUserRepository;
+use App\Repositories\Discount\DiscountCodeRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
@@ -20,17 +22,23 @@ class CartService extends BaseService
     protected $userRepository;
     protected $productRepository;
     protected $productVariantRepository;
+    protected $discountCodeRepository;
+    protected $discountCodeUserRepository;
 
     public function __construct(
         CartRepository $cartRepository,
         UserRepository $userRepository,
         ProductRepository $productRepository,
         ProductVariantRepository $productVariantRepository,
+        DiscountCodeRepository $discountCodeRepository,
+        DiscountCodeUserRepository $discountCodeUserRepository,
     ) {
         $this->cartRepository = $cartRepository;
         $this->userRepository = $userRepository;
         $this->productRepository = $productRepository;
         $this->productVariantRepository = $productVariantRepository;
+        $this->discountCodeRepository = $discountCodeRepository;
+        $this->discountCodeUserRepository = $discountCodeUserRepository;
     }
 
     private function paginateAgrument($request)
@@ -93,14 +101,35 @@ class CartService extends BaseService
             return false;
         }
     }
-
-
-
     public function delete($id)
     {
         DB::beginTransaction();
         try {
             $this->cartRepository->delete($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
+            return false;
+        }
+    }
+    public function checkDiscount($user_id, $code)
+    {
+        $code = $this->discountCodeRepository->findByField('code', $code)->first();
+        $existCode = $this->discountCodeUserRepository->findByField('discount_code_id', $code->id)->where('user_id', $user_id)->first();
+        return $existCode;
+    }
+    public function submitDiscount($user_id, $discountCode)
+    {
+        DB::beginTransaction();
+        try {
+            $discountCode = json_decode($discountCode, true);
+            $payload['user_id'] = $user_id;
+            foreach ($discountCode as $codeId) {
+                $payload['discount_code_id'] = $codeId;
+                $this->discountCodeUserRepository->create($payload);
+            }
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -174,7 +203,6 @@ class CartService extends BaseService
         }
         return $data;
     }
-
     public function getTotalCart($carts)
     {
         $total = 0;
@@ -188,5 +216,4 @@ class CartService extends BaseService
         }
         return $total;
     }
-
 }

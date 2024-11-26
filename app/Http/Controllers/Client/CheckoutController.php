@@ -45,7 +45,7 @@ class CheckoutController extends Controller
     }
     public function index()
     {
-        if(Auth::id()){
+        if (Auth::id()) {
             $user = $this->userRepository->findById(Auth::id());
         }
         $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
@@ -53,7 +53,7 @@ class CheckoutController extends Controller
         $total = $this->cartService->fetchCartData($carts)['total'];
         $provinces = $this->provinceRepository->getAllProvinces();
         $districts = $this->districtRepository->getAllDistricts();
-        $wards = $this->wardRepository->getAllWards();  
+        $wards = $this->wardRepository->getAllWards();
         $config = $this->config();
         $address = $order->address ?? $order->user->address ?? '';
         return view('client.pages.cart.checkout', compact(
@@ -70,7 +70,14 @@ class CheckoutController extends Controller
     public function addDiscount(Request $request)
     {
         $discountCode = $this->discountCodeRepository->findByField('code', $request->code)->first();
-        return successResponse(($discountCode && !checkExpiredDate($discountCode->end_date)) ? $discountCode : false);
+        $existCode = $this->cartService->checkDiscount(Auth::id(), $request->code);
+        if (!$existCode) {
+            return successResponse($discountCode, '');
+        }
+        // if($discountCode){
+        // }else{
+        // return errorResponse( 'thành công cóc');
+        // }
     }
 
     public function applyDiscount(Request $request)
@@ -84,19 +91,23 @@ class CheckoutController extends Controller
         }
         return $data;
     }
-    public function store(Request $request) {
-
+    public function store(Request $request)
+    {
         $order = $this->orderService->create($request);
         if ($order) {
-            return redirect()->route('order.index')->with('success', 'Tạo đơn hàng mới thành công');
-        } 
-        return redirect()->route('order.index')->with('Error', 'Tạo đơn hàng mới thất bại');
+            if (isset($request->discountCode)) {
+                $this->cartService->submitDiscount(Auth::id(), $request->discountCode);
+            }
+            $this->cartRepository->deleteCart(Auth::id());
+            return to_route('client.cart.index')->with('success', 'Đặt hàng thành công thành công');
+        }
+        return to_route('client.cart.index')->with('Error', 'Đặt hàng thành công thất bại');
     }
     private function config()
     {
         return [
             'css' => [
-                
+
             ],
             'js' => [
                 "https://freshcart.codescandy.com/assets/libs/rater-js/index.js",

@@ -106,18 +106,22 @@
     TGNT.showProduct = () => {
         const productElement = document.querySelector(".show-product");
         var point_value = $("#point_value").val();
-        if (point_value && point_value.trim() !== "") {
-            $("#description_value").html(point_value);
-            array["idArray"] = $("#skus").val().split(",");
-            array["idArray"].forEach((skuabc) => {
-                TGNT.initializePopovers(skuabc);
-            });
-            if (productElement) productElement.classList.remove("hidden");
-            $(this).css("display", "none");
-            $(".add-product").css("display", "none");
-            TGNT.fetchData(array);
-        } else {
+        console.log(point_value);
+        
+        // if (point_value && point_value.trim() !== "") {
+        //     $("#description_value").html(point_value);
+        //     array["idArray"] = $("#skus").val().split(",");
+        //     array["idArray"].forEach((skuabc) => {
+        //         TGNT.initializePopovers(skuabc);
+        //     });
+        //     if (productElement) productElement.classList.remove("hidden");
+        //     $(this).css("display", "none");
+        //     $(".add-product").css("display", "none");
+        //     TGNT.fetchData(array);
+        // } else {
             if (skus && skus.length > 0) {
+                console.log(skus);
+                
                 array["idArray"] = skus.split(",");
                 var point_value = $("#point_value").val();
                 $("#description_value").html(point_value);
@@ -129,7 +133,7 @@
                 $(".add-product").css("display", "none");
                 TGNT.fetchData(array);
             }
-        }
+        // }
 
         $(".add-product").on("click", function () {
             let key = $(this).data("show");

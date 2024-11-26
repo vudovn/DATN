@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
 
-class ClientMiddleware
+class ClientAuthMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,10 +18,9 @@ class ClientMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check()){
-            return redirect()->route('');
+            return $next($request);
         }
-
-        return $next($request);
+        return redirect()->route('client.auth.login');
         
     }
 }

@@ -1,5 +1,7 @@
 @extends('client.layout')
-
+@section('seo')
+    @include('client.components.seo')
+@endsection
 @section('content')
     <main>
         <section class="container collection_tgnt">

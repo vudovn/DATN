@@ -38,7 +38,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Email không khớp.',
+            'email' => 'Email hoặc mật khẩu không chính xác',
         ])->onlyInput('email');
     }
 

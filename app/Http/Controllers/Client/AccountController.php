@@ -42,25 +42,15 @@ class AccountController extends Controller
 
     public function index()
     {
+        $title = 'Tài khoản - Thế giới nội thất';
         $config = $this->config();
         $user = $this->userRepository->findById(auth()->id(), ['province', 'district', 'ward']);
         $provinces = $this->provinceRepository->getAllProvinces();
-        $orderAll = $this->orderRepository->getOrdersByUser(auth()->id());
-        $orderCompleted = $this->orderRepository->getOrdersByStatus(auth()->id(), 'completed');
-        $orderCancelled = $this->orderRepository->getOrdersByStatus(auth()->id(), 'cancelled');
-        $orderPending = $this->orderRepository->getOrdersByStatus(auth()->id(), 'pending');
-        $orderShipping = $this->orderRepository->getOrdersByStatus(auth()->id(), 'shipping');
-        $orderReturn = $this->orderRepository->getOrdersByStatus(auth()->id(), 'return');
         return view('client.pages.account.index', compact(
             'user',
             'provinces',
             'config',
-            'orderAll',
-            'orderCompleted',
-            'orderCancelled',
-            'orderPending',
-            'orderShipping',
-            'orderReturn'
+            'title'
         ));
     }
 

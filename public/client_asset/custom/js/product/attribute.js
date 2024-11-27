@@ -26,7 +26,17 @@
                 return $(this).attr("data-attributeId");
             })
             .get();
-
+        const url = new URL(window.location.href);
+        const attrParams = attribute_ids;
+        console.log(attrParams.join(","));
+        if (attrParams.length > 0) {
+            url.searchParams.set("attr", attrParams.join(","));
+        } else {
+            url.searchParams.delete("attr");
+        }
+        const newUrl = url.toString().replace(/%2C/g, ',');
+        window.history.pushState({}, "", newUrl);
+        
         const allSelected = $(".attribute")
             .toArray()
             .every((item) => {
@@ -56,9 +66,9 @@
 
     TGNT.renderInfo = (data) => {
         $(".product-title").html(`${data.name} (${data.title}) `);
-        if(data.sku){
-            $(".buyNow").attr('data-sku',`${data.sku}`);
-            $(".addToCart").attr('data-sku',`${data.sku}`);
+        if (data.sku) {
+            $(".buyNow").attr("data-sku", `${data.sku}`);
+            $(".addToCart").attr("data-sku", `${data.sku}`);
         }
         if (data.discount > 0) {
             $(".product-price").html(`

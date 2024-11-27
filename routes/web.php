@@ -19,7 +19,7 @@ use App\Http\Controllers\Admin\settingController;
 
 
 use App\Http\Controllers\Admin\CollectionController;
-use App\Http\Controllers\Admin\WishlistController;
+use App\Http\Controllers\Client\WishlistController;
 
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;

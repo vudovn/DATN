@@ -35,6 +35,7 @@ class CartController extends Controller
     }
     public function index(Request $request)
     {
+        $title = 'Giỏ hàng - Thế giới nội thất';
         $config = $this->config();
         $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
         $listCart = '';
@@ -44,7 +45,8 @@ class CartController extends Controller
         return view('client.pages.cart.index', compact(
             'config',
             'carts',
-            'listCart'
+            'listCart',
+            'title',
         ));
     }
 

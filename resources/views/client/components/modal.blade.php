@@ -5,7 +5,10 @@
             <form class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modal_danhgiaTitle">Viết đánh giá của bạn</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn-close btn-close-review" data-bs-dismiss="modal" aria-label="Close"
+                        aria-label="Close" data-order-id=""
+                        data-order-url="{{ route('client.account.get-order-detail') }}" data-bs-toggle="modal"
+                        data-bs-target="#orderDetail">
                         <span aria-hidden="true"></span>
                     </button>
                 </div>
@@ -64,9 +67,22 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-outline-stnt"
-                        data-bs-dismiss="modal">Hủy</button>
                     <button type="button" class="btn btn-primary btn-stnt add_review_tgnt">Đánh giá</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- end modal viết đánh giá -->
+
+    <!-- modal viết đánh giá -->
+    <div class="modal fade" id="modal_xemdanhgia" tabindex="-1" role="dialog" aria-labelledby="modal_danhgiaTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form class="modal-content" id="view-review">
+                <div class="text-center" style="padding-top: 200px !important; padding-bottom: 200px !important">
+                    <div class="spinner-border text-tgnt" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
             </form>
         </div>

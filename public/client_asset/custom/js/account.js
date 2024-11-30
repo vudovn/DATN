@@ -5,6 +5,8 @@
     const VDmessage = new VdMessage();
     const _token = $('meta[name="csrf-token"]').attr("content");
 
+    let orderDetailCurrent = null;
+
     TGNT.editUser = () => {
         const form = $("form.edit-account-form");
         const saveButton = $(".saveEditAccount");
@@ -168,6 +170,7 @@
             },
         });
     };
+
     TGNT.loadOrderStatus = (status, url) => {
         $.ajax({
             url: url,
@@ -211,28 +214,37 @@
                 const button = event.relatedTarget;
                 const orderId = button.getAttribute("data-order-id");
                 const url = button.getAttribute("data-order-url");
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    data: { id: orderId },
-                    dataType: "json",
-                    beforeSend: function () {
-                        $(".order_detail_html").html(
-                            `
+                orderDetailCurrent = orderId;
+                $(".btn-close-review").attr("data-order-id", orderId);
+                TGNT.loadDataOrderDetail(orderId, url);
+            });
+        }
+    };
+
+    TGNT.loadDataOrderDetail = (
+        orderId,
+        url = "/tai-khoan/ajax/get-order-detail"
+    ) => {
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: { id: orderId },
+            dataType: "json",
+            beforeSend: function () {
+                $(".order_detail_html").html(
+                    `
                                 <div class="text-center" style="padding-top: 300px !important; padding-bottom: 300px !important">
                                     <div class="spinner-border text-tgnt" role="status">
                                     <span class="visually-hidden">Loading...</span>
                                     </div>
                                 </div>
                             `
-                        );
-                    },
-                    success: function (res) {
-                        $(".order_detail_html").html(res.data);
-                    },
-                });
-            });
-        }
+                );
+            },
+            success: function (res) {
+                $(".order_detail_html").html(res.data);
+            },
+        });
     };
 
     TGNT.checkCancel = () => {
@@ -269,6 +281,108 @@
         }
     };
 
+    TGNT.checkModalReview = () => {
+        const exampleModal = document.getElementById("modal_danhgia");
+        if (exampleModal) {
+            exampleModal.addEventListener("show.bs.modal", (event) => {
+                const button = event.relatedTarget;
+                const product_id = button.getAttribute("data-product-id");
+                TGNT.add_review(product_id);
+            });
+        }
+    };
+
+    TGNT.add_review = (product_id) => {
+        $(".add_review_tgnt")
+            .off("click")
+            .on("click", function () {
+                const _this = $(this);
+                const form = _this.closest("form");
+                let rate = 0;
+                form.find("input[name=star-radio]").each(function () {
+                    if ($(this).is(":checked")) {
+                        rate = Math.max(rate, $(this).val());
+                    }
+                });
+                const content = form.find("textarea[name=content]").val();
+
+                if (!rate) {
+                    VDmessage.show("error", "Vui lòng chọn số sao đánh giá");
+                    return;
+                }
+                if (!content) {
+                    VDmessage.show("error", "Vui lòng nhập nội dung đánh giá");
+                    return;
+                }
+
+                $.ajax({
+                    url: "/san-pham/ajax/add-review",
+                    type: "POST",
+                    data: {
+                        product_id: product_id,
+                        rating: rate,
+                        content: content,
+                        _token: $('meta[name="csrf-token"]').attr("content"),
+                    },
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.status) {
+                            VDmessage.show("success", res.message);
+                            TGNT.loadOrderAll(array);
+                            TGNT.loadOrderStatus(
+                                "delivered",
+                                "/tai-khoan/ajax/get-order-by-status/delivered"
+                            );
+                            form.find("input[name=star-radio]:checked").prop(
+                                "checked",
+                                false
+                            );
+                            form.find("textarea[name=content]").val("");
+                            $(".modal").modal("hide");
+                            TGNT.loadDataOrderDetail(orderDetailCurrent);
+                            $("#orderDetail").modal("show");
+                        } else {
+                            VDmessage.show(
+                                "error",
+                                "Có lỗi xảy ra, vui lòng thử lại sau"
+                            );
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    },
+                });
+            });
+    };
+
+    TGNT.checkModalViewReview = () => {
+        const exampleModal = document.getElementById("modal_xemdanhgia");
+        if (exampleModal) {
+            exampleModal.addEventListener("show.bs.modal", (event) => {
+                const button = event.relatedTarget;
+                const product_id = button.getAttribute("data-product-id");
+                const orderDetail_id = orderDetailCurrent;
+                console.log(orderDetail_id);
+                TGNT.loadReview(product_id, orderDetail_id);
+            });
+        }
+    };
+
+    TGNT.loadReview = (product_id, orderDetail_id) => {
+        $.ajax({
+            url: "/tai-khoan/ajax/get-review",
+            type: "GET",
+            data: { product_id: product_id, orderDetail_id: orderDetail_id },
+            dataType: "json",
+            success: function (res) {
+                $("#view-review").html(res.data);
+            },
+            error: function (err) {
+                console.log(err);
+            },
+        });
+    };
+
     $(document).ready(function () {
         TGNT.editUser();
         TGNT.changePassUser();
@@ -278,5 +392,7 @@
         TGNT.orderStatus();
         TGNT.checkOrder();
         TGNT.checkCancel();
+        TGNT.checkModalReview();
+        TGNT.checkModalViewReview();
     });
 })(jQuery);

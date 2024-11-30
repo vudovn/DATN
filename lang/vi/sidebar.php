@@ -108,41 +108,8 @@ return [
         [
             'name' => 'Quản lý hệ thống',
             'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-setting-2"></use> </svg>',
-            'route' => ['setting'],
-            'module' => [
-                [
-                    'name' => 'Quản lý slide',
-                    'path' => route('setting.slider')
-                ],
-                [
-                    'name' => 'Quản lý banner',
-                    'path' => route('setting.banner')
-                ],
-                [
-                    'name' => 'Quản lý footer',
-                    'path' => route('setting.footer')
-                ],
-                [
-                    'name' => 'Quản lý mạng xã hội',
-                    'path' => route('setting.social')
-                ],
-                [
-                    'name' => 'Quản lý liên hệ',
-                    'path' => route('setting.contact')
-                ],
-                [
-                    'name' => 'Quản lý email',
-                    'path' => route('setting.email')
-                ],
-                [
-                    'name' => 'Quản lý SEO',
-                    'path' => route('setting.seo')
-                ],
-                [
-                    'name' => 'Quản lý thanh toán',
-                    'path' => route('setting.payment')
-                ]
-            ]
+            'route' => route('setting.index'),
+            'module' => []
         ]
     ]
 ];

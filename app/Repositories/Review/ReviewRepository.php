@@ -51,4 +51,9 @@ class ReviewRepository extends BaseRepository
             'totalReviews' => $totalRatings,
         ];
     }
+
+    public function getReviewByProductAndUser($productId, $userId)
+    {
+        return $this->model->where('product_id', $productId)->with('children')->where('user_id', $userId)->first();
+    }
 }

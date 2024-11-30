@@ -43,6 +43,11 @@
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
 
+<style>
+    .select2-results__option[aria-disabled="true"] {
+        background-color: #e9ecef;
+    }
+</style>
 
 @if (isset($config['css']) && count($config['css']))
     @foreach ($config['css'] as $key => $val)

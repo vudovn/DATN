@@ -172,7 +172,9 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
 
     // setting route
     Route::prefix('admin/setting')->name('setting.')->group(function () {
-        Route::get('/slider', [settingController::class, 'slider'])->name('slider');
+        Route::get('/index', [settingController::class, 'index'])->name('index');
+        Route::get('/slide', [settingController::class, 'slide'])->name('slide');
+        Route::put('/slider', [settingController::class, 'sliderUpdate'])->name('sliderUpdate');
         Route::get('/banner', [settingController::class, 'banner'])->name('banner');
         Route::get('/footer', [settingController::class, 'footer'])->name('footer');
         Route::get('/social', [settingController::class, 'social'])->name('social');
@@ -256,6 +258,7 @@ route::middleware('preventBackHistory')->group(function () {
             Route::get('ajax/get-order-by-status/{status}', [AccountController::class, 'getOrderByStatus'])->name('get-order-by-status');
             Route::get('ajax/get-order-detail', [AccountController::class, 'getOrderDetail'])->name('get-order-detail');
             Route::get('ajax/cancel-order', [AccountController::class, 'cancelOrder'])->name('cancel-order');
+            Route::get('ajax/get-review', [AccountController::class, 'getReview'])->name('get-review');
         });
 
         Route::prefix('danh-muc')->name('category.')->group(function () {

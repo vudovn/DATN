@@ -87,20 +87,20 @@ class RoleController extends Controller implements HasMiddleware
     {
         $breadcrumb = [
             'index' => [
-                'name' => 'Quản lý phân quyền',
-                'list' => ['QL phân quyền', 'Danh sách']
+                'name' => 'Quản lý vai trò',
+                'list' => ['QL vai trò', 'Danh sách']
             ],
             'create' => [
-                'name' => 'Tạo phân quyền',
-                'list' => ['QL phân quyền', 'Tạo phân quyền chi đó']
+                'name' => 'Tạo vai trò',
+                'list' => ['QL vai trò', 'Tạo vai trò chi đó']
             ],
             'update' => [
-                'name' => 'Cập nhật phân quyền',
-                'list' => ['QL phân quyền', 'Cập nhật phân quyền']
+                'name' => 'Cập nhật vai trò',
+                'list' => ['QL vai trò', 'Cập nhật vai trò']
             ],
             'delete' => [
-                'name' => 'Xóa phân quyền',
-                'list' => ['QL phân quyền', 'Xóa phân quyền']
+                'name' => 'Xóa vai trò',
+                'list' => ['QL vai trò', 'Xóa vai trò']
             ]
         ];
         return $breadcrumb[$key];

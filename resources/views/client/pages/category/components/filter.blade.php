@@ -1,4 +1,4 @@
-<div class="card card-body mb-4">
+<div class="card card-body mb-4 border-0">
     <div class="row">
         <div class="bar d-flex justify-content-end align-items-center flex-wrap">
             <form method="get" class="d-xxl-flex d-md-flex d-block justify-content-end align-items-center gap-4">

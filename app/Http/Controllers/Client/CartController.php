@@ -65,6 +65,7 @@ class CartController extends Controller
         return view('client.pages.cart.components.item', compact('product', 'carts', 'zIndex'))->render();
 
     }
+    
     public function count()
     {
         $data = $this->cartRepository->findByField('user_id', Auth::id())->get();

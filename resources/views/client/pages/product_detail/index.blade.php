@@ -16,7 +16,10 @@
         $attributeCategory = $product->attribute_category;
         $shortContent = $product->short_content;
         $attrUrl = $_GET['attr'] ?? '';
-        $attrUrl = explode(',', $attrUrl);
+        if ($attrUrl) {
+            $attrUrl = explode(',', $attrUrl);
+        }
+
     @endphp
     <script>
         const product_id = {{ $product->id ?? 0 }};

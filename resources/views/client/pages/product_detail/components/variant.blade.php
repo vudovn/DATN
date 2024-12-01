@@ -5,17 +5,15 @@
                 <strong>{{ $item->name }}</strong> <span class="text-tgnt"></span><br>
                 <div class="attribute-value">
                     @foreach ($item->attributes as $key => $attribute)
-                    <button 
-                    type="button" 
-                    data-attributeId="{{ $attribute->id }}"
-                    class="choose-attribute btn btn-sm btn-outline-secondary 
+                        <button type="button" data-attributeId="{{ $attribute->id }}"
+                            class="choose-attribute btn btn-sm btn-outline-secondary 
                            {{ $attrUrl ? (in_array($attribute->id, $attrUrl) ? 'active' : '') : ($key == 0 ? 'active' : '') }}">
-                    {{ $attribute->value }}
-                </button>
+                            {{ $attribute->value }}
+                        </button>
                     @endforeach
                 </div>
             </div>
         </div>
     @endforeach
 @endif
-<input type="hidden" name="product_id" value="{{ $product->id }}"> 
+<input type="hidden" name="product_id" value="{{ $product->id }}">

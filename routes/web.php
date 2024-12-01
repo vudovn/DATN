@@ -277,15 +277,17 @@ route::middleware('preventBackHistory')->group(function () {
         });
         // cart route
         Route::prefix('gio-hang')->name('cart.')->group(function () {
-            Route::get('/', [ClientCartController::class, 'index'])->name('index');
-            Route::get('/listCart', [ClientCartController::class, 'listCart'])->name('listCart');
-            Route::get('/getProduct', [ClientCartController::class, 'getProduct'])->name('getProduct');
             Route::get('/count', [ClientCartController::class, 'count'])->name('count');
-            Route::post('/store', [ClientCartController::class, 'store'])->name('store');
-            Route::post('/remove', [ClientCartController::class, 'remove'])->name('remove');
-            Route::post('/updateQuantity', [ClientCartController::class, 'updateQuantity'])->name('updateQuantity');
-            Route::post('/changeVariant', [ClientCartController::class, 'changeVariant'])->name('changeVariant');
-            Route::post('/totalCart', [ClientCartController::class, 'totalCart'])->name('totalCart');
+            route::middleware('clientAuth')->group(function () {
+                Route::get('/', [ClientCartController::class, 'index'])->name('index');
+                Route::get('/listCart', [ClientCartController::class, 'listCart'])->name('listCart');
+                Route::get('/getProduct', [ClientCartController::class, 'getProduct'])->name('getProduct');
+                Route::post('/store', [ClientCartController::class, 'store'])->name('store');
+                Route::post('/remove', [ClientCartController::class, 'remove'])->name('remove');
+                Route::post('/updateQuantity', [ClientCartController::class, 'updateQuantity'])->name('updateQuantity');
+                Route::post('/changeVariant', [ClientCartController::class, 'changeVariant'])->name('changeVariant');
+                Route::post('/totalCart', [ClientCartController::class, 'totalCart'])->name('totalCart');
+            });
         });
         // checkout route
         Route::prefix('thanh-toan')->name('checkout.')->group(function () {

@@ -19,8 +19,8 @@ class ClientAuthMiddleware
     {
         if(Auth::check()){
             return $next($request);
+        }else{
+            return redirect()->route('client.auth.login');
         }
-        return redirect()->route('client.auth.login');
-        
     }
 }

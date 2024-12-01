@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 text-center">
-                        <a href="{{ route('client.home') }}"><img class="logo_vd_top" src="/logoTGNT.png" width="150"
+                        <a href="{{ route('client.home') }}"><img class="logo_vd_top" src="/logoTGNT-red.png" width="150"
                                 alt="logo_sieuthinoithat" /></a>
                     </div>
                     <div class="col-md-3">
@@ -214,23 +214,21 @@
                         <div>
                             <ul class="navbar-nav align-items-center">
                                 <li class="nav-item w-100 w-lg-auto">
-                                    <a class="nav-link active" href="">Trang chủ</a>
+                                    <a class="nav-link {{ request()->routeIs('client.home') ? 'active' : '' }}" href="{{ route('client.home') }}">Trang chủ</a>
                                 </li>
-
+                            
                                 <li class="nav-item w-100 w-lg-auto">
-                                    <a class="nav-link" href="{{ route('client.about.index') }}">Giới thiệu</a>
+                                    <a class="nav-link {{ request()->routeIs('client.about.index') ? 'active' : '' }}" href="{{ route('client.about.index') }}">Giới thiệu</a>
                                 </li>
-
+                            
                                 <li class="nav-item dropdown w-100 w-lg-auto dropdown-fullwidth">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Sản phẩm</a>
+                                    <a class="nav-link dropdown-toggle {{ request()->is('category/*') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sản phẩm</a>
                                     <div class="dropdown-menu pb-0">
                                         <div class="row p-2 p-lg-4 menu_drop_vd">
-                                            {{-- format bằng cách nào --}}
                                             @foreach (getCategory('other') as $item)
                                                 <div class="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                    <a class="dropdown-item"
-                                                        href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
+                                                    <a class="dropdown-item {{ request()->routeIs('client.category.index') && request('slug') === $item->slug ? 'active' : '' }}"
+                                                       href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -253,22 +251,27 @@
                                         </div>
                                     </div>
                                 </li>
+                            
                                 <li class="nav-item dropdown w-100 w-lg-auto menu_drop_vd">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">Phòng</a>
+                                    <a class="nav-link dropdown-toggle {{ request()->is('room/*') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Phòng</a>
                                     <ul class="dropdown-menu">
                                         @foreach (getCategory('room') as $item)
                                             <li>
-                                                <a class="dropdown-item"
-                                                    href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
+                                                <a class="dropdown-item {{ request()->routeIs('client.category.index') && request('slug') === $item->slug ? 'active' : '' }}"
+                                                   href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
                                             </li>
                                         @endforeach
                                     </ul>
                                 </li>
+                            
                                 <li class="nav-item w-100 w-lg-auto">
-                                    <a class="nav-link" href="{{route('client.collection.index')}}">Bộ sưu tập</a>
+                                    <a class="nav-link {{ request()->routeIs('client.collection.index') ? 'active' : '' }}" href="{{ route('client.collection.index') }}">Bộ sưu tập</a>
+                                </li>
+                                <li class="nav-item w-100 w-lg-auto">
+                                    <a class="nav-link {{ request()->routeIs('client.contact.index') ? 'active' : '' }}" href="{{ route('client.contact.index') }}">Liên hệ</a>
                                 </li>
                             </ul>
+                            
                         </div>
                         <!-- end menu -->
                     </div>

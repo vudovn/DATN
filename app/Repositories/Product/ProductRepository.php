@@ -2,7 +2,7 @@
 namespace App\Repositories\Product;
 use App\Repositories\BaseRepository;
 use App\Models\Product;
-
+use DB;
 class ProductRepository extends BaseRepository
 {
     protected $model;
@@ -57,7 +57,26 @@ class ProductRepository extends BaseRepository
     {
         return $this->model->where('name', 'like', '%' . $keyword . '%')->where('publish', 1)->get();
     }
+    public function getFeatured()
+    {
+        return $this->model->where('is_featured' , 1)->where('publish', 1)->get();
+    }
+    public function getBestsellers()
+    {
+        $products = DB::table('products')
+        ->join('order_details', 'products.id', '=', 'order_details.product_id')
+        ->join('orders', 'order_details.order_id', '=', 'orders.id')
+        ->select(
+            'products.*',
+            DB::raw('SUM(CASE WHEN orders.status = "delivered" THEN order_details.quantity ELSE 0 END) as total_quantity'),
+            DB::raw('SUM(CASE WHEN orders.status = "delivered" THEN order_details.quantity * order_details.price ELSE 0 END) as total_revenue')
+        )
+        ->groupBy('products.id', 'products.name', 'products.thumbnail', 'products.slug', 'products.sku')
+        ->orderByDesc('total_quantity')
+        ->take(10)
+        ->get();
 
-
+    return $products;
+    }
 
 }

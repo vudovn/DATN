@@ -1,5 +1,17 @@
 body {
-    font-family: "Roboto", sans-serif !important;
+    font-family: "Open Sans" !important;
+}
+.scroll-up {
+    z-index: 100;
+    position: fixed;
+    background-color: var(--base-color-hover);
+    padding: 10px 15px;
+    color: #ffffff;
+    border-radius: 50%;
+    top: 90%;
+    left: 5%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
 }
 /* a {
   color: var(--base-color) !important;
@@ -195,6 +207,7 @@ body {
 }
 
 .header_vd .dropdown-fullwidth .dropdown-menu {
+    top: 15px !important;
     width: 70% !important;
     border-radius: 20px !important;
 }
@@ -307,7 +320,7 @@ body {
 }
 
 .navbar-default .dropdown-menu {
-    transition: all 0.1s ease-in !important;
+    transition: all 0.2s ease-in !important;
 }
 
 /* ======== */

@@ -70,4 +70,14 @@ $(document).ready(function () {
         autoplay: true,
         autoplaySpeed: 2000,
     });
+    $('#slide-featured').slick({
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 2
+    });
+    $('#slide-bestseller').slick({
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 2
+    });
 });

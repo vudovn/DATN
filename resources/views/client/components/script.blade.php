@@ -46,8 +46,23 @@
         });
     </script>
 @endif
+<script>
+    window.onscroll = function() {
+        var scrollLink = document.getElementById("scroll-up");
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            scrollLink.style.opacity = "1";
+        } else {
+            scrollLink.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    $(document).ready(function() {
+        $('.slick-prev').html('<i class="fa-solid fa-chevron-left"></i>');
+        $('.slick-next').html('<i class="fa-solid fa-chevron-right"></i>');
+    });
+</script>
 <script src="/client_asset/custom/js/library.js"></script>
 <script src="/client_asset/custom/js/product/search.js"></script>
 <script src="/client_asset/custom/js/product/wishlist.js"></script>
 <script src="/client_asset/custom/js/cart/addToCart.js"></script>
-

@@ -16,6 +16,7 @@
     <main class="m-0 pt-2">
         @yield('content')
     </main>
+
     @if (!Route::currentRouteName() == 'client.account.index')
         @include('client.components.footer')
     @endif
@@ -23,7 +24,6 @@
     @include('client.components.modal')
     @include('client.components.alert')
     @include('client.components.script')
-
+    <a href="#" class="scroll-up" id="scroll-up"><i class="fa-solid fa-arrow-up"></i></a>
 </body>
-
 </html>

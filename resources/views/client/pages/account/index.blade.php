@@ -7,7 +7,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="trangchu.html" class="text-stnt">Trang chủ</a>
+                        <a href="{{ route('client.home') }}" class="text-stnt">Trang chủ</a>
                     </li>
                     <!-- <li class="breadcrumb-item"><a href="product.html" class="text-stnt">Sản phẩm</a></li> -->
                     <li class="breadcrumb-item active" aria-current="page">

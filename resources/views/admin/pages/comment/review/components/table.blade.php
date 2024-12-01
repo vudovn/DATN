@@ -8,19 +8,21 @@
                     <label class="form-check-label" for="ustomCheckbox{{ $review->id }}"></label>
                 </div>
             </td>
-            <td>{{ $key+1 }}</td>
+            <td>{{ $key + 1 }}</td>
             <td>
-                <a href="{{ $review->user->avatar }}" data-fancybox="gallery">
-                    <img loading="lazy" width="50" class="rounded" src="{{ $review->user->avatar }}" alt="{{ $review->user->name }}">
+                <a href="https://ui-avatars.com/api/?background=random&name={{ $review->user->name }}"
+                    data-fancybox="gallery">
+                    <img loading="lazy" width="50" class="rounded"
+                        src="https://ui-avatars.com/api/?background=random&name={{ $review->user->name }}"
+                        alt="{{ $review->user->name }}">
                 </a>
-
             </td>
 
             <td>
-            {{$review->user->name}}
+                <a href="#{{ $review->user->name }}">{{ $review->user->name }}</a>
             </td>
 
-            <td>
+            <td class="text-wrap">
                 <span class="row-name">{{ $review->content }}</span>
             </td>
             <td>
@@ -34,17 +36,19 @@
                     @endfor
                 </div>
             </td>
-            <td>{{ $review->product->name }}</td>
+            <td><a
+                    href="{{ route('client.product.detail', $review->product->name) }}">{{ $review->product->name }}</a>
+            </td>
             <td>{{ changeDateFormat($review->created_at) }}</td>
             <td class="text-center table-actions">
                 <ul class="list-inline me-auto mb-0">
-                    <x-delete :id="$review->id" :model="ucfirst($config['model'])"/>
+                    <x-delete :id="$review->id" :model="ucfirst($config['model'])" />
                 </ul>
             </td>
         </tr>
     @endforeach
 @else
-<tr>
-    <td colspan="9" class="text-center">Không có dữ liệu</td>
-</tr>
+    <tr>
+        <td colspan="9" class="text-center">Không có dữ liệu</td>
+    </tr>
 @endif

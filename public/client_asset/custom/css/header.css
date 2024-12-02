@@ -492,3 +492,28 @@ body {
 }
 
 /* end đánh giá */
+/*  */
+.social-icons a {
+    color: var(--base-color);
+  }
+  
+  .social-icons p {
+    margin-bottom: 0;
+    display: inline-block;
+    line-height: 0%;
+    margin-right: 10px;
+    padding: 6px 8px;
+    background-color: white;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .social-icons p:hover {
+    background-color: var(--base-color);
+    color: white !important;
+    transition: 0.3s ease-in-out;
+  }
+  .social-icons p:hover .social-icons_link {
+    color: white !important;
+    transition: 0.3s ease-in-out;
+  }

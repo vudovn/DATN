@@ -14,7 +14,7 @@
             @if (Auth()->check())
                 @if ($user->wishlists->count() > 0)
                     @foreach ($user->wishlists as $wishlist)
-                        <x-productCard :data="$wishlist->product" :dataType="'remove'" />
+                        <x-product_card :data="$wishlist->product" :dataType="'remove'" />
                     @endforeach
                 @else
                     <div class="col-12">

@@ -51,7 +51,7 @@
             <h3>Sản phẩm nổi bật</h3>
             <div class="row animate__animated animate__fadeIn listProduct mb-4" id="slide-featured">
                 @foreach ($product_featureds->take(8) as $product_featured)
-                    <x-productCard :data="$product_featured" />
+                    <x-product_card :data="$product_featured" />
                 @endforeach
             </div>
         </section>
@@ -59,7 +59,7 @@
             <h3>Sản phẩm bán chạy</h3>
             <div class="row animate__animated animate__fadeIn listProduct mb-4" id="slide-bestseller">
                 @foreach ($product_bestsellers->take(8) as $product_bestseller)
-                    <x-productCard :data="$product_bestseller" />
+                    <x-product_card :data="$product_bestseller" />
                 @endforeach
             </div>
         </section>

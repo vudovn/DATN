@@ -69,7 +69,7 @@
                             </span>
                         </form>
                     </div>
-                    <div class="mt-3 list_all_order " style="min-height: 150px">
+                    <div class="mt-3 list_all_order" style="min-height: 150px">
                         {{-- js render ở đây --}}
                     </div>
                 </div>

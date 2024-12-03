@@ -5,8 +5,13 @@
                 <strong>{{ $item->name }}</strong> <span class="text-tgnt"></span><br>
                 <div class="attribute-value">
                     @foreach ($item->attributes as $key => $attribute)
-                        <button type="button" data-attributeId="{{ $attribute->id }}"
-                            class="choose-attribute btn btn-sm btn-outline-secondary {{ $key == 0 ? 'active' : '' }}">{{ $attribute->value }}</button>
+                    <button 
+                    type="button" 
+                    data-attributeId="{{ $attribute->id }}"
+                    class="choose-attribute btn btn-sm btn-outline-secondary 
+                           {{ $attrUrl ? (in_array($attribute->id, $attrUrl) ? 'active' : '') : ($key == 0 ? 'active' : '') }}">
+                    {{ $attribute->value }}
+                </button>
                     @endforeach
                 </div>
             </div>

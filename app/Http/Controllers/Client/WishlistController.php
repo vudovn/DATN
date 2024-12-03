@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -21,15 +21,13 @@ class WishlistController extends Controller
 
     public function index(Request $request)
     {
+        $title = 'Danh sách yêu thích - Thế giới nội thất';
         $config = $this->config();
         $user = User::with('wishlists.product')->find(1);
-        // dd($products);
-        // foreach ($user->wishlists as $wishlist) {
-        //     dd($wishlist);
-        // }
         return view('client.pages.wishlist.wish_list', compact(
             'config',
-            'user'
+            'user',
+            'title',
         ));
     }
 

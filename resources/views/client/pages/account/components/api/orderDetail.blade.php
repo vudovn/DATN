@@ -61,6 +61,7 @@
                             <th>Giá tiền</th>
                             <th>Số lượng</th>
                             <th>Tổng tiền</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <!-- tbody -->
@@ -85,6 +86,24 @@
                                 <td><span class="text-body">{{ formatMoney($item->price) }}</span></td>
                                 <td>{{ $item->quantity }}</td>
                                 <td>{{ formatMoney($item->quantity * $item->price) }}</td>
+                                <td>
+                                    @if ($order->status == 'delivered')
+                                        @if ($item->product->reviews->where('user_id', Auth::id())->count() == 0)
+                                            <button data-product-id="{{ $item->product_id }}" data-bs-toggle="modal"
+                                                data-bs-target="#modal_danhgia" class="btn btn-outline-tgnt mt-4">Viết
+                                                đánh giá
+                                            </button>
+                                        @else
+                                            <button data-product-id="{{ $item->product_id }}" data-bs-toggle="modal"
+                                                data-bs-target="#modal_xemdanhgia" class="btn btn-outline-tgnt mt-4"
+                                                class="btn btn-tgnt">Xem
+                                                đánh
+                                                giá</button>
+                                        @endif
+                                    @else
+                                    @endif
+
+                                </td>
                             </tr>
                         @endforeach
                         <tr>

@@ -11,6 +11,7 @@ use App\Repositories\Location\DistrictRepository;
 use App\Repositories\Location\WardRepository;
 use App\Repositories\Order\OrderRepository;
 use App\Services\Order\OrderService;
+use App\Repositories\Review\ReviewRepository;
 
 class AccountController extends Controller
 {
@@ -21,6 +22,7 @@ class AccountController extends Controller
     protected $wardRepository;
     protected $orderRepository;
     protected $orderService;
+    protected $reviewRepository;
 
     function __construct(
         UserRepository $userRepository,
@@ -29,7 +31,8 @@ class AccountController extends Controller
         DistrictRepository $districtRepository,
         WardRepository $wardRepository,
         OrderRepository $orderRepository,
-        OrderService $orderService
+        OrderService $orderService,
+        ReviewRepository $reviewRepository
     ) {
         $this->userRepository = $userRepository;
         $this->userService = $userService;
@@ -38,29 +41,20 @@ class AccountController extends Controller
         $this->wardRepository = $wardRepository;
         $this->orderRepository = $orderRepository;
         $this->orderService = $orderService;
+        $this->reviewRepository = $reviewRepository;
     }
 
     public function index()
     {
+        $title = 'Tài khoản - Thế giới nội thất';
         $config = $this->config();
         $user = $this->userRepository->findById(auth()->id(), ['province', 'district', 'ward']);
         $provinces = $this->provinceRepository->getAllProvinces();
-        $orderAll = $this->orderRepository->getOrdersByUser(auth()->id());
-        $orderCompleted = $this->orderRepository->getOrdersByStatus(auth()->id(), 'completed');
-        $orderCancelled = $this->orderRepository->getOrdersByStatus(auth()->id(), 'cancelled');
-        $orderPending = $this->orderRepository->getOrdersByStatus(auth()->id(), 'pending');
-        $orderShipping = $this->orderRepository->getOrdersByStatus(auth()->id(), 'shipping');
-        $orderReturn = $this->orderRepository->getOrdersByStatus(auth()->id(), 'return');
         return view('client.pages.account.index', compact(
             'user',
             'provinces',
             'config',
-            'orderAll',
-            'orderCompleted',
-            'orderCancelled',
-            'orderPending',
-            'orderShipping',
-            'orderReturn'
+            'title'
         ));
     }
 
@@ -121,7 +115,7 @@ class AccountController extends Controller
 
     public function getOrderDetail(Request $request)
     {
-        $order = $this->orderRepository->findById($request->id, ['orderDetails.product', 'district', 'ward', 'province']);
+        $order = $this->orderRepository->findById($request->id, ['orderDetails.product.reviews', 'district', 'ward', 'province']);
         return successResponse(view('client.pages.account.components.api.orderDetail', compact('order'))->render());
     }
 
@@ -132,6 +126,16 @@ class AccountController extends Controller
             return successResponse('', 'Hủy đơn hàng thành công');
         }
         return errorResponse('Hủy đơn hàng thất bại');
+    }
+
+    public function getReview(Request $request)
+    {
+        $data = $this->reviewRepository->getReviewByProductAndUser($request->product_id, auth()->id())->first();
+        $orderDetail_id = $request->orderDetail_id;
+        return successResponse(view('client.pages.account.components.api.view-review', compact(
+            'data',
+            'orderDetail_id'
+        ))->render());
     }
 
 

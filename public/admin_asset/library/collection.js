@@ -120,8 +120,6 @@
         //     TGNT.fetchData(array);
         // } else {
             if (skus && skus.length > 0) {
-                console.log(skus);
-                
                 array["idArray"] = skus.split(",");
                 var point_value = $("#point_value").val();
                 $("#description_value").html(point_value);
@@ -193,6 +191,8 @@
                         sku: sku ? sku : "",
                     },
                     success: function (data) {
+                        console.log(data);
+                        
                         $("#renderPoints").append(
                             `<div id="point${
                                 data.sku

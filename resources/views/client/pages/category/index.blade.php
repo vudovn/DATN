@@ -1,4 +1,7 @@
 @extends('client.layout')
+@section('seo')
+    @include('client.components.seo')
+@endsection
 @section('content')
     <input type="hidden" name="url_getProduct" value="{{ route('client.category.get-product') }}">
     <section class="container">

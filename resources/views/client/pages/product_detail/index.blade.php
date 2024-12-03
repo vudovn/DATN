@@ -1,5 +1,8 @@
 @extends('client.layout')
 
+@section('seo')
+    @include('client.components.seo')
+@endsection
 @section('content')
     <!-- abc -->
     @php
@@ -12,6 +15,8 @@
         $category = $product->categories;
         $attributeCategory = $product->attribute_category;
         $shortContent = $product->short_content;
+        $attrUrl = $_GET['attr'] ?? '';
+        $attrUrl = explode(',', $attrUrl);
     @endphp
     <script>
         const product_id = {{ $product->id ?? 0 }};
@@ -62,7 +67,7 @@
                     <div class="mb-xxl-7 mb-2">
                         <strong>Danh mục: </strong>
                         @foreach ($category as $item)
-                            <a href="{{ route('client.category.index',$item->slug) }}" class="cate_ctsp">
+                            <a href="{{ route('client.category.index', $item->slug) }}" class="cate_ctsp">
                                 <span class="badge bg-light text-dark product_ct_badge">
                                     {{ $item->name }}
                                 </span>
@@ -77,21 +82,22 @@
                     <div class="quantity_spct mb-xxl-0 mb-3">
                         <div class="input-group input-spinner">
                             <input type="button" value="-" class="button-minus btn btn-sm" data-field="quantity">
-                            <input type="number" step="1" min="1" max="3" value="1" name="quantity"
-                                id="quantity" class="quantity-field form-control-sm form-input">
+                            <input type="number" step="1" min="1" max="3" value="1"
+                                name="quantity" id="quantity" class="quantity-field form-control-sm form-input">
                             <input type="button" value="+" class="button-plus btn btn-sm" data-field="quantity">
                         </div>
                     </div>
                     <div class="btn_spct ">
-                        <button class="btn btn-stnt buyNow" data-id="{{$product->id}}" data-sku="{{$product->sku}}">Mua ngay</button>
-                        <button class="btn btn-outline-stnt ms-4 addToCart" data-id="{{$product->id}}" data-sku="{{$product->sku}}">Thêm vào giỏ hàng</button>
+                        <button class="btn btn-stnt buyNow" data-id="{{ $product->id }}"
+                            data-sku="{{ $product->sku }}">Mua ngay</button>
+                        <button class="btn btn-outline-stnt ms-4 addToCart" data-id="{{ $product->id }}"
+                            data-sku="{{ $product->sku }}">Thêm vào giỏ hàng</button>
                         <button class="btn btn-link p-0 ms-3">
                             <label for="like{{ $product->id }}" style="cursor: pointer"
                                 title="Thêm sản phẩm vào mục yêu thích"
                                 class="animate__animated animate__bounceIn like_action con-like">
                                 <input
-
-                                    {{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id)? 'checked': '' }}
+                                    {{ auth()->check() &&auth()->user()->wishlists->contains('product_id', $product->id)? 'checked': '' }}
                                     class="like action_wishlist" id="like{{ $product->id }}"
                                     data-id="{{ $product->id }}" type="checkbox" value="{{ $product->id }}">
                                 <div class="checkmark">

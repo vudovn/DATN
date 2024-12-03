@@ -42,15 +42,13 @@
                     @endforeach
                 </div>
 
-                @if (Auth()->check())
+                {{-- @if (Auth()->check())
                     <div class="d-grid">
                         <h4>Đánh giá sản phẩm này </h4>
                         <p class="mb-0">Chia sẻ trải nghiệm mua hàng của bạn tới những khách hàng khác</p>
-                        <button data-bs-toggle="modal" data-bs-target="#modal_danhgia"
-                            class="btn btn-outline-tgnt mt-4">Viết
-                            đánh giá</button>
+                        
                     </div>
-                @endif
+                @endif --}}
 
             </div>
         </div>

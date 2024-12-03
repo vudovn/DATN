@@ -19,7 +19,7 @@ use App\Http\Controllers\Admin\settingController;
 
 
 use App\Http\Controllers\Admin\CollectionController;
-use App\Http\Controllers\Admin\WishlistController;
+use App\Http\Controllers\Client\WishlistController;
 
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
@@ -172,7 +172,9 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
 
     // setting route
     Route::prefix('admin/setting')->name('setting.')->group(function () {
-        Route::get('/slider', [settingController::class, 'slider'])->name('slider');
+        Route::get('/index', [settingController::class, 'index'])->name('index');
+        Route::get('/slide', [settingController::class, 'slide'])->name('slide');
+        Route::put('/slider', [settingController::class, 'sliderUpdate'])->name('sliderUpdate');
         Route::get('/banner', [settingController::class, 'banner'])->name('banner');
         Route::get('/footer', [settingController::class, 'footer'])->name('footer');
         Route::get('/social', [settingController::class, 'social'])->name('social');
@@ -256,6 +258,7 @@ route::middleware('preventBackHistory')->group(function () {
             Route::get('ajax/get-order-by-status/{status}', [AccountController::class, 'getOrderByStatus'])->name('get-order-by-status');
             Route::get('ajax/get-order-detail', [AccountController::class, 'getOrderDetail'])->name('get-order-detail');
             Route::get('ajax/cancel-order', [AccountController::class, 'cancelOrder'])->name('cancel-order');
+            Route::get('ajax/get-review', [AccountController::class, 'getReview'])->name('get-review');
         });
 
         Route::prefix('danh-muc')->name('category.')->group(function () {
@@ -274,15 +277,17 @@ route::middleware('preventBackHistory')->group(function () {
         });
         // cart route
         Route::prefix('gio-hang')->name('cart.')->group(function () {
-            Route::get('/', [ClientCartController::class, 'index'])->name('index');
-            Route::get('/listCart', [ClientCartController::class, 'listCart'])->name('listCart');
-            Route::get('/getProduct', [ClientCartController::class, 'getProduct'])->name('getProduct');
             Route::get('/count', [ClientCartController::class, 'count'])->name('count');
-            Route::post('/store', [ClientCartController::class, 'store'])->name('store');
-            Route::post('/remove', [ClientCartController::class, 'remove'])->name('remove');
-            Route::post('/updateQuantity', [ClientCartController::class, 'updateQuantity'])->name('updateQuantity');
-            Route::post('/changeVariant', [ClientCartController::class, 'changeVariant'])->name('changeVariant');
-            Route::post('/totalCart', [ClientCartController::class, 'totalCart'])->name('totalCart');
+            route::middleware('clientAuth')->group(function () {
+                Route::get('/', [ClientCartController::class, 'index'])->name('index');
+                Route::get('/listCart', [ClientCartController::class, 'listCart'])->name('listCart');
+                Route::get('/getProduct', [ClientCartController::class, 'getProduct'])->name('getProduct');
+                Route::post('/store', [ClientCartController::class, 'store'])->name('store');
+                Route::post('/remove', [ClientCartController::class, 'remove'])->name('remove');
+                Route::post('/updateQuantity', [ClientCartController::class, 'updateQuantity'])->name('updateQuantity');
+                Route::post('/changeVariant', [ClientCartController::class, 'changeVariant'])->name('changeVariant');
+                Route::post('/totalCart', [ClientCartController::class, 'totalCart'])->name('totalCart');
+            });
         });
         // checkout route
         Route::prefix('thanh-toan')->name('checkout.')->group(function () {

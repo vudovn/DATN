@@ -13,38 +13,28 @@
         </section>
         <!-- 2. SECTION 2 -->
         <div class="demo">
-            <div class="banner-content container-fluid p-0 position-relative">
-                <img class="w-100" src="/client_asset/image/home/banner_home.jpeg" alt="Banner Image" />
-                <div class="banner-title" style="max-width: 800px">
-                    <p class="text-white fw-bold">Sự ấm cúng <br />đang đến gần !!</p>
-                    <p class="banner-subtitle lh-lg mt-3">
-                        Ánh sáng vàng dịu từ đèn treo và nến tạo nên bầu không khí gần
-                        gũi, thân thiện. Những chiếc ghế sofa êm ái, gối tựa mềm mại và
-                        thảm trải sàn mang lại sự ấm cúng.
-                    </p>
+            @foreach ($slides as $slide)
+                <div class="banner-content container-fluid p-0 position-relative">
+                    <img class="w-100" height="600" src="{{ asset($slide->collection->thumbnail) }}" alt="Banner Image" />
+                    <div class="banner-title" style="max-width: 800px">
+                        <p class="text-white fw-bold">
+                            {{ $slide->collection->name }}
+                        </p>
+                        <p class="banner-subtitle lh-lg mt-3">
+                            {{ $slide->collection->short_description }}
+                        </p>
+                    </div>
+                    <div class="d-flex gap-2 banner-title-btn">
+                        <a href="{{ route('client.collection.detail', $slide->collection->slug) }}"
+                            class="d-block btn banner-btn">
+                            Xem thêm <span><i class="bi bi-arrow-right"></i></span>
+                        </a>
+                        <button class="d-block btn btn-outline custom-outline">
+                            Hỗ trợ
+                        </button>
+                    </div>
                 </div>
-                <div class="d-flex gap-2 banner-title-btn">
-                    <button class="d-block btn banner-btn">
-                        Xem thêm <span><i class="bi bi-arrow-right"></i></span>
-                    </button>
-                    <button class="d-block btn btn-outline custom-outline">
-                        Hỗ trợ
-                    </button>
-                </div>
-            </div>
-            <div class="banner">
-                <img src="/client_asset/image/home/banner_home_2.png" alt="Banner Image" />
-                <div class="banner-text">
-                    <p class="fw-bold">Các sản phẩm bán chạy của chúng tôi</p>
-                    <span class="mb-3">
-                        Sản phẩm bán chạy nhất của chúng tôi mang đến chất lượng vượt
-                        trội, được khách hàng trên khắp cả nước yêu thích và tin dùng.
-                    </span>
-                    <button class="d-block btn banner-btn mt-4">
-                        Xem ngay <span><i class="bi bi-arrow-right"></i></span>
-                    </button>
-                </div>
-            </div>
+            @endforeach
         </div>
 
         <!-- 4. SECTION 4 -->
@@ -87,90 +77,90 @@
         <hr class="w-75 m-auto">
         <!-- 9. SECTION 9 -->
         <!-- <section class="collection-content">
-                                                                                                                        <div class="testimonial-title container p-md-5 p-3">
-                                                                                                                          <h2 class="text-white">Bộ sưu tập</h2>
-                                                                                                                          <p>
-                                                                                                                            Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar
-                                                                                                                            elementum tempus hac tellus libero accumsan.
-                                                                                                                          </p>
-                                                                                                                        </div>
-                                                                                                                        <div class="collection-group container-fluid p-0">
-                                                                                                                          <div class="row m-0">
-                                                                                                                            <div class="col-md-3 col-6 p-0 position-relative">
-                                                                                                                              <img src="/client_asset/image/home/collect-1.jpg" alt="" />
-                                                                                                                              <div class="position-absolute collection-item text-center">
-                                                                                                                                <p>Kids lighting</p>
-                                                                                                                                <a href="#" class="btn">See more</a>
-                                                                                                                              </div>
-                                                                                                                            </div>
-                                                                                                                            <div class="col-md-3 col-6 p-0 position-relative">
-                                                                                                                              <img src="/client_asset/image/home/collect-2.jpg" alt="" />
-                                                                                                                              <div class="position-absolute collection-item text-center">
-                                                                                                                                <p>Woven decor</p>
-                                                                                                                                <a href="#" class="btn">See more</a>
-                                                                                                                              </div>
-                                                                                                                            </div>
-                                                                                                                            <div class="col-md-3 col-6 p-0 position-relative">
-                                                                                                                              <img src="/client_asset/image/home/collect-3.jpg" alt="" />
-                                                                                                                              <div class="position-absolute collection-item text-center">
-                                                                                                                                <p>Xmas decor</p>
-                                                                                                                                <a href="#" class="btn">See more</a>
-                                                                                                                              </div>
-                                                                                                                            </div>
-                                                                                                                            <div class="col-md-3 col-6 p-0 position-relative">
-                                                                                                                              <img src="/client_asset/image/home/collect-4.jpg" alt="" />
-                                                                                                                              <div class="position-absolute collection-item text-center">
-                                                                                                                                <p>Halloween</p>
-                                                                                                                                <a href="#" class="btn">See more</a>
-                                                                                                                              </div>
-                                                                                                                            </div>
-                                                                                                                          </div>
-                                                                                                                        </div>
-                                                                                                                        </section> -->
+                                                                                                                                                    <div class="testimonial-title container p-md-5 p-3">
+                                                                                                                                                      <h2 class="text-white">Bộ sưu tập</h2>
+                                                                                                                                                      <p>
+                                                                                                                                                        Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar
+                                                                                                                                                        elementum tempus hac tellus libero accumsan.
+                                                                                                                                                      </p>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div class="collection-group container-fluid p-0">
+                                                                                                                                                      <div class="row m-0">
+                                                                                                                                                        <div class="col-md-3 col-6 p-0 position-relative">
+                                                                                                                                                          <img src="/client_asset/image/home/collect-1.jpg" alt="" />
+                                                                                                                                                          <div class="position-absolute collection-item text-center">
+                                                                                                                                                            <p>Kids lighting</p>
+                                                                                                                                                            <a href="#" class="btn">See more</a>
+                                                                                                                                                          </div>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="col-md-3 col-6 p-0 position-relative">
+                                                                                                                                                          <img src="/client_asset/image/home/collect-2.jpg" alt="" />
+                                                                                                                                                          <div class="position-absolute collection-item text-center">
+                                                                                                                                                            <p>Woven decor</p>
+                                                                                                                                                            <a href="#" class="btn">See more</a>
+                                                                                                                                                          </div>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="col-md-3 col-6 p-0 position-relative">
+                                                                                                                                                          <img src="/client_asset/image/home/collect-3.jpg" alt="" />
+                                                                                                                                                          <div class="position-absolute collection-item text-center">
+                                                                                                                                                            <p>Xmas decor</p>
+                                                                                                                                                            <a href="#" class="btn">See more</a>
+                                                                                                                                                          </div>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="col-md-3 col-6 p-0 position-relative">
+                                                                                                                                                          <img src="/client_asset/image/home/collect-4.jpg" alt="" />
+                                                                                                                                                          <div class="position-absolute collection-item text-center">
+                                                                                                                                                            <p>Halloween</p>
+                                                                                                                                                            <a href="#" class="btn">See more</a>
+                                                                                                                                                          </div>
+                                                                                                                                                        </div>
+                                                                                                                                                      </div>
+                                                                                                                                                    </div>
+                                                                                                                                                    </section> -->
         <!-- 10. SECTION 10 -->
         <!-- <section class="home-category">
-                                                                                                                        <div class="container">
-                                                                                                                          <h2 class="p-5 text-white">Ours stock</h2>
-                                                                                                                          <div class="category-content">
-                                                                                                                            <div class="item">
-                                                                                                                              <img src="/client_asset/image/home/cate-1.jpg" alt="Item Image" />
-                                                                                                                              <p class="text-dark fw-semibold">Ghế bành</p>
-                                                                                                                            </div>
-                                                                                                                            <div class="item">
-                                                                                                                              <img src="/client_asset/image/home/cate-2.jpg" alt="Item Image" />
-                                                                                                                              <p class="text-dark fw-semibold">Ghế đôn</p>
-                                                                                                                            </div>
-                                                                                                                            <div class="item">
-                                                                                                                              <img src="https://mdsf.vn/wp-content/uploads/2022/12/ghe-go-nha-hang.jpg" alt="Item Image" />
-                                                                                                                              <p class="text-dark fw-semibold">Ghế</p>
-                                                                                                                            </div>
-                                                                                                                            <div class="item">
-                                                                                                                              <img src="/client_asset/image/home/cate-4.jpg" alt="Item Image" />
-                                                                                                                              <p class="text-dark fw-semibold">Ghế sofa</p>
-                                                                                                                            </div>
-                                                                                                                            <div class="item">
-                                                                                                                              <img src="/client_asset/image/home/cate-5.jpg" alt="Item Image" />
-                                                                                                                              <p class="text-dark fw-semibold">Bàn</p>
-                                                                                                                            </div>
-                                                                                                                            <div class="item">
-                                                                                                                              <img src="/client_asset/image/home/cate-6.jpg" alt="Item Image" />
-                                                                                                                              <p class="text-dark fw-semibold">Bàn có ngăn kéo</p>
-                                                                                                                            </div>
-                                                                                                                            <div class="item">
-                                                                                                                              <img src="/client_asset/image/home/cate-7.jpg" alt="Item Image" />
-                                                                                                                              <p class="text-dark fw-semibold">Đèn</p>
-                                                                                                                            </div>
-                                                                                                                            <div class="item">
-                                                                                                                              <img src="/client_asset/image/home/cate-8.jpg" alt="Item Image" />
-                                                                                                                              <p class="text-dark fw-semibold">Thảm trải sàn</p>
-                                                                                                                            </div>
-                                                                                                                            <div class="item">
-                                                                                                                              <img src="/client_asset/image/home/cate-9.jpg" alt="Item Image" />
-                                                                                                                              <p class="text-dark fw-semibold">Gối</p>
-                                                                                                                            </div>
-                                                                                                                          </div>
-                                                                                                                        </div>
-                                                                                                                        </section> -->
+                                                                                                                                                    <div class="container">
+                                                                                                                                                      <h2 class="p-5 text-white">Ours stock</h2>
+                                                                                                                                                      <div class="category-content">
+                                                                                                                                                        <div class="item">
+                                                                                                                                                          <img src="/client_asset/image/home/cate-1.jpg" alt="Item Image" />
+                                                                                                                                                          <p class="text-dark fw-semibold">Ghế bành</p>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="item">
+                                                                                                                                                          <img src="/client_asset/image/home/cate-2.jpg" alt="Item Image" />
+                                                                                                                                                          <p class="text-dark fw-semibold">Ghế đôn</p>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="item">
+                                                                                                                                                          <img src="https://mdsf.vn/wp-content/uploads/2022/12/ghe-go-nha-hang.jpg" alt="Item Image" />
+                                                                                                                                                          <p class="text-dark fw-semibold">Ghế</p>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="item">
+                                                                                                                                                          <img src="/client_asset/image/home/cate-4.jpg" alt="Item Image" />
+                                                                                                                                                          <p class="text-dark fw-semibold">Ghế sofa</p>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="item">
+                                                                                                                                                          <img src="/client_asset/image/home/cate-5.jpg" alt="Item Image" />
+                                                                                                                                                          <p class="text-dark fw-semibold">Bàn</p>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="item">
+                                                                                                                                                          <img src="/client_asset/image/home/cate-6.jpg" alt="Item Image" />
+                                                                                                                                                          <p class="text-dark fw-semibold">Bàn có ngăn kéo</p>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="item">
+                                                                                                                                                          <img src="/client_asset/image/home/cate-7.jpg" alt="Item Image" />
+                                                                                                                                                          <p class="text-dark fw-semibold">Đèn</p>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="item">
+                                                                                                                                                          <img src="/client_asset/image/home/cate-8.jpg" alt="Item Image" />
+                                                                                                                                                          <p class="text-dark fw-semibold">Thảm trải sàn</p>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="item">
+                                                                                                                                                          <img src="/client_asset/image/home/cate-9.jpg" alt="Item Image" />
+                                                                                                                                                          <p class="text-dark fw-semibold">Gối</p>
+                                                                                                                                                        </div>
+                                                                                                                                                      </div>
+                                                                                                                                                    </div>
+                                                                                                                                                    </section> -->
 
         <!-- 14.Comment -->
         <section class="comment-client ">

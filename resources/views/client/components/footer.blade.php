@@ -1,125 +1,68 @@
-    <!-- footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h5>Company name</h5>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur dolol drakgonil adipiscing
-                        elit aliquam mauris.
-                    </p>
-                    <form class="">
-                        <input type="email" class="subscribe-input form-control me-2"
-                            placeholder="Nhập email của bạn" />
-                        <button class="subscribe-button mt-3">Đăng ký</button>
-                    </form>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <h5>Menu</h5>
-                    <ul class="list_url list-unstyled">
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">Home</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">Pricing</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">Case studies</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">Features</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">Downloads</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">Updates</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">Changelog</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <h5>Company</h5>
-                    <ul class="list_url list-unstyled">
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">About</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">Contact us</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">Careers</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">Culture</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">Help Center</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">Support</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-dark">Legal</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Follow on Instagram</h5>
-                    <div class="d-flex flex-wrap instagram-images mt-3">
-                        <div class="col-4 p-1 instagram-images_item">
-                            <a href=""><img src="/client_asset/image/footer/img-5nYZSnz6bRoBrzLdOdX5nnsU.png"
-                                    class="img-fluid" /></a>
-                        </div>
-                        <div class="col-4 p-1 instagram-images_item">
-                            <a href=""><img src="/client_asset/image/footer/img-aDHf7wQveqez32KM8KsvswUG.png"
-                                    class="img-fluid" /></a>
-                        </div>
-                        <div class="col-4 p-1 instagram-images_item">
-                            <a href=""><img src="/client_asset/image/footer/img-L7OFaOk8ZrAnt66IhoaksATE.png"
-                                    class="img-fluid" /></a>
-                        </div>
-                        <div class="col-4 p-1 instagram-images_item">
-                            <a href=""><img src="/client_asset/image/footer/img-RVJmM8r4dOhjHyI0Av9zWNCG.png"
-                                    class="img-fluid" /></a>
-                        </div>
-                        <div class="col-4 p-1 instagram-images_item">
-                            <a href=""><img src="/client_asset/image/footer/img-5nYZSnz6bRoBrzLdOdX5nnsU.png"
-                                    class="img-fluid" /></a>
-                        </div>
-                        <div class="col-4 p-1 instagram-images_item">
-                            <a href=""><img src="/client_asset/image/footer/img-5nYZSnz6bRoBrzLdOdX5nnsU.png"
-                                    class="img-fluid" /></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-3 footer-bottom">
-                <div class="col-md-6">
-                    <p class="text_vd">Copyright © 2023 Bees | All Rights Reserved</p>
-                </div>
-                <div class="col-md-6">
-                    <div class="text-end social-icons">
-                        <p>
-                            <a href="#" class="social-icons_link"><i class="fa-brands fa-facebook-f"></i></a>
-                        </p>
-                        <p>
-                            <a href="#" class="social-icons_link"><i class="fa-brands fa-twitter"></i></a>
-                        </p>
-                        <p>
-                            <a href="#" class="social-icons_link"><i class="bi bi-instagram"></i></a>
-                        </p>
-                        <p>
-                            <a href="#" class="social-icons_link"><i class="fa-brands fa-linkedin-in"></i></a>
-                        </p>
-                        <p>
-                            <a href="#" class="social-icons_link"><i class="bi bi-youtube"></i></a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+<footer class="footer">
+    <div class="footer-container container">
+      <div class="footer-main row">
+        <div class="footer-logo col-md-3 col-12">
+          <a href="#"><img src="/logoTGNT-red.png" alt="Heilsa" /></a>
         </div>
-    </footer>
-    <!-- end footer -->
+        <div class="footer-section col-md-2 col-5">
+          <h3>Sản phẩm</h3>
+          <ul>
+            <li><a href="#">Product</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Log in</a></li>
+            <li><a href="#">Request access</a></li>
+            <li><a href="#">Partnerships</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section col-md-2 col-5">
+          <h3>Doanh nghiệp</h3>
+          <ul>
+            <li><a href="#">About heilsa</a></li>
+            <li><a href="#">Contact us</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section col-md-2 col-5">
+          <h3>Tài nguyên</h3>
+          <ul>
+            <li><a href="#">Help center</a></li>
+            <li><a href="#">Book a demo</a></li>
+            <li><a href="#">Server status</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-section col-md-3 col-6">
+          <h3>Liên lạc</h3>
+          <div class="get-in-touch">
+            <p>Câu hỏi hoặc phản hồi?</p>
+            <p>chúng tôi muốn nghe ý kiến ​​từ bạn <a href="{{route('client.contact.index')}}">Liên hệ</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-bottom-left">
+          <span>©2024 Sworkit® by Nexercise, Inc.</span>
+          <a href="#">Terms of Service</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+        <div class="social-icons">
+          <a href="#" class="social-icon">
+            <i style="color: #016bdf" class="fa-brands fa-facebook"></i>
+          </a>
+          <a href="#" class="social-icon yt">
+            <i style="color: #ff0033" class="fa-brands fa-youtube"></i>
+          </a>
+          <a href="#" class="social-icon tw">
+            <i style="color: #1fabf6" class="fa-brands fa-twitter"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>  <script
+  src="https://kit.fontawesome.com/b8d3f92d8d.js"
+  crossorigin="anonymous"
+></script>

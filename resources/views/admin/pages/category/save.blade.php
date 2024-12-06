@@ -40,7 +40,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card">
+                    <input type="hidden" name="parent_id"  value="0">
+                    {{-- <div class="card">
                         <label for="parent_id" class="card-header">
                             Danh mục cha
                         </label>
@@ -50,7 +51,7 @@
                                 {!! $categoryOptions !!}
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.active')" :value="$category->publish ?? ''"
                         :require="true" />
                 @else

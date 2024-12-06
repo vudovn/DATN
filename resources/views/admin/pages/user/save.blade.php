@@ -76,17 +76,17 @@
                                 </thead>
                                 <tbody>
                                     @if (isset($user->wishlists) && count($user->wishlists))
-                                        @foreach ($user->wishlists as $wishlist)
+                                        @foreach ($user->wishlists as $key => $wishlist)
                                             <tr>
-                                                <th scope="row">{{ $wishlist->id }}</th>
-                                                <td>{{ $wishlist->product->name ?? 'Sản phẩm không tồn tại' }}</td>
+                                                <th scope="row">{{ $key + 1 }}</th>
+                                                <td><a href="{{ route('client.product.detail',$wishlist->product->slug) }}">{{ $wishlist->product->name }}</a></td>
                                                 <td>{{ $wishlist->created_at ? $wishlist->created_at->format('d/m/Y') : 'Không có ngày tạo' }}
                                                 </td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="100" class="text-center">Không có dữ liệu</td>
+                                            <td colspan="100" class="text-center">Không có sản phẩm yêu thích nào</td>
                                         </tr>
                                     @endif
                                 </tbody>
@@ -110,10 +110,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if (isset($users->orders) && count($users->orders))
-                                            @foreach ($user->orders as $order)
+                                        @if (isset($user->orders) && count($user->orders))
+                                            @foreach ($user->orders as $key => $order)
                                                 <tr>
-                                                    <th>{{ $order->id }}</th>
+                                                    <th>{{ $key + 1 }}</th>
                                                     <td><a
                                                             href="{{ route('order.edit', $order->id) }}">{{ $order->code }}</a>
                                                     </td>
@@ -125,7 +125,7 @@
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="100" class="text-center">Không có dữ liệu</td>
+                                                <td colspan="100" class="text-center">Không có đơn hàng nào</td>
                                             </tr>
                                         @endif
                                     </tbody>

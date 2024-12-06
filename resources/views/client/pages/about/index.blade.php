@@ -1,10 +1,22 @@
 @extends('client.layout')
 
 @section('content')
-    <section class="container">
-        <!-- end header -->
         <main>
             <div class="about">
+                <!-- Breadcrumb -->
+                {{-- <div class="d-none d-xxl-block mp-5 mb-5 container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ route('client.home') }}" class="text-stnt">Trang chủ</a>
+                            </li>
+                            <!-- <li class="breadcrumb-item"><a href="product.html" class="text-stnt">Sản phẩm</a></li> -->
+                            <li class="breadcrumb-item active" aria-current="page">
+                                Giới thiệu
+                            </li>
+                        </ol>
+                    </nav>
+                </div> --}}
                 <section class="banner position-relative">
                     <div class="text-center" style="background-color: #3d3733;">
                         <p class="py-3 text-white mb-0">GIẢM GIÁ 20% cho đơn hàng đầu tiên. Đăng ký nhận thông báo
@@ -14,12 +26,12 @@
                         </p>
                     </div>
                     <img src=".\client_asset\image\banner\Hero img.png" class="w-100 h-75" alt="">
-                    <label for="">Để mọi người có thể trân trọng cách họ sống trong những thời gian quan
+                    <label for="" class="fw-bold" style="filter: drop-shadow(0px 5px 15px black)">Để mọi người có thể trân trọng cách họ sống trong những thời gian quan
                         trọng.</label>
                 </section>
                 <section class="about-content">
                     <div class="container about-item1">
-                        <h2 class="text-center fw-bold my-4">Giới thiệu về chúng tôi</h2>
+                        <h1 class="text-center fw-bold my-4">Giới thiệu về chúng tôi</h1>
                         <div class="my-lg-5 my-md-5 my-sm-2">
                             <p>
                                 Chúng tôi là thành viên của Tập đoàn Otto và có 7.500 cộng sự. Với hơn 100 cửa hàng và đối
@@ -90,7 +102,7 @@
                         </div>
                     </div>
                     <div class="about-item3 overflow-hidden">
-                        <div class="text-center bg-black" style="background-color: black !important;">
+                        <div class="text-center bg-black" style="background-color: #3d3733 !important;">
                             <p class="py-4 text-white fs-4 mb-0">Chúng tôi cống hiến bằng tâm hồn trong từng sản phẩm</p>
                         </div>
                         <div class="row">
@@ -99,12 +111,11 @@
                             <img class="w-25" src=".\client_asset\image\banner\img_about1.png" alt="">
                             <img class="w-25" src=".\client_asset\image\banner\img_about3.png" alt="">
                         </div>
-                        <div class="text-center bg-black" style="background-color: black !important;">
+                        <div class="text-center bg-black" style="background-color: #3d3733 !important;">
                             <p class="py-4 text-white fs-4 mb-0">... từ kho hàng đến phòng trưng bày</p>
                         </div>
                     </div>
                 </section>
             </div>
         </main>
-    </section>
 @endsection

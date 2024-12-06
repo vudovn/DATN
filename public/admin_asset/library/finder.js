@@ -126,6 +126,9 @@
         finder.selectActionFunction = function (fileUrl, data) {
             $(".image-preview").attr("src", fileUrl);
             object.siblings("input").val(fileUrl);
+            $("#point_value").val(
+                $("#description_value").prop("outerHTML")
+            );
         };
         finder.popup();
     };

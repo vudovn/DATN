@@ -12,15 +12,17 @@
                         class="bi bi-arrow-right"></i></span></a>
         </section>
         <!-- 2. SECTION 2 -->
-        <div class="demo">
+        <div class="demo home-slick-arrow">
+            {{-- <button class="slick-prev slick-arrow" aria-label="Previous" type="button" style="">Previous</button>
+            <button class="slick-next slick-arrow" aria-label="Next" type="button" style="">Previous</button> --}}
             @foreach ($slides as $slide)
                 <div class="banner-content container-fluid p-0 position-relative">
                     <img class="w-100" height="600" src="{{ asset($slide->collection->thumbnail) }}" alt="Banner Image" />
                     <div class="banner-title" style="max-width: 800px">
-                        <p class="text-white fw-bold">
+                        <p class="text-white fw-bold" style="filter: drop-shadow(0px 5px 15px black)">
                             {{ $slide->collection->name }}
                         </p>
-                        <p class="banner-subtitle lh-lg mt-3">
+                        <p class="banner-subtitle lh-lg mt-3" style="filter: drop-shadow(0px 5px 15px black)">
                             {{ $slide->collection->short_description }}
                         </p>
                     </div>
@@ -44,7 +46,23 @@
                 nơi ở của mình đẹp đẽ hơn"
             </p>
         </section>
-        <!-- 5. SECTION 5 -->
+
+        <section class="container mb-5">
+            <h3>Sản phẩm nổi bật</h3>
+            <div class="row animate__animated animate__fadeIn listProduct mb-4" id="slide-featured">
+                @foreach ($product_featureds->take(8) as $product_featured)
+                    <x-product_card :data="$product_featured" />
+                @endforeach
+            </div>
+        </section>
+        <section class="container mb-5">
+            <h3>Sản phẩm bán chạy</h3>
+            <div class="row animate__animated animate__fadeIn listProduct mb-4" id="slide-bestseller">
+                @foreach ($product_bestsellers->take(8) as $product_bestseller)
+                    <x-product_card :data="$product_bestseller" />
+                @endforeach
+            </div>
+        </section>
 
         <!-- 6. SECTION 6 -->
         <section class="title-forward-bg">
@@ -55,7 +73,7 @@
         <!-- 7.SECTION 7 -->
         <section class="banner-collection">
             <!-- 7. Living room -->
-            @foreach ($categoryRoom as $room)
+            @foreach ($categoryRoom->take(4) as $room)
                 <div class="banner mb-2">
                     <img src="{{ asset($room->thumbnail) }}" alt="Banner Image" />
                     <div class="overlay"></div>
@@ -77,95 +95,95 @@
         <hr class="w-75 m-auto">
         <!-- 9. SECTION 9 -->
         <!-- <section class="collection-content">
-                                                                                                                                                    <div class="testimonial-title container p-md-5 p-3">
-                                                                                                                                                      <h2 class="text-white">Bộ sưu tập</h2>
-                                                                                                                                                      <p>
-                                                                                                                                                        Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar
-                                                                                                                                                        elementum tempus hac tellus libero accumsan.
-                                                                                                                                                      </p>
-                                                                                                                                                    </div>
-                                                                                                                                                    <div class="collection-group container-fluid p-0">
-                                                                                                                                                      <div class="row m-0">
-                                                                                                                                                        <div class="col-md-3 col-6 p-0 position-relative">
-                                                                                                                                                          <img src="/client_asset/image/home/collect-1.jpg" alt="" />
-                                                                                                                                                          <div class="position-absolute collection-item text-center">
-                                                                                                                                                            <p>Kids lighting</p>
-                                                                                                                                                            <a href="#" class="btn">See more</a>
-                                                                                                                                                          </div>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="col-md-3 col-6 p-0 position-relative">
-                                                                                                                                                          <img src="/client_asset/image/home/collect-2.jpg" alt="" />
-                                                                                                                                                          <div class="position-absolute collection-item text-center">
-                                                                                                                                                            <p>Woven decor</p>
-                                                                                                                                                            <a href="#" class="btn">See more</a>
-                                                                                                                                                          </div>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="col-md-3 col-6 p-0 position-relative">
-                                                                                                                                                          <img src="/client_asset/image/home/collect-3.jpg" alt="" />
-                                                                                                                                                          <div class="position-absolute collection-item text-center">
-                                                                                                                                                            <p>Xmas decor</p>
-                                                                                                                                                            <a href="#" class="btn">See more</a>
-                                                                                                                                                          </div>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="col-md-3 col-6 p-0 position-relative">
-                                                                                                                                                          <img src="/client_asset/image/home/collect-4.jpg" alt="" />
-                                                                                                                                                          <div class="position-absolute collection-item text-center">
-                                                                                                                                                            <p>Halloween</p>
-                                                                                                                                                            <a href="#" class="btn">See more</a>
-                                                                                                                                                          </div>
-                                                                                                                                                        </div>
-                                                                                                                                                      </div>
-                                                                                                                                                    </div>
-                                                                                                                                                    </section> -->
+                                                                                                                                                                            <div class="testimonial-title container p-md-5 p-3">
+                                                                                                                                                                              <h2 class="text-white">Bộ sưu tập</h2>
+                                                                                                                                                                              <p>
+                                                                                                                                                                                Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar
+                                                                                                                                                                                elementum tempus hac tellus libero accumsan.
+                                                                                                                                                                              </p>
+                                                                                                                                                                            </div>
+                                                                                                                                                                            <div class="collection-group container-fluid p-0">
+                                                                                                                                                                              <div class="row m-0">
+                                                                                                                                                                                <div class="col-md-3 col-6 p-0 position-relative">
+                                                                                                                                                                                  <img src="/client_asset/image/home/collect-1.jpg" alt="" />
+                                                                                                                                                                                  <div class="position-absolute collection-item text-center">
+                                                                                                                                                                                    <p>Kids lighting</p>
+                                                                                                                                                                                    <a href="#" class="btn">See more</a>
+                                                                                                                                                                                  </div>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="col-md-3 col-6 p-0 position-relative">
+                                                                                                                                                                                  <img src="/client_asset/image/home/collect-2.jpg" alt="" />
+                                                                                                                                                                                  <div class="position-absolute collection-item text-center">
+                                                                                                                                                                                    <p>Woven decor</p>
+                                                                                                                                                                                    <a href="#" class="btn">See more</a>
+                                                                                                                                                                                  </div>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="col-md-3 col-6 p-0 position-relative">
+                                                                                                                                                                                  <img src="/client_asset/image/home/collect-3.jpg" alt="" />
+                                                                                                                                                                                  <div class="position-absolute collection-item text-center">
+                                                                                                                                                                                    <p>Xmas decor</p>
+                                                                                                                                                                                    <a href="#" class="btn">See more</a>
+                                                                                                                                                                                  </div>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="col-md-3 col-6 p-0 position-relative">
+                                                                                                                                                                                  <img src="/client_asset/image/home/collect-4.jpg" alt="" />
+                                                                                                                                                                                  <div class="position-absolute collection-item text-center">
+                                                                                                                                                                                    <p>Halloween</p>
+                                                                                                                                                                                    <a href="#" class="btn">See more</a>
+                                                                                                                                                                                  </div>
+                                                                                                                                                                                </div>
+                                                                                                                                                                              </div>
+                                                                                                                                                                            </div>
+                                                                                                                                                                            </section> -->
         <!-- 10. SECTION 10 -->
         <!-- <section class="home-category">
-                                                                                                                                                    <div class="container">
-                                                                                                                                                      <h2 class="p-5 text-white">Ours stock</h2>
-                                                                                                                                                      <div class="category-content">
-                                                                                                                                                        <div class="item">
-                                                                                                                                                          <img src="/client_asset/image/home/cate-1.jpg" alt="Item Image" />
-                                                                                                                                                          <p class="text-dark fw-semibold">Ghế bành</p>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="item">
-                                                                                                                                                          <img src="/client_asset/image/home/cate-2.jpg" alt="Item Image" />
-                                                                                                                                                          <p class="text-dark fw-semibold">Ghế đôn</p>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="item">
-                                                                                                                                                          <img src="https://mdsf.vn/wp-content/uploads/2022/12/ghe-go-nha-hang.jpg" alt="Item Image" />
-                                                                                                                                                          <p class="text-dark fw-semibold">Ghế</p>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="item">
-                                                                                                                                                          <img src="/client_asset/image/home/cate-4.jpg" alt="Item Image" />
-                                                                                                                                                          <p class="text-dark fw-semibold">Ghế sofa</p>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="item">
-                                                                                                                                                          <img src="/client_asset/image/home/cate-5.jpg" alt="Item Image" />
-                                                                                                                                                          <p class="text-dark fw-semibold">Bàn</p>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="item">
-                                                                                                                                                          <img src="/client_asset/image/home/cate-6.jpg" alt="Item Image" />
-                                                                                                                                                          <p class="text-dark fw-semibold">Bàn có ngăn kéo</p>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="item">
-                                                                                                                                                          <img src="/client_asset/image/home/cate-7.jpg" alt="Item Image" />
-                                                                                                                                                          <p class="text-dark fw-semibold">Đèn</p>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="item">
-                                                                                                                                                          <img src="/client_asset/image/home/cate-8.jpg" alt="Item Image" />
-                                                                                                                                                          <p class="text-dark fw-semibold">Thảm trải sàn</p>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="item">
-                                                                                                                                                          <img src="/client_asset/image/home/cate-9.jpg" alt="Item Image" />
-                                                                                                                                                          <p class="text-dark fw-semibold">Gối</p>
-                                                                                                                                                        </div>
-                                                                                                                                                      </div>
-                                                                                                                                                    </div>
-                                                                                                                                                    </section> -->
+                                                                                                                                                                            <div class="container">
+                                                                                                                                                                              <h2 class="p-5 text-white">Ours stock</h2>
+                                                                                                                                                                              <div class="category-content">
+                                                                                                                                                                                <div class="item">
+                                                                                                                                                                                  <img src="/client_asset/image/home/cate-1.jpg" alt="Item Image" />
+                                                                                                                                                                                  <p class="text-dark fw-semibold">Ghế bành</p>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="item">
+                                                                                                                                                                                  <img src="/client_asset/image/home/cate-2.jpg" alt="Item Image" />
+                                                                                                                                                                                  <p class="text-dark fw-semibold">Ghế đôn</p>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="item">
+                                                                                                                                                                                  <img src="https://mdsf.vn/wp-content/uploads/2022/12/ghe-go-nha-hang.jpg" alt="Item Image" />
+                                                                                                                                                                                  <p class="text-dark fw-semibold">Ghế</p>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="item">
+                                                                                                                                                                                  <img src="/client_asset/image/home/cate-4.jpg" alt="Item Image" />
+                                                                                                                                                                                  <p class="text-dark fw-semibold">Ghế sofa</p>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="item">
+                                                                                                                                                                                  <img src="/client_asset/image/home/cate-5.jpg" alt="Item Image" />
+                                                                                                                                                                                  <p class="text-dark fw-semibold">Bàn</p>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="item">
+                                                                                                                                                                                  <img src="/client_asset/image/home/cate-6.jpg" alt="Item Image" />
+                                                                                                                                                                                  <p class="text-dark fw-semibold">Bàn có ngăn kéo</p>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="item">
+                                                                                                                                                                                  <img src="/client_asset/image/home/cate-7.jpg" alt="Item Image" />
+                                                                                                                                                                                  <p class="text-dark fw-semibold">Đèn</p>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="item">
+                                                                                                                                                                                  <img src="/client_asset/image/home/cate-8.jpg" alt="Item Image" />
+                                                                                                                                                                                  <p class="text-dark fw-semibold">Thảm trải sàn</p>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="item">
+                                                                                                                                                                                  <img src="/client_asset/image/home/cate-9.jpg" alt="Item Image" />
+                                                                                                                                                                                  <p class="text-dark fw-semibold">Gối</p>
+                                                                                                                                                                                </div>
+                                                                                                                                                                              </div>
+                                                                                                                                                                            </div>
+                                                                                                                                                                            </section> -->
 
         <!-- 14.Comment -->
         <section class="comment-client ">
             <div class="container p-5 text-center">
-                <h2>Khách hàng của chúng tôi nói gì</h2>
+                <h2>Khách hàng nói về chúng tôi</h2>
                 <p>
                     Những phản hồi từ khách hàng của chúng tôi cho thấy sự hài lòng về
                     chất lượng sản phẩm và dịch vụ tận tâm, chuyên nghiệp.
@@ -175,16 +193,18 @@
                 <div class="slide_cmt">
                     <div class="card col shadow-sm">
                         <div class="card-body">
-                            <p class="card-text">
-                                "Hướng dẫn trực quan có thể là một wireframe, bố cục quảng
-                                cáo, hoặc kiến ​​trúc thông tin."
+                            <p class="card-text feedback">
+                                "Tôi thực sự ấn tượng với Thế Giới Nội Thất! Trang web không chỉ dễ dàng sử dụng mà còn cung
+                                cấp rất nhiều lựa chọn nội thất đẹp mắt, phù hợp với phong cách hiện đại của tôi. Mỗi sản
+                                phẩm đều được mô tả chi tiết, giúp tôi dễ dàng chọn lựa. Tôi rất hài lòng với chất lượng các
+                                sản phẩm, chúng không chỉ đẹp mà còn rất bền bỉ!"
                             </p>
                             <div class="d-flex align-items-center pt-4">
                                 <img src="/client_asset/image/home/user-1.jpg" class="rounded-circle icon-xl"
                                     alt="" />
                                 <div>
-                                    <h5 class="card-title fw-bold">John Carter</h5>
-                                    <span class="text-success">Head of Marketing</span>
+                                    <h5 class="card-title fw-bold">Đỗ Văn Vũ</h5>
+                                    <span class="text-success">vũ văn vở</span>
                                 </div>
                             </div>
                         </div>
@@ -192,16 +212,18 @@
                     <div class="card col shadow-sm">
                         <div class="card-body">
                             <p class="card-text">
-                                "Hướng dẫn trực quan có thể là một wireframe, bố cục quảng
-                                cáo, hoặc kiến ​​trúc thông tin. Một thiết bị cho phép cộng
-                                tác sẽ làm giảm nguy cơ công việc phải làm lại hoàn toàn."
+                                "Với Thế Giới Nội Thất, tôi tìm thấy những món đồ hoàn hảo cho ngôi nhà của mình. Trang web
+                                rất dễ tìm kiếm và chọn lựa sản phẩm. Tôi đặc biệt yêu thích bộ sưu tập nội thất đa dạng, từ
+                                cổ điển đến hiện đại, mọi thứ đều đáp ứng đúng nhu cầu của tôi. Đây chắc chắn là địa chỉ uy
+                                tín để mua sắm nội thất cho
+                                không gian sống của mình!"
                             </p>
                             <div class="d-flex align-items-center pt-4">
                                 <img src="/client_asset/image/home/user-2.jpg" class="rounded-circle icon-xl"
                                     alt="" />
                                 <div>
-                                    <h5 class="card-title fw-bold">Matt Cannon</h5>
-                                    <span class="text-success">Testimonial Role</span>
+                                    <h5 class="card-title fw-bold">Thái Hoàng Quân</h5>
+                                    <span class="text-success">quân quằn quại</span>
                                 </div>
                             </div>
                         </div>
@@ -209,16 +231,17 @@
                     <div class="card col shadow-sm">
                         <div class="card-body">
                             <p class="card-text">
-                                "Hướng dẫn trực quan có thể là một wireframe, bố cục quảng
-                                cáo, hoặc kiến ​​trúc thông tin. Một thiết bị cho phép cộng
-                                tác sẽ làm giảm nguy cơ công việc phải làm lại hoàn toàn."
+                                "Chất lượng sản phẩm tuyệt vời và thiết kế vô cùng tinh tế! Tôi đã mua một số món đồ từ Thế
+                                Giới Nội Thất cho ngôi nhà mới và chúng thực sự làm cho không gian của tôi thêm phần sang
+                                trọng. Hơn nữa, trang web rất dễ dàng để tìm kiếm các sản phẩm và tôi luôn nhận được thông
+                                tin chính xác về sản phẩm. Một trải nghiệm mua sắm tuyệt vời!"
                             </p>
                             <div class="d-flex align-items-center pt-4">
                                 <img src="/client_asset/image/home/user-3.jpg" class="rounded-circle icon-xl"
                                     alt="" />
                                 <div>
-                                    <h5 class="card-title fw-bold">Sophie Moore</h5>
-                                    <span class="text-success">Lead Developer</span>
+                                    <h5 class="card-title fw-bold">Phạm Gia Ân</h5>
+                                    <span class="text-success">ân ảo ảnh</span>
                                 </div>
                             </div>
                         </div>
@@ -226,16 +249,17 @@
                     <div class="card col shadow-sm">
                         <div class="card-body">
                             <p class="card-text">
-                                "Hướng dẫn trực quan có thể là một wireframe, bố cục quảng
-                                cáo, hoặc kiến ​​trúc thông tin. Một thiết bị cho phép cộng
-                                tác sẽ làm giảm nguy cơ công việc phải làm lại hoàn toàn."
+                                "Dịch vụ của Thế Giới Nội Thất thật sự ấn tượng. Tôi đã tìm thấy những món đồ nội thất phù
+                                hợp với từng không gian trong ngôi nhà của mình. Các sản phẩm đều rất chất lượng và thiết kế
+                                hiện đại, dễ dàng kết hợp với nhau. Hơn nữa, giao hàng nhanh chóng và đội ngũ nhân viên rất
+                                nhiệt tình, giúp tôi có trải nghiệm mua sắm tuyệt vời!"
                             </p>
                             <div class="d-flex align-items-center pt-4">
                                 <img src="/client_asset/image/home/user-2.jpg" class="rounded-circle icon-xl"
                                     alt="" />
                                 <div>
-                                    <h5 class="card-title fw-bold">Jane Doeji</h5>
-                                    <span class="text-success">CEO, Example Company</span>
+                                    <h5 class="card-title fw-bold">Nguyễn Trần Khánh Vi</h5>
+                                    <span class="text-success">vi vui vẻ</span>
                                 </div>
                             </div>
                         </div>
@@ -243,16 +267,17 @@
                     <div class="card col shadow-sm">
                         <div class="card-body">
                             <p class="card-text">
-                                "Hướng dẫn trực quan có thể là một wireframe, bố cục quảng
-                                cáo, hoặc kiến ​​trúc thông tin. Một thiết bị cho phép cộng
-                                tác sẽ làm giảm nguy cơ công việc phải làm lại hoàn toàn."
+                                "Với Thế Giới Nội Thất, tôi không chỉ mua được những sản phẩm đẹp mà còn được trải nghiệm
+                                dịch vụ chăm sóc khách hàng tuyệt vời. Từ khâu tư vấn sản phẩm đến giao hàng, mọi thứ đều
+                                rất chuyên nghiệp. Tôi đã mua nhiều món đồ cho phòng khách và phòng ngủ, tất cả đều rất ưng
+                                ý và tạo nên không gian sống hoàn hảo!"
                             </p>
                             <div class="d-flex align-items-center pt-4">
                                 <img src="/client_asset/image/home/user-2.jpg" class="rounded-circle icon-xl"
                                     alt="" />
                                 <div>
-                                    <h5 class="card-title fw-bold">Jane Doeji</h5>
-                                    <span class="text-success">CEO, Example Company</span>
+                                    <h5 class="card-title fw-bold">Bùi Tuyết Ngân</h5>
+                                    <span class="text-success">ngân ngại ngùng</span>
                                 </div>
                             </div>
                         </div>
@@ -289,11 +314,4 @@
             </div>
         </section>
     </div>
-
-    <style>
-        .slick-prev.slick-arrow,
-        .slick-next.slick-arrow {
-            display: none !important;
-        }
-    </style>
 @endsection

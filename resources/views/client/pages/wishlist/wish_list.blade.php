@@ -5,7 +5,7 @@
         <div class="d-none d-xxl-block mp-5">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="trangchu.html" class="text-stnt">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('client.home')}}" class="text-stnt">Trang chủ</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Sản phẩm yêu thích</li>
                 </ol>
             </nav>
@@ -14,7 +14,7 @@
             @if (Auth()->check())
                 @if ($user->wishlists->count() > 0)
                     @foreach ($user->wishlists as $wishlist)
-                        <x-productCard :data="$wishlist->product" :dataType="'remove'" />
+                        <x-product_card :data="$wishlist->product" :dataType="'remove'" />
                     @endforeach
                 @else
                     <div class="col-12">

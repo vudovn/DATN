@@ -1,7 +1,7 @@
 <div class="row animate__animated animate__fadeIn listProduct mb-4">
     @if ($products->count() > 0)
         @foreach ($products as $item)
-            <x-productCard :data="$item" />
+            <x-product_card :data="$item" />
         @endforeach
     @else
         <div class="col-12">

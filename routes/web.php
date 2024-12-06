@@ -306,6 +306,11 @@ route::middleware('preventBackHistory')->group(function () {
         Route::prefix('gioi-thieu')->name('about.')->group(function () {
             Route::get('/', [IndexController::class, 'about'])->name('index');
         });
+        
+        // about route
+        Route::prefix('lien-he')->name('contact.')->group(function () {
+            Route::get('/', [IndexController::class, 'contact'])->name('index');
+        });
 
         /* WISHLIST */
         Route::prefix('yeu-thich')->name('wishlist.')->group(function () {

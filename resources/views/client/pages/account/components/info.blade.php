@@ -15,8 +15,9 @@
                 <li><strong>Số điện thoại:</strong> <span class="account_phone">{{ $user->phone }}</span>
                 </li>
                 <li><strong>Email:</strong> <span class="account_email">{{ $user->email }}</span></li>
-                <li><strong>Địa chỉ: </strong> {{ $user->ward->name }}, {{ $user->district->name }},
-                    {{ $user->province->name }} </li>
+                <li><strong>Địa chỉ: </strong> {{ $user->ward->name ?? 'Chưa có ' }},
+                    {{ $user->district->name ?? 'Chưa có' }},
+                    {{ $user->province->name ?? 'Chưa có' }} </li>
             </ul>
         </ul>
         <div class="text-end">

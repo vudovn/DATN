@@ -57,9 +57,8 @@ class OrderService extends BaseService
         try {
             $storeOrder = $this->storeOrder($request);
             $storeOrderDetail = $this->storeOrderDetail($request, $storeOrder);
-            //lỗi ở đây
             DB::commit();
-            return true;
+            return $storeOrder;
         } catch (\Exception $e) {
             DB::rollback();
             echo $e->getMessage();
@@ -83,7 +82,8 @@ class OrderService extends BaseService
             'status',
             'payment_status',
             'total_amount',
-            'fee_ship'
+            'fee_ship',
+            'payment_method'
         ]);
         $payload['total'] = $this->filterPrice($payload['total_amount']);
         $payload['code'] = orderCode();
@@ -103,7 +103,6 @@ class OrderService extends BaseService
                 'name' => $payload['name_orderDetail'][$key],
                 'quantity' => (int) $payload['quantity'][$key],
                 'price' => (float) $payload['price'][$key],
-
             ];
         }
 

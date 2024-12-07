@@ -3,7 +3,7 @@
         <div class="">
             <div class="d-md-flex justify-content-between">
                 <div class="d-flex align-items-center mb-2 mb-md-0">
-                    <h4 class="mb-0">Mã đơn hàng: <span class="order_code">{{ $order->code }}</span></h4>
+                    {{-- <h4 class="mb-0">Mã đơn hàng: <span class="order_code">{{ $order->code }}</span></h4> --}}
                     <span class="badge bg-light-warning text-dark-warning ms-2">{{ statusOrder($order->status) }}</span>
                 </div>
                 <!-- button -->
@@ -127,7 +127,7 @@
         <div class="row">
             <div class="col-md-6 mb-4 mb-lg-0">
                 <h6>Thông tin thanh toán</h6>
-                <span>Thanh toán khi nhận hàng</span>
+                <span>{{ $order->payment_method }}</span>
             </div>
             <div class="col-md-6">
                 <h5>Ghi chú đơn hàng</h5>

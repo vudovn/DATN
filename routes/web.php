@@ -31,6 +31,7 @@ use App\Http\Controllers\Client\IndexController;
 use App\Http\Controllers\Client\CategoryController as ClientCategoryController;
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
+use App\Http\Controllers\Client\VnPayController;
 
 
 
@@ -295,6 +296,8 @@ route::middleware('preventBackHistory')->group(function () {
             Route::post('/addDiscount', [ClientCheckoutController::class, 'addDiscount'])->name('addDiscount');
             Route::post('/applyDiscount', [ClientCheckoutController::class, 'applyDiscount'])->name('applyDiscount');
             Route::post('/store', [ClientCheckoutController::class, 'store'])->name('store');
+            Route::post('/vnpay/pay', [VnPayController::class, 'pay'])->name('vnpay.pay');
+            Route::get('/vnpay/return', [VnPayController::class, 'return'])->name('vnpay.return');
         });
         // collection route
         Route::prefix('bo-suu-tap')->name('collection.')->group(function () {

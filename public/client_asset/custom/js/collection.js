@@ -2,47 +2,56 @@
     "use strict";
     var TGNT = {};
     const VDmessage = new VdMessage();
-    // TGNT.listCollection = () => {
-    //     let abcc = "";
-    //     $.ajax({
-    //         type: "GET",
-    //         url: "/bo-suu-tap/list",
-    //         success: function (data) {
-    //             data.forEach((element) => {
-    //                 abcc += `
-    //                <div class="col-md-6 col-sm-12 mb-5">
-    //                     <div class="card card-blog">
-    //                         <div class="card-image">
-    //                             <a href="#"> <img class="img card-image-top" src="${element.thumbnail}">
-    //                             </a>
-    //                         </div>
-    //                         <div class="table mt-2 p-3">
-    //                             <a href="#" class="card-caption">${element.name}</a>
-    //                             <hr class="border-3 w-25 my-2">
-    //                             <p class="card-description"> ${element.short_content} </p>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //                 `;
-    //             });
-    //             $(".list").html(abcc);
-    //         },
-    //     });
-    // };
     TGNT.renderJs = () => {
-        
-        $('.point').each((index,element) => {
-            // console.log(element.id);
+        $(".point").each((index, element) => {
             var popover = new bootstrap.Popover(
-                        document.getElementById(element.id),
-                        {
-                            trigger: "focus",
-                        }
-                    );
-        })
+                document.getElementById(element.id),
+                {
+                    trigger: "focus",
+                }
+            );
+        });
     };
+
+
+    TGNT.removeProduct = () => { //aaaaaaaaaaaaaaaaaaaaaa
+        $(document).on("click", "#removeItem", function () {
+            let _this = $(this);
+            let id = _this.data("id");
+            let skuProduct = _this.attr("data-productSku");
+            $.ajax({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+                type: "POST",
+                url: url,
+                data: {
+                    id,
+                },
+                success: function (data) {
+                    VDmessage.show("success", "Đã xoá sản phẩm khỏi giỏ hàng");
+                    $(`#cart-item-${id}`).remove();
+                    let divSku = $(`.cart-item[data-productSku="${skuProduct}"]`);
+                    divSku.each(function () {
+                        let id = $(this).data("id");
+                        TGNT.getProduct(id)
+                            .then((productHtml) => {
+                                $(`#cart-item-${id}`).replaceWith(productHtml);
+                            })
+                            .catch((error) => {
+                                console.error("Error fetching product:", error);
+                            });
+                    });
+                },
+                error: function (data) {},
+            });
+        });
+    };
+
     $(document).ready(function () {
-        // TGNT.listCollection();
         TGNT.renderJs();
+        TGNT.removeProduct();
     });
 })(jQuery);

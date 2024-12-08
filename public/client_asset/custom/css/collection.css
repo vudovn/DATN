@@ -240,7 +240,7 @@
     pointer-events: none; /* Ngăn chặn sự tương tác khi ẩn */
 }
 .point_content .name {
-    font-size: clamp(13px, 1.5vw, 20px);
+    font-size: clamp(11px, 1.5vw, 13px);
     font-weight: bold;
     margin: 0;
     margin: 7px 0px;
@@ -250,7 +250,7 @@
     -webkit-line-clamp: 1;
 }
 .point_content .href a {
-    font-size: clamp(10px, 1.5vw, 15px);
+    font-size: clamp(11px, 1.5vw, 13px);
     text-decoration: underline;
     margin: 0;
 }

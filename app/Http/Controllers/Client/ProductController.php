@@ -112,7 +112,16 @@ class ProductController extends Controller
         ];
         return successResponse($data);
     }
-
+    public function addCompare(Request $request, $sku)
+    {
+        $data = $this->productRepository->findByField('sku', $sku)->first();
+        if (empty($data)) {
+            $data = $this->productVariantRepository->findByField('sku', $sku)->first();
+            $data->name = $data->product->name;
+            $data->thumbnail = $data->product->thumbnail;
+        }
+        return $data;
+    }
 
     private function config()
     {
@@ -125,6 +134,8 @@ class ProductController extends Controller
                 "https://freshcart.codescandy.com/assets/libs/rater-js/index.js",
                 'client_asset/custom/js/product/comment_review.js',
                 'client_asset/custom/js/product/attribute.js',
+                'client_asset/custom/js/product/compare.js',
+                'client_asset/custom/js/product/compare_search.js',
                 // 'client_asset/custom/js/product/attribute_hex.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.min.js',
 

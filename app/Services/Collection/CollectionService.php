@@ -45,7 +45,27 @@ class CollectionService extends BaseService
         $data = $this->collectionRepository->pagination($agruments);
         return $data;
     }
-
+    public function getDetail($id_collections){
+        $products = [];
+        foreach ($id_collections as $value) {
+            $data = $this->productRepository->findByField('sku', $value->product_sku)->first();
+            if ($data) {
+                $category = $data->categories->where('is_room', 2)->first();
+                $data->category = $category ? strtolower($category->name) : '';
+            }
+            if (empty($data->sku)) {
+                $data = $this->productVariantRepository->findByField('sku', $value->productVariant_sku)->first();
+                if ($data && $data->product) {
+                    $data->name = $data->product->name ?? '';
+                    $data->slug = $data->product->slug ?? '';
+                    $category = $data->product->categories->where('is_room', 2)->first();
+                    $data->category = $category ? strtolower($category->name) : '';
+                }
+            }
+            $products[] = $data;
+        }
+        return $products;
+    }
     public function create($request)
     {
         DB::beginTransaction();

@@ -275,6 +275,8 @@ route::middleware('preventBackHistory')->group(function () {
             Route::get('/ajax/search-product', [ClientProductController::class, 'searchProduct'])->name('get-variant');
             Route::get('/ajax/get-review', [ClientProductController::class, 'getReview'])->name('get-review');
             Route::post('/ajax/add-review', [ClientProductController::class, 'addReview'])->name('add-review');
+            Route::get('/ajax/add-compare/{sku}', [ClientProductController::class, 'addCompare'])->name('add-compare');
+
         });
         // cart route
         Route::prefix('gio-hang')->name('cart.')->group(function () {

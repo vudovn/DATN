@@ -5,22 +5,26 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Collection;
+use App\Services\Collection\CollectionService;
 use App\Repositories\Collection\CollectionRepository;
 use App\Repositories\Collection\CollectionProductRepository;
 use App\Repositories\Product\ProductVariantRepository;
 use App\Repositories\Product\ProductRepository;
 class CollectionController extends Controller
 {
+    protected $collectionService;
     protected $collectionRepository;
     protected $collectionProductRepository;
     protected $productVariantRepository;
     protected $productRepository;
     public function __construct(
+        CollectionService $collectionService,
         CollectionRepository $collectionRepository,
         CollectionProductRepository $collectionProductRepository,
         ProductRepository $productRepository,
         ProductVariantRepository $productVariantRepository,
     ) {
+        $this->collectionService = $collectionService;
         $this->collectionRepository = $collectionRepository;
         $this->collectionProductRepository = $collectionProductRepository;
         $this->productRepository = $productRepository;
@@ -37,24 +41,7 @@ class CollectionController extends Controller
         $config = $this->config();
         $collection = $this->collectionRepository->findByField('slug', $slug)->first();
         $id_collections = $this->collectionProductRepository->findByField('collection_id', $collection->id)->get();
-        $products = [];
-        foreach ($id_collections as $value) {
-            $data = $this->productRepository->findByField('sku', $value->product_sku)->first();
-            if ($data) {
-                $category = $data->categories->where('is_room', 2)->first();
-                $data->category = $category ? strtolower($category->name) : '';
-            }
-            if (empty($data->sku)) {
-                $data = $this->productVariantRepository->findByField('sku', $value->productVariant_sku)->first();
-                if ($data && $data->product) {
-                    $data->name = $data->product->name ?? '';
-                    $data->slug = $data->product->slug ?? '';
-                    $category = $data->product->categories->where('is_room', 2)->first();
-                    $data->category = $category ? strtolower($category->name) : '';
-                }
-            }
-            $products[] = $data;
-        }
+        $products = $this->collectionService->getDetail($id_collections);
         return view('client.pages.collection.detail', compact('config', 'collection', 'products'));
     }
     public function list(Request $request)
@@ -62,9 +49,6 @@ class CollectionController extends Controller
         $collections = successResponse(Collection::all())->getData()->data;
         return $collections;
     }
-
-
-
 
     private function config()
     {

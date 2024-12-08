@@ -34,9 +34,9 @@
         } else {
             url.searchParams.delete("attr");
         }
-        const newUrl = url.toString().replace(/%2C/g, ',');
+        const newUrl = url.toString().replace(/%2C/g, ",");
         window.history.pushState({}, "", newUrl);
-        
+
         const allSelected = $(".attribute")
             .toArray()
             .every((item) => {
@@ -66,7 +66,9 @@
 
     TGNT.renderInfo = (data) => {
         $(".product-title").html(`${data.name} (${data.title}) `);
+        $(".inventory").val(`${data.quantity}`);
         if (data.sku) {
+            $(".compare").data("sku", `${data.sku}`);
             $(".buyNow").attr("data-sku", `${data.sku}`);
             $(".addToCart").attr("data-sku", `${data.sku}`);
         }

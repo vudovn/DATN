@@ -105,16 +105,6 @@ class CheckoutController extends Controller
             if (isset($request->discountCode)) {
                 $this->cartService->submitDiscount(Auth::id(), $request->discountCode);
             }
-            $this->cartRepository->deleteCart(Auth::id());
-            SendOrderMail::dispatch($order);
-            $message = "🛍️ *Đơn hàng mới đã được tạo!*\n\n"
-                . "📦 *Thông tin đơn hàng:*\n"
-                . "🆔 *Mã đơn hàng:* {$order->code}\n"
-                . "👤 *Khách hàng:* {$order->user->name}\n"
-                . "💰 *Tổng tiền:* " . number_format($order->total) . " VND\n\n"
-                . "⏰ *Thời gian đặt:* " . now()->format('H:i:s d/m/Y') . "\n"
-                . "🔗 *Chi tiết đơn hàng:* [Xem tại đây](" . route('order.show', $order->id) . ")\n";
-            SendTelegramNotification::dispatch($message);
             return view('client.pages.cart.components.checkout.result', ['message' => 'Đặt hàng thành công', 'status' => 'success']);
         }
         return view('client.pages.cart.components.checkout.result', ['message' => 'Đặt hàng thất bại', 'status' => 'success']);

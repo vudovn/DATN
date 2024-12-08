@@ -64,7 +64,6 @@ class CartService extends BaseService
             $payload = $request->except(['_token', 'send']);
             $payload['user_id'] = Auth::id();
             $payload['quantity'] = (int) $payload['quantity'];
-            $payload['id'] = (int) $payload['id'];
             $payload['price'] = (int) $payload['price'];
             $cart = $this->cartRepository->findByField('user_id', $payload['user_id'])->get();
             $found = false;
@@ -180,14 +179,13 @@ class CartService extends BaseService
     {
         if (isset($item)) {
             $data = $this->productRepository->findByField('sku', $item->sku)->first();
-            if (isset($data)) {
-                $data->idCart = $item->id ?? "";
-                $data->quantityCart = $item->quantity ?? '';
-            }
+            // if (isset($data)) {
+            //     $data->idCart = $item->id ?? "";
+            //     $data->quantityCart = $item->quantity ?? '';
+            // }
             if (empty($data)) {
                 $data = $this->productVariantRepository->findByField('sku', $item->sku)->first();
-                $data->idCart = $item->id ?? '';
-                $data->quantityCart = $item->quantity ?? '';
+     
                 $data->discount = $data->product->discount ?? '';
                 $data->name = $data->product->name ?? '';
                 $data->slug = $data->product->slug ?? '';
@@ -200,6 +198,9 @@ class CartService extends BaseService
                 $category = $data->product->categories->where('is_room', 2)->first();
                 $data->category = $category ? strtolower($category->name) : '';
             }
+            $data->idCart = $item->id ?? '';
+            $data->quantityCart = $item->quantity ?? '';
+            $data->quantity =  $data->product->quantity ?? $data->quantity;
         }
         return $data;
     }

@@ -312,16 +312,17 @@
         });
     };
     TGNT.selectIcon = (category) => {
-        if (category) {
-            switch (category) {
-                case "ghế":
-                    return '<i class="fa-solid fa-chair"></i>';
-                case "giường":
-                    return '<i class="fa-sharp fa-solid fa-bed-front"></i>';
-            }
-        } else {
-            return '<i class="fa-brands fa-shopify"></i>';
-        }
+        // if (category) {
+        //     switch (category) {
+        //         case "ghế":
+        //             return '<i class="fa-solid fa-chair"></i>';
+        //         case "giường":
+        //             return '<i class="fa-sharp-duotone fa-regular fa-bed-front"></i>';
+        //     }
+        // } else {
+        //     return '<i class="fa-brands fa-shopify"></i>';
+        // }
+        return '<i class="fa-brands fa-shopify"></i>';
     };
     $(document).ready(function () {
         TGNT.searchForm();

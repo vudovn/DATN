@@ -119,7 +119,10 @@
                     $("#cart-total-discount").html(
                         TGNT.formatNumber(afterDiscount)
                     );
-                    // $("#total-cart-input").val(afterDiscount);
+
+                    
+                    
+                    $("#cart-total-discount-input").val(afterDiscount);
                     $("#total-cart-input").val(
                         TGNT.formatNumber(afterDiscount)
                     );

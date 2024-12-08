@@ -8,8 +8,8 @@
             <div class="d-none d-xxl-block mp-5">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="trangchu.html" class="text-stnt">Trang chủ</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Bộ sưu tập</li>
+                        <li class="breadcrumb-item"><a href="{{route('client.home')}}" class="text-stnt">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('client.collection.index')}}" class="text-stnt">Bộ sưu tập</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{ $collection->name }}</li>
                     </ol>
                 </nav>
@@ -50,7 +50,7 @@
                     </div> --}}
                     <div class="text-center my-3">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-tgnt" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
                             Thêm bộ sưu tập vào giỏ hàng
                         </button>
@@ -59,5 +59,6 @@
                 </div>
             </div>
         </section>
+        
     </main>
 @endsection

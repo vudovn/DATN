@@ -13,6 +13,11 @@ body {
     transform: translate(-50%, -50%);
     transition: all 0.5s ease;
 }
+.slick-prev:hover,
+.slick-next:hover {
+  background: var(--base-color) !important;
+  border-color: var(--base-color) !important;
+}
 /* a {
   color: var(--base-color) !important;
   &:hover{

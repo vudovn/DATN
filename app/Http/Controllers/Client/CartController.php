@@ -42,8 +42,10 @@ class CartController extends Controller
         foreach ($carts as $cart) {
             $listCart .= $this->getProductFull($cart);
         }
+        $product_featureds = $this->productRepository->getFeatured();
         return view('client.pages.cart.index', compact(
             'config',
+            'product_featureds',
             'carts',
             'listCart',
             'title',
@@ -73,7 +75,7 @@ class CartController extends Controller
         $product = $this->cartService->getProduct($cart);
         return view('client.pages.cart.components.item', compact('product', 'carts', 'zIndex'))->render();
     }
-    
+
     public function count()
     {
         $data = $this->cartRepository->findByField('user_id', Auth::id())->get();
@@ -84,9 +86,9 @@ class CartController extends Controller
         if (Auth::check()) {
             $data = $this->cartService->create($request);
             if ($data) {
-                return successResponse('', 'Thêm sản phẩm vào giỏ hàng thành công');
+                return successResponse('', 'Thành công');
             }
-            return errorResponse('Thêm sản phẩm vào giỏ hàng thất bại');
+            return errorResponse('Thất bại');
         } else {
             return errorResponse('Bạn phải đăng nhập');
         }
@@ -110,7 +112,7 @@ class CartController extends Controller
     }
     public function updateQuantity(Request $request)
     {
-        $id = $request->idCart;
+        $id = $request->idCart; 
         $data = $this->cartService->update($request, $id);
         if ($data) {
             return successResponse('', 'Cập nhật số lượng');

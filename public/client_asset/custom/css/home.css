@@ -15,11 +15,7 @@ a {
   top: 100%;
   transform: translate(-50%, -50%);
 }
-.home .slick-prev:hover,
-.home .slick-next:hover {
-  background: var(--base-color) !important;
-  border-color: var(--base-color) !important;
-}
+
 .home .notice {
     font-size: clamp(10px, 1vw, 56px);
     background-color: #3d3733;

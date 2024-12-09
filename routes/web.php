@@ -148,8 +148,8 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     /* REVIEW ROUTE */
     Route::prefix('admin/review')->name('review.')->group(function () {
         Route::get('/index', [ReviewController::class, 'index'])->name('index');
-        Route::get('/create', [ReviewController::class, 'create'])->name('create');
-        Route::post('/store', [ReviewController::class, 'store'])->name('store');
+        Route::get('/reply/{id}', [ReviewController::class, 'reply'])->name('reply');
+        Route::post('/store/{id}', [ReviewController::class, 'store'])->name('store');
         Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'destroy'])->name('delete');
     });
 

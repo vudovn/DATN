@@ -27,7 +27,7 @@ class VnPayService extends BaseService
             return $paymentUrl;
         } catch (\Exception $e) {
             DB::rollback();
-            \Log::error('Transaction creation failed: ' . $e->getMessage());
+            \Log::error('Tạo giao dịch thất bại: ' . $e->getMessage());
             throw $e;
         }
     }
@@ -54,7 +54,7 @@ class VnPayService extends BaseService
         $vnp_Amount = $order->total * 100;
         $vnp_Locale = 'vn';
         $vnp_BankCode = $order->bankCode;
-        $vnp_IpAddr = $request->ip(); 
+        $vnp_IpAddr = $request->ip();
 
         $inputData = array(
             "vnp_Version" => "2.1.0",
@@ -70,27 +70,27 @@ class VnPayService extends BaseService
             "vnp_ReturnUrl" => $vnp_ReturnUrl,
             "vnp_TxnRef" => $vnp_TxnRef,
         );
- 
+
         if (isset($vnp_BankCode) && $vnp_BankCode != "") {
             $inputData['vnp_BankCode'] = $vnp_BankCode;
         }
 
         if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
-            $inputData['vnp_Bill_State'] = $vnp_Bill_State; 
+            $inputData['vnp_Bill_State'] = $vnp_Bill_State;
         }
 
         ksort($inputData);
 
-        $query = ""; 
-        $i = 0; 
-        $hashdata = ""; 
+        $query = "";
+        $i = 0;
+        $hashdata = "";
 
         foreach ($inputData as $key => $value) {
             if ($i == 1) {
                 $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
             } else {
                 $hashdata .= urlencode($key) . "=" . urlencode($value);
-                $i = 1; 
+                $i = 1;
             }
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
         }

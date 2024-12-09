@@ -37,7 +37,7 @@
                 </div>
             </td>
             <td><a
-                    href="{{ route('client.product.detail', $review->product->name) }}">{{ $review->product->name }}</a>
+                    href="{{ route('client.product.detail', $review->product->slug) }}">{{ $review->product->name }}</a>
             </td>
             <td>{{ changeDateFormat($review->created_at) }}</td>
             <td class="text-center table-actions">

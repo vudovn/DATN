@@ -4,7 +4,7 @@ namespace App\Services\Collection;
 use App\Services\BaseService;
 use App\Repositories\Collection\CollectionRepository;
 use App\Repositories\Product\ProductRepository;
-use App\Repositories\Product\productVariantRepository;
+use App\Repositories\Product\ProductVariantRepository;
 use Illuminate\Support\Facades\DB;
 class CollectionProductService extends BaseService
 {

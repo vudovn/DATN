@@ -40,7 +40,9 @@ class ReviewController extends Controller
         ));
     }
 
-    public function create() {}
+    public function create()
+    {
+    }
 
     public function store(Request $request)
     {
@@ -58,7 +60,7 @@ class ReviewController extends Controller
         if ($this->reviewService->create($request)) {
             return redirect()->route('review.index')->with('success', 'Tạo đánh giá mới thành công');
         }
-        return  redirect()->route('review.index')->with('error', 'Tạo đánh giá mới thất bại');
+        return redirect()->route('review.index')->with('error', 'Tạo đánh giá mới thất bại');
     }
 
     public function update(Request $request, $id)
@@ -76,11 +78,13 @@ class ReviewController extends Controller
         if ($this->reviewService->update($request, $id)) {
             return redirect()->route('review.index')->with('success', 'Cập nhật đánh giá thành công.');
         }
-        return  redirect()->route('review.index')->with('error', 'Cập nhật đánh giá thất bại');
+        return redirect()->route('review.index')->with('error', 'Cập nhật đánh giá thất bại');
     }
 
 
-    public function edit($id) {}
+    public function edit($id)
+    {
+    }
 
     public function delete($id)
     {

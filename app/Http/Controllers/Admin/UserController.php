@@ -45,8 +45,10 @@ class UserController extends Controller implements HasMiddleware
         } else {
             $config['breadcrumb'] = $this->breadcrumb('customer');
         }
+        $users = $this->userService->paginationAdmin($request);
         return view('admin.pages.user.index', compact(
             'config',
+            'users'
         ));
     }
     public function getData($request)

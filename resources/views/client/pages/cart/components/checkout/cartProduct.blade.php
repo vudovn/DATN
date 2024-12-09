@@ -20,23 +20,20 @@
                             {{ $product->name }}
                             <span class="quantity btn btn-tgnt">{{ formatNumber($product->quantityCart) }}</span>
                         </td>
+                        <td class="hidden">
+                            <input type="hidden" name="product_id[]" value="{{ $product->product_id ?? $product->id }}">
+                            <input type="hidden" class="product_quantity_input" name="quantity[]" value="{{ $product->quantityCart }}">
+                            <input type="hidden" name="price[]" value="{{ $product->price - ($product->price * $product->discount)/100 }}">
+                            <input type="hidden" name="name_orderDetail[]" value="{{ $product->name }}">
+                            <input type="hidden" name="sku[]" value="{{ $product->sku }}">
+                        </td>
                     </tr>
- 
-                    <div class="hidden">
-                        <input type="hidden" name="product_id[]" value="{{$product->product->id ?? $product->id}}">
-                        <input type="hidden" name="quantity[]" value="{{$product->quantityCart}}">
-                        <input type="hidden" name="price[]" value="{{$product->price}}">
-                        <input type="hidden" name="name_orderDetail[]" value="{{ $product->name }}{{ isset($product->title) ? ' (' . $product->title.')' : '' }}">
-                        <input type="hidden" name="sku[]" value="{{$product->product->sku ?? $product->sku}}">
-                        <input type="hidden" name="thumbnail[]" value="{{$product->thumbnail}}">
-                        {{-- <input type="hidden" name="total[]" value="{{$product->price * $product->quantityCart}}"> --}}
-                    </div>
                 @endforeach
             @endif
         </tbody>
     </table>
     <p class="cart-total">Tổng tiền: <span id="cart-total">{{ formatNumber($total) }}</span>đ</p>
-    <input type="hidden" id="cart-total-input" value="{{ $total }}"></input>
+    <input type="hidden" id="cart-total-input"  value="{{ $total }}"></input>
     
     <style>
         th,

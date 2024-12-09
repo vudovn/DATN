@@ -8,15 +8,16 @@
             <div class="d-none d-xxl-block mp-5">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="trangchu.html" class="text-stnt">Trang chủ</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Bộ sưu tập</li>
+                        <li class="breadcrumb-item"><a href="{{ route('client.home') }}" class="text-stnt">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('client.collection.index') }}" class="text-stnt">Bộ sưu
+                                tập</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{ $collection->name }}</li>
                     </ol>
                 </nav>
             </div>
             <div class="container detail">
                 <div class="banner mb-3">
-                    <img class="banner-image" src="{{ $collection->thumbnail }}" alt="">
+                    <img class="banner-image rounded" src="{{ $collection->thumbnail }}" alt="">
                     <p class="banner-caption">{{ $collection->name }}</p>
                     <p class="banner-description">{{ $collection->short_description }}</p>
                 </div>
@@ -50,14 +51,24 @@
                     </div> --}}
                     <div class="text-center my-3">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-tgnt" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Thêm bộ sưu tập vào giỏ hàng
                         </button>
+                    </div>
+                    {{-- bình luận --}}
+                    <div class="mb-5">
+                        <h3>Bình luận</h3>
+                        <div>
+                            <div class="fb-comments" data-href="{{ url()->current() }}" data-numposts="5" data-width="100%">
+                            </div>
+                        </div>
                     </div>
                     @include('client.pages.collection.components.modal_product')
                 </div>
             </div>
         </section>
     </main>
+    {{-- <div id="fb-root"></div> --}}
+    <script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v21.0&appId=458546473274979"></script>
 @endsection

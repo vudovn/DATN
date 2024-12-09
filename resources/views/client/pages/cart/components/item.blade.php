@@ -22,16 +22,19 @@
                 @if (isset($product->discount) && $product->discount !== 0)
                     <div class="cart-item-price">
                         <input type="hidden" class="price" id="origin-price-{{ $product->idCart }}-input"
-                            value="{{ $product->price - ($product->price * $product->discount) / 100 }}">
+                            value="{{ $product->discount > 0 ? $product->price - ($product->price * $product->discount) / 100 : $product->price }}">
                         </input>
                         Giá:
                         <span id="origin-price-{{ $product->idCart }}">
-                            {{ formatMoney($product->price - ($product->price * $product->discount) / 100) }}</span>₫
+                            {{ formatMoney($product->discount > 0 ? $product->price - ($product->price * $product->discount) / 100 : $product->price) }}</span>₫
                     </div>
                     <div class="cart-item-old-price m-xxl-2 m-md-0">
                         <span id="dis-price-{{ $product->idCart }}">{{ formatMoney($product->price) }}</span>₫
                     </div>
                 @else
+                    <input type="hidden" class="price" id="origin-price-{{ $product->idCart }}-input"
+                        value="{{ $product->price }}">
+                    </input>
                     <div class="cart-item-price">
                         Giá: <span class="price" id="price-{{ $product->sku }}">{{ $product->price }}</span>₫
                     </div>
@@ -69,7 +72,7 @@
                     {{ formatMoney(($product->price - ($product->price * $product->discount) / 100) * $product->quantityCart) }}</span>₫
                 <input type="hidden" class="price-total" value="">
             </div>
-            
+
             <div class="input-group input-spinner d-flex">
                 <input type="button" value="-" class="btn-minus btn btn-sm" data-field="quantity">
                 <input type="number" step="1" max="3" data-idCart="{{ $product->idCart }}"

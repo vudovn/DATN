@@ -50,6 +50,9 @@
                     <h2 class="product-title">{{ $name }}
                     </h2>
                     <span class="badge bg-light-warning text-dark-warning"> Giảm {{ $product->discount }} %</span>
+                    <button type="button" class="badge bg-light-primary text-dark-warning compare"
+                        data-sku="{{ $product->sku }}"> So sánh
+                        (+)</button>
                 </div>
                 <div class="price_spct product-price d-flex">
                     @if ($discount > 0)
@@ -127,6 +130,7 @@
                         </button>
                         <div class="hidden">
                             <input type="hidden" name="price" id="price" value="{{ $priceDiscount }}">
+                            <input type="hidden" name="inventory" class="inventory" value="{{ $product->quantity }}">
                         </div>
                         {{-- <input 
                             {{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id) ? 'checked' : '' }} 
@@ -190,4 +194,6 @@
 
     </section>
     <!-- end -->
+    @include('client.pages.product_detail.components.api.compare')
+
 @endsection

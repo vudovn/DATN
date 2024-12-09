@@ -39,4 +39,5 @@ return array(
     '377b22b161c09ed6e5152de788ca020a' => $vendorDir . '/spatie/laravel-permission/src/helpers.php',
     'c01203beecb6ad4ab68387093161dc71' => $baseDir . '/app/Helpers/MyHelper.php',
     '208eac789f42c75a68e7f70dd80e6d56' => $baseDir . '/app/Helpers/ResponseHelper.php',
+    '21574af90edade1dbd7d07c5e019806e' => $baseDir . '/app/Helpers/TelegramHelper.php',
 );

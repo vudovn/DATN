@@ -25,6 +25,7 @@ class Order extends Model
         'note',
         'total',
         'payment_status',
+        'payment_method',
         'status',
         'fee_ship',
         'user_id'

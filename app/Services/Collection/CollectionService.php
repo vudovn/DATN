@@ -4,7 +4,7 @@ namespace App\Services\Collection;
 use App\Services\BaseService;
 use App\Repositories\Collection\CollectionRepository;
 use App\Repositories\Product\ProductRepository;
-use App\Repositories\Product\productVariantRepository;
+use App\Repositories\Product\ProductVariantRepository;
 use Illuminate\Support\Facades\DB;
 class CollectionService extends BaseService
 {
@@ -45,7 +45,28 @@ class CollectionService extends BaseService
         $data = $this->collectionRepository->pagination($agruments);
         return $data;
     }
-
+    public function getDetail($id_collections)
+    {
+        $products = [];
+        foreach ($id_collections as $value) {
+            $data = $this->productRepository->findByField('sku', $value->product_sku)->first();
+            if ($data) {
+                $category = $data->categories->where('is_room', 2)->first();
+                $data->category = $category ? strtolower($category->name) : '';
+            }
+            if (empty($data->sku)) {
+                $data = $this->productVariantRepository->findByField('sku', $value->productVariant_sku)->first();
+                if ($data && $data->product) {
+                    $data->name = $data->product->name ?? '';
+                    $data->slug = $data->product->slug ?? '';
+                    $category = $data->product->categories->where('is_room', 2)->first();
+                    $data->category = $category ? strtolower($category->name) : '';
+                }
+            }
+            $products[] = $data;
+        }
+        return $products;
+    }
     public function create($request)
     {
         DB::beginTransaction();
@@ -75,7 +96,7 @@ class CollectionService extends BaseService
                     ]);
                 }
             }
-            
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -90,7 +111,7 @@ class CollectionService extends BaseService
         DB::beginTransaction();
         try {
             DB::table('collection_product')->where('collection_id', $id)->delete();
-            $payload = $request->except(['categoriesOther', 'categoriesRoom', '_token', 'send', 'idProduct', 'keyword','_method']);
+            $payload = $request->except(['categoriesOther', 'categoriesRoom', '_token', 'send', 'idProduct', 'keyword', '_method']);
             $collection = $this->collectionRepository->findById($id);
             if (empty($payload['slug'])) {
                 $payload['slug'] = getSlug($payload['name']);
@@ -116,9 +137,9 @@ class CollectionService extends BaseService
                             'productVariant_sku' => $productVariantSku ?? null,
                         ]
                     );
-                }            
+                }
             }
-            
+
             DB::commit();
             return true;
         } catch (\Exception $e) {

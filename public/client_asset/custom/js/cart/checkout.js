@@ -119,7 +119,7 @@
                     $("#cart-total-discount").html(
                         TGNT.formatNumber(afterDiscount)
                     );
-                    // $("#total-cart-input").val(afterDiscount);
+                    $("#cart-total-discount-input").val(afterDiscount);
                     $("#total-cart-input").val(
                         TGNT.formatNumber(afterDiscount)
                     );
@@ -179,9 +179,16 @@
         number = Math.floor(number);
         return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
+
+    TGNT.form_payment = () => {
+        $(".radio_input_tgnt").on("change", function () {
+            $(".form_payment").attr("action", $(this).data('url'));
+        });
+    }
     $(document).ready(function () {
         TGNT.updateTotalCart();
         TGNT.addDiscount();
         TGNT.removeDiscount();
+        TGNT.form_payment();
     });
 })(jQuery);

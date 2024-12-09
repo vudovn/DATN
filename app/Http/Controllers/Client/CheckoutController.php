@@ -13,6 +13,9 @@ use App\Repositories\Location\ProvinceRepository;
 use App\Repositories\Location\DistrictRepository;
 use App\Repositories\Location\WardRepository;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\Payment\PaymentMethodRepository;
+use App\Jobs\SendOrderMail;
+use App\Jobs\SendTelegramNotification;
 class CheckoutController extends Controller
 {
     protected $cartRepository;
@@ -23,7 +26,7 @@ class CheckoutController extends Controller
     protected $provinceRepository;
     protected $districtRepository;
     protected $wardRepository;
-
+    protected $paymentMethodRepository;
     public function __construct(
         CartRepository $cartRepository,
         CartService $cartService,
@@ -33,6 +36,7 @@ class CheckoutController extends Controller
         ProvinceRepository $provinceRepository,
         DistrictRepository $districtRepository,
         WardRepository $wardRepository,
+        PaymentMethodRepository $paymentMethodRepository
     ) {
         $this->cartService = $cartService;
         $this->orderService = $orderService;
@@ -42,6 +46,7 @@ class CheckoutController extends Controller
         $this->districtRepository = $districtRepository;
         $this->wardRepository = $wardRepository;
         $this->cartRepository = $cartRepository;
+        $this->paymentMethodRepository = $paymentMethodRepository;
     }
     public function index()
     {
@@ -56,6 +61,7 @@ class CheckoutController extends Controller
         $wards = $this->wardRepository->getAllWards();
         $config = $this->config();
         $address = $order->address ?? $order->user->address ?? '';
+        $orderPayment = $this->paymentMethodRepository->getAllPublic();
         return view('client.pages.cart.checkout', compact(
             'user',
             'provinces',
@@ -64,7 +70,8 @@ class CheckoutController extends Controller
             'address',
             'products',
             'total',
-            'config'
+            'config',
+            'orderPayment'
         ));
     }
     public function addDiscount(Request $request)
@@ -98,10 +105,9 @@ class CheckoutController extends Controller
             if (isset($request->discountCode)) {
                 $this->cartService->submitDiscount(Auth::id(), $request->discountCode);
             }
-            $this->cartRepository->deleteCart(Auth::id());
-            return to_route('client.cart.index')->with('success', 'Đặt hàng thành công thành công');
+            return view('client.pages.cart.components.checkout.result', ['message' => 'Đặt hàng thành công', 'status' => 'success']);
         }
-        return to_route('client.cart.index')->with('Error', 'Đặt hàng thành công thất bại');
+        return view('client.pages.cart.components.checkout.result', ['message' => 'Đặt hàng thất bại', 'status' => 'success']);
     }
     private function config()
     {

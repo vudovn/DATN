@@ -28,6 +28,7 @@ use App\Http\Controllers\Client\CommentController as ClientCommentController;
 use App\Http\Controllers\Client\CartController as ClientCartController;
 use App\Http\Controllers\Client\CheckoutController as ClientCheckoutController;
 use App\Http\Controllers\Client\IndexController;
+use App\Http\Controllers\Client\ContactController as ClientContactController;
 use App\Http\Controllers\Client\CategoryController as ClientCategoryController;
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -163,7 +164,6 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/create', [CommentForbiddenWordController::class, 'create'])->name('create');
         Route::post('/store', [CommentForbiddenWordController::class, 'store'])->name('store');
         Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'delete'])->name('delete');
-
     });
 
     // setting route
@@ -305,11 +305,13 @@ route::middleware('preventBackHistory')->group(function () {
         Route::prefix('gioi-thieu')->name('about.')->group(function () {
             Route::get('/', [IndexController::class, 'about'])->name('index');
         });
-        
+
         // about route
         Route::prefix('lien-he')->name('contact.')->group(function () {
-            Route::get('/', [IndexController::class, 'contact'])->name('index');
+            Route::get('/', [ClientContactController::class, 'contact'])->name('index');
+            Route::post('/', [ClientContactController::class, 'send'])->name('send');
         });
+
 
         /* WISHLIST */
         Route::prefix('yeu-thich')->name('wishlist.')->group(function () {

@@ -6,6 +6,7 @@
             <x-filter :model="$config['model']" :createButton="[
                 'label' => '',
                 'route' => $config['model'] . '.create',
+                'type' => $type,
             ]" :options="[
                 'actions' => generateSelect('Hành động', __('general.actions')),
                 'perpage' => generateSelect('10 hàng', __('general.perpage')),

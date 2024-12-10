@@ -255,9 +255,11 @@
 <body class="antialiased">
     <div class="container">
         <div class="error">
+
             <h2>Ôi hỏng</h2>
             <p>Ruh-roh, có điều gì đó không ổn... Có vẻ bạn đang không dùng đúng với điều khoản và chính sấch bảo mật của chúng tôi ;)</p>
             @yield('message')
+
         </div>
         <div class="stack-container">
             <div class="card-container">

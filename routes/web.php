@@ -43,6 +43,7 @@ Route::get('/account', function () {
     return view('admin.pages.account.application.index');
 })->name('home');
 
+
 Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::prefix('admin/dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');
@@ -50,17 +51,24 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/ajax/newCustomersByMonth', [DashboardController::class, 'newCustomersByMonth'])->name('newCustomersByMonth');
     });
     /* USER ROUTE */
+
     Route::prefix('admin/user')->name('user.')->group(function () {
         Route::get('/customer', [UserController::class, 'index'])->name('index');
         Route::get('/admin', [UserController::class, 'index'])->name('admin.index');
         Route::get('/create', [UserController::class, 'create'])->name('create');
+    });
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('/{type}', [UserController::class, 'index'])->name('index')
+            ->where('type', 'customer|staff');
+        Route::get('/create/{type}', [UserController::class, 'create'])
+            ->name('create')->where('type', 'customer|staff');
         Route::post('/store', [UserController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
 
         // Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
-        // Route::get('/api/wards/{district_code}', [UserController::class, 'getWards'])->name('wards');
+        Route::get('/api/wards/{district_code}', [UserController::class, 'getWards'])->name('wards');
     });
     /* PRODUCT ROUTE */
     Route::prefix('admin/product')->name('product.')->group(function () {
@@ -157,6 +165,9 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::prefix('admin/collection')->name('collection.')->group(function () {
         Route::get('/index', [CollectionController::class, 'index'])->name('index');
         Route::get('/getProductPoint', [CollectionController::class, 'getProductPoint'])->name('getProductPoint');
+    });
+    Route::prefix('collection')->name('collection.')->group(function () {
+        Route::get('/index', [CollectionController::class, 'index'])->name('index');
         Route::get('/create', [CollectionController::class, 'create'])->name('create');
         Route::post('/store', [CollectionController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [CollectionController::class, 'edit'])->name('edit');
@@ -196,6 +207,10 @@ Route::middleware(['checkPermission'])->group(function () {
         Route::put('/change/status', [AjaxDashboardController::class, 'updateStatus'])->name('ajax.dashboard.updateStatus');
     });
 });
+Route::prefix('setting/account')->name('setting.account.')->group(function () {
+    Route::get('/{type}', [UserController::class, 'getInformation'])->name('index');
+    Route::put('/update-{type}', [UserController::class, 'updateInformation'])->name('update');
+});
 
 Route::get('/ajax/getLocation', [LocationController::class, 'getLocation'])->name('ajax.getLocation');
 Route::get('getProduct', [AjaxDashboardController::class, 'getProduct'])->name('getProduct');
@@ -225,7 +240,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 Route::get('/order-code', function () {
     return orderCode(7);
 });
-
 
 Route::get('/test', [AjaxDashboardController::class, 'test']);
 

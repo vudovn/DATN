@@ -1,4 +1,4 @@
-@props(['model'])
+@props(['model','type'])
 
 <div class="card" style="position: sticky; top: 0; z-index:100;">
     <div class="card-header">
@@ -10,7 +10,7 @@
                 <i data-feather="check-circle" class="me-1"></i>
                 Lưu
             </button>
-            <a href="{{ route($model.'.index') }}" class="btn btn-danger d-inline-flex d-inline-flex justify-content-center" style="flex: 1">
+            <a href="{{ route($model.'.index', isset($type) ? ['type' => $type] : []) }}" class="btn btn-danger d-inline-flex d-inline-flex justify-content-center" style="flex: 1">
                 <i data-feather="log-out" class="me-1"></i>
                 Hủy</a>
         </div>

@@ -28,10 +28,6 @@ class PermissionController extends Controller implements HasMiddleware
     ) {
         $this->permissionService = $permissionService;
         $this->permissionRepository = $permissionRepository;
-        // $this->middleware('permission:attribute-list|attribute-create|attribute-edit|attribute-delete', ['only' => ['index', 'store']]);
-        // $this->middleware('permission:attribute-create', ['only' => ['create', 'store']]);
-        // $this->middleware('permission:attribute-edit', ['only' => ['edit', 'update']]);
-        // $this->middleware('permission:attribute-delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)

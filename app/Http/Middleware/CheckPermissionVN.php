@@ -29,7 +29,7 @@ class CheckPermissionVN
             'show', 'get' => 'index',
             default => $method[0], 
         };
-        $permission = $model != null ? $permission = $model . ' ' . $action : $permission = $currentAction[0] . ' ' . $action;
+        $permission = $model != null ? $permission = ucfirst($model) . ' ' . $action : $permission = $currentAction[0] . ' ' . $action;
         if (Auth::user()->hasRole('Super Admin')) {
             return $next($request);
         }

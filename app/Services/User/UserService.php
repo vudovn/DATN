@@ -94,6 +94,22 @@ class UserService extends BaseService
             $user = $this->userRepository->update($id, $payload);
             $findUser = $this->userRepository->findById($id);
             $findUser->syncRoles($request->input('roles')); // Đồng bộ vai trò
+
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+           DB::rollback();
+            echo $e->getMessage();die();
+            // $this->log($e);
+            // return false;
+        }
+    }
+    public function changePassword($request, $id){
+        DB::beginTransaction();  
+        try {
+            $payload = $request->except(['_token', 'send', '_method']);
+            $payload['password'] = Hash::make($request->password_new);
+            $user = $this->userRepository->update($id, $payload); 
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -147,22 +163,5 @@ class UserService extends BaseService
         return Hash::check($password, $user->password);
     }
 
-    public function changePassword($request, $id)
-    {
-        DB::beginTransaction();
-        try {
-            $payload = $request->except(['_token', 'send']);
-            $payload['password'] = Hash::make($request->password);
-            $user = $this->userRepository->update($id, $payload);
-            DB::commit();
-            return true;
-        } catch (\Exception $e) {
-            DB::rollback();
-            echo $e->getMessage();
-            die();
-            // $this->log($e);
-            // return false;
-        }
-    }
 
 }

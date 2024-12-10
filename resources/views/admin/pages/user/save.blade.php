@@ -21,11 +21,28 @@
                                 <x-input :label="'Tên đầy đủ'" :name="'name'" :value="$user->name ?? ''" :required="true" />
                             </div>
                         </div>
+
+                        @if (isset($config['method']) && $config['method'] !== 'edit')
+                            <div class="row mb-3">
+                                <div class="col-lg-6">
+                                    <x-input :label="'Mật khẩu'" :name="'password'" :value="''" :required="true"
+                                        :type="'password'" />
+                                </div>
+                                <div class="col-lg-6">
+                                    <x-input :label="'Mật khẩu xác nhận'" :name="'re_password'" :required="true" :type="'password'" />
+                                </div>
+                            </div>
+                        @endif
                         <div class="row mb-3">
                             <div class="col-lg-6">
                                 <label for="roles[]">Chọn vai trò <span class="text-danger">*</span></label>
                                 <select class="form-control js-choice-multiple" name="roles[]" multiple="multiple">
                                     @foreach ($roles as $key => $role)
+                                        @php
+                                            if ($role->name == 'Super Admin' && auth()->user()->cannot('Super Admin')) {
+                                                continue;
+                                            }
+                                        @endphp
                                         <option value="{{ $role->name }}"
                                             {{ isset($user) && $user->roles->contains('name', $role->name) ? 'selected' : '' }}
                                             {{ in_array($role->name, old('roles') ?? []) ? 'selected' : '' }}>
@@ -41,6 +58,7 @@
                                 <x-input :label="'Số điện thoại'" :name="'phone'" :value="$user->phone ?? ''" :required="true" />
                             </div>
                         </div>
+
                         @if (isset($config['method']) && $config['method'] !== 'edit')
                             <div class="row mb-3">
                                 <div class="col-lg-6">
@@ -52,7 +70,6 @@
                                 </div>
                             </div>
                         @endif
-
                         @include('admin.pages.user.components.location')
                         <div class="col-lg-12">
                             <x-input :label="'Địa chỉ cụ thể'" :name="'address'" :value="$user->address ?? ''" :required="false" />
@@ -139,8 +156,8 @@
             </div>
 
             <div class="col-xl-3">
-                <x-save_back :model="$config['model']" />
-                <x-thumbnail :label="'Ảnh đại diện'" :name="'avatar'" :value="$user->avatar ?? 'https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That'" />
+                <x-save_back :model="$config['model']" :type="'customer'" />
+                <x-thumbnail :label="'Ảnh đại diện'" :name="'avatar'" :value="$user->avatar ?? '/uploads/system/no_img.jpg'" />
                 <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.active')" :value="$user->publish ?? ''" />
             </div>
 

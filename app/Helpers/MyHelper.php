@@ -124,16 +124,19 @@ if (!function_exists('getActionRoute')) {
     {
         $allRoutes = Route::getRoutes();
         $permissionAll = [];
+        $allowedActions = ['index', 'create', 'edit', 'delete'];
         foreach ($allRoutes as $route) {
-            if (in_array('GET', $route->methods())) {
-                if (in_array('authenticated', $route->middleware())) {
-                    $actionName = $route->getActionName();
-                    if (strpos($actionName, '@') !== false) {
-                        list($controller, $action) = explode('@', $actionName);
-                        $controller = class_basename($controller);
-                        $controller = str_replace('Controller', '', $controller);
+            if (in_array('GET', $route->methods()) && in_array('authenticated', $route->middleware())) {
+                $actionName = $route->getActionName();
+                if (strpos($actionName, '@') !== false) {
+                    list($controller, $action) = explode('@', $actionName);
+                    $controller = class_basename($controller);
+                    $controller = str_replace('Controller', '', $controller);
+                    if (in_array($action, $allowedActions)) {
                         $permissionAll[] = "$controller $action";
-                    } else {
+                    }
+                } else {
+                    if (in_array($actionName, $allowedActions)) {
                         $permissionAll[] = $actionName;
                     }
                 }

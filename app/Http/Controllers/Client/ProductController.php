@@ -122,7 +122,22 @@ class ProductController extends Controller
         }
         return $data;
     }
-
+    public function compare(Request $request)
+    {
+        $skus = $request->except('_token');
+        $products = [];
+        foreach ($skus as $sku) {
+            $data = $this->productRepository->findByField('sku', $sku)->first();
+            if (empty($data)) {
+                $data = $this->productVariantRepository->findByField('sku', $sku)->first();
+                $data->name = $data->product->name;
+                $data->thumbnail = $data->product->thumbnail;
+            }
+            $products[] = $data;
+        }
+        return view('client.pages.product.compare', compact('products'))->render();
+        ;
+    }
     private function config()
     {
         return [

@@ -5,7 +5,7 @@
         <img class="Sirv image-hover" src="{{ $data->albums != [] ? json_decode($data->albums)[0] : '' }}" alt="">
         <div class="p-3">
             <h2 style="">{{ $data->name }}</h2>
-            <div class="price text-tgnt">{{ formatMoney($data->price - ($data->price * $data->discount) / 100 ) }}</div>
+            <div class="price text-tgnt">{{ formatMoney($data->price - ($data->price * $data->discount) / 100 ) }}đ</div>
         </div>
 
         {{-- discount --}}

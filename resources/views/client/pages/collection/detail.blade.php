@@ -50,7 +50,7 @@
                     </div> --}}
                     <div class="text-center my-3">
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-tgnt" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-tgnt getCollection" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
                             Thêm bộ sưu tập vào giỏ hàng
                         </button>

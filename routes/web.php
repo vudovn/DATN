@@ -41,7 +41,6 @@ use App\Http\Controllers\Ajax\LocationController;
 Route::get('/account', function () {
     return view('admin.pages.account.application.index');
 })->name('home');
-
 Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::prefix('admin/dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');
@@ -57,9 +56,6 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
-
-        // Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
-        // Route::get('/api/wards/{district_code}', [UserController::class, 'getWards'])->name('wards');
     });
     /* PRODUCT ROUTE */
     Route::prefix('admin/product')->name('product.')->group(function () {
@@ -270,6 +266,7 @@ route::middleware('preventBackHistory')->group(function () {
         Route::prefix('san-pham')->name('product.')->group(function () {
             Route::get('/', [ClientProductController::class, 'index'])->name('index');
             Route::get('/{slug}', [ClientProductController::class, 'detail'])->name('detail');
+            Route::post('/so-sanh', [ClientProductController::class, 'compare'])->name('compare');
             Route::get('/ajax/get-variant', [ClientProductController::class, 'getVariant'])->name('get-variant');
             Route::get('/ajax/search-product', [ClientProductController::class, 'searchProduct'])->name('get-variant');
             Route::get('/ajax/get-review', [ClientProductController::class, 'getReview'])->name('get-review');
@@ -320,6 +317,5 @@ route::middleware('preventBackHistory')->group(function () {
             Route::get('/ajax/action-wishlist', [WishlistController::class, 'action']);
             Route::get('/ajax/count-wishlist', [WishlistController::class, 'count']);
         });
-
     });
 });

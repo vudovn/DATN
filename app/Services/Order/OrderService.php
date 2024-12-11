@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Repositories\Cart\CartRepository;
 use App\Jobs\SendOrderMail;
 use App\Jobs\SendTelegramNotification;
+use App\Repositories\Product\ProductRepository;
+use App\Repositories\Product\ProductVariantRepository;
 
 
 
@@ -19,15 +21,21 @@ class OrderService extends BaseService
     protected $orderRepository;
     protected $orderDetailsRepository;
     protected $cartRepository;
+    protected $productRepository;
+    protected $productVariantRepository;
 
     public function __construct(
         OrderRepository $orderRepository,
         OrderDetailsRepository $orderDetailsRepository,
-        CartRepository $cartRepository
+        CartRepository $cartRepository,
+        ProductRepository $productRepository,
+        ProductVariantRepository $productVariantRepository
     ) {
         $this->orderRepository = $orderRepository;
         $this->orderDetailsRepository = $orderDetailsRepository;
         $this->cartRepository = $cartRepository;
+        $this->productRepository = $productRepository;
+        $this->productVariantRepository = $productVariantRepository;
     }
 
     private function paginateAgrument($request)
@@ -111,6 +119,7 @@ class OrderService extends BaseService
     {
         $payload = $request->only('quantity', 'sku', 'product_id', 'name_orderDetail', 'price');
         $result = [];
+        $updateQuantity = [];
         foreach ($payload['sku'] as $key => $value) {
             $result[] = [
                 'order_id' => $storeOrder->id,
@@ -120,9 +129,15 @@ class OrderService extends BaseService
                 'quantity' => (int) $payload['quantity'][$key],
                 'price' => (float) $payload['price'][$key],
             ];
+            $updateQuantity[] = [
+                'product_id' => (int) $payload['product_id'][$key],
+                'quantity' => (int) $payload['quantity'][$key],
+            ];
         }
 
         $check = $this->orderDetailsRepository->insert($result);
+        // lây ra sku và số lượng sản phẩm để cập nhật lại số lượng sản phẩm
+        $this->updateQuantityProduct($updateQuantity);
         return $check;
     }
 
@@ -239,6 +254,25 @@ class OrderService extends BaseService
         }
     }
 
+    public function updateQuantityProduct($updateQuantity)
+    {
+        DB::beginTransaction();
+        try {
+            foreach ($updateQuantity as $key => $value) {
+                $product = $this->productRepository->updateQuantity($value['product_id'], $value['quantity']);
+                if (!$product) {
+                    $productVariant = $this->productVariantRepository->updateQuantity($value['product_id'], $value['quantity']);
+                }
+            }
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+            $this->log($e);
+            return false;
+        }
+    }
 
 
 }

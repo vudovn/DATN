@@ -10,7 +10,7 @@
                 <i class="bi bi-x-circle-fill" style="font-size: 3rem;"></i>
             </div>
             <h4 id="message" class="mt-3">{{ $message }}</h4>
-            <div class="mt-4">
+            <div class="mt-4 d-flex justify-content-center gap-5">
                 <a href="{{ route('client.home') }}" class="btn btn-tgnt btn-sm">Quay về trang chủ</a>
                 <a href="{{ route('client.cart.index') }}" class="btn btn-outline-tgnt btn-sm">Xem giỏ hàng</a>
             </div>

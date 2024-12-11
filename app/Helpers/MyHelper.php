@@ -178,7 +178,7 @@ if (!function_exists('formatMoney')) {
         }
         return number_format(ceil($number), 0, '.', '.');
     }
-    
+
 }
 
 // lấy danh mục phòng
@@ -236,5 +236,16 @@ if (!function_exists('getAttributeCategory')) {
     {
         $data = loadClass('AttributeCategory', 'Repository');
         return $data->getAllWith();
+    }
+}
+
+// lấy setting site
+if (!function_exists('getSetting')) {
+    function getSetting()
+    {
+        $data = loadClass('Setting', 'Repository');
+        $newData = $data->getAll()->first();
+        $newData->site_social = json_decode($newData->site_social);
+        return $newData;
     }
 }

@@ -142,17 +142,20 @@
     TGNT.checkInput = () => {
         $(document).on("change", ".checkInput", function () {
             const sku = $(this).data("sku");
+            console.log(sku);
             const item = $("#product-item" + sku);
-
             if ($(this).prop("checked")) {
                 if (!array.idArray.includes(sku) && sku) {
                     array.idArray.push(sku);
                     item.css("background-color", "#cce6e6");
                 }
+                
                 TGNT.addPoint(sku);
             } else {
                 array.idArray = array.idArray.filter((i) => i !== sku);
                 item.css("background-color", "");
+                $(`#product-row-${sku}`).remove();
+                TGNT.calculateTotalAmount();
             }
             $(".countProduct").html(array.idArray.length);
             $(".filterProduct .title")
@@ -177,6 +180,7 @@
                     },
                     success: function (data) {
                         TGNT.renderRow(data.data);
+                        TGNT.calculateTotalAmount();
                     },
                     error: function (xhr, status, error) {
                         console.log("lỗi");

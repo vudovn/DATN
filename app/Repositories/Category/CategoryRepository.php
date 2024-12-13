@@ -15,7 +15,24 @@ class CategoryRepository extends BaseRepository
     ) {
         $this->model = $model;
     }
+    public function paginationCategory(array $params = [])
+    {
+        return $this->model
+            ->where('is_room', 2)
+            ->condition($params['condition'] ?? [])
+            ->keyword($params['keyword'] ?? [])
+            ->orderBy($params['sort'][0], $params['sort'][1])
+            ->paginate($params['perpage']);
+    }
 
+    public function paginationRoom(array $params = [])
+    {
+        return $this->model
+            ->where('is_room', 1)
+            ->condition($params['condition'] ?? [])
+            ->keyword($params['keyword'] ?? [])
+            ->orderBy($params['sort'][0], $params['sort'][1])
+            ->paginate($params['perpage']);
     public function getAll()
     {
         return $this->model->all();

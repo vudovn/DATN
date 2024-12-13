@@ -23,6 +23,7 @@
             <!-- Cột bên phải chứa các thông tin bổ sung -->
             <div class="col-lg-3 col-md-12 mb-4">
                 <x-save_back :model="$config['model']" />
+
                 <x-thumbnail :label="'Ảnh danh mục'" :name="'thumbnail'" :value="$category->thumbnail ?? '	https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That'" :require="true" />
                 @if (isset($config['method']) && $config['method'] !== 'edit')
                     <div class="card">
@@ -76,9 +77,8 @@
                         </label>
                         <div class="card-body">
                             <select name="parent_id" class="form-select js-choice">
-                                <option value="{{ $category->parent_id }}">
-                                    {{ $category->parent ? $category->parent->name : 'Danh mục gốc' }}</option>
-                                {!! $categoryOptions !!}
+                                <option value="{{$category->parent_id}}">{{$category->parent ? $category->parent->name : 'Danh mục gốc'}}</option>
+                                {!! $categoryOptions !!} 
                             </select>
                         </div>
                     </div>

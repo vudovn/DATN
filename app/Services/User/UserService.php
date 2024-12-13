@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services\User;
 
 use App\Services\BaseService;
@@ -122,4 +121,51 @@ class UserService extends BaseService
             return false;
         }
     }
+
+
+    public function editAccount($request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $payload = $request->except(['_token', 'send', '_method']);
+            $user = $this->userRepository->update($id, $payload);
+            $findUser = $this->userRepository->findById($id);
+            if($request->has('roles')){
+                $findUser->syncRoles($request->input('roles'));
+            }
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+            die();
+            // $this->log($e);
+            // return false;
+        }
+    }
+
+    public function checkOldPassword($password, $id)
+    {
+        $user = $this->userRepository->findById($id);
+        return Hash::check($password, $user->password);
+    }
+
+    public function changePassword($request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $payload = $request->except(['_token', 'send']);
+            $payload['password'] = Hash::make($request->password);
+            $user = $this->userRepository->update($id, $payload);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+            die();
+            // $this->log($e);
+            // return false;
+        }
+    }
+
 }

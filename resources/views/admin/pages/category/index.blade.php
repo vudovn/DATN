@@ -29,7 +29,7 @@
                                     <label class="form-check-label" for="checkAll"></label>
                                 </div>
                             </th>
-                            <th>ID</th>
+                            <th>STT</th>
                             <th>Hình ảnh</th>
                             <th>Tên danh mục</th>
                             <th>Ngày tạo</th>

@@ -2,17 +2,15 @@
 
 <div class="card">
     <div class="card-header">
-        {{ $label }} @if ($required ?? '') <span class="text-danger">*</span> @endif
+        {{ $label }} @if ($required ?? '')
+            <span class="text-danger">*</span>
+        @endif
     </div>
     <div class="card-body">
         <div class="{{ $name }} img-cover image-target">
-            <img 
-                src="{{ old($name, $value ?? 'https://placehold.co/600x600?text=The Gioi\nNoi That') }}" 
-                width="100%" 
-                class="img-thumbnail img-fluid" 
-                alt="Hình ảnh">
+            <img src="{{ old($name, $value ?? '	https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That') }}"
+                width="100%" class="img-thumbnail img-fluid" alt="Hình ảnh">
         </div>
         <input type="hidden" name="{{ $name }}" value="{{ old($name, $value ?? '') }}">
     </div>
 </div>
-

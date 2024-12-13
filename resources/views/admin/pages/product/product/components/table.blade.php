@@ -1,5 +1,5 @@
 @if (isset($products) && count($products))
-    @foreach ($products as $product)
+    @foreach ($products as $key => $product)
         <tr class="animate__animated animate__fadeIn">
             <td class="">
                 <div class="form-check">
@@ -8,7 +8,7 @@
                     <label class="form-check-label" for="ustomCheckbox{{ $product->id }}"></label>
                 </div>
             </td>
-            <td>{{ $product->id }}</td>
+            <td class="text-center">{{ $key + 1 }}</td>
             <td>
                 <a data-fancybox="gallery" href="{{ $product->thumbnail }}">
                     <img loading="lazy" width="80" class="rounded" src="{{ $product->thumbnail }}"
@@ -17,7 +17,7 @@
             </td>
 
             <td class="text-primary text-wrap">
-                {{ $product->name }} <br>
+                <a href="{{ route('product.edit', $product->id) }}">{{ $product->name }}</a> <br>
                 {!! $product->discount != 0
                     ? "<span class='badge bg-light-danger'>Có giảm giá - $product->discount%</span>"
                     : '' !!}
@@ -29,7 +29,9 @@
             <td class="text-center">{{ number_format($product->quantity) }}</td>
             <td class="text-center">{{ $product->sku }}</td>
             <td>{{ changeDateFormat($product->created_at) }}</td>
-            <td class="text-center">-</td>
+            <td class="text-center text-wrap">
+                {{ $product->categories->count() ? $product->categories->pluck('name')->implode(', ') : 'Không có danh mục' }}
+            </td>
             <td class="text-center">
                 <x-switchvip :value="$product" :model="ucfirst($config['model'])" />
             </td>

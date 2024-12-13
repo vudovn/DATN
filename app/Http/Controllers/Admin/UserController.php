@@ -13,6 +13,7 @@ use App\Repositories\Location\ProvinceRepository;
 use Spatie\Permission\Models\Role;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Traits\HasDynamicMiddleware;
+
 class UserController extends Controller implements HasMiddleware
 {
     use HasDynamicMiddleware;
@@ -97,7 +98,8 @@ class UserController extends Controller implements HasMiddleware
 
     public function edit($id)
     {
-        $user = $this->userRepository->findById($id);
+        // $user = $this->userRepository->findById($id); // 1 dòng thôi
+        $user = $this->userRepository->findById($id, ['wishlists.product', 'orders']);
         // $user  = $this->userRepository->findById($id, ['province', 'district', 'ward']);
         $provinces = $this->provinceRepository->getAllProvinces(); // Lấy danh sách tỉnh
         $config = $this->config();

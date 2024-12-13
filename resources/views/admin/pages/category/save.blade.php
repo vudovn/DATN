@@ -23,8 +23,9 @@
             <!-- Cột bên phải chứa các thông tin bổ sung -->
             <div class="col-lg-3 col-md-12 mb-4">
                 <x-save_back :model="$config['model']" />
-                <x-thumbnail :label="'Ảnh danh mục'" :name="'thumbnail'" :value="$category->thumbnail ?? '/uploads/system/no_img.jpg'" :require="true" />
-                @if (isset($config['method']) && $config['method'] !== 'edit')                
+
+                <x-thumbnail :label="'Ảnh danh mục'" :name="'thumbnail'" :value="$category->thumbnail ?? '	https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That'" :require="true" />
+                @if (isset($config['method']) && $config['method'] !== 'edit')
                     <div class="card">
                         <label class="card-header">Loại danh mục</label>
                         <div class="card-body">
@@ -40,7 +41,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card">
+                    <input type="hidden" name="parent_id"  value="0">
+                    {{-- <div class="card">
                         <label for="parent_id" class="card-header">
                             Danh mục cha
                         </label>
@@ -50,7 +52,7 @@
                                 {!! $categoryOptions !!}
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.active')" :value="$category->publish ?? ''"
                         :require="true" />
                 @else

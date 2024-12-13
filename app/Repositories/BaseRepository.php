@@ -52,10 +52,17 @@ class BaseRepository
         return $this->model->select($select)->with($relation)->find($id);
     }
 
-    public function findByField(string $field, $value, array $select = ['*'])
+
+    public function findByField(string $field, $value, array $select = ['*'], $relation = [])
     {
-        return $this->model->select($select)->where($field, $value);
+        return $this->model->select($select)->where($field, $value)->with($relation);
     }
+
+    public function findByWhereIn($column, $values = [], $relation = [], $select = ['*'])
+    {
+        return $this->model->select($select)->whereIn($column, $values)->with($relation)->get();
+    }
+    
 
     public function delete(int $id)
     {
@@ -72,12 +79,19 @@ class BaseRepository
         return $this->model->whereIn($whereInField, $whereIn)->delete();
     }
 
-    // public function findByIdLocation(
-    //     int $modelId,
-    //     array $column = ['*'],
-    //     array $relation = []
-    // ){
-    //     return $this->model->select($column)->with($relation)->findOrFail($modelId);
-    // }  cái ni t tạo hôm qua , chừ không dùng nữa !
+
+    public function getAll() {
+        return $this->model->all();
+    }
+
+
+    public function deleteManyWhere($field1, $valField1, $field2, $valField2) {
+        return $this->model->where($field1, $valField1)->where($field2, $valField2)->delete();
+    }
+
+
+    public function createMany(array $payload = []){
+        return $this->model->insert($payload);
+    }
 
 }

@@ -95,7 +95,6 @@ class CategoryService extends BaseService
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            // echo $e->getMessage();die();
             $this->log($e);
             return false;
         }
@@ -106,7 +105,6 @@ class CategoryService extends BaseService
         DB::beginTransaction();
         try {
             $category = $this->categoryRepository->findById($id);
-            // dd($category->children()->count() );
             if ($category->children()->count() == 0) {
                 $this->categoryRepository->delete($id);
                 DB::commit();

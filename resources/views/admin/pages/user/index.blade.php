@@ -25,7 +25,7 @@
                                     <label class="form-check-label" for="checkAll"></label>
                                 </div>
                             </th>
-                            <th>ID</th>
+                            <th>STT</th>
                             <th>Hỉnh ảnh</th>
                             <th>Tên</th>
                             <th>Email</th>

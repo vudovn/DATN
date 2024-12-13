@@ -17,10 +17,9 @@ class UnAuthenticated
     public function handle(Request $request, Closure $next): Response
     {
 
-        if(Auth::check()){
+        if (Auth::check() && count(Auth::user()->getRoleNames()) > 0) {
             return redirect()->route('dashboard.index');
         }
-
         return $next($request);
     }
 }

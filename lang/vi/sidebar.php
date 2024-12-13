@@ -1,6 +1,5 @@
 <?php
 return [
-
     'function' => [
         [
             'name' => 'Quản lý thành viên',
@@ -41,7 +40,6 @@ return [
                     'name' => 'Thuộc tính',
                     'path' => route('attributeCategory.index')
                 ]
-
             ]
         ],
         [
@@ -61,6 +59,17 @@ return [
             ]
         ],
         [
+            'name' => 'Quản lý bộ sưu tập',
+            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-layer"></use> </svg>',
+            'route' => ['collection'],
+            'module' => [
+                [
+                    'name' => 'Danh sách bộ sưu tập',
+                    'path' => route('collection.index')
+                ]
+            ]
+        ],
+        [
             'name' => 'Quản lý đơn hàng',
             'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-box-1"></use> </svg>',
             'route' => ['order'],
@@ -70,7 +79,42 @@ return [
                     'path' => route('order.index')
                 ]
             ]
+        ],
+        [
+            'name' => 'Quản lý mã giảm giá',
+            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-dollar-square"></use> </svg>',
+            'route' => ['discount'],
+            'module' => [
+                [
+                    'name' => 'Danh sách mã giảm giá',
+                    'path' => route('discountCode.index')
+                ]
+            ]
+        ],
+        [
+            'name' => 'Quản lý phản hồi',
+            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-message-2"></use> </svg>',
+            'route' => ['order'],
+            'module' => [
+                [
+                    'name' => 'Quản lý bình luận',
+                    'path' => route('comment.index')
+                ],
+                [
+                    'name' => 'Quản lý đánh giá',
+                    'path' => route('review.index')
+                ],
+                [
+                    'name' => 'Quản lý nội dung bình luận',
+                    'path' => route('CommentForbiddenWord.index')
+                ]
+            ]
+        ],
+        [
+            'name' => 'Quản lý hệ thống',
+            'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-setting-2"></use> </svg>',
+            'route' => route('setting.index'),
+            'module' => []
         ]
-
     ]
 ];

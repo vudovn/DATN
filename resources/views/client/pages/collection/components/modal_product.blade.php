@@ -33,19 +33,27 @@
                                             </button>
                                         @endif
                                     </div>
-                                    <div class="cart-item-remove">
-                                        <button type="button" data-sku="{{ $product->sku }}"
-                                            class="removeItem btn btn-link p-0 text-danger"
-                                            style="text-decoration: none;">x</button>
+                                    <div class="cart-item-check">
+                                        <div class="checkbox-wrapper-27">
+                                            <label class="checkbox check-collection" data-sku="{{ $product->sku }}"
+                                                data-inventory="{{ $product->quantity }}"
+                                                data-price="{{ $product->price }}"
+                                                data-name="{{ $product->name }}"
+                                                >
+                                                <input type="checkbox" class="checkboxsku"
+                                                    id="checkboxsku-{{ $product->sku }}" >
+                                                <span class="checkbox__icon"></span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="hidden">
+                                {{-- <div class="hidden">
                                     <input type="hidden" name="product_id[]" value="{{ $product->id }}">
                                     <input type="hidden" name="sku[]" value="{{ $product->sku }}">
                                     <input type="hidden" name="name[]" value="{{ $product->name }}">
                                     <input type="hidden" name="price[]" value="{{ $product->price }}">
                                     <input type="hidden" name="inventory[]" value="{{ $product->quantity }}">
-                                </div>
+                                </div> --}}
                             @endforeach
                         </div>
                     </div>
@@ -53,7 +61,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-tgnt" data-bs-dismiss="modal">Huỷ</button>
-                <button type="button" class="btn btn-tgnt addMultiToCart" data-bs-dismiss="modal">Thêm vào giỏ hàng</button>
+                <button type="button" class="btn btn-tgnt addMultiToCart" data-bs-dismiss="modal">Thêm vào giỏ
+                    hàng</button>
             </div>
         </div>
     </div>

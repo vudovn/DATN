@@ -47,6 +47,9 @@
     .select2-results__option[aria-disabled="true"] {
         background-color: #e9ecef;
     }
+    .hidden {
+        visibility: hidden !important;
+    }
 </style>
 
 @if (isset($config['css']) && count($config['css']))

@@ -49,7 +49,8 @@ class CommentController extends Controller
     public function reply(Request $request, $id)
     {
         $parentComment = $this->commentRepository->findById($id);
-        $replies = Comment::where('parent_id', $id)->whereNull('deleted_at')->with('replies')->get();
+        // $replies = Comment::where('parent_id', $id)->whereNull('deleted_at')->with('replies')->get();
+        $replies = Comment::where('parent_id', $id)->with('replies')->get();
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('reply');
         return view('admin.pages.comment.reply', compact(
@@ -62,7 +63,8 @@ class CommentController extends Controller
 
     public function create()
     {
-        $comments = Comment::all()->where('deleted_at', null)->all();
+        // $comments = Comment::all()->where('deleted_at', null)->all();
+        $comments = Comment::all()->all();
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';

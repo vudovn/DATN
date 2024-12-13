@@ -10,7 +10,7 @@
                 'perpage' => generateSelect('10 hàng', __('general.perpage')),
                 'sort' => generateSelect('Sắp xếp', __('general.sort')),
             ]" />
-        </div>
+        </div>  
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table">

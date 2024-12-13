@@ -299,6 +299,11 @@ route::middleware('preventBackHistory')->group(function () {
         Route::prefix('bo-suu-tap')->name('collection.')->group(function () {
             Route::get('/', [ClientCollectionController::class, 'index'])->name('index');
             Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
+            Route::get('/ajax/get-comments/{slug}', action: [ClientCollectionController::class, 'getComments'])->name('get-comment');
+            Route::get('/ajax/get-replies/{comment_id}/{limit}', [ClientCollectionController::class, 'getReplies'])->name('get-reply');
+            Route::post('/ajax/comment/store', [ClientCollectionController::class, 'store'])->name('store');
+            Route::post('/ajax/comment/update', [ClientCollectionController::class, 'update'])->name('update');
+            Route::post('/ajax/comment/remove', [ClientCollectionController::class, 'remove'])->name('remove');
         });
 
         // about route

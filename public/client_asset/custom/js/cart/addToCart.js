@@ -102,29 +102,29 @@
     };
     TGNT.getProductInCollection = () => {
         $(document).on("click", ".getCollection", function () {
-            let names = document.querySelectorAll('input[name="name[]"]');
-            let skus = document.querySelectorAll('input[name="sku[]"]');
-            let prices = document.querySelectorAll('input[name="price[]"]');
-            let inventories = document.querySelectorAll(
-                'input[name="inventory[]"]'
-            );
-            let productIds = document.querySelectorAll(
-                'input[name="product_id[]"]'
-            );
-            for (let i = 0; i < productIds.length; i++) {
-                let name = names[i].value;
-                let sku = skus[i].value;
-                let price = prices[i].value;
-                let inventory = inventories[i].value;
-                let productId = productIds[i].value;
+            $('.checkboxsku').each(function () {
+                if (!$(this).is(':checked')) {
+                    $(this).trigger('click');
+                }
+            });
+        });
+    };
+    TGNT.checkProduct = () => {
+        $(document).on("change", ".check-collection", function () {  
+            let sku = $(this).data("sku");
+            let inventory = $(this).data("inventory");
+            let price = $(this).data("price");
+            let name = $(this).data("name");
+            if ($(`#checkboxsku-${sku}`).is(":checked")) {
                 skuItems.push({
                     sku: sku,
-                    name: name,
                     quantity: 1,
                     inventory: inventory,
                     price: price,
-                    product_id: productId,
+                    name: name,
                 });
+            } else {
+                skuItems = skuItems.filter((item) => item.sku !== sku);
             }
         });
     };
@@ -157,6 +157,7 @@
         TGNT.addToCart();
         TGNT.getProductInCollection();
         TGNT.addMultiToCart();
+        TGNT.checkProduct();
         TGNT.removeItem();
         TGNT.cartCount();
     });

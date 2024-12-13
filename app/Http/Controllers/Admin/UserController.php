@@ -70,7 +70,6 @@ class UserController extends Controller implements HasMiddleware
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';
-
         $roles = Role::all();
         return view('admin.pages.user.save', compact(
             'config',

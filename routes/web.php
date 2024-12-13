@@ -58,7 +58,6 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
-
         // Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
         // Route::get('/api/wards/{district_code}', [UserController::class, 'getWards'])->name('wards');
     });

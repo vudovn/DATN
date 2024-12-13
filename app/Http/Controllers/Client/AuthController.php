@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\User\UserRepository;
+use App\Jobs\SendActiveMail;
 
 
 class AuthController extends Controller
@@ -58,7 +59,7 @@ class AuthController extends Controller
         $data['password'] = bcrypt($request->password);
         // $data['confirmation_token'] = Str::random(60);
         if ($account = User::create($data)) {
-            Mail::to($account->email)->send(new VerifyAccount($account));
+            SendActiveMail::dispatch($account);
             return redirect()->route('client.auth.login')->with('success', 'Đăng ký thành công, vui lòng kiểm tra email để kích hoạt tài khoản');
         }
         return redirect()->back()->with('error', 'Đăng ký không thành công');

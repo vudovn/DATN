@@ -40,7 +40,7 @@ class CartController extends Controller
         $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
         $listCart = '';
         foreach ($carts as $cart) {
-            $listCart .= $this->getProduct($cart);
+            $listCart .= $this->getProductFull($cart);
         }
         return view('client.pages.cart.index', compact(
             'config',
@@ -56,14 +56,22 @@ class CartController extends Controller
         return $data;
     }
 
-    public function getProduct($data)
+    public function getProductFull($data)
     {
         $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
         $zIndex = 1000 - $data->id;
-        $cart = $this->cartRepository->findById($data->id);
+        // $cart = $this->cartRepository->findById($data->id);
         $product = $this->cartService->getProduct($data);
         return view('client.pages.cart.components.item', compact('product', 'carts', 'zIndex'))->render();
+    }
 
+    public function getProduct(Request $request)
+    {
+        $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
+        $zIndex = 1000 - $request->id;
+        $cart = $this->cartRepository->findById($request->id);
+        $product = $this->cartService->getProduct($cart);
+        return view('client.pages.cart.components.item', compact('product', 'carts', 'zIndex'))->render();
     }
     
     public function count()

@@ -106,8 +106,6 @@
     TGNT.showProduct = () => {
         const productElement = document.querySelector(".show-product");
         var point_value = $("#point_value").val();
-        console.log(point_value);
-        
         // if (point_value && point_value.trim() !== "") {
         //     $("#description_value").html(point_value);
         //     array["idArray"] = $("#skus").val().split(",");
@@ -123,6 +121,8 @@
                 array["idArray"] = skus.split(",");
                 var point_value = $("#point_value").val();
                 $("#description_value").html(point_value);
+                console.log(array["idArray"]);
+                
                 array["idArray"].forEach((sku) => {
                     TGNT.initializePopovers(sku);
                 });
@@ -191,8 +191,6 @@
                         sku: sku ? sku : "",
                     },
                     success: function (data) {
-                        console.log(data);
-                        
                         $("#renderPoints").append(
                             `<div id="point${
                                 data.sku

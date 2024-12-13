@@ -23,7 +23,8 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:products',
-            'sku' => 'required|regex:/^\S*$/|unique:products',
+            // sku chỉ lấy số và chữ không lấy ký tự đặc biệt và dẫu chấm
+            'sku' => 'required|regex:/^[a-zA-Z0-9]*$/|unique:products|min:6',
             'price' => 'required',
             'quantity' => 'required',
             'category' => 'required|not_in:0',
@@ -39,8 +40,9 @@ class StoreProductRequest extends FormRequest
             'name.required' => 'Tên sản phẩm không được để trống',
             'name.unique' => 'Tên sản phẩm đã tồn tại',
             'sku.required' => 'Mã sản phẩm không được để trống',
-            'sku.regex' => 'Mã sản phẩm không được chứa khoảng trắng',
+            'sku.regex' => 'Mã sản phẩm không được chứa khoảng trắng hoặc ký tự đặc biệt',
             'sku.unique' => 'Mã sản phẩm đã tồn tại',
+            'sku.min' => 'Mã sản phẩm phải có ít nhất 6 ký tự',
             'price.required' => 'Giá sản phẩm không được để trống',
             'quantity.required' => 'Số lượng sản phẩm không được để trống',
             'category.required' => 'Danh mục không được để trống',

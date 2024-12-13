@@ -29,9 +29,16 @@
             <td class="text-center">{{ number_format($product->quantity) }}</td>
             <td class="text-center">{{ $product->sku }}</td>
             <td>{{ changeDateFormat($product->created_at) }}</td>
-            <td class="text-center text-wrap">
-                {{ $product->categories->count() ? $product->categories->pluck('name')->implode(', ') : 'Không có danh mục' }}
+            <td class="text-start text-wrap">
+                @if ($product->categories->count())
+                    @foreach ($product->categories as $category)
+                        <a href="{{ route('client.category.index', $category->slug) }}"><span class="badge bg-light-danger">{{ $category->name }}</span></a>
+                    @endforeach
+                @else
+                    <span class="badge bg-light-danger">Không có danh mục</span>
+                @endif
             </td>
+
             <td class="text-center">
                 <x-switchvip :value="$product" :model="ucfirst($config['model'])" />
             </td>

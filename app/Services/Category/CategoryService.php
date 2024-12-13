@@ -105,7 +105,7 @@ class CategoryService extends BaseService
     {
         $html = '';
         foreach ($categories as $category) {
-            $indent = str_repeat('&nbsp;', $level * 4);
+            $indent = str_repeat('', $level * 4);
             $html .= '<option value="' . $category->id . '">' . $indent . $category->name . '</option>';
             if ($category->children->isNotEmpty()) {
                 $html .= $this->renderCategoryOptions($category->children, $level + 1);

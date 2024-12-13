@@ -58,7 +58,6 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
-
         // Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
         // Route::get('/api/wards/{district_code}', [UserController::class, 'getWards'])->name('wards');
     });
@@ -148,8 +147,8 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     /* REVIEW ROUTE */
     Route::prefix('admin/review')->name('review.')->group(function () {
         Route::get('/index', [ReviewController::class, 'index'])->name('index');
-        Route::get('/create', [ReviewController::class, 'create'])->name('create');
-        Route::post('/store', [ReviewController::class, 'store'])->name('store');
+        Route::get('/reply/{id}', [ReviewController::class, 'reply'])->name('reply');
+        Route::post('/store/{id}', [ReviewController::class, 'store'])->name('store');
         Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'destroy'])->name('delete');
     });
 
@@ -176,13 +175,8 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/index', [settingController::class, 'index'])->name('index');
         Route::get('/slide', [settingController::class, 'slide'])->name('slide');
         Route::put('/slider', [settingController::class, 'sliderUpdate'])->name('sliderUpdate');
-        Route::get('/banner', [settingController::class, 'banner'])->name('banner');
-        Route::get('/footer', [settingController::class, 'footer'])->name('footer');
-        Route::get('/social', [settingController::class, 'social'])->name('social');
-        Route::get('/contact', [settingController::class, 'contact'])->name('contact');
-        Route::get('/email', [settingController::class, 'email'])->name('email');
-        Route::get('/seo', [settingController::class, 'seo'])->name('seo');
-        Route::get('/payment', [settingController::class, 'payment'])->name('payment');
+        Route::get('/general', [settingController::class, 'general'])->name('general');
+        Route::put('/general', [settingController::class, 'generalUpdate'])->name('generalUpdate');
     });
 });
 
@@ -293,7 +287,7 @@ route::middleware('preventBackHistory')->group(function () {
             });
         });
         // checkout route
-        Route::prefix('thanh-toan')->name('checkout.')->group(function () {
+        Route::prefix('thanh-toan')->middleware('clientAuth')->name('checkout.')->group(function () {
             Route::get('/', [ClientCheckoutController::class, 'index'])->name('index');
             Route::post('/addDiscount', [ClientCheckoutController::class, 'addDiscount'])->name('addDiscount');
             Route::post('/applyDiscount', [ClientCheckoutController::class, 'applyDiscount'])->name('applyDiscount');
@@ -311,7 +305,7 @@ route::middleware('preventBackHistory')->group(function () {
         Route::prefix('gioi-thieu')->name('about.')->group(function () {
             Route::get('/', [IndexController::class, 'about'])->name('index');
         });
-        
+
         // about route
         Route::prefix('lien-he')->name('contact.')->group(function () {
             Route::get('/', [IndexController::class, 'contact'])->name('index');

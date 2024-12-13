@@ -36,6 +36,7 @@
                 $(".variantTable tbody").html("");
                 TGNT.checkMaxAttributeGroup(attributeCatalogue);
                 TGNT.disabledAttributeCatalogueChoose();
+                TGNT.checkAllData();
             });
         }
     };
@@ -99,6 +100,7 @@
         $(document).on("change", ".selectVariant", function () {
             let _this = $(this);
             TGNT.createVariant();
+            TGNT.checkAllData();
         });
     };
 
@@ -106,77 +108,72 @@
         let attributes = [];
         let variants = [];
         let attributeTitle = [];
-            $(".variant-item").each(function () {
-                let _this = $(this);
-                let attr = [];
-                let attrVariant = [];
+        $(".variant-item").each(function () {
+            let _this = $(this);
+            let attr = [];
+            let attrVariant = [];
 
-                const attributeCatalogueId = _this
-                    .find(".choose-attribute")
-                    .val();
-                const optionText = _this
-                    .find(".choose-attribute option:selected")
-                    .text();
-                const attribute = $(".variant-" + attributeCatalogueId).select2(
-                    "data"
-                );
+            const attributeCatalogueId = _this.find(".choose-attribute").val();
+            const optionText = _this
+                .find(".choose-attribute option:selected")
+                .text();
+            const attribute = $(".variant-" + attributeCatalogueId).select2(
+                "data"
+            );
 
-                attribute.forEach((attrItem) => {
-                    let item = {};
-                    let itemVariant = {};
+            attribute.forEach((attrItem) => {
+                let item = {};
+                let itemVariant = {};
 
-                    item[optionText] = attrItem.text;
-                    itemVariant[attributeCatalogueId] = attrItem.id;
+                item[optionText] = attrItem.text;
+                itemVariant[attributeCatalogueId] = attrItem.id;
 
-                    attr.push(item);
-                    attrVariant.push(itemVariant);
+                attr.push(item);
+                attrVariant.push(itemVariant);
+            });
+
+            attributeTitle.push(optionText);
+            attributes.push(attr);
+            variants.push(attrVariant);
+        });
+        let attributesNew = TGNT.generateVariants(attributes);
+        let variantsNew = TGNT.generateVariants(variants);
+
+        TGNT.createTableHeader(attributeTitle);
+        let trClass = [];
+
+        attributesNew.forEach((attribute, index) => {
+            let $row = TGNT.createVariantRow(attribute, variantsNew[index]);
+            let classModified =
+                "tr-variant-" +
+                Object.values(variantsNew[index])
+                    .join(", ")
+                    .replace(/, /g, "-");
+
+            trClass.push(classModified);
+            if (!$(`table.variantTable tbody tr.${classModified}`).length) {
+                $("table.variantTable tbody").append($row);
+            }
+        });
+
+        $("table.variantTable tbody tr").each(function () {
+            const $row = $(this);
+            const rowClasses = $row.attr("class");
+
+            if (rowClasses) {
+                const rowClassArray = rowClasses.split(" ");
+                let shouldRemove = true;
+                rowClassArray.forEach((item) => {
+                    if (trClass.includes(item)) {
+                        shouldRemove = false;
+                    }
                 });
 
-                attributeTitle.push(optionText);
-                attributes.push(attr);
-                variants.push(attrVariant);
-            });
-            let attributesNew = TGNT.generateVariants(attributes);
-            let variantsNew = TGNT.generateVariants(variants);
-    
-            TGNT.createTableHeader(attributeTitle);
-            let trClass = [];
-    
-            attributesNew.forEach((attribute, index) => {
-                let $row = TGNT.createVariantRow(attribute, variantsNew[index]);
-                let classModified =
-                    "tr-variant-" +
-                    Object.values(variantsNew[index])
-                        .join(", ")
-                        .replace(/, /g, "-");
-    
-                trClass.push(classModified);
-                if (!$(`table.variantTable tbody tr.${classModified}`).length) {
-                    $("table.variantTable tbody").append($row);
+                if (shouldRemove) {
+                    $row.remove();
                 }
-            });
-    
-            $("table.variantTable tbody tr").each(function () {
-                const $row = $(this);
-                const rowClasses = $row.attr("class");
-    
-                if (rowClasses) {
-                    const rowClassArray = rowClasses.split(" ");
-                    let shouldRemove = true;
-                    rowClassArray.forEach((item) => {
-                        if (trClass.includes(item)) {
-                            shouldRemove = false;
-                        }
-                    });
-    
-                    if (shouldRemove) {
-                        $row.remove();
-                    }
-                }
-            });
-
-
-       
+            }
+        });
     };
 
     TGNT.createVariantRow = (attributeItem, variantItem) => {
@@ -226,7 +223,11 @@
                 class: "variant_sku",
                 value: mainSku + "-" + classModified,
             },
-            { name: "variant[quantity][]", class: "variant_quantity", value: '0' },
+            {
+                name: "variant[quantity][]",
+                class: "variant_quantity",
+                value: "0",
+            },
             {
                 name: "variant[price][]",
                 class: "variant_price",
@@ -388,7 +389,7 @@
                                 <div class="col-lg-4">
                                     <div class="mb-3 position-relative">
                                         <label class="form-label" for="sku">SKU <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="variant_sku" id="sku" value="${
+                                        <input disabled class="form-control" type="text" name="variant_sku" id="sku" value="${
                                             variantData.variant_sku
                                         }">
                                     </div>
@@ -812,6 +813,21 @@
         $("#sortableVariant").disableSelection();
     };
 
+    TGNT.checkAllData = () => {
+        $(".choose-attribute").each(function () {
+            if ($(this).val() == "") {
+                $("button[type=submit]").prop("disabled", true);
+            }
+            $(".selectVariant").each(function () {
+                if ($(this).val() == "") {
+                    $("button[type=submit]").prop("disabled", true);
+                } else {
+                    $("button[type=submit]").prop("disabled", false);
+                }
+            });
+        });
+    };
+
     $(document).ready(function () {
         TGNT.setupProductVariant();
         TGNT.addVariant();
@@ -825,5 +841,6 @@
         TGNT.saveVariantUpdate();
         TGNT.deleteVariant();
         TGNT.setupSelectMultiple(() => TGNT.productVariant());
+        TGNT.checkAllData();
     });
 })(jQuery);

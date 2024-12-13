@@ -40,7 +40,8 @@
                                 <div class="tab_location">
                                     @include('client.pages.cart.components.checkout.location')
                                     <div class="form-group mb-3">
-                                        <x-input :label="'Địa chỉ chi tiết'" name="address" :value="$user->address" :required="true" />
+                                        <label for="">Địa chỉ chi tiết</label>
+                                        <input type="text" placeholder="Số nhà, ngõ, ..." name="address" class="form-control" required>
                                     </div>
                                 </div>
                                 <!-- Note -->

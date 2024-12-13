@@ -235,12 +235,13 @@ class OrderController extends Controller  implements HasMiddleware
     public function getProduct(Request $request){
         // dd($request);
         $product = $this->productRepository->findByField('sku',$request->sku)->first();
+        // rỗng nếu mình chọn biến thể
         if(empty($product)){
             $product = $this->productVariantRepository->findByField('sku',$request->sku)->first();
-            $product->name = $product->product->name . ' - ' . $product->title;
+            $product->name = $product->product->name . ' - ' . $product->title; // tên sản phẩm + biến thể
             $product->slug = $product->product->slug;
             $product->thumbnail = $product->product->thumbnail;
-            $product->quantity = 1;
+            
         } 
         $product->quantity = 1;
         return successResponse($product);

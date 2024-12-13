@@ -105,5 +105,10 @@ class ProductRepository extends BaseRepository
         return $products;
     }
 
+    public function updateQuantity($product_id, $quantity)
+    {
+        return $this->model->where('id', $product_id)->update(['quantity' => DB::raw('quantity - ' . $quantity)]);
+    }
+
 
 }

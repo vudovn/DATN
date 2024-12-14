@@ -78,25 +78,18 @@ class CheckoutController extends Controller
     {
         $discountCode = $this->discountCodeRepository->findByField('code', $request->code)->first();
         $existCode = $this->cartService->checkDiscount(Auth::id(), $request->code);
-        if (!$existCode) {
+        if (!$existCode && !checkExpiredDate($discountCode->end_date)) {
             return successResponse($discountCode, '');
         }
-        // if($discountCode){
-        // }else{
-        // return errorResponse( 'thành công cóc');
-        // }
     }
 
     public function applyDiscount(Request $request)
     {
-        $data = [];
-        foreach ($request->code as $code) {
-            $discountCode = $this->discountCodeRepository->findByField('code', $code)->first();
-            if ($discountCode && !checkExpiredDate($discountCode->end_date)) {
-                $data[] = $discountCode;
-            }
+        $discountCode = $this->discountCodeRepository->findByField('code', $request->code)->first();
+        if (!checkExpiredDate($discountCode->end_date)) {
+            return $discountCode;
         }
-        return $data;
+        return false;
     }
     public function store(Request $request)
     {

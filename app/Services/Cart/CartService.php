@@ -185,7 +185,6 @@ class CartService extends BaseService
             // }
             if (empty($data)) {
                 $data = $this->productVariantRepository->findByField('sku', $item->sku)->first();
-     
                 $data->discount = $data->product->discount ?? '';
                 $data->name = $data->product->name ?? '';
                 $data->slug = $data->product->slug ?? '';

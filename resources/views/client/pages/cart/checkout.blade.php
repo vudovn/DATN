@@ -28,7 +28,7 @@
                                             value="{{ $user->phone }}" required>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <!-- Phương Thức Thanh Toán -->
                                     <div class="form-group mb-3">
                                         <label for="payment_method">Phương Thức Thanh Toán: <span
@@ -36,7 +36,7 @@
                                         <input type="text" id="payment_method" name="payment_method" class="form-control"
                                             value="{{ $user->payment_method ?? 'Tiền mặt' }}" disabled>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="tab_location">
                                     @include('client.pages.cart.components.checkout.location')
                                     <div class="form-group mb-3">

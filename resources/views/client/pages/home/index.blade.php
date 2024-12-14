@@ -70,7 +70,7 @@
         <!-- 7.SECTION 7 -->
         <section class="banner-collection">
             <!-- 7. Living room -->
-            @foreach ($categoryRoom->take(4) as $room)
+            @foreach (getCategory('room')->take(4) as $room)
                 <div class="banner mb-2">
                     <img src="{{ asset($room->thumbnail) }}" alt="Banner Image" />
                     <div class="overlay"></div>
@@ -93,49 +93,18 @@
         <section class="home-category">
             <div class="container">
                 <div class="testimonial-title container p-md-5 p-3">
-                    <h2 class="text-white">Bộ sưu tập</h2>
+                    <h2 class="text-white">Danh mục</h2>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar
-                        elementum tempus hac tellus libero accumsan.
+                        Không gian sống đẹp bắt đầu từ những món nội thất hoàn hảo.
                     </p>
                 </div>
                 <div class="category-content">
+                    @foreach (getCategory('orther')->take(9) as $item)
                     <div class="item">
-                        <img src="/client_asset/image/home/cate-1.jpg" alt="Item Image" />
-                        <p class="text-dark fw-semibold">Ghế bành</p>
+                        <img src="{{ $item->thumbnail ?? 'https://placehold.co/600x600?text=The%20Gioi%20Noi%20That'}}" alt="Item Image" />
+                        <p class="text-dark fw-semibold"><a class="text-light" href="{{route('client.category.index',$item->slug)}}">{{$item->name}}</a></p>
                     </div>
-                    <div class="item">
-                        <img src="/client_asset/image/home/cate-2.jpg" alt="Item Image" />
-                        <p class="text-dark fw-semibold">Ghế đôn</p>
-                    </div>
-                    <div class="item">
-                        <img src="https://mdsf.vn/wp-content/uploads/2022/12/ghe-go-nha-hang.jpg" alt="Item Image" />
-                        <p class="text-dark fw-semibold">Ghế</p>
-                    </div>
-                    <div class="item">
-                        <img src="/client_asset/image/home/cate-4.jpg" alt="Item Image" />
-                        <p class="text-dark fw-semibold">Ghế sofa</p>
-                    </div>
-                    <div class="item">
-                        <img src="/client_asset/image/home/cate-5.jpg" alt="Item Image" />
-                        <p class="text-dark fw-semibold">Bàn</p>
-                    </div>
-                    <div class="item">
-                        <img src="/client_asset/image/home/cate-6.jpg" alt="Item Image" />
-                        <p class="text-dark fw-semibold">Bàn có ngăn kéo</p>
-                    </div>
-                    <div class="item">
-                        <img src="/client_asset/image/home/cate-7.jpg" alt="Item Image" />
-                        <p class="text-dark fw-semibold">Đèn</p>
-                    </div>
-                    <div class="item">
-                        <img src="/client_asset/image/home/cate-8.jpg" alt="Item Image" />
-                        <p class="text-dark fw-semibold">Thảm trải sàn</p>
-                    </div>
-                    <div class="item">
-                        <img src="/client_asset/image/home/cate-9.jpg" alt="Item Image" />
-                        <p class="text-dark fw-semibold">Gối</p>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>

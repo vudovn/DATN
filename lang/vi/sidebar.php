@@ -50,7 +50,12 @@ return [
                 [
                     'name' => 'Danh sách danh mục',
                     'path' => route('category.index')
+                ],
+                [
+                    'name' => 'Danh sách phòng',
+                    'path' => route('category.room.index')
                 ]
+
             ]
         ],
         [

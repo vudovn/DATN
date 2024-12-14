@@ -1,4 +1,8 @@
     <!-- header -->
+    <script>
+        window.isLoggedIn = {{ auth()->check() ? 'true' : 'false' }};
+    </script>
+    
     <header class="header_vd border-bottom" style="box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;">
         <!-- header top -->
         <div class="py-1 pt-xxl-6">

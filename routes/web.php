@@ -28,6 +28,7 @@ use App\Http\Controllers\Client\CommentController as ClientCommentController;
 use App\Http\Controllers\Client\CartController as ClientCartController;
 use App\Http\Controllers\Client\CheckoutController as ClientCheckoutController;
 use App\Http\Controllers\Client\IndexController;
+use App\Http\Controllers\Client\ContactController as ClientContactController;
 use App\Http\Controllers\Client\CategoryController as ClientCategoryController;
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -42,7 +43,6 @@ use App\Http\Controllers\Client\VnPayController;
 Route::get('/account', function () {
     return view('admin.pages.account.application.index');
 })->name('home');
-
 Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::prefix('admin/dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');
@@ -60,6 +60,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
         // Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
         // Route::get('/api/wards/{district_code}', [UserController::class, 'getWards'])->name('wards');
+
     });
     /* PRODUCT ROUTE */
     Route::prefix('admin/product')->name('product.')->group(function () {
@@ -117,6 +118,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     /* CATEGORY ROUTE */
     Route::prefix('admin/category')->name('category.')->group(function () {
         Route::get('/index', [CategoryController::class, 'index'])->name('index');
+        Route::get('/room', [CategoryController::class, 'index'])->name('room.index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
         Route::post('/store', [CategoryController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
@@ -167,7 +169,6 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/create', [CommentForbiddenWordController::class, 'create'])->name('create');
         Route::post('/store', [CommentForbiddenWordController::class, 'store'])->name('store');
         Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'delete'])->name('delete');
-
     });
 
     // setting route
@@ -221,6 +222,7 @@ Route::get('/order-code', function () {
 });
 
 
+
 Route::get('/test', [AjaxDashboardController::class, 'test']);
 
 // =======================================================CLIENT================================================================
@@ -265,6 +267,7 @@ route::middleware('preventBackHistory')->group(function () {
         Route::prefix('san-pham')->name('product.')->group(function () {
             Route::get('/', [ClientProductController::class, 'index'])->name('index');
             Route::get('/{slug}', [ClientProductController::class, 'detail'])->name('detail');
+            Route::post('/so-sanh', [ClientProductController::class, 'compare'])->name('compare');
             Route::get('/ajax/get-variant', [ClientProductController::class, 'getVariant'])->name('get-variant');
             Route::get('/ajax/search-product', [ClientProductController::class, 'searchProduct'])->name('get-variant');
             Route::get('/ajax/get-review', [ClientProductController::class, 'getReview'])->name('get-review');
@@ -299,6 +302,11 @@ route::middleware('preventBackHistory')->group(function () {
         Route::prefix('bo-suu-tap')->name('collection.')->group(function () {
             Route::get('/', [ClientCollectionController::class, 'index'])->name('index');
             Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
+            Route::get('/ajax/get-comments/{slug}', action: [ClientCollectionController::class, 'getComments'])->name('get-comment');
+            Route::get('/ajax/get-replies/{comment_id}/{limit}', [ClientCollectionController::class, 'getReplies'])->name('get-reply');
+            Route::post('/ajax/comment/store', [ClientCollectionController::class, 'store'])->name('store');
+            Route::post('/ajax/comment/update', [ClientCollectionController::class, 'update'])->name('update');
+            Route::post('/ajax/comment/remove', [ClientCollectionController::class, 'remove'])->name('remove');
         });
 
         // about route
@@ -308,8 +316,10 @@ route::middleware('preventBackHistory')->group(function () {
 
         // about route
         Route::prefix('lien-he')->name('contact.')->group(function () {
-            Route::get('/', [IndexController::class, 'contact'])->name('index');
+            Route::get('/', [ClientContactController::class, 'contact'])->name('index');
+            Route::post('/', [ClientContactController::class, 'send'])->name('send');
         });
+
 
         /* WISHLIST */
         Route::prefix('yeu-thich')->name('wishlist.')->group(function () {
@@ -317,6 +327,5 @@ route::middleware('preventBackHistory')->group(function () {
             Route::get('/ajax/action-wishlist', [WishlistController::class, 'action']);
             Route::get('/ajax/count-wishlist', [WishlistController::class, 'count']);
         });
-
     });
 });

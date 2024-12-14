@@ -52,10 +52,10 @@
                 <div class="price_spct product-price d-flex">
                     @if ($discount > 0)
                         <span
-                            class="price_base_spct text-danger price">{{ formatMoney($price - ($price * $discount) / 100) }}</span>
-                        <strike class="price_discount_spct ms-3 price">{{ formatMoney($price) }}</strike>
+                            class="price_base_spct text-danger price">{{ formatMoney($price - ($price * $discount) / 100) }}đ</span>
+                        <strike class="price_discount_spct ms-3 price">{{ formatMoney($price) }}đ</strike>
                     @else
-                        <span class="price_base_spct text-danger price">{{ formatMoney($price) }}</span>
+                        <span class="price_base_spct text-danger price">{{ formatMoney($price) }}đ</span>
                     @endif
                 </div>
                 {{-- Mô tả ngắn --}}

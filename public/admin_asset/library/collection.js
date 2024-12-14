@@ -191,6 +191,7 @@
                         sku: sku ? sku : "",
                     },
                     success: function (data) {
+                        let code = data.code.replace(/\s+/g, "")
                         $("#renderPoints").append(
                             `<div id="point${
                                 data.sku
@@ -210,7 +211,7 @@
                                         <p class="href m-0">
                                             <a href="/san-pham/${
                                                 data.slug
-                                            }">Xem chi tiết sản phẩm</a>
+                                            }?attr=${code}">Xem chi tiết sản phẩm</a>
                                         </p>
                                     </div>
                                 </div>'>

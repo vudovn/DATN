@@ -19,6 +19,7 @@
                 <td>
                     <span class="row-name">{{ $category->name }}</span>
                 </td>
+
                 @if ($category->is_room == 1)
                     <td>
                         <span class="badge bg-light-primary">Phòng</span>

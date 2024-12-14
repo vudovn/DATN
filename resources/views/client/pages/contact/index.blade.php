@@ -18,21 +18,27 @@
                         <p>Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn với mọi thắc mắc. Hãy liên hệ ngay để nhận được
                             những
                             tư vấn tốt nhất từ đội ngũ chuyên gia của chúng tôi!</p>
-                        <form action="" method="POST">
+                        <form action="{{ route('client.contact.send') }}" method="POST">
                             @csrf
                             <div class="row mb-4">
                                 <div class="col">
                                     <div class="form-outline">
                                         <label class="form-label" for="form6Example1">Họ tên</label>
-                                        <input type="text" id="form6Example1" class="form-control custom-form-control"
+                                        <input type="text" name="name" id="form6Example1" class="form-control custom-form-control"
                                             placeholder="Họ tên" />
+                                            @error('name')
+                                                <small class="error text-danger">*{{ $message }}</small>
+                                            @enderror
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-outline">
                                         <label class="form-label" for="form6Example2">Email</label>
-                                        <input type="text" id="form6Example2" class="form-control custom-form-control"
+                                        <input type="text" name="email" id="form6Example2" class="form-control custom-form-control"
                                             placeholder="Email" />
+                                            @error('email')
+                                                <small class="error text-danger">*{{ $message }}</small>
+                                            @enderror
                                     </div>
                                 </div>
                             </div>
@@ -40,21 +46,27 @@
                                 <div class="col">
                                     <div class="form-outline">
                                         <label class="form-label" for="form6Example3">Công ty</label>
-                                        <input type="text" id="form6Example3" class="form-control custom-form-control"
+                                        <input type="text" name="company" id="form6Example3" class="form-control custom-form-control"
                                             placeholder="Công ty" />
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-outline">
                                         <label class="form-label" for="form6Example4">Điện thoại</label>
-                                        <input type="text" id="form6Example4" class="form-control custom-form-control"
+                                        <input type="text" name="phone" id="form6Example4" class="form-control custom-form-control"
                                             placeholder="Điện thoại" />
+                                            @error('phone')
+                                                <small class="error text-danger">*{{ $message }}</small>
+                                            @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form6Example5">Để lại lời nhắn</label>
-                                <textarea class="form-control" id="form6Example5" rows="4" placeholder="Nhập lời nhắn"></textarea>
+                                <textarea class="form-control" id="form6Example5" name="message" rows="4" placeholder="Nhập lời nhắn"></textarea>
+                                @error('message')
+                                    <small class="error text-danger">*{{ $message }}</small>
+                                @enderror
                             </div>
                             <button type="submit" class="btn btn-tgnt">Gửi lời nhắn</button>
                         </form>

@@ -30,8 +30,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('client.home') }}" class="text-stnt">Trang chủ</a>
                     </li>
-                    <li class="breadcrumb-item"><a onclick="window.history.back()" href="#" class="text-stnt">Sản
-                            phẩm</a></li>
+                    <li class="breadcrumb-item"><a href="#" class="text-stnt">Sản phẩm</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ $name }}</li>
                 </ol>
             </nav>
@@ -69,11 +68,17 @@
                         <strong>Danh mục: </strong>
                         @foreach ($category as $item)
                             <a href="{{ route('client.category.index', $item->slug) }}" class="cate_ctsp">
-                                <span class="badge bg-light text-dark product_ct_badge">
+                                <span class="badge bg-light-warning text-dark-warning product_ct_badge">
                                     {{ $item->name }}
                                 </span>
                             </a>
                         @endforeach
+                    </div>
+                    <div class="mb-xxl-7 mb-2 status_spct">
+                        <strong>Tình trạng: </strong>
+                        <span class="badge bg-light-{{ $product->quantity > 0 ? 'success' : 'danger' }} text-dark-warning product_ct_badge">
+                            {{ $product->quantity > 0 ? 'Còn hàng' : 'Hết hàng' }}
+                        </span>
                     </div>
                 </div>
                 <!-- end info sản phẩm -->
@@ -83,7 +88,7 @@
                     <div class="quantity_spct mb-xxl-0 mb-3">
                         <div class="input-group input-spinner">
                             <input type="button" value="-" class="button-minus btn btn-sm" data-field="quantity">
-                            <input type="number" step="1" min="1" max="3" value="1"
+                            <input type="number" step="1" min="1" max="{{ $product->quantity }}" value="1"
                                 name="quantity" id="quantity" class="quantity-field form-control-sm form-input">
                             <input type="button" value="+" class="button-plus btn btn-sm" data-field="quantity">
                         </div>

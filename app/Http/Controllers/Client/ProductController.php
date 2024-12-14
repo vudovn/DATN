@@ -43,12 +43,11 @@ class ProductController extends Controller
     {
         $config = $this->config();
         $product = $this->productRepository->findByWhereIn('slug', [$slug], ['categories', 'productVariants'], )->first();
-        $NewAlbums = array_map('trim', explode(',', trim($product->albums, '[]"')));
-        $product->thumbnail_sub = $NewAlbums[1] ?? $NewAlbums[0];
+        $NewAlbums = json_decode($product->albums);
+        $product->thumbnail_sub = $NewAlbums[0] ?? $product->thumbnail;
         $historyProduct = Session::get('historyProduct', []);
         if (!collect($historyProduct)->contains('id', $product->id)) {
             $historyProduct[] = $product;
-            // dd($historyProduct);
             Session::put('historyProduct', $historyProduct);
         }
         $variant = (object) [];
@@ -68,14 +67,16 @@ class ProductController extends Controller
             }
 
             $product->sku = $variantCurrent->sku;
-            $product->name = $product->name . '(' . $variantCurrent->title . ')';
+            $product->title = $variantCurrent->title;
             $product->price = $variantCurrent->price;
             $product->code = explode(',', $variantCurrent->code);
             $product->quantity = $variantCurrent->quantity;
             $variant->albums = $variantCurrent->albums;
+            // dd($variant);
         }
         $product->albums = view('client.pages.product_detail.components.api.albums', compact('variant', 'product'))->render();
         // Session::flush();
+        // dd($product);
         return view('client.pages.product_detail.index', compact(
             'config',
             'product',

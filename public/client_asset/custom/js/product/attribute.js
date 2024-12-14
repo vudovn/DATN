@@ -64,8 +64,24 @@
     };
 
     TGNT.renderInfo = (data) => {
-        $(".product-title").html(`${data.name} (${data.title}) `);
+        $(".product-title").html(`${data.name}`);
         $(".inventory").val(`${data.quantity}`);
+
+        $(".status_spct").html(`
+            <strong>Tình trạng: </strong>
+                <span class="badge bg-light-danger text-dark-warning product_ct_badge">
+                    Hết hàng
+                </span>
+    `);
+        if (data.quantity > 0) {
+            $(".status_spct").html(`
+                    <strong>Tình trạng: </strong>
+                        <span class="badge bg-light-success text-dark-warning product_ct_badge">
+                            Còn hàng
+                        </span>
+            `);
+        }
+
         if (data.sku) {
             $(".compare").data("sku", `${data.sku}`);
             $(".buyNow").attr("data-sku", `${data.sku}`);

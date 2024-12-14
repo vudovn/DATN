@@ -16,10 +16,9 @@ class ProductVariantRepository extends BaseRepository
 
     public function findVariant($product_id, $code)
     {
-        return $this->model->where([
-            ['product_id', $product_id],
-            ['code', $code]
-        ])->first();
+        return $this->model->where('product_id', $product_id)
+            ->where('code', 'REGEXP', '(^|,)' . $code . '(,|$)')
+            ->first();
     }
 
 

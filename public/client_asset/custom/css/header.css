@@ -2,6 +2,8 @@ body {
     font-family: "Open Sans" !important;
     background-color: var(--body-bg) !important;
 }
+
+
 .header_vd .nav-link {
     position: relative;
     color: black !important;
@@ -268,6 +270,13 @@ body {
 /* responsive */
 /* mobile */
 @media (max-width: 767px) {
+    /* .slick-slider .slick-prev {
+        margin-left: -150px !important;
+        margin-top: -36px !important;
+    }
+    .slick-slider .slick-next {
+        margin-right: 50px !important;
+    } */
     .header_vd .logo_vd_top {
         display: none;
     }

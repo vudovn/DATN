@@ -1,5 +1,5 @@
 @php
-    if (!empty($variant->albums) && $variant->albums !== '[]') {
+    if ($variant->albums != '"0"') {
         $albums = array_map('trim', explode(',', trim($variant->albums, '[]"')));
     } else {
         $albums = json_decode($product->albums);

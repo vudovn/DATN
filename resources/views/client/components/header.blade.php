@@ -2,7 +2,7 @@
     <script>
         window.isLoggedIn = {{ auth()->check() ? 'true' : 'false' }};
     </script>
-    
+
     <header class="header_vd border-bottom" style="box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;">
         <!-- header top -->
         <div class="py-1 pt-xxl-6">
@@ -44,13 +44,15 @@
                                             d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
                                         </path>
                                     </svg>
-                                    <span
-                                        class="wishlist_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
-                                        @auth
-                                            {{ getWishlistCount() }}
-                                        @endauth
-                                        <span class="visually-hidden">unread messages</span>
-                                    </span>
+                                    @auth
+                                        <span
+                                            class="wishlist_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
+
+                                            {{ getWishlistCount() ?? 0 }}
+
+                                            <span class="visually-hidden">unread messages</span>
+                                        </span>
+                                    @endauth
                                     <div class="list_icon_text_vd">
                                         <small>Yêu thích</small>
                                     </div>
@@ -68,13 +70,15 @@
                                         <line x1="3" y1="6" x2="21" y2="6"></line>
                                         <path d="M16 10a4 4 0 0 1-8 0"></path>
                                     </svg>
-                                    <span
-                                        class="cart_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
-                                        @auth
+                                    @auth
+                                        <span
+                                            class="cart_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
+
                                             {{ getCartCount() }}
-                                        @endauth
-                                        <span class="visually-hidden">unread messages</span>
-                                    </span>
+
+                                            <span class="visually-hidden">unread messages</span>
+                                        </span>
+                                    @endauth
                                     <div class="list_icon_text_vd">
                                         <small>Giỏ hàng</small>
                                     </div>

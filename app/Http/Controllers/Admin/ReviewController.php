@@ -40,47 +40,28 @@ class ReviewController extends Controller
         ));
     }
 
-    public function create() {}
 
-    public function store(Request $request)
+    public function reply($id)
     {
-        $request->validate(
-            [
-                'name' => 'required|unique:categories,name',
-                'publish' => 'required',
-            ],
-            [
-                'name.required' => 'Tên đánh giá không được để trống',
-                'name.unique' => 'đánh giá đã tồn tại',
-                'publish.required' => 'Chưa chọn trạng thái đánh giá',
-            ]
-        );
-        if ($this->reviewService->create($request)) {
-            return redirect()->route('review.index')->with('success', 'Tạo đánh giá mới thành công');
-        }
-        return  redirect()->route('review.index')->with('error', 'Tạo đánh giá mới thất bại');
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('reply');
+        $review = $this->reviewRepository->findById($id, ['user', 'children']);
+        return view('admin.pages.comment.review.reply', compact(
+            'config',
+            'review'
+        ));
     }
 
-    public function update(Request $request, $id)
+    public function store(Request $request, $id)
     {
-        $request->validate(
-            [
-                'name' => 'required|unique:categories,name, ' . $id,
-            ],
-            [
-                'name.required' => 'Tên đánh giá không được để trống',
-                'name.unique' => 'đánh giá đã tồn tại',
-            ]
-        );
-
-        if ($this->reviewService->update($request, $id)) {
-            return redirect()->route('review.index')->with('success', 'Cập nhật đánh giá thành công.');
-        }
-        return  redirect()->route('review.index')->with('error', 'Cập nhật đánh giá thất bại');
+        $this->reviewService->reply($request, $id);
+        return redirect()->back()->with('success', 'Phản hồi đánh giá thành công');
     }
 
 
-    public function edit($id) {}
+    public function edit($id)
+    {
+    }
 
     public function delete($id)
     {
@@ -94,29 +75,18 @@ class ReviewController extends Controller
         ));
     }
 
-    public function destroy($id)
-    {
-        if ($this->reviewService->delete($id)) {
-            return redirect()->route('forbiddenword.index')->with('success', 'Xóa bình luận thành công');
-        }
-        return redirect()->route('forbiddenword.index')->with('error', 'Xóa bình luận thất bại');
-    }
 
     private function breadcrumb($key)
     {
         $breadcrumb = [
             'index' => [
                 'name' => 'Quản lý đánh giá',
-                'list' => ['đánh giá', 'Danh sách']
+                'list' => ['Đánh giá', 'Danh sách']
             ],
-            // 'create' => [
-            //     'name' => 'Tạo đánh giá',
-            //     'list' => ['đánh giá', 'Tạo đánh giá']
-            // ],
-            // 'update' => [
-            //     'name' => 'Cập nhật đánh giá',
-            //     'list' => ['đánh giá', 'Cập nhật đánh giá']
-            // ],
+            'reply' => [
+                'name' => 'Phản hồi đánh giá',
+                'list' => ['Đánh giá', 'Phản hồi đánh giá']
+            ],
             'delete' => [
                 'name' => 'Xóa đánh giá',
                 'list' => ['đánh giá', 'Xóa đánh giá']

@@ -24,20 +24,26 @@ class ReviewService extends BaseService
 
     private function paginateAgrument($request)
     {
+        $condition = [
+            'parent_id' => null,
+        ];
+
+        if (isset($request['rating']) && $request['rating'] != 0) {
+            $condition['rating'] = $request['rating'] ?? 0;
+        }
+
         return [
             'keyword' => [
                 'search' => $request['keyword'] ?? '',
                 'field' => ['content'],
             ],
-            'condition' => [
-                'parent_id' => NULL,
-            ],
+            'condition' => $condition,
             'sort' => isset($request['sort']) && $request['sort'] != 0
                 ? explode(',', $request['sort'])
                 : ['id', 'asc'],
-            
             'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
         ];
+
     }
 
     public function paginate($request)
@@ -73,7 +79,6 @@ class ReviewService extends BaseService
             $payload = $request->except(['_token', 'send', '_method']);
             $payload['slug'] = getSlug($payload['name']);
             $review = $this->reviewRepository->update($id, $payload);
-
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -108,4 +113,26 @@ class ReviewService extends BaseService
         }
         return $html;
     }
+
+    public function reply($request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $payload = $request->except(['_token', 'send', '_method']);
+            $hasReply = $this->reviewRepository->findByField('parent_id', $id)->first();
+            if ($hasReply) {
+                $this->reviewRepository->update($hasReply->id, $payload);
+            } else {
+                $payload['parent_id'] = $id;
+                $this->reviewRepository->create($payload);
+            }
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
+            return false;
+        }
+    }
+
 }

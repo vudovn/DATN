@@ -1,10 +1,23 @@
 body {
     font-family: "Open Sans" !important;
+    background-color: var(--body-bg) !important;
+}
+.header_vd .nav-link {
+    position: relative;
+    color: black !important;
+}
+.header_vd .nav-link.active {
+    position: relative;
+    color: var(--base-color) !important;
+}
+
+.slick-track {
+    margin-left: unset !important;
 }
 .scroll-up {
     z-index: 100;
     position: fixed;
-    background-color: var(--base-color-hover);
+    background-color: var(--base-color);
     padding: 10px 15px;
     color: #ffffff;
     border-radius: 50%;
@@ -13,10 +26,15 @@ body {
     transform: translate(-50%, -50%);
     transition: all 0.5s ease;
 }
+
+.scroll-up:hover {
+    background-color: var(--base-color-hover);
+    color: #ffffff !important;
+}
 .slick-prev:hover,
 .slick-next:hover {
-  background: var(--base-color) !important;
-  border-color: var(--base-color) !important;
+    background: var(--base-color) !important;
+    border-color: var(--base-color) !important;
 }
 /* a {
   color: var(--base-color) !important;
@@ -59,6 +77,10 @@ body {
 .header_vd .box_right_vd {
     border-radius: 40px 0px 0px 40px;
     display: flex;
+}
+
+.header_vd .box_right_vd a {
+    color: var(--text-color) !important;
 }
 
 .header_vd .dropdown-fullwidth .dropdown-menu {
@@ -165,6 +187,17 @@ body {
 
 /* desktop */
 @media (min-width: 1024px) {
+    .header_vd .nav-link.active::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 3px;
+        border-radius: 10px;
+        background-color: var(--base-color-hover);
+        position: absolute;
+        bottom: 3px;
+        left: 0;
+    }
     .header_vd .logo_vd {
         display: none;
     }
@@ -500,9 +533,9 @@ body {
 /*  */
 .social-icons a {
     color: var(--base-color);
-  }
-  
-  .social-icons p {
+}
+
+.social-icons p {
     margin-bottom: 0;
     display: inline-block;
     line-height: 0%;
@@ -511,14 +544,14 @@ body {
     background-color: white;
     border-radius: 5px;
     transition: 0.3s ease-in-out;
-  }
-  
-  .social-icons p:hover {
+}
+
+.social-icons p:hover {
     background-color: var(--base-color);
     color: white !important;
     transition: 0.3s ease-in-out;
-  }
-  .social-icons p:hover .social-icons_link {
+}
+.social-icons p:hover .social-icons_link {
     color: white !important;
     transition: 0.3s ease-in-out;
-  }
+}

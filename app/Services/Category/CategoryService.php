@@ -120,14 +120,19 @@ class CategoryService extends BaseService
     public function renderCategoryOptions($categories, $category = null, $level = 0)
     {
         $html = '';
+        foreach ($categories as $category) {
+            $indent = str_repeat('', $level * 4);
+            $html .= '<option value="' . $category->id . '">' . $indent . $category->name . '</option>';
+            if ($category->children->isNotEmpty()) {
+                $html .= $this->renderCategoryOptions($category->children, $level + 1);
 
-        foreach ($categories as $childCategory) {
-            if ($category === null || $childCategory->id !== $category->id) {
-                $indent = str_repeat('&nbsp;', $level * 4);
-                $html .= '<option value="' . $childCategory->id . '">' . $indent . $childCategory->name . '</option>';
-                if ($childCategory->children->isNotEmpty()) {
-                    $html .= $this->renderCategoryOptions($childCategory->children, $category, $level + 1);
-                }
+//         foreach ($categories as $childCategory) {
+//             if ($category === null || $childCategory->id !== $category->id) {
+//                 $indent = str_repeat('&nbsp;', $level * 4);
+//                 $html .= '<option value="' . $childCategory->id . '">' . $indent . $childCategory->name . '</option>';
+//                 if ($childCategory->children->isNotEmpty()) {
+//                     $html .= $this->renderCategoryOptions($childCategory->children, $category, $level + 1);
+//                 }
             }
         }
         return $html;

@@ -17,7 +17,7 @@
             </div>
             <div class="container detail">
                 <div class="banner mb-3">
-                    <img class="banner-image" src="{{ $collection->thumbnail }}" alt="">
+                    <img class="banner-image rounded" src="{{ $collection->thumbnail }}" alt="">
                     <p class="banner-caption">{{ $collection->name }}</p>
                     <p class="banner-description">{{ $collection->short_description }}</p>
                 </div>
@@ -28,6 +28,7 @@
                     <p class="title">Sản phẩm thuộc bộ sưu tập</p>
                     {!! $collection->description !!}
                     <div class="text-center my-3">
+
                         <button type="button" class="btn btn-tgnt getCollection" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
                             Thêm bộ sưu tập vào giỏ hàng
@@ -59,4 +60,7 @@
             </div>
         </section>
     </main>
+    {{-- <div id="fb-root"></div> --}}
+    <script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v21.0&appId=458546473274979"></script>
 @endsection

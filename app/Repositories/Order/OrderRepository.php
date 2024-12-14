@@ -104,8 +104,13 @@ class OrderRepository extends BaseRepository
     {
         return $this->model->where('user_id', $userId)->with('orderDetails')->get();
     }
-    
 
+    public function getOrderByCode($code)
+    {
+        return $this->model->where('code', $code)->with('orderDetails', 'user')->first();
+    }
+    
+    
 
 
 

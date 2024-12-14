@@ -9,6 +9,7 @@
                 'actions' => generateSelect('Hành động', __('general.actions')),
                 'perpage' => generateSelect('10 hàng', __('general.perpage')),
                 'sort' => generateSelect('Sắp xếp', __('general.sort')),
+                'rating' => generateSelect('Đánh giá', __('general.rating')),
             ]" />
         </div>  
         <div class="card-body p-0">

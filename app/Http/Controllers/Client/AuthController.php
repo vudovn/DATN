@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\User\UserRepository;
+use App\Http\Requests\ClientAuth\LoginClientRequest;
+use App\Http\Requests\ClientAuth\RegisterClientRequest;
+use App\Http\Requests\ClientAuth\ForgetPassClientRequest;
+use App\Http\Requests\ClientAuth\ChangeForgetPassClientRequest;
 use App\Jobs\SendActiveMail;
 
 
@@ -36,48 +40,18 @@ class AuthController extends Controller
     {
         return view('client.auth.register');
     }
-    public function postRegister(Request $request)
+    public function postRegister(RegisterClientRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'password-confirm' => 'required|same:password',
-            // 'terms' => 'accepted',
-        ], [
-            'name.required' => 'Vui lòng nhập họ & tên',
-            'email.required' => 'Vui lòng nhập email',
-            'email.email' => 'Email không đúng định dạng',
-            'email.unique' => 'Email đã tồn tại trong hệ thống',
-            'password.required' => 'Vui lòng nhập mật khẩu',
-            'password.min' => 'Mật khẩu phải lớn hơn 6 kí tự',
-            'password-confirm.required' => 'Vui lòng nhập mật khẩu xác nhận',
-            'password-confirm.same' => 'Mật khẩu xác nhận không trùng khớp',
-            // 'terms.accepted' => 'Bạn cần đồng ý với các điều khoản'
-        ]);
         $data = $request->only('name', 'email');
         $data['password'] = bcrypt($request->password);
-        // $data['confirmation_token'] = Str::random(60);
         if ($account = User::create($data)) {
             SendActiveMail::dispatch($account);
             return redirect()->route('client.auth.login')->with('success', 'Đăng ký thành công, vui lòng kiểm tra email để kích hoạt tài khoản');
         }
         return redirect()->back()->with('error', 'Đăng ký không thành công');
     }
-    public function postLogin(Request $request)
+    public function postLogin(LoginClientRequest $request)
     {
-        // Validate email và mật khẩu
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required'
-        ], [
-            'email.required' => 'Vui lòng nhập email',
-            'email.exists' => 'Email không tồn tại trong hệ thống',
-            'email.email' => 'Email không đúng định dạng',
-            'password.required' => 'Vui lòng nhập mật khẩu',
-            'password.min' => 'Mật khẩu phải lớn hơn 6 kí tự'
-        ]);
-
         $user = User::where('email', $request->input('email'))->first();
         if ($user && is_null($user->email_verified_at)) {
             return back()->withErrors(['email' => 'Tài khoản của bạn chưa được kích hoạt.'])->onlyInput('email');
@@ -100,16 +74,8 @@ class AuthController extends Controller
     }
 
 
-    public function submitForgetPasswordForm(Request $request)
+    public function submitForgetPasswordForm(ForgetPassClientRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-        ], [
-            'email.required' => 'Vui lòng nhập email',
-            'email.email' => 'Email không đúng định dạng',
-            'email.exists' => 'Email không tồn tại trong hệ thống',
-        ]);
-
         $token = strtoupper(Str::random(10));
         $payload = [
             'remember_token' => $token
@@ -134,15 +100,8 @@ class AuthController extends Controller
     }
 
 
-    public function submitChangePasswordForm(User $user, $token, Request $request)
+    public function submitChangePasswordForm(User $user, $token, ChangeForgetPassClientRequest $request)
     {
-        $request->validate([
-            'password' => 'required|min:6|confirmed',
-        ], [
-            'password.required' => 'Vui lòng nhập mật khẩu mới',
-            'password.min' => 'Mật khẩu phải lớn hơn 6 kí tự',
-            'password.confirmed' => 'Xác nhận mật khẩu không khớp',
-        ]);
         // dd($user, $token, $request->all());
 
         if ($user && $user->remember_token === $token) {

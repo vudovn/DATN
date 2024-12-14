@@ -20,4 +20,8 @@ class CartRepository extends BaseRepository
         $this->model->where('user_id', $id)->delete();
     }
 
+    public function getCartCount($id)
+    {
+        return $this->model->where('user_id', $id)->count();
+    }
 }

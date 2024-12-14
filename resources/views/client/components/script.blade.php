@@ -32,20 +32,7 @@
         $(".loading_tgnt").fadeOut("slow");
     });
 </script>
-@if (Auth::check())
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: "/yeu-thich/ajax/count-wishlist",
-                type: "GET",
-                dataType: "json",
-                success: function(res) {
-                    $(".wishlist_count").text(res.data);
-                },
-            });
-        });
-    </script>
-@endif
+
 <script>
     window.onscroll = function() {
         var scrollLink = document.getElementById("scroll-up");

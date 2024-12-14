@@ -19,7 +19,7 @@
             <div class="mt-4">
                 @include('client.pages.category.components.filter')
                 <input type="hidden" name="category_id" value="{{ $category->id }}">
-                <div class="product_container">
+                <div class="product_container show">
                     @include('client.pages.category.components.product')
                 </div>
             </div>

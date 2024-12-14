@@ -14,4 +14,9 @@ class WishlistRepository extends BaseRepository
     ){
         $this->model = $model;
     }
+
+    public function getWishlistCount($id)
+    {
+        return $this->model->where('user_id', $id)->count();
+    }
 }

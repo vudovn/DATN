@@ -71,7 +71,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card">
+                    {{-- <div class="card">
                         <label for="parent_id" class="card-header">
                             Chọn danh mục cha
                         </label>
@@ -81,7 +81,7 @@
                                 {!! $categoryOptions !!} 
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.active')" :value="$category->publish ?? ''" />
                 @endif
             </div>

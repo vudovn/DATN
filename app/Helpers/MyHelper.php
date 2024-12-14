@@ -178,7 +178,7 @@ if (!function_exists('formatMoney')) {
         }
         return number_format(ceil($number), 0, '.', '.');
     }
-    
+
 }
 
 // lấy danh mục phòng
@@ -236,5 +236,47 @@ if (!function_exists('getAttributeCategory')) {
     {
         $data = loadClass('AttributeCategory', 'Repository');
         return $data->getAllWith();
+    }
+}
+
+// lấy setting site
+if (!function_exists('getSetting')) {
+    function getSetting()
+    {
+        $data = loadClass('Setting', 'Repository');
+        $newData = $data->getAll()->first();
+        $newData->site_social = json_decode($newData->site_social);
+        return $newData;
+    }
+}
+
+// lấy số lượng sản phẩm trong giỏ hàng
+if (!function_exists('getCartCount')) {
+    function getCartCount()
+    {
+        $data = loadClass('Cart', 'Repository');
+        $user_id = Auth::user()->id;
+        // dd($data->getCartCount($user));
+        return $data->getCartCount($user_id);
+    }
+}
+
+// lấy số lượng sản phẩm yêu thích
+if (!function_exists('getWishlistCount')) {
+    function getWishlistCount()
+    {
+        $data = loadClass('Wishlist', 'Repository');
+        $user_id = Auth::user()->id;
+        return $data->getWishlistCount($user_id);
+    }
+}
+
+// lấy sản phẩm vừa xem gần đây
+if (!function_exists('getHistoryProduct')) {
+    function getHistoryProduct()
+    {
+        $data = Illuminate\Support\Facades\Session::get('historyProduct');
+        $data = collect($data)->take(8);
+        return $data;
     }
 }

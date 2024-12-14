@@ -157,6 +157,7 @@
         TGNT.addToCart();
         TGNT.getProductInCollection();
         TGNT.addMultiToCart();
+        // TGNT.cartCount();
         TGNT.checkProduct();
         TGNT.removeItem();
         TGNT.cartCount();

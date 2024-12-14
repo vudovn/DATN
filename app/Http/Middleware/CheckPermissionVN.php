@@ -10,7 +10,7 @@ use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpFoundation\Response;
 
 
-class checkPermission
+class CheckPermissionVN
 {
     /**
      * Handle an incoming request.

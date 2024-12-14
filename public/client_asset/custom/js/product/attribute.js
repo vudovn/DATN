@@ -41,8 +41,7 @@
             .toArray()
             .every((item) => {
                 return $(item).find(".choose-attribute.active").length > 0;
-            });
-
+            });            
         if (allSelected) {
             $.ajax({
                 url: "/san-pham/ajax/get-variant",
@@ -130,6 +129,6 @@
     $(document).ready(function () {
         TGNT.selectVariantProduct();
         TGNT.formatMoney();
-        TGNT.checkChange();
+        // TGNT.checkChange();
     });
 })(jQuery);

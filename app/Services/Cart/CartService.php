@@ -161,7 +161,7 @@ class CartService extends BaseService
             if (empty($data)) {
                 $data = $this->productVariantRepository->findByField('sku', $value->sku)->first();
                 $data->discount = $data->product->discount;
-                $data->name = $data->product->name;
+                $data->name = $data->product->name . " - $data->title";
                 $data->quantityCart = $value->quantity;
                 if (isset($data->albums) && !empty($data->albums)) {
                     $albums = json_decode($data->albums, true);

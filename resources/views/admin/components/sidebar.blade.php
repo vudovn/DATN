@@ -1,8 +1,8 @@
 <nav class="pc-sidebar" style="z-index: 1 !important">
     <div class="navbar-wrapper">
-        <div class="m-header">
+        <div class="m-header d-flex justify-content-center">
             <a href="{{ route('dashboard.index') }}" class="b-brand text-primary">
-                <img src="" class="img-fluid logo-lg" width="50px" alt="logo" />
+                <img src="{{ asset(getSetting()->site_logo) }}" width="150" alt="">
             </a>
         </div>
         <div class="navbar-content">
@@ -10,8 +10,8 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                            <img src="{{ asset(auth()->user()->avatar) }}" alt="user-image"
-                                class="user-avtar wid-45 rounded-circle" />
+                            <img src="https://ui-avatars.com/api/?background=random&name={{ auth()->user()->name }}"
+                                alt="user-image" class="user-avtar wid-45 rounded-circle" />
                         </div>
                         <div class="flex-grow-1 ms-3 me-2">
                             <h6 class="mb-0">{{ auth()->user()->name }}</h6>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="collapse pc-user-links" id="pc_sidebar_userlink">
                         <div class="pt-3">
-                            <a href="#!">
+                            <a href="">
                                 <i class="ti ti-user"></i>
                                 <span>Tài khoản</span>
                             </a>

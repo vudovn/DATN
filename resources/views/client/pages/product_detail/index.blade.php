@@ -10,7 +10,7 @@
         $price = $product->price;
         $discount = $product->discount;
         $priceDiscount = $price - ($price * $discount) / 100;
-        $albums = json_decode($product->albums);
+        $albums = $product->albums;
         $description = $product->description;
         $category = $product->categories;
         $attributeCategory = $product->attribute_category;
@@ -30,20 +30,15 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('client.home') }}" class="text-stnt">Trang chủ</a>
                     </li>
-                    <li class="breadcrumb-item"><a href="product.html" class="text-stnt">Sản phẩm</a></li>
+                    <li class="breadcrumb-item"><a onclick="window.history.back()" href="#" class="text-stnt">Sản
+                            phẩm</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ $name }}</li>
                 </ol>
             </nav>
         </div>
         <div class="row">
             <div class="col-xxl-6 col-sm-12 mb-5 gallery-container">
-                <div class="fotorama" data-nav="thumbs" data-width="100%" data-ratio="900/600" data-allowfullscreen="true">
-                    @if ($albums)
-                        @foreach ($albums as $album)
-                            <img class="img-preview-tgnt" src="{{ $album }}" alt="{{ $product->name }}">
-                        @endforeach
-                    @endif
-                </div>
+                {!! $albums !!}
             </div>
             <div class="col-xxl-6 col-sm-12 mb-5">
                 <div class="title_spct mb-7">
@@ -132,22 +127,19 @@
                             <input type="hidden" name="price" id="price" value="{{ $priceDiscount }}">
                             <input type="hidden" name="inventory" class="inventory" value="{{ $product->quantity }}">
                         </div>
-                        {{-- <input 
-                            {{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id) ? 'checked' : '' }} 
-                            type="checkbox" 
-                            name="product_id" 
-                            class="add_wishlist" 
-                            class="like"
-                            data-type="{{ auth()->check() && auth()->user()->wishlists->contains('product_id', $product->id) ? 'remove' : 'add' }}" 
-                            value="{{ $product->id }}"> --}}
 
-                        {{-- <input
-                            {{ auth()->check() &&auth()->user()->wishlists->contains('product_id', $product->id)? 'checked': '' }}
-                            type="checkbox" name="add_wishlist" class="add_wishlist" value="{{ $product->id }}"> --}}
                     </div>
                     <!-- end action sản phẩm -->
                 </div>
 
+            </div>
+            <div class="col-xxl-12 col-sm-12 mt-5 mb-5">
+                <h3 class="fw-bold pb-4">Sản phẩm đã xem gần đây</h3>
+                <div class="row animate__animated animate__fadeIn listProduct mb-4" id="slide-featured">
+                    @foreach (getHistoryProduct() as $product_featured)
+                        <x-product_card :data="$product_featured" />
+                    @endforeach
+                </div>
             </div>
             <div class="col-xxl-12 col-sm-12 mb-5">
                 <!-- policy sản phẩm -->
@@ -195,5 +187,4 @@
     </section>
     <!-- end -->
     @include('client.pages.product_detail.components.api.compare')
-
 @endsection

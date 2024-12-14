@@ -46,12 +46,12 @@
                     </ul>
                 </td>
             </tr>
-            @foreach ($category->children->whereNotNull('parent_id') as $child)
+            {{-- @foreach ($category->children->whereNotNull('parent_id') as $child)
                 @include('admin.pages.category.components.child', [
                     'child' => $child,
                     'char' => ' |-- ',
                 ])
-            @endforeach
+            @endforeach --}}
         @endif
     @endforeach
     <tr class="animate__animated animate__fadeIn">

@@ -7,6 +7,11 @@ use App\Repositories\Order\OrderDetailsRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use App\Repositories\Cart\CartRepository;
+use App\Jobs\SendOrderMail;
+use App\Jobs\SendTelegramNotification;
+use App\Repositories\Product\ProductRepository;
+use App\Repositories\Product\ProductVariantRepository;
 
 
 
@@ -15,13 +20,22 @@ class OrderService extends BaseService
 
     protected $orderRepository;
     protected $orderDetailsRepository;
+    protected $cartRepository;
+    protected $productRepository;
+    protected $productVariantRepository;
 
     public function __construct(
         OrderRepository $orderRepository,
-        OrderDetailsRepository $orderDetailsRepository
+        OrderDetailsRepository $orderDetailsRepository,
+        CartRepository $cartRepository,
+        ProductRepository $productRepository,
+        ProductVariantRepository $productVariantRepository
     ) {
         $this->orderRepository = $orderRepository;
         $this->orderDetailsRepository = $orderDetailsRepository;
+        $this->cartRepository = $cartRepository;
+        $this->productRepository = $productRepository;
+        $this->productVariantRepository = $productVariantRepository;
     }
 
     private function paginateAgrument($request)
@@ -57,9 +71,18 @@ class OrderService extends BaseService
         try {
             $storeOrder = $this->storeOrder($request);
             $storeOrderDetail = $this->storeOrderDetail($request, $storeOrder);
-            //lỗi ở đây
+            $this->cartRepository->deleteCart(auth()->id());
+            SendOrderMail::dispatch($storeOrder);
+            $message = "🛍️ *Đơn hàng mới đã được tạo!*\n\n"
+                . "📦 *Thông tin đơn hàng:*\n"
+                . "🆔 *Mã đơn hàng:* {$storeOrder->code}\n"
+                . "👤 *Khách hàng:* {$storeOrder->user->name}\n"
+                . "💰 *Tổng tiền:* " . number_format($storeOrder->total) . " VND\n\n"
+                . "⏰ *Thời gian đặt:* " . now()->format('H:i:s d/m/Y') . "\n"
+                . "🔗 *Chi tiết đơn hàng:* [Xem tại đây](" . route('order.show', $storeOrder->id) . ")\n";
+            SendTelegramNotification::dispatch($message);
             DB::commit();
-            return true;
+            return $storeOrder;
         } catch (\Exception $e) {
             DB::rollback();
             echo $e->getMessage();
@@ -83,7 +106,8 @@ class OrderService extends BaseService
             'status',
             'payment_status',
             'total_amount',
-            'fee_ship'
+            'fee_ship',
+            'payment_method'
         ]);
         $payload['total'] = $this->filterPrice($payload['total_amount']);
         $payload['code'] = orderCode();
@@ -95,6 +119,7 @@ class OrderService extends BaseService
     {
         $payload = $request->only('quantity', 'sku', 'product_id', 'name_orderDetail', 'price');
         $result = [];
+        $updateQuantity = [];
         foreach ($payload['sku'] as $key => $value) {
             $result[] = [
                 'order_id' => $storeOrder->id,
@@ -103,11 +128,16 @@ class OrderService extends BaseService
                 'name' => $payload['name_orderDetail'][$key],
                 'quantity' => (int) $payload['quantity'][$key],
                 'price' => (float) $payload['price'][$key],
-
+            ];
+            $updateQuantity[] = [
+                'product_id' => (int) $payload['product_id'][$key],
+                'quantity' => (int) $payload['quantity'][$key],
             ];
         }
 
         $check = $this->orderDetailsRepository->insert($result);
+        // lây ra sku và số lượng sản phẩm để cập nhật lại số lượng sản phẩm
+        $this->updateQuantityProduct($updateQuantity);
         return $check;
     }
 
@@ -224,6 +254,25 @@ class OrderService extends BaseService
         }
     }
 
+    public function updateQuantityProduct($updateQuantity)
+    {
+        DB::beginTransaction();
+        try {
+            foreach ($updateQuantity as $key => $value) {
+                $product = $this->productRepository->updateQuantity($value['product_id'], $value['quantity']);
+                if (!$product) {
+                    $productVariant = $this->productVariantRepository->updateQuantity($value['product_id'], $value['quantity']);
+                }
+            }
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+            $this->log($e);
+            return false;
+        }
+    }
 
 
 }

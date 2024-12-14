@@ -29,7 +29,7 @@
             @if (isset($order_details))
                 @foreach ($order_details as $detail)
                     {{-- @dd($detail->product) --}}
-                    <tr data-id="{{ $detail->product->id }}">
+                    <tr id="product-row-{{ $detail->sku }}" data-sku="{{ $detail->sku }}">
                         <td>
                             <a href="{{ $detail->product->thumbnail }}" data-fancybox="gallery">
                                 <img src="{{ $detail->product->thumbnail }}" alt="{{ $detail->name }}"

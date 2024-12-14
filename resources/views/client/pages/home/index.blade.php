@@ -31,9 +31,6 @@
                             class="d-block btn banner-btn">
                             Xem thêm <span><i class="bi bi-arrow-right"></i></span>
                         </a>
-                        <button class="d-block btn btn-outline custom-outline">
-                            Hỗ trợ
-                        </button>
                     </div>
                 </div>
             @endforeach
@@ -66,7 +63,7 @@
 
         <!-- 6. SECTION 6 -->
         <section class="title-forward-bg">
-            <p class="fw-bold text-center w-50">
+            <p class="fw-bold text-center w-50 m-0">
                 Xem sản phẩm của chúng tôi theo loại phòng
             </p>
         </section>
@@ -252,27 +249,28 @@
         <!-- 15.Contact us -->
         <section class="container py-10">
             <div class="row contact-us">
-                <div class="contact-us-text col-12 col-md-6 text-white">
-                    <h2 class="pb-4 text-white">Liên hệ</h2>
+                <div class="contact-us-text col-12 col-md-6 ">
+                    <h2 class="pb-4 text-tgnt">Liên hệ</h2>
                     <p class="mb-3">
                         Nguyên mẫu cũng có thể được miễn một số yêu cầu sẽ áp dụng cho
                         sản phẩm cuối cùng.
                     </p>
-                    <a href="mailto:contact@company.com" class="text-white mb-3">
+                    <a href="mailto:{{ getSetting()->site_email }}" class=" mb-3">
                         <span><i class="bi bi-envelope me-2"></i></span>
-                        contact@company.com</a><br />
-                    <a href="tel:+123456789" class="text-white mb-3">
+                        {{ getSetting()->site_email }}</a><br />
+                    <a href="tel:{{ getSetting()->site_phone }}" class=" mb-3">
                         <span><i class="bi bi-telephone me-2"></i></span>
-                        (123) 456-789</a><br />
+                        {{ getSetting()->site_phone }}</a><br />
                     <p class="mb-3">
                         <i class="bi bi-geo-alt me-2"></i>
-                        794 Mcallister St San Francisco, 94102
+                        {{ getSetting()->site_address }}
                     </p>
                 </div>
                 <div class="contact-us-iframe col-12 col-md-6 p-0">
-                    <iframe
+                    {!! getSetting()->site_map !!}
+                    {{-- <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3833.801789055265!2d108.16736761086088!3d16.075772239198137!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314218e6e72e66f5%3A0x46619a0e2d55370a!2zMTM3IE5ndXnhu4VuIFRo4buLIFRo4bqtcCwgVGhhbmggS2jDqiBUw6J5LCBMacOqbiBDaGnhu4N1LCDEkMOgIE7hurVuZywgVmlldG5hbQ!5e0!3m2!1sen!2s!4v1710949332685!5m2!1sen!2s"
-                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> --}}
                 </div>
             </div>
         </section>

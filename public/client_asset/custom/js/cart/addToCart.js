@@ -122,6 +122,6 @@
         TGNT.buyNow();
         TGNT.addToCart();
         TGNT.addMultiToCart();
-        TGNT.cartCount();
+        // TGNT.cartCount();
     });
 })(jQuery);

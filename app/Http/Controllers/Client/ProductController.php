@@ -10,6 +10,7 @@ use App\Repositories\Attribute\AttributeCategoryRepository;
 use App\Repositories\Attribute\AttributeRepository;
 use App\Repositories\Product\ProductVariantRepository;
 use App\Repositories\Review\ReviewRepository;
+use Illuminate\Support\Facades\Session;
 class ProductController extends Controller
 {
     protected $productRepository;
@@ -38,16 +39,46 @@ class ProductController extends Controller
         return view('client.pages.product.index');
     }
 
-    public function detail($slug)
+    public function detail(Request $request, $slug)
     {
         $config = $this->config();
         $product = $this->productRepository->findByWhereIn('slug', [$slug], ['categories', 'productVariants'], )->first();
+        $NewAlbums = array_map('trim', explode(',', trim($product->albums, '[]"')));
+        $product->thumbnail_sub = $NewAlbums[1] ?? $NewAlbums[0];
+        $historyProduct = Session::get('historyProduct', []);
+        if (!collect($historyProduct)->contains('id', $product->id)) {
+            $historyProduct[] = $product;
+            // dd($historyProduct);
+            Session::put('historyProduct', $historyProduct);
+        }
+        $variant = (object) [];
         if ($product->has_attribute == 1) {
             $product = $this->getAttribute($product);
+            $product->productVariants->map(function ($item) {
+                $item->attributes = explode(',', $item->attributes);
+                return $item;
+            });
+            $variantCurrent = $product->productVariants->first();
+
+            if ($request->has('attr')) {
+                $attr = $request->attr;
+                $attr = explode(',', $attr);
+                $attr = implode(', ', $attr);
+                $variantCurrent = $this->productVariantRepository->findVariant($product->id, $attr);
+            }
+
+            $product->sku = $variantCurrent->sku;
+            $product->name = $product->name . '(' . $variantCurrent->title . ')';
+            $product->price = $variantCurrent->price;
+            $product->code = explode(',', $variantCurrent->code);
+            $product->quantity = $variantCurrent->quantity;
+            $variant->albums = $variantCurrent->albums;
         }
+        $product->albums = view('client.pages.product_detail.components.api.albums', compact('variant', 'product'))->render();
+        // Session::flush();
         return view('client.pages.product_detail.index', compact(
             'config',
-            'product'
+            'product',
         ));
     }
 

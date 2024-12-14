@@ -64,6 +64,7 @@
             success: function (res) {
                 console.log(res);
                 $(".product_container").html(res.data);
+                $(".product_container").html(res.data).addClass("show");
             },
         });
     };

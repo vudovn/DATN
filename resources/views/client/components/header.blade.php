@@ -31,8 +31,8 @@
                     <div class="col-md-3">
                         <div class="box_right_vd align-items-center justify-content-center gap-7">
                             <!-- wishlist -->
-                            <div class="list-inline-item  text-center">
-                                <a href="{{ route('client.wishlist.index') }}" class="text-muted position-relative">
+                            <div class="list-inline-item text-center">
+                                <a href="{{ route('client.wishlist.index') }}" class="position-relative">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
@@ -42,18 +42,20 @@
                                     </svg>
                                     <span
                                         class="wishlist_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
-                                        0
+                                        @auth
+                                            {{ getWishlistCount() }}
+                                        @endauth
                                         <span class="visually-hidden">unread messages</span>
                                     </span>
                                     <div class="list_icon_text_vd">
-                                        <small>Wishlist</small>
+                                        <small>Yêu thích</small>
                                     </div>
                                 </a>
                             </div>
 
                             <!-- giỏ hàng -->
                             <div class="list-inline-item  text-center">
-                                <a class="text-muted position-relative" href="{{ route('client.cart.index') }}">
+                                <a class="position-relative" href="{{ route('client.cart.index') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
@@ -64,7 +66,9 @@
                                     </svg>
                                     <span
                                         class="cart_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
-                                        0
+                                        @auth
+                                            {{ getCartCount() }}
+                                        @endauth
                                         <span class="visually-hidden">unread messages</span>
                                     </span>
                                     <div class="list_icon_text_vd">
@@ -76,7 +80,7 @@
                             <!-- tài khoản -->
                             <div class="list-inline-item  text-center">
                                 <a href="{{ Auth()->check() ? route('client.account.index') : route('client.auth.login') }}"
-                                    class="text-muted">
+                                    class="">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">

@@ -36,10 +36,10 @@
                                 {!! $listCart !!}
                             </div>
                         @else
-                            <div class="container cart-no-item text-center mb-4">
-                                <img src="https://live-mmb-public.s3.ap-south-1.amazonaws.com/assets/img/empty-cart.png"
-                                    alt="" width="35%">
-                                <p class="text-muted fw-bold mb-3">Giỏ hàng của bạn còn trống</p>
+                            <div class="container cart-no-item text-center mb-4 pt-15">
+                                <img src="{{ asset('uploads/image/system/no_product.webp') }}"
+                                    alt="" width="100">
+                                <p class="text-muted fw-bold mb-3 mt-3">Giỏ hàng của bạn còn trống</p>
                                 <a class="btn btn-tgnt w-25" href="{{ route('client.home') }}">Mua ngay</a>
                             </div>
                             
@@ -103,9 +103,9 @@
 
     <!-- slide -->
     <section class="container mb-5">
-        <h3 class="fw-bold pb-4">Sản phẩm nổi bật</h3>
+        <h3 class="fw-bold pb-4">Sản phẩm đã xem gần đây</h3>
         <div class="row animate__animated animate__fadeIn listProduct mb-4" id="slide-featured">
-            @foreach ($product_featureds->take(8) as $product_featured)
+            @foreach (getHistoryProduct() as $product_featured)
                 <x-product_card :data="$product_featured"/>
             @endforeach
         </div>

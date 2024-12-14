@@ -47,9 +47,7 @@
     @endif
 @else
     <div class="pt-8 d-flex align-items-center" style="flex-direction: column">
-        <img width="60"
-            src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/orderlist/5fafbb923393b712b964.png"
-            alt="">
+        <img width="60" src="{{ asset('uploads/image/system/no_product.webp') }}" alt="">
         <p class="text-center">Chưa có đơn hàng</p>
     </div>
 @endif

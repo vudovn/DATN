@@ -1,8 +1,8 @@
 <nav class="pc-sidebar" style="z-index: 1 !important">
     <div class="navbar-wrapper">
-        <div class="m-header">
+        <div class="m-header d-flex justify-content-center">
             <a href="{{ route('dashboard.index') }}" class="b-brand text-primary">
-                <img src="" class="img-fluid logo-lg" width="50px" alt="logo" />
+                <img src="{{ asset(getSetting()->site_logo) }}" width="150" alt="">
             </a>
         </div>
         <div class="navbar-content">

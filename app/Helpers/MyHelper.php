@@ -249,3 +249,34 @@ if (!function_exists('getSetting')) {
         return $newData;
     }
 }
+
+// lấy số lượng sản phẩm trong giỏ hàng
+if (!function_exists('getCartCount')) {
+    function getCartCount()
+    {
+        $data = loadClass('Cart', 'Repository');
+        $user_id = Auth::user()->id;
+        // dd($data->getCartCount($user));
+        return $data->getCartCount($user_id);
+    }
+}
+
+// lấy số lượng sản phẩm yêu thích
+if (!function_exists('getWishlistCount')) {
+    function getWishlistCount()
+    {
+        $data = loadClass('Wishlist', 'Repository');
+        $user_id = Auth::user()->id;
+        return $data->getWishlistCount($user_id);
+    }
+}
+
+// lấy sản phẩm vừa xem gần đây
+if (!function_exists('getHistoryProduct')) {
+    function getHistoryProduct()
+    {
+        $data = Illuminate\Support\Facades\Session::get('historyProduct');
+        $data = collect($data)->take(8);
+        return $data;
+    }
+}

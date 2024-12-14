@@ -31,9 +31,6 @@
                             class="d-block btn banner-btn">
                             Xem thêm <span><i class="bi bi-arrow-right"></i></span>
                         </a>
-                        <button class="d-block btn btn-outline custom-outline">
-                            Hỗ trợ
-                        </button>
                     </div>
                 </div>
             @endforeach
@@ -66,7 +63,7 @@
 
         <!-- 6. SECTION 6 -->
         <section class="title-forward-bg">
-            <p class="fw-bold text-center w-50">
+            <p class="fw-bold text-center w-50 m-0">
                 Xem sản phẩm của chúng tôi theo loại phòng
             </p>
         </section>
@@ -252,16 +249,16 @@
         <!-- 15.Contact us -->
         <section class="container py-10">
             <div class="row contact-us">
-                <div class="contact-us-text col-12 col-md-6 text-white">
-                    <h2 class="pb-4 text-white">Liên hệ</h2>
+                <div class="contact-us-text col-12 col-md-6 ">
+                    <h2 class="pb-4 text-tgnt">Liên hệ</h2>
                     <p class="mb-3">
                         Nguyên mẫu cũng có thể được miễn một số yêu cầu sẽ áp dụng cho
                         sản phẩm cuối cùng.
                     </p>
-                    <a href="mailto:{{ getSetting()->site_email }}" class="text-white mb-3">
+                    <a href="mailto:{{ getSetting()->site_email }}" class=" mb-3">
                         <span><i class="bi bi-envelope me-2"></i></span>
                         {{ getSetting()->site_email }}</a><br />
-                    <a href="tel:{{ getSetting()->site_phone }}" class="text-white mb-3">
+                    <a href="tel:{{ getSetting()->site_phone }}" class=" mb-3">
                         <span><i class="bi bi-telephone me-2"></i></span>
                         {{ getSetting()->site_phone }}</a><br />
                     <p class="mb-3">

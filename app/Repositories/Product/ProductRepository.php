@@ -111,4 +111,17 @@ class ProductRepository extends BaseRepository
     }
 
 
+    // Lấy sản phẩm liên quan
+    public function getRelatedProduct($product_id, $category_id)
+    {
+        return $this->model
+            ->where('id', '!=', $product_id)
+            ->whereHas('categories', function ($q) use ($category_id) {
+                $q->where('category_id', $category_id);
+            })
+            ->inRandomOrder()
+            ->take(6)
+            ->get();
+    }
+
 }

@@ -28,7 +28,7 @@
             .get();
         const url = new URL(window.location.href);
         const attrParams = attribute_ids;
-        console.log(attrParams.join(","));
+        attrParams.sort((a, b) => a - b);
         if (attrParams.length > 0) {
             url.searchParams.set("attr", attrParams.join(","));
         } else {
@@ -41,7 +41,7 @@
             .toArray()
             .every((item) => {
                 return $(item).find(".choose-attribute.active").length > 0;
-            });            
+            });
         if (allSelected) {
             $.ajax({
                 url: "/san-pham/ajax/get-variant",

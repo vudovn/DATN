@@ -102,15 +102,15 @@
     };
     TGNT.getProductInCollection = () => {
         $(document).on("click", ".getCollection", function () {
-            $('.checkboxsku').each(function () {
-                if (!$(this).is(':checked')) {
-                    $(this).trigger('click');
+            $(".checkboxsku").each(function () {
+                if (!$(this).is(":checked")) {
+                    $(this).trigger("click");
                 }
             });
         });
     };
     TGNT.checkProduct = () => {
-        $(document).on("change", ".check-collection", function () {  
+        $(document).on("change", ".check-collection", function () {
             let sku = $(this).data("sku");
             let inventory = $(this).data("inventory");
             let price = $(this).data("price");
@@ -160,6 +160,6 @@
         // TGNT.cartCount();
         TGNT.checkProduct();
         TGNT.removeItem();
-        TGNT.cartCount();
+        // TGNT.cartCount();
     });
 })(jQuery);

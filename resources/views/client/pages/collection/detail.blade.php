@@ -36,12 +36,10 @@
                     </div>
                 </div>
                 @include('client.pages.collection.components.modal_product')
-                <p class="fs-3 fw-bold border-top"><span class="count-comment"></span>Bình luận</p>
                 <div class="row">
                         <div class="comment-collection col-12 col-md-9">
                             {{-- RENDER JS --}}
                         </div>
-        
                     <div class="col-md-3 col-12">
                         <div class="bg-light p-5 rounded mb-5">
                             <h5 class="mt-1 fw-bold">Xem các bộ sưu tập khác</h5>

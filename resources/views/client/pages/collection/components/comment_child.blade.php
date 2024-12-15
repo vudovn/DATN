@@ -21,7 +21,7 @@
                                 class="btn-edit btn btn-link text-muted text-decoration-none fw-bold  p-0"
                                 style="font-size:12px">Chỉnh sửa
                             </button>
-                            <p data-id="{{ $childComment->id }}" data-status="parent"
+                            <p data-id="{{ $childComment->id }}" data-status="child"
                                 class="remove-comment text-tgnt fw-bold p-0 position-absolute top-0 end-0"
                                 style="font-size:12px; cursor: pointer;">X
                             </p>
@@ -35,7 +35,10 @@
         </div>
     </div>
 @endforeach
-<button class="btn-load-more-replies btn btn-link text-decoration-none fw-bold text-muted p-0"
-    comment-id="{{ $comment->id }}" style="font-size:12px">
-    Tải thêm bình luận
-</button>
+@if ($count_comment_childs_current < $count_comment_childs)
+    <button class="btn-load-more-replies btn btn-link text-decoration-none fw-bold text-muted p-0"
+        comment-id="{{ $comment->id }}" style="font-size:12px">
+        Tải thêm bình luận
+    </button>
+@endif
+

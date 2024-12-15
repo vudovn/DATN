@@ -241,6 +241,7 @@
     TGNT.removeComment = () => {
         $(document).on("click", ".remove-comment", function () {
             let id = $(this).data("id");
+            let status = $(this).data("status");
             $.ajax({
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
@@ -249,12 +250,17 @@
                 },
                 type: "POST",
                 url: `/bo-suu-tap/ajax/comment/remove`,
-                data:{
+                data: {
                     id: id,
                 },
                 success: function (response) {
                     VDmessage.show("success", "Xoá thành công");
                     $(`#comment-item-${id}`).remove();
+                    if (status == "parent") {
+                        TGNT.render();
+                    } else {
+                        TGNT.loadCommentReply(parent_id, 5);
+                    }
                 },
                 error: function (error) {
                     console.error("Error:", error);

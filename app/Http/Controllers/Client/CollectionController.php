@@ -76,8 +76,9 @@ class CollectionController extends Controller
             [$collection->id],
             (int) $request->limit
         );
-        return view('client.pages.collection.components.comment', compact('collection', 'comments'))->render();
-    }
+        $count_comment_current = $comments->count();
+        $count_comments = $collection->comments->whereNull('parent_id')->count();
+        return view('client.pages.collection.components.comment', compact('collection', 'comments','count_comments','count_comment_current'))->render();    }
     public function getReplies(Request $request, $comment_id, $limit)
     {
         $comment = $this->commentRepository->findById($comment_id);
@@ -86,7 +87,9 @@ class CollectionController extends Controller
             [$comment_id],
             (int) $limit
         );
-        return view('client.pages.collection.components.comment_child', compact('comment_childs', 'comment'))->render();
+        $count_comment_childs_current = $request->limit;
+        $count_comment_childs = $comment->children->whereNotNull('parent_id')->count();
+        return view('client.pages.collection.components.comment_child', compact('comment_childs', 'comment','count_comment_childs_current','count_comment_childs'))->render();
     }
     public function store(Request $request)
     {

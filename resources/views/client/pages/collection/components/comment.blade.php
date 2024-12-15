@@ -1,3 +1,5 @@
+<p class="fs-3 fw-bold border-top"><span class="count-comment">{{ $count_comments }} </span>
+    Bình luận</p>
 @if (Auth()->check())
     <form class="form-comment animate__animated animate__fadeIn mb-3">
         <input type="hidden" name="user_id" value="{{ Auth::id() }}">
@@ -72,6 +74,8 @@
         </div>
     </div>
 @endforeach
-<button class="load-more-comments btn btn-outline-tgnt mb-3" data-collection-id="{{ $collection->id }}">
-    Tải thêm bình luận
-</button>
+@if ($count_comment_current < $count_comments)
+    <button class="load-more-comments btn btn-outline-tgnt mb-3" data-collection-id="{{ $collection->id }}">
+        Tải thêm bình luận
+    </button>
+@endif

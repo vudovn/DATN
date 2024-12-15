@@ -114,16 +114,5 @@
             });
         }
     </script>
-    {{-- <script>
-        $(document).ready(function() {
-            new Choices('.js-choice-order');
-            new Choices('.js-choice-province');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-        });
-    </script> --}}
 
 @endsection

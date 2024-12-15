@@ -9,11 +9,11 @@
             </div>
         </div>
         {{-- sản phẩm nổi bật --}}
-        @if ($data->is_featured == 1)
+        {{-- @if ($data->is_featured == 1)
             <div class="position-absolute top-0 start-0 mt-10 ms-4" style="z-index: 10">
                 <h5><span class="badge bg-light-danger text-dark-danger">Nổi bật</span></h5>
             </div>
-        @endif
+        @endif --}}
         {{-- discount --}}
         @if ($data->discount > 0)
             <div class="position-absolute top-0 start-0 mt-4 ms-4" style="z-index: 10">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Jobs\SendMailContact;
 
 class ContactController extends Controller
 {
@@ -19,7 +20,6 @@ class ContactController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
-            'phone' => 'max:12',
             'message' => 'required|string',
         ], [
             'name.required' => 'Vui lòng nhập tên.',
@@ -29,9 +29,6 @@ class ContactController extends Controller
             'email.required' => 'Vui lòng nhập email.',
             'email.email' => 'Email phải đúng định dạng.',
 
-            'phone.max' => 'Số điện thoại không được dài hơn 12 ký tự.',
-            'phone.numeric' => 'Số điện thoại phải là số.',
-
             'message.required' => 'Vui lòng nhập lời nhắn.',
             'message.string' => 'Tin nhắn phải là một chuỗi ký tự.',
         ]);
@@ -40,20 +37,14 @@ class ContactController extends Controller
         $data = [
             'name' => $request->name,
             'email' => $request->email,
-            'company' => $request->company,
-            'phone' => $request->phone,
             'contact_message' => $request->message,
         ];
 
-        // Gửi email
-        Mail::send('client.pages.contact.send', $data, function ($message) use ($data) {
-            $message->to('khanhvi12344321@gmail.com')
-                ->subject('Thông tin liên hệ của khách: ' . $data['name']);
-        });
-        Mail::send('client.pages.contact.user_contact', $data, function ($message) use ($request) {
-            $message->to($request->email)
-                ->subject('Chúng tôi đã nhận được liên hệ của bạn - TheGioiNoiThat');
-        });
+
+        SendMailContact::dispatch($data, true);
+        SendMailContact::dispatch($data, false);
+
+
         return back()->with('success', 'Gửi liên hệ thành công!');
     }
 

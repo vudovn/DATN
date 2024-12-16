@@ -105,6 +105,7 @@ class OrderService extends BaseService
             'note',
             'status',
             'payment_status',
+            'payment_method_id',
             'total_amount',
             'fee_ship',
             'payment_method'
@@ -162,7 +163,7 @@ class OrderService extends BaseService
 
     private function updateOrder($request, $id)
     {
-        $payload = $request->only(['name', 'phone', 'email', 'province_id', 'district_id', 'ward_id', 'address', 'note', 'status', 'payment_status', 'total_amount', 'fee_ship']);
+        $payload = $request->only(['name', 'phone', 'email', 'province_id', 'district_id', 'ward_id', 'address', 'note', 'status', 'payment_status', 'payment_method_id', 'total_amount', 'fee_ship']);
         $payload['total'] = $this->filterPrice($payload['total_amount']);
         return $this->orderRepository->update($id, $payload);
     }

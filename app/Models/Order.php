@@ -25,7 +25,7 @@ class Order extends Model
         'note',
         'total',
         'payment_status',
-        'payment_method',
+        'payment_method_id',
         'status',
         'fee_ship',
         'user_id'
@@ -65,5 +65,10 @@ class Order extends Model
     public function paymentStatus()
     {
         return $this->belongsTo(PaymentStatus::class, 'payment_status_id');
+    }
+
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class);
     }
 }

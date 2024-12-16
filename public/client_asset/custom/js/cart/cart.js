@@ -56,9 +56,9 @@
                 $(".cart_count").html(data);
                 if (data == 0) {
                     $(".cart-container").html(`
-                        <div class="container cart-no-item text-center mb-4">
-                                <img src="https://live-mmb-public.s3.ap-south-1.amazonaws.com/assets/img/empty-cart.png"
-                                    alt="" width="35%">
+                        <div class="container cart-no-item text-center pt-15">
+                                <img src="/uploads/image/system/no_product.webp"
+                                    alt="" width="100">
                                 <p class="text-muted fw-bold mb-3">Giỏ hàng của bạn còn trống</p>
                                 <a class="btn btn-tgnt w-25" href="${homeUrl}">Mua ngay</a>
                             </div>`);
@@ -202,7 +202,7 @@
         console.log(price);
         const total_price = price * quantity;
         console.log(total_price);
-        
+
         $(`#price-total-${idCart}`).html(TGNT.formatNumber(total_price));
         $(`.price-total`).val(total_price);
     };

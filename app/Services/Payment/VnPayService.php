@@ -24,6 +24,7 @@ class VnPayService extends BaseService
     {
         DB::beginTransaction();
         try {
+            $request->payment_method_id = 2;
             $order = $this->orderService->create($request);
             $paymentUrl = $this->createPayment($request, $order);
             DB::commit();
@@ -35,11 +36,10 @@ class VnPayService extends BaseService
         }
     }
 
-    public function createAgainTransaction($request)
+    public function createAgainTransaction($request, $userId)
     {
         try {
-            $order = $this->orderRepository->findByField('code', $request->vnp_TxnRef);
-            dd($order);
+            $order = $this->orderRepository->findByField('code', $request->code)->first();
             $paymentUrl = $this->createPayment($request, $order);
             return $paymentUrl;
         } catch (\Exception $e) {

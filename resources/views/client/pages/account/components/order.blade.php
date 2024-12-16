@@ -24,9 +24,9 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <a class="nav-link pt-0 order_status" id="payment-pending-order-tab" data-status="payment_pending"
-                        data-url="{{ route('client.account.get-order-by-status', 'pending') }}" data-bs-toggle="pill"
-                        href="#payment-pending-order" role="tab" aria-controls="payment-pending-order"
-                        aria-selected="false" tabindex="-1">
+                        data-url="{{ route('client.account.get-order-by-status', 'payment-pending') }}"
+                        data-bs-toggle="pill" href="#payment-pending-order" role="tab"
+                        aria-controls="payment-pending-order" aria-selected="false" tabindex="-1">
                         Chờ thanh toán
                     </a>
                 </li>
@@ -90,9 +90,8 @@
                 </div>
                 <div class="tab-pane tab-example-html fade" id="payment-pending-order" role="tabpanel"
                     aria-labelledby="payment-pending-order-tab">
-                    <div class="mt-3 list_payment-pending_order" style="min-height: 150px">
+                    <div class="mt-3 list_payment_pending_order" style="min-height: 150px">
                         {{-- js render ở đây --}}
-                        123132
                     </div>
                 </div>
                 <div class="tab-pane tab-example-html fade" id="shipped-order" role="tabpanel"

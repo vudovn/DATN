@@ -28,6 +28,13 @@
                         aria-label="View Order Details">
                         Xem Chi Tiết Đơn Hàng
                     </button>
+                    @if ($item->payment_status == 'pending' && $item->paymentMethod->type == 'online')
+                        <form action="{{ route('client.checkout.vnpay.pay-again') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="code" value="{{ $item->code }}">
+                            <button type="submit" class="btn btn-warning btn-sm">Thanh toán lại</button>
+                        </form>
+                    @endif
                     @if ($item->status == 'pending')
                         <button data-order-id="{{ $item->id }}" data-order-id="{{ $item->id }}"
                             data-order-url="{{ route('client.account.cancel-order') }}" data-bs-toggle="modal"

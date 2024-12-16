@@ -27,18 +27,18 @@ class VnPayController extends Controller
         return redirect($paymentUrl);
     }
 
+    public function payAgain(Request $request)
+    {
+        $userId = auth()->id();
+        $paymentUrl = $this->vnpayService->createAgainTransaction($request, $userId);
+        return redirect($paymentUrl);
+    }
+
     public function return(Request $request)
     {
-        $vnp_HashSecret = config('vnp_HashSecret');
-        $inputData = $request->except('vnp_SecureHash');
-        ksort($inputData);
-        $hashData = '';
-        foreach ($inputData as $key => $value) {
-            $hashData .= $key . '=' . $value . '&';
-        }
-        $hashData = rtrim($hashData, '&');
-        $secureHash = hash_hmac('sha256', $hashData, $vnp_HashSecret);
-        if ($request->vnp_SecureHash === $secureHash) {
+        // dd($request->vnp_TxnRef);
+        $code = $request->vnp_TxnRef;
+        if ($request->vnp_ResponseCode == "00" && $request->vnp_TransactionNo != null && $request->vnp_ResponseCode == "00") {
             $this->orderRepostitory->updateByWhereIn('code', [$request->vnp_TxnRef], ['payment_status' => 'completed']);
             return view('client.pages.cart.components.checkout.result', [
                 'message' => 'Thanh toán thành công, chúng tôi sẽ xử lý đơn hàng của bạn',
@@ -48,7 +48,8 @@ class VnPayController extends Controller
             // Hash không hợp lệ
             return view('client.pages.cart.components.checkout.result', [
                 'message' => 'Thanh toán thất bại',
-                'status' => 'error'
+                'status' => 'error',
+                'code' => $code
             ]);
         }
     }

@@ -54,6 +54,9 @@ class CheckoutController extends Controller
             $user = $this->userRepository->findById(Auth::id());
         }
         $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
+        if ($carts->isEmpty()) {
+            return redirect()->route('client.cart.index');
+        }
         $products = $this->cartService->fetchCartData($carts)['cart'];
         $total = $this->cartService->fetchCartData($carts)['total'];
         $provinces = $this->provinceRepository->getAllProvinces();

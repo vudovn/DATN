@@ -20,6 +20,7 @@ use App\Traits\HasDynamicMiddleware;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductVariantRepository;
+use App\Repositories\Payment\PaymentMethodRepository;
 
 class OrderController extends Controller  implements HasMiddleware
 {
@@ -37,6 +38,7 @@ class OrderController extends Controller  implements HasMiddleware
     protected $categoryRepository;
     protected $productRepository;
     protected $productVariantRepository;
+    protected $paymentMethodRepository;
 
     public function __construct(
         Order $order,
@@ -48,6 +50,7 @@ class OrderController extends Controller  implements HasMiddleware
         CategoryRepository $categoryRepository,
         ProductRepository $productRepository,
         ProductVariantRepository $productVariantRepository,
+        PaymentMethodRepository $paymentMethodRepository
         )
         {
         $this->order = $order;
@@ -59,6 +62,7 @@ class OrderController extends Controller  implements HasMiddleware
         $this->categoryRepository = $categoryRepository;
         $this->productRepository =  $productRepository;
         $this->productVariantRepository =  $productVariantRepository;
+        $this->paymentMethodRepository = $paymentMethodRepository;
         }
 
     public function index(Request $request) 
@@ -85,6 +89,7 @@ class OrderController extends Controller  implements HasMiddleware
         $wards = $this->wardRepository->getAllWards();
         $categories = $this->categoryRepository->findByField('is_room', 2)->pluck('name', 'id')->prepend('Danh mục', 0)->toArray();
         $categoryRoom = $this->categoryRepository->findByField('is_room', 1)->pluck('name', 'id')->prepend('Phòng', 0)->toArray();
+        $paymentMethods = $this->paymentMethodRepository->getAllPublic();
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';
@@ -96,7 +101,8 @@ class OrderController extends Controller  implements HasMiddleware
             'wards',
             'config',
             'categories',
-            'categoryRoom'
+            'categoryRoom',
+            'paymentMethods',
         ));
     }
 
@@ -117,6 +123,7 @@ class OrderController extends Controller  implements HasMiddleware
         $districts = $this->districtRepository->getAllDistricts();
         $wards = $this->wardRepository->getAllWards();
         $config = $this->config();
+        $paymentMethods = $this->paymentMethodRepository->getAllPublic();
         $config['breadcrumb'] = $this->breadcrumb('update');
         $address = $order->address ?? $order->user->address ?? '';
         return view('admin.pages.order.edit', compact(
@@ -126,11 +133,13 @@ class OrderController extends Controller  implements HasMiddleware
             'districts',
             'wards',
             'address',
-            'config'
+            'config',
+            'paymentMethods'
         ));
     }
 
     public function update(UpdateOrderRequest $request, $id) {
+        // dd($request->payment_method_id);
         $result = $this->orderService->update($request, $id);
 
         if($result){

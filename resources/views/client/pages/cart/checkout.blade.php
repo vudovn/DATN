@@ -41,7 +41,8 @@
                                     @include('client.pages.cart.components.checkout.location')
                                     <div class="form-group mb-3">
                                         <label for="">Địa chỉ chi tiết</label>
-                                        <input type="text" placeholder="Số nhà, ngõ, ..." name="address" class="form-control" required>
+                                        <input type="text" placeholder="Số nhà, ngõ, ..." name="address"
+                                            class="form-control" required>
                                     </div>
                                 </div>
                                 <!-- Note -->
@@ -56,25 +57,30 @@
                                 <h4>Phương thức thanh toán</h4>
                                 <div class="col-12">
                                     <div class="form-check ps-0 mb-3">
-                                        <label
+                                        <label for="payment_method_id1"
                                             class="label_input_tgnt d-flex justify-content-between align-items-center w-100 p-3 rounded border bg-light cursor-pointer transition-all position-relative payment-option-label">
                                             <div class="d-flex align-items-center gap-2">
                                                 <img src="https://cdn-icons-png.flaticon.com/512/3692/3692056.png"
                                                     alt="Thanh toán khi nhận hàng" class="payment-icon">
                                                 <span class="w-100 text-center">Thanh toán khi nhận hàng</span>
                                             </div>
-                                            <input data-url="{{ route('client.checkout.store') }}" required type="radio" name="payment_method" value="Thanh toán khi nhận hàng" class="form-check-input radio_input_tgnt" />
+                                            <input id="payment_method_id1" data-url="{{ route('client.checkout.store') }}"
+                                                required type="radio" name="payment_method_id" value="1"
+                                                class="form-check-input radio_input_tgnt" />
                                         </label>
                                     </div>
                                     <div class="form-check ps-0">
-                                        <label
+                                        <label for="payment_method_id2"
                                             class="label_input_tgnt d-flex justify-content-between align-items-center w-100 p-3 rounded border bg-light cursor-pointer transition-all position-relative payment-option-label">
                                             <div class="d-flex align-items-center gap-2">
                                                 <img src="{{ asset('uploads/image/system/logo_vnpay.png') }}"
                                                     alt="Thanh toán bằng VN Pay" class="payment-icon">
                                                 <span class="w-100 text-center">Thanh toán bằng VN Pay</span>
                                             </div>
-                                            <input data-url="{{ route('client.checkout.vnpay.pay') }}" type="radio" name="payment_method" value="Thanh toán bằng VN Pay" class="form-check-input radio_input_tgnt" />
+                                            <input id="payment_method_id2"
+                                                data-url="{{ route('client.checkout.vnpay.pay') }}" type="radio"
+                                                name="payment_method_id" value="2"
+                                                class="form-check-input radio_input_tgnt" />
                                         </label>
                                     </div>
                                 </div>
@@ -107,11 +113,10 @@
                                     height: 20px;
                                 }
 
-                                .radio_input_tgnt[tyle="radio"]:checked + .label_input_tgnt {
+                                .radio_input_tgnt[tyle="radio"]:checked+.label_input_tgnt {
                                     background-color: #007bff;
                                     color: #fff;
                                 }
-
                             </style>
 
 

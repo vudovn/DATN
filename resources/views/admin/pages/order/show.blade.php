@@ -28,7 +28,7 @@
                         <p class="mb-1"><strong>Số điện thoại:</strong> {{ $order->phone }}</p>
                         <p class="mb-1"><strong>Địa chỉ:</strong> {{ $order->address }}, {{ $order->ward->name }},
                             {{ $order->district->name }}, {{ $order->province->name }}</p>
-                        <p class="mb-1"><strong>Hình thức thanh toán:</strong> {{ $order->payment_method }}</p>
+                        <p class="mb-1"><strong>Hình thức thanh toán:</strong> {{ $order->paymentMethod->name }}</p>
                     </div>
                     <div class="col-6 text-right">
                         <h6 class="text-primary">Thông tin thanh toán</h6>

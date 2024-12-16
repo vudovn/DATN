@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\QueryScope;
-use Illuminate\Database\Eloquent\SoftDeletes;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
     use HasFactory, QueryScope;
-    use SoftDeletes;
+    // use SoftDeletes;
     protected $fillable = [
         'user_id',
         'collection_id',
-        'product_id',
         'content',
         'parent_id',
         'deleted_at'
@@ -36,7 +35,10 @@ class Comment extends Model
     {
         return $this->belongsTo(Comment::class, 'parent_id');
     }
-
+    public function children()
+    {
+        return $this->hasMany(Comment::class, 'parent_id');
+    }
     // Mối quan hệ con (các bình luận trả lời)
     public function replies()
     {

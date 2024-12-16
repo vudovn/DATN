@@ -98,7 +98,7 @@ class CommentService extends BaseService
         DB::beginTransaction();
         try {
             $request['user_id'] = Auth::user()->id;
-            $request['product_id'] = (int) $request['product_id'];
+            $request['collection'] = (int) $request['collection'];
             $request['parent_id'] = (int) $request['parent_id'] == 0 ? null :  (int) $request['parent_id'];
             $payload = $request->except(['_token', 'send']);
             $comment = $this->commentRepository->create($payload);
@@ -137,6 +137,7 @@ class CommentService extends BaseService
             return true;
         } catch (\Exception $e) {
             DB::rollback();
+            echo $e->getMessage();
             $this->log($e);
             return false;
         }

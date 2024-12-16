@@ -62,9 +62,9 @@
                                 <p class="text-muted fw-bold mb-3">Giỏ hàng của bạn còn trống</p>
                                 <a class="btn btn-tgnt w-25" href="${homeUrl}">Mua ngay</a>
                             </div>`);
-                    $('.checkout-cart').addClass('disabled-link')
-                }else{
-                    $('.checkout-cart').removeClass('disabled-link')
+                    $(".checkout-cart").addClass("disabled-link");
+                } else {
+                    $(".checkout-cart").removeClass("disabled-link");
                 }
             },
             error: function (data) {
@@ -147,14 +147,14 @@
             if (a < 10) {
                 o.value = a + 1;
                 return true;
-            } else{
+            } else {
                 return false;
             }
         } else if (t.classList.contains("btn-minus")) {
             if (a > 1) {
                 o.value = a - 1;
                 return true;
-            } else{
+            } else {
                 return false;
             }
         }
@@ -170,7 +170,7 @@
             const quantity = _this.val();
             const price = $(`#origin-price-${idCart}-input`).val();
             let url = "gio-hang/updateQuantity";
-            if(checkQuantity){
+            if (checkQuantity) {
                 clearTimeout(timeUpdate);
                 timeUpdate = setTimeout(function () {
                     $.ajax({
@@ -199,7 +199,10 @@
         });
     };
     TGNT.updateTotalItem = (idCart, quantity, price) => {
+        console.log(price);
         const total_price = price * quantity;
+        console.log(total_price);
+        
         $(`#price-total-${idCart}`).html(TGNT.formatNumber(total_price));
         $(`.price-total`).val(total_price);
     };
@@ -216,7 +219,6 @@
                 $("#cart-total-input").val(data);
                 $("#cart-total-discount").html(TGNT.formatNumber(data));
                 $("#cart-total-discount-input").val(data);
-                
             },
             error: function () {
                 console.log("lỗi");
@@ -247,7 +249,9 @@
                 success: function (data) {
                     VDmessage.show("success", "Đã xoá sản phẩm khỏi giỏ hàng");
                     $(`#cart-item-${id}`).remove();
-                    let divSku = $(`.cart-item[data-productSku="${skuProduct}"]`);
+                    let divSku = $(
+                        `.cart-item[data-productSku="${skuProduct}"]`
+                    );
                     divSku.each(function () {
                         let id = $(this).data("id");
                         TGNT.getProduct(id)
@@ -265,7 +269,11 @@
             });
         });
     };
-
+    $("#slide-featured").slick({
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 2,
+    });
     $(document).ready(function () {
         // TGNT.loadCart();
         TGNT.removeCart();
@@ -275,4 +283,3 @@
         TGNT.updateTotalCart();
     });
 })(jQuery);
-

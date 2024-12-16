@@ -13,7 +13,7 @@
             <td>{{ $key+1 }}</td>
             <td><a href="{{ route('order.edit',  ['id' => $order->id]) }}"  class="btn_link {{ $order->status == "delivered" && $order->payment_status == "completed" ? 'disabled_row' : ''}}">{{ $order->code }}</a></td>
             <td>{{ number_format($order->total, 0, '.', '.') }}</td>
-            <td>Thanh toán khi nhận hàng</td>
+            <td>{{ $order->payment_method }}</td>
             <td>
                 <select name="payment_status" data-id="{{ $order->id }}" class="form-select select_status" {{ $order->status == "delivered" && $order->payment_status == "completed" ? 'disabled' : ''}}>
                     @foreach (__('order.payment_status') as $key => $item)

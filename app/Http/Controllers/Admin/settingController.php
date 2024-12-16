@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Services\Slide\SlideService;
 use App\Repositories\Slide\SlideRepository;
 use App\Repositories\Collection\CollectionRepository;
+use App\Services\Setting\SettingService;
+use App\Repositories\Setting\SettingRepository;
 
 
 class settingController extends Controller
@@ -14,14 +16,20 @@ class settingController extends Controller
     protected $sliderService;
     protected $sliderRepository;
     protected $collectionRepository;
+    protected $settingService;
+    protected $settingRepository;
     function __construct(
         SlideService $sliderService,
         SlideRepository $sliderRepository,
-        CollectionRepository $collectionRepository
+        CollectionRepository $collectionRepository,
+        SettingService $settingService,
+        SettingRepository $settingRepository
     ) {
         $this->sliderService = $sliderService;
         $this->sliderRepository = $sliderRepository;
         $this->collectionRepository = $collectionRepository;
+        $this->settingService = $settingService;
+        $this->settingRepository = $settingRepository;
     }
 
 
@@ -59,40 +67,27 @@ class settingController extends Controller
         return redirect()->route('setting.slide')->with('success', 'Cập nhật thành công');
     }
 
-    public function banner()
+    public function general()
     {
-        return successResponse(null, 'Đang phát triển');
+        $config = $this->config();
+        $config['model'] = 'collection';
+        $config['breadcrumb'] = $this->breadcrumb('general');
+        $setting = $this->settingRepository->getAll()->first();
+        return view('admin.pages.setting.general', compact(
+            'config',
+            'setting'
+        ));
     }
 
-    public function footer()
+    public function generalUpdate(Request $request)
     {
-        return successResponse(null, 'Đang phát triển');
+        if ($this->settingService->update($request)) {
+            return redirect()->route('setting.general')->with('success', 'Cập nhật thành công');
+        }
+        return redirect()->route('setting.general')->with('error', 'Cập nhật thất bại');
     }
 
-    public function social()
-    {
-        return successResponse(null, 'Đang phát triển');
-    }
 
-    public function contact()
-    {
-        return successResponse(null, 'Đang phát triển');
-    }
-
-    public function email()
-    {
-        return successResponse(null, 'Đang phát triển');
-    }
-
-    public function seo()
-    {
-        return successResponse(null, 'Đang phát triển');
-    }
-
-    public function payment()
-    {
-        return successResponse(null, 'Đang phát triển');
-    }
 
     public function config()
     {
@@ -115,12 +110,12 @@ class settingController extends Controller
             ],
             'slider' => [
                 'name' => 'Quản lý slider',
-                'list' => ['Quản lý slider']
+                'list' => ['Cài đặt hệ thống', 'Quản lý slider']
             ],
 
-            'create' => [
-                'name' => 'Tạo người dùng',
-                'list' => ['QL người dùng', 'Tạo người dùng']
+            'general' => [
+                'name' => 'Thông tin website',
+                'list' => ['Cài đặt hệ thống', 'Thông tin website']
             ],
             'update' => [
                 'name' => 'Cập nhật người dùng',

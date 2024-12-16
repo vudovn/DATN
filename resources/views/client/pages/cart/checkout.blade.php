@@ -3,7 +3,7 @@
 @section('content')
     {{-- <div style="height: 1000px; width:100px"></div> --}}
     <section class="checkout">
-        <form action="{{ route('client.checkout.store') }}" method="post">
+        <form class="form_payment" action="" method="post">
             @csrf
             <div class="container my-lg-5">
                 <div class="row">
@@ -28,7 +28,7 @@
                                             value="{{ $user->phone }}" required>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <!-- Phương Thức Thanh Toán -->
                                     <div class="form-group mb-3">
                                         <label for="payment_method">Phương Thức Thanh Toán: <span
@@ -36,20 +36,85 @@
                                         <input type="text" id="payment_method" name="payment_method" class="form-control"
                                             value="{{ $user->payment_method ?? 'Tiền mặt' }}" disabled>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="tab_location">
                                     @include('client.pages.cart.components.checkout.location')
                                     <div class="form-group mb-3">
-                                        <x-input :label="'Địa chỉ chi tiết'" name="address" :value="$user->address" :required="true" />
+                                        <label for="">Địa chỉ chi tiết</label>
+                                        <input type="text" placeholder="Số nhà, ngõ, ..." name="address" class="form-control" required>
                                     </div>
                                 </div>
                                 <!-- Note -->
                                 <div class="form-group mb-3">
                                     <label for="customer_note">Ghi chú:</label>
                                     <textarea type="text" id="customer_note" name="note" class="form-control" value="{{ $user->note }}"
-                                        placeholder="Ghi chú cho cửa hàng"></textarea>
+                                        placeholder="Ghi chú cho đơn hàng"></textarea>
                                 </div>
                             </div>
+                            {{-- list thanh toán --}}
+                            <div class="row mt-3">
+                                <h4>Phương thức thanh toán</h4>
+                                <div class="col-12">
+                                    <div class="form-check ps-0 mb-3">
+                                        <label
+                                            class="label_input_tgnt d-flex justify-content-between align-items-center w-100 p-3 rounded border bg-light cursor-pointer transition-all position-relative payment-option-label">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <img src="https://cdn-icons-png.flaticon.com/512/3692/3692056.png"
+                                                    alt="Thanh toán khi nhận hàng" class="payment-icon">
+                                                <span class="w-100 text-center">Thanh toán khi nhận hàng</span>
+                                            </div>
+                                            <input data-url="{{ route('client.checkout.store') }}" required type="radio" name="payment_method" value="Thanh toán khi nhận hàng" class="form-check-input radio_input_tgnt" />
+                                        </label>
+                                    </div>
+                                    <div class="form-check ps-0">
+                                        <label
+                                            class="label_input_tgnt d-flex justify-content-between align-items-center w-100 p-3 rounded border bg-light cursor-pointer transition-all position-relative payment-option-label">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <img src="{{ asset('uploads/image/system/logo_vnpay.png') }}"
+                                                    alt="Thanh toán bằng VN Pay" class="payment-icon">
+                                                <span class="w-100 text-center">Thanh toán bằng VN Pay</span>
+                                            </div>
+                                            <input data-url="{{ route('client.checkout.vnpay.pay') }}" type="radio" name="payment_method" value="Thanh toán bằng VN Pay" class="form-check-input radio_input_tgnt" />
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <style>
+                                .payment-option-label {
+                                    background-color: #f9f9f9;
+                                    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+                                }
+
+                                .payment-option-label:hover,
+                                .payment-option-label:focus-within {
+                                    background-color: #e0e0e0;
+                                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                                }
+
+                                .payment-option-label input[type="radio"]:checked+span {
+                                    color: #007bff;
+                                }
+
+                                .payment-icon {
+                                    width: 24px;
+                                    height: 24px;
+                                    object-fit: contain;
+                                }
+
+                                .form-check-input {
+                                    width: 20px;
+                                    height: 20px;
+                                }
+
+                                .radio_input_tgnt[tyle="radio"]:checked + .label_input_tgnt {
+                                    background-color: #007bff;
+                                    color: #fff;
+                                }
+
+                            </style>
+
+
 
                         </div>
                     </div>
@@ -78,10 +143,12 @@
                         <div class="d-flex justify-content-between">
                             <p class="fs-6">Thành tiền:</p>
                             <p class="cart-total"><span id="cart-total-discount">{{ formatNumber($total) }}</span>₫</p>
-                            <input type="hidden" id="cart-total-discount-input" value="{{ $total }}"></input>
+                            <input type="hidden" id="cart-total-discount-input" name="total_amount"
+                                value="{{ $total }}"></input>
                         </div>
                         <div class="cart-last-step d-flex my-4">
-                            <a href="{{ route('client.cart.index') }}" class="cart-back btn btn-outline-tgnt w-50 ms-2">Trở
+                            <a href="{{ route('client.cart.index') }}"
+                                class="cart-back btn btn-outline-tgnt w-50 ms-2">Trở
                                 lại
                                 đơn hàng</a>
                             <div class="value-cart">

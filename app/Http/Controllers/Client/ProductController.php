@@ -10,6 +10,7 @@ use App\Repositories\Attribute\AttributeCategoryRepository;
 use App\Repositories\Attribute\AttributeRepository;
 use App\Repositories\Product\ProductVariantRepository;
 use App\Repositories\Review\ReviewRepository;
+use Illuminate\Support\Facades\Session;
 class ProductController extends Controller
 {
     protected $productRepository;
@@ -38,16 +39,47 @@ class ProductController extends Controller
         return view('client.pages.product.index');
     }
 
-    public function detail($slug)
+    public function detail(Request $request, $slug)
     {
         $config = $this->config();
         $product = $this->productRepository->findByWhereIn('slug', [$slug], ['categories', 'productVariants'], )->first();
+        $NewAlbums = json_decode($product->albums);
+        $product->thumbnail_sub = $NewAlbums[0] ?? $product->thumbnail;
+        $historyProduct = Session::get('historyProduct', []);
+        if (!collect($historyProduct)->contains('id', $product->id)) {
+            $historyProduct[] = $product;
+            Session::put('historyProduct', $historyProduct);
+        }
+        $variant = (object) [];
         if ($product->has_attribute == 1) {
             $product = $this->getAttribute($product);
+            $product->productVariants->map(function ($item) {
+                $item->attributes = explode(',', $item->attributes);
+                return $item;
+            });
+            $variantCurrent = $product->productVariants->first();
+
+            if ($request->has('attr')) {
+                $attr = $request->attr;
+                $attr = explode(',', $attr);
+                $attr = implode(', ', $attr);
+                $variantCurrent = $this->productVariantRepository->findVariant($product->id, $attr);
+            }
+
+            $product->sku = $variantCurrent->sku;
+            $product->title = $variantCurrent->title;
+            $product->price = $variantCurrent->price;
+            $product->code = explode(',', $variantCurrent->code);
+            $product->quantity = $variantCurrent->quantity;
+            $variant->albums = $variantCurrent->albums;
+            // dd($variant);
         }
+        $product->albums = view('client.pages.product_detail.components.api.albums', compact('variant', 'product'))->render();
+        // Session::flush();
+        // dd($product);
         return view('client.pages.product_detail.index', compact(
             'config',
-            'product'
+            'product',
         ));
     }
 
@@ -112,8 +144,32 @@ class ProductController extends Controller
         ];
         return successResponse($data);
     }
-
-
+    public function addCompare(Request $request, $sku)
+    {
+        $data = $this->productRepository->findByField('sku', $sku)->first();
+        if (empty($data)) {
+            $data = $this->productVariantRepository->findByField('sku', $sku)->first();
+            $data->name = $data->product->name;
+            $data->thumbnail = $data->product->thumbnail;
+        }
+        return $data;
+    }
+    public function compare(Request $request)
+    {
+        $skus = $request->except('_token');
+        $products = [];
+        foreach ($skus as $sku) {
+            $data = $this->productRepository->findByField('sku', $sku)->first();
+            if (empty($data)) {
+                $data = $this->productVariantRepository->findByField('sku', $sku)->first();
+                $data->name = $data->product->name;
+                $data->thumbnail = $data->product->thumbnail;
+            }
+            $products[] = $data;
+        }
+        return view('client.pages.product.compare', compact('products'))->render();
+        ;
+    }
     private function config()
     {
         return [
@@ -125,6 +181,8 @@ class ProductController extends Controller
                 "https://freshcart.codescandy.com/assets/libs/rater-js/index.js",
                 'client_asset/custom/js/product/comment_review.js',
                 'client_asset/custom/js/product/attribute.js',
+                'client_asset/custom/js/product/compare.js',
+                'client_asset/custom/js/product/compare_search.js',
                 // 'client_asset/custom/js/product/attribute_hex.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.min.js',
 

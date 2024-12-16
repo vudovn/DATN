@@ -149,9 +149,11 @@ class ProductService extends BaseService
 
     private function sortVariantId($variantId)
     {
-        $extract = explode(',', $variantId);
+        $extract = explode(', ', $variantId);
         sort($extract, SORT_NUMERIC);
-        return implode(',', $extract);
+        $extract = implode(', ', $extract);
+        $extract = trim($extract);
+        return $extract;
     }
     private function createVariantArray(array $payload)
     {

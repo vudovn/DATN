@@ -25,17 +25,26 @@ class CategoryController extends Controller
     }
     public function index(Request $request)
     {
-        $categories = $this->categoryService->paginate($request);
+        $previousUrl = class_basename(url()->current());
         $config = $this->config();
-        $config['breadcrumb'] = $this->breadcrumb('index');
+        if ($previousUrl === 'index') {
+            $config['breadcrumb'] = $this->breadcrumb('category');
+        } else {
+            $config['breadcrumb'] = $this->breadcrumb('room');
+        }
         return view('admin.pages.category.index', compact(
-            'config',
-            'categories'
+            'config'
         ));
     }
     public function getData($request)
     {
-        $categories = $this->categoryService->paginate($request);
+        $previousUrl = class_basename(url()->previous());
+
+        if ($previousUrl === 'index') {
+            $categories = $this->categoryService->paginationCategory($request);
+        } else {
+            $categories = $this->categoryService->paginationRoom($request);
+        }
         $config = $this->config();
         return view('admin.pages.category.components.table', compact('categories', 'config'));
     }
@@ -96,8 +105,8 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
         $category  = $this->categoryRepository->findById($id);
-        $categoriesChild = Category::with('children')->where('parent_id', 0)->get();
-        $categoryOptions = $this->categoryService->renderCategoryOptions($categoriesChild);
+        $categoriesChild = Category::with('children')->where('parent_id', 0)->where('id', '!=', $id)->get();
+        $categoryOptions = $this->categoryService->renderCategoryOptions($categoriesChild, $category);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('update');
         $config['method'] = 'edit';
@@ -135,8 +144,12 @@ class CategoryController extends Controller
     private function breadcrumb($key)
     {
         $breadcrumb = [
-            'index' => [
+            'category' => [
                 'name' => 'Quản lý danh mục',
+                'list' => ['Danh mục', 'Danh sách']
+            ],
+            'room' => [
+                'name' => 'Quản lý danh mục phòng',
                 'list' => ['Danh mục', 'Danh sách']
             ],
             'create' => [

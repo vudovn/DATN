@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="col-md-3 col-md-3">
                     <div class="bg-light p-5 rounded mb-5">
-                        <h5 class="mt-1">Bộ sưu tập Thế giới nội thất</h5>
+                        <h5 class="mt-1 fw-bold">Bộ sưu tập Thế giới nội thất</h5>
                         <hr class="border-top border-3 w-25 my-2">
                         <div class="row">
                             @foreach ($collections as $collection)

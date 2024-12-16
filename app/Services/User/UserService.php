@@ -1,5 +1,6 @@
 <?php
 namespace App\Services\User;
+
 use App\Services\BaseService;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\DB;
@@ -94,6 +95,7 @@ class UserService extends BaseService
             $user = $this->userRepository->update($id, $payload);
             $findUser = $this->userRepository->findById($id);
             $findUser->syncRoles($request->input('roles')); // Đồng bộ vai trò
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -119,6 +121,7 @@ class UserService extends BaseService
             return false;
         }
     }
+
 
     public function editAccount($request, $id)
     {

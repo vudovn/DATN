@@ -31,7 +31,7 @@
                         </div>
                         <div class="col">
                             <div class="d-block mb-1">
-                                <a class="text-decoration-none text-primary fw-bold" href="">
+                                <a class="text-decoration-none text-primary fw-bold" href="{{ route('setting.general') }}">
                                     Cài đặt chung
                                 </a>
                             </div>

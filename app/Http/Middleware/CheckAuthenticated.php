@@ -17,10 +17,12 @@ class CheckAuthenticated
     public function handle(Request $request, Closure $next): Response
     {
 
-        if(!Auth::check()){
-            return redirect()->route('auth.index');
-        }
+        // kiểm ra xem có quyền với đã đăng nhập hay không
 
-        return $next($request);
+        if(Auth::check() && count(Auth::user()->getRoleNames()) > 0){
+            return $next($request);
+        }
+        Auth::logout();
+        return redirect()->route('auth.index');
     }
 }

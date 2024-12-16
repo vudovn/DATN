@@ -52,6 +52,7 @@ class BaseRepository
         return $this->model->select($select)->with($relation)->find($id);
     }
 
+
     public function findByField(string $field, $value, array $select = ['*'], $relation = [])
     {
         return $this->model->select($select)->where($field, $value)->with($relation);
@@ -63,7 +64,8 @@ class BaseRepository
     }
     
 
-    public function delete(int $id){
+    public function delete(int $id)
+    {
         return $this->findById($id)->delete();
     }
 

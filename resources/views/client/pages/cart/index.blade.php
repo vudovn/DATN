@@ -36,10 +36,10 @@
                                 {!! $listCart !!}
                             </div>
                         @else
-                            <div class="container cart-no-item text-center mb-4">
-                                <img src="https://live-mmb-public.s3.ap-south-1.amazonaws.com/assets/img/empty-cart.png"
-                                    alt="" width="35%">
-                                <p class="text-muted fw-bold mb-3">Giỏ hàng của bạn còn trống</p>
+                            <div class="container cart-no-item text-center mb-4 pt-15">
+                                <img src="{{ asset('uploads/image/system/no_product.webp') }}"
+                                    alt="" width="100">
+                                <p class="text-muted fw-bold mb-3 mt-3">Giỏ hàng của bạn còn trống</p>
                                 <a class="btn btn-tgnt w-25" href="{{ route('client.home') }}">Mua ngay</a>
                             </div>
                             
@@ -57,14 +57,14 @@
                     <div class="cart-delivery">
                         <div class="checkbox-wrapper-27">
                             <label class="checkbox">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" checked disabled>
                                 <span class="checkbox__icon"></span>
                                 <span class="text">Liên hệ phí vận chuyển sau</span>
                             </label>
                         </div>
                         <div class="checkbox-wrapper-27">
                             <label class="checkbox">
-                                <input type="checkbox">
+                                <input type="checkbox" disabled>
                                 <span class="checkbox__icon"></span>
                                 <span class="text">Phí vận chuyển</span>
                             </label>
@@ -74,7 +74,7 @@
                     
                     <div class="d-flex justify-content-between">
                         <p class="fs-6">Tiết kiệm:</p>
-                        <p class="cart-total"><span class="save-price" id="save-price"></span>₫</p>
+                        <p class="cart-total"><span class="save-price" id="save-price"></span>0₫</p>
                     </div>
                     <div class="d-flex justify-content-between">
                         <p class="fs-6">Thành tiền:</p>
@@ -102,154 +102,12 @@
     </section>
 
     <!-- slide -->
-    <section class="recently_vd container mb-5">
-        <div>
-            <h3>Đã xem gần đây</h3>
-            <button class="carousel-control-next" type="button" data-bs-target="#recentlyViewedCarousel"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-        <div id="recentlyViewedCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row">
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
-                            <div class="product-card">
-                                <a href="">
-                                    <div>
-                                        <img class="img-fluid" data-img-hover="/assets/image/footer/pic1.png"
-                                            src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
-                                            class="product-image img-fluid" />
-                                    </div>
-                                </a>
-                                <a href="" class="title_product">
-                                    <h6 class="mt-2">Gather Couch</h6>
-                                </a>
-                                <p>12,300,000 đ</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
-                            <div class="product-card">
-                                <a href="">
-                                    <div>
-                                        <img class="img-fluid"
-                                            src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
-                                            class="product-image img-fluid" />
-                                    </div>
-                                </a>
-                                <a href="" class="title_product">
-                                    <h6 class="mt-2">Gather Couch</h6>
-                                </a>
-                                <p>12,300,000 đ</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
-                            <div class="product-card">
-                                <a href="">
-                                    <div>
-                                        <img class="img-fluid"
-                                            src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
-                                            class="product-image img-fluid" />
-                                    </div>
-                                </a>
-                                <a href="" class="title_product">
-                                    <h6 class="mt-2">Gather Couch</h6>
-                                </a>
-                                <p>12,300,000 đ</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
-                            <div class="product-card">
-                                <a href="">
-                                    <div>
-                                        <img class="img-fluid"
-                                            src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
-                                            class="product-image img-fluid" />
-                                    </div>
-                                </a>
-                                <a href="" class="title_product">
-                                    <h6 class="mt-2">Gather Couch</h6>
-                                </a>
-                                <p>12,300,000 đ</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row">
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
-                            <div class="product-card">
-                                <a href="">
-                                    <div>
-                                        <img src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
-                                            class="product-image img-fluid" />
-                                    </div>
-                                </a>
-                                <a href="" class="title_product">
-                                    <h6 class="mt-2">Gather Couch</h6>
-                                </a>
-                                <p>12,300,000 đ</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
-                            <div class="product-card">
-                                <a href="">
-                                    <div>
-                                        <img src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
-                                            class="product-image img-fluid" />
-                                    </div>
-                                </a>
-                                <a href="" class="title_product">
-                                    <h6 class="mt-2">Gather Couch</h6>
-                                </a>
-                                <p>12,300,000 đ</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
-                            <div class="product-card">
-                                <a href="">
-                                    <div>
-                                        <img src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
-                                            class="product-image img-fluid" />
-                                    </div>
-                                </a>
-                                <a href="" class="title_product">
-                                    <h6 class="mt-2">Gather Couch</h6>
-                                </a>
-                                <p>12,300,000 đ</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
-                            <div class="product-card">
-                                <a href="">
-                                    <div>
-                                        <img src="https://noithatgiakho.com/upload/sanpham/large/giuong-ngu-boc-nem-da-dep-hien-dai-gia-re-368-38b3ef.jpg"
-                                            class="product-image img-fluid" />
-                                    </div>
-                                </a>
-                                <a href="" class="title_product">
-                                    <h6 class="mt-2">Gather Couch</h6>
-                                </a>
-                                <p>12,300,000 đ</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev d-none" type="button" data-bs-target="#recentlyViewedCarousel"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"><i
-                        class="fa-solid fa-chevron-left"></i></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next d-none" type="button" data-bs-target="#recentlyViewedCarousel"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"><i
-                        class="fa-solid fa-chevron-right"></i></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+    <section class="container mb-5">
+        <h3 class="fw-bold pb-4">Sản phẩm đã xem gần đây</h3>
+        <div class="row animate__animated animate__fadeIn listProduct mb-4" id="slide-featured">
+            @foreach (getHistoryProduct() as $product_featured)
+                <x-product_card :data="$product_featured"/>
+            @endforeach
         </div>
     </section>
 @endsection

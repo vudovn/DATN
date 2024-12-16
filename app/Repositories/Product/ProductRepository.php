@@ -105,5 +105,23 @@ class ProductRepository extends BaseRepository
         return $products;
     }
 
+    public function updateQuantity($product_id, $quantity)
+    {
+        return $this->model->where('id', $product_id)->update(['quantity' => DB::raw('quantity - ' . $quantity)]);
+    }
+
+
+    // Lấy sản phẩm liên quan
+    public function getRelatedProduct($product_id, $category_id)
+    {
+        return $this->model
+            ->where('id', '!=', $product_id)
+            ->whereHas('categories', function ($q) use ($category_id) {
+                $q->where('category_id', $category_id);
+            })
+            ->inRandomOrder()
+            ->take(6)
+            ->get();
+    }
 
 }

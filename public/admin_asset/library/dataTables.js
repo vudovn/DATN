@@ -121,7 +121,6 @@
                         : "alert alert-danger"
                 );
             $("#idProduct").val(array.idArray.join(","));
-            
         });
     };
 

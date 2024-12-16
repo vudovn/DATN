@@ -65,8 +65,8 @@
 
     TGNT.checkAndHighlight = (idsArray) => {
         idsArray.forEach((sku) => {
-            $(`#checkInput${sku}`).prop("checked", true);
-            $(`#product-item${sku}`).css("background-color", "#cce6e6");
+            $(`#checkInput${sku}`).prop("checked", true); // Check input
+            $(`#product-item${sku}`).css("background-color", "#cce6e6"); //chuyển màu nền
         });
         function countVariant() {
             $(".product-main").each(function () {
@@ -143,16 +143,20 @@
         $(document).on("change", ".checkInput", function () {
             const sku = $(this).data("sku");
             const item = $("#product-item" + sku);
-
             if ($(this).prop("checked")) {
                 if (!array.idArray.includes(sku) && sku) {
+                    console.log(array.idArray);        
                     array.idArray.push(sku);
                     item.css("background-color", "#cce6e6");
                 }
+                
                 TGNT.addPoint(sku);
             } else {
                 array.idArray = array.idArray.filter((i) => i !== sku);
+                console.log(array.idArray);
                 item.css("background-color", "");
+                $(`#product-row-${sku}`).remove();
+                TGNT.calculateTotalAmount();
             }
             $(".countProduct").html(array.idArray.length);
             $(".filterProduct .title")
@@ -175,8 +179,9 @@
                     data: {
                         sku: sku ? sku : "",
                     },
-                    success: function (data) {
+                    success: function (data) {                        
                         TGNT.renderRow(data.data);
+                        TGNT.calculateTotalAmount();
                     },
                     error: function (xhr, status, error) {
                         console.log("lỗi");
@@ -271,10 +276,11 @@
                 .replace(/\./g, "")
                 .trim();
             let price = parseInt(priceText);
-            totalAmount += price;
+            // totalAmount += price;
+            totalAmount = totalAmount + price;
         });
         $("#total_amount").val(TGNT.formatNumber(totalAmount));
-        $(".total_amount").text(TGNT.formatNumber(totalAmount));
+        $(".total_amount").text(TGNT.formatNumber(totalAmount)); 
     };
 
     TGNT.updateQuantity = () => {
@@ -283,7 +289,7 @@
             let price = $(this).data("price");
             let totalPrice = quantity * price;
 
-            $(this).closest("tr").find(".product_quantity_input").val(quantity);
+            $(this).closest("tr").find(".product_quantity_input").val(quantity); 
             $(this)
                 .closest("tr")
                 .find(".total-price")
@@ -294,8 +300,8 @@
     };
 
     TGNT.checkOld = () => {
-        if (typeof productOrder !== "undefined" && productOrder.length > 0) {
-            productOrder.forEach((product) => {
+        if (typeof productOld !== "undefined" && productOld.length > 0) {
+            productOld.forEach((product) => {
                 TGNT.renderRow(product);
                 array.idArray.push(product.sku);
             });

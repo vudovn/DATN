@@ -28,21 +28,20 @@
             .get();
         const url = new URL(window.location.href);
         const attrParams = attribute_ids;
-        console.log(attrParams.join(","));
+        attrParams.sort((a, b) => a - b);
         if (attrParams.length > 0) {
             url.searchParams.set("attr", attrParams.join(","));
         } else {
             url.searchParams.delete("attr");
         }
-        const newUrl = url.toString().replace(/%2C/g, ',');
+        const newUrl = url.toString().replace(/%2C/g, ",");
         window.history.pushState({}, "", newUrl);
-        
+
         const allSelected = $(".attribute")
             .toArray()
             .every((item) => {
                 return $(item).find(".choose-attribute.active").length > 0;
             });
-
         if (allSelected) {
             $.ajax({
                 url: "/san-pham/ajax/get-variant",
@@ -65,8 +64,26 @@
     };
 
     TGNT.renderInfo = (data) => {
-        $(".product-title").html(`${data.name} (${data.title}) `);
+        $(".product-title").html(`${data.name}`);
+        $(".inventory").val(`${data.quantity}`);
+
+        $(".status_spct").html(`
+            <strong>Tình trạng: </strong>
+                <span class="badge bg-light-danger text-dark-warning product_ct_badge">
+                    Hết hàng
+                </span>
+    `);
+        if (data.quantity > 0) {
+            $(".status_spct").html(`
+                    <strong>Tình trạng: </strong>
+                        <span class="badge bg-light-success text-dark-warning product_ct_badge">
+                            Còn hàng
+                        </span>
+            `);
+        }
+
         if (data.sku) {
+            $(".compare").data("sku", `${data.sku}`);
             $(".buyNow").attr("data-sku", `${data.sku}`);
             $(".addToCart").attr("data-sku", `${data.sku}`);
         }
@@ -128,6 +145,6 @@
     $(document).ready(function () {
         TGNT.selectVariantProduct();
         TGNT.formatMoney();
-        TGNT.checkChange();
+        // TGNT.checkChange();
     });
 })(jQuery);

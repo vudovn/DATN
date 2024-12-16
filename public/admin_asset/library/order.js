@@ -61,11 +61,12 @@
         }
     };
 
+
+    // Tìm kiếm khách hàng theo số đt
     TGNT.searchCustomer = () => {
         let debounceTimer;
         $('.search-customer').on('input', function () {
-            const phoneNumber = $(this).val().trim();
-    
+            const phoneNumber = $(this).val().trim();            
             clearTimeout(debounceTimer); // Xóa bỏ debounce trước đó nếu có
             debounceTimer = setTimeout(() => {
                 if (phoneNumber) {
@@ -75,6 +76,7 @@
                         data: { phone: phoneNumber },
                         dataType: 'json',
                         success: function (response) {
+                            
                             if (response.data?.success && response.data.customer) {
                                 VDmessage.show('success', 'Đã tìm thấy khách hàng');
                                 const customer = response.data.customer;
@@ -107,7 +109,7 @@
                 } else {
                     VDmessage.show('warning', 'Vui lòng nhập số điện thoại trước khi tìm kiếm.');
                 }
-            }, 1000); // Debounce 500ms
+            }, 500); // Debounce 500ms
         });
     };
     

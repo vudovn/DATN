@@ -7,10 +7,12 @@
                     @foreach ($item->attributes as $key => $attribute)
                         <button type="button" data-attributeId="{{ $attribute->id }}"
                             class="choose-attribute btn btn-sm btn-outline-secondary 
-                           {{ $attrUrl ? (in_array($attribute->id, $attrUrl) ? 'active' : '') : ($key == 0 ? 'active' : '') }}">
+                               {{ $attrUrl ? (in_array($attribute->id, $attrUrl) ? 'active' : '') : ($key == 0 ? 'active' : '') }}"
+                            {{ $attrUrl ? (in_array($attribute->id, $attrUrl) ? 'disabled=disabled' : '') : ($key == 0 ? 'disabled=disabled' : '') }}>
                             {{ $attribute->value }}
                         </button>
                     @endforeach
+
                 </div>
             </div>
         </div>

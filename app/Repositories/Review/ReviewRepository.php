@@ -54,6 +54,10 @@ class ReviewRepository extends BaseRepository
 
     public function getReviewByProductAndUser($productId, $userId)
     {
-        return $this->model->where('product_id', $productId)->with('children')->where('user_id', $userId)->first();
+        return $this->model
+            ->where('product_id', $productId)
+            ->where('user_id', $userId)
+            ->with('children');
     }
+
 }

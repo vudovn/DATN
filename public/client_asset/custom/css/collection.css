@@ -240,7 +240,7 @@
     pointer-events: none; /* Ngăn chặn sự tương tác khi ẩn */
 }
 .point_content .name {
-    font-size: clamp(13px, 1.5vw, 20px);
+    font-size: clamp(11px, 1.5vw, 13px);
     font-weight: bold;
     margin: 0;
     margin: 7px 0px;
@@ -250,7 +250,77 @@
     -webkit-line-clamp: 1;
 }
 .point_content .href a {
-    font-size: clamp(10px, 1.5vw, 15px);
+    font-size: clamp(11px, 1.5vw, 13px);
     text-decoration: underline;
     margin: 0;
 }
+:root {
+    --primary: var(--base-color);
+    --secondary: var(--base-color);
+    --white: #fff;
+    --gray: #9b9b9b;
+    
+  }
+  
+  .form__group {
+    position: relative;
+    padding: 15px 0 0;
+    margin-top: 10px;
+    width: 50%;
+  }
+  
+  .form__field {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid var(--gray);
+    outline: 0;
+    font-size: 0.9rem;
+    color: black;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+  }
+  
+  .form__field::placeholder {
+    color: grey;
+  }
+  
+  .form__field:placeholder-shown ~ .form__label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+  }
+  
+  .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: var(--gray);
+  }
+  
+  .form__field:focus {
+    ~ .form__label {
+      position: absolute;
+      top: 0;
+      display: block;
+      transition: 0.2s;
+      font-size: 1rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+    padding-bottom: 6px;
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, var(--primary), var(--secondary));
+    border-image-slice: 1;
+  }
+  
+  /* Reset input */
+  .form__field:required,
+  .form__field:invalid {
+    box-shadow: none;
+  }
+  

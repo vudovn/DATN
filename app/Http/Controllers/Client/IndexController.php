@@ -17,8 +17,7 @@ class IndexController extends Controller
         CategoryRepository $categoryRepository,
         SlideRepository $slideRepository,
         ProductRepository $productRepository,
-        )
-    {
+    ) {
         $this->categoryRepository = $categoryRepository;
         $this->slideRepository = $slideRepository;
         $this->productRepository = $productRepository;
@@ -38,7 +37,6 @@ class IndexController extends Controller
             'product_featureds',
             'product_bestsellers'
         ));
-
     }
 
     public function about()
@@ -46,11 +44,7 @@ class IndexController extends Controller
         $config = $this->config();
         return view('client.pages.about.index', compact('config'));
     }
-    public function contact()
-    {
-        $config = $this->config();
-        return view('client.pages.contact.index', compact('config'));
-    }
+
     private function config()
     {
         return [

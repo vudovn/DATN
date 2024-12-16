@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'authenticated' => CheckAuthenticated::class,
             'unauthenticated' => UnAuthenticated::class,
-            'checkPermission' => App\Http\Middleware\CheckPermission::class,
+            'checkPermission' => App\Http\Middleware\CheckPermissionVN::class,
             'preventBackHistory' => App\Http\Middleware\RevalidateBackHistory::class,
             'clientAuth' => App\Http\Middleware\ClientAuthMiddleware::class,
             'clientLogin' => App\Http\Middleware\ClientLoginMiddleware::class,

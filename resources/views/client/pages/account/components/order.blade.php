@@ -23,6 +23,14 @@
                     </a>
                 </li>
                 <li class="nav-item" role="presentation">
+                    <a class="nav-link pt-0 order_status" id="payment-pending-order-tab" data-status="payment_pending"
+                        data-url="{{ route('client.account.get-order-by-status', 'pending') }}" data-bs-toggle="pill"
+                        href="#payment-pending-order" role="tab" aria-controls="payment-pending-order"
+                        aria-selected="false" tabindex="-1">
+                        Chờ thanh toán
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
                     <a class="nav-link pt-0 order_status" id="shipped-order-tab" data-status="shipped"
                         data-url="{{ route('client.account.get-order-by-status', 'shipped') }}" data-bs-toggle="pill"
                         href="#shipped-order" role="tab" aria-controls="shipped-order" aria-selected="false"
@@ -40,9 +48,9 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <a class="nav-link pt-0 order_status" id="cancelled-order-tab" data-status="cancelled"
-                    data-url="{{ route('client.account.get-order-by-status', 'cancelled') }}" data-bs-toggle="pill"
-                    href="#cancelled-order" role="tab" aria-controls="cancelled-order" aria-selected="false"
-                    tabindex="-1">
+                        data-url="{{ route('client.account.get-order-by-status', 'cancelled') }}" data-bs-toggle="pill"
+                        href="#cancelled-order" role="tab" aria-controls="cancelled-order" aria-selected="false"
+                        tabindex="-1">
                         Đã hủy
                     </a>
                 </li>
@@ -61,7 +69,8 @@
                                     type="button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-search">
                                         <circle cx="11" cy="11" r="8"></circle>
                                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                                     </svg>
@@ -77,6 +86,13 @@
                     aria-labelledby="pending-order-tab">
                     <div class="mt-3 list_pending_order" style="min-height: 150px">
                         {{-- js render ở đây --}}
+                    </div>
+                </div>
+                <div class="tab-pane tab-example-html fade" id="payment-pending-order" role="tabpanel"
+                    aria-labelledby="payment-pending-order-tab">
+                    <div class="mt-3 list_payment-pending_order" style="min-height: 150px">
+                        {{-- js render ở đây --}}
+                        123132
                     </div>
                 </div>
                 <div class="tab-pane tab-example-html fade" id="shipped-order" role="tabpanel"

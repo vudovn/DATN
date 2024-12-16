@@ -19,6 +19,7 @@
                 <td>
                     <span class="row-name">{{ $category->name }}</span>
                 </td>
+
                 @if ($category->is_room == 1)
                     <td>
                         <span class="badge bg-light-primary">Phòng</span>
@@ -45,12 +46,12 @@
                     </ul>
                 </td>
             </tr>
-            @foreach ($category->children->whereNotNull('parent_id') as $child)
+            {{-- @foreach ($category->children->whereNotNull('parent_id') as $child)
                 @include('admin.pages.category.components.child', [
                     'child' => $child,
                     'char' => ' |-- ',
                 ])
-            @endforeach
+            @endforeach --}}
         @endif
     @endforeach
     <tr class="animate__animated animate__fadeIn">

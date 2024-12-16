@@ -1,4 +1,8 @@
     <!-- header -->
+    <script>
+        window.isLoggedIn = {{ auth()->check() ? 'true' : 'false' }};
+    </script>
+
     <header class="header_vd border-bottom" style="box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;">
         <!-- header top -->
         <div class="py-1 pt-xxl-6">
@@ -7,31 +11,32 @@
                     <div class="col-md-3">
                         <div class="box_left_vd social-icons align-items-center justify-content-center">
                             <p>
-                                <a href="#" class="social-icons_link"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a target="_blank"
+                                    href="https://www.facebook.com/{{ getSetting()->site_social->facebook }}"
+                                    class="social-icons_link"><i class="fa-brands fa-facebook-f"></i></a>
                             </p>
                             <p>
-                                <a href="#" class="social-icons_link"><i class="fa-brands fa-twitter"></i></a>
+                                <a target="_blank"
+                                    href="https://www.instagram.com/{{ getSetting()->site_social->instagram }}"
+                                    class="social-icons_link"><i class="bi bi-instagram"></i></a>
                             </p>
                             <p>
-                                <a href="#" class="social-icons_link"><i class="bi bi-instagram"></i></a>
-                            </p>
-                            <p>
-                                <a href="#" class="social-icons_link"><i class="fa-brands fa-linkedin-in"></i></a>
-                            </p>
-                            <p>
-                                <a href="#" class="social-icons_link"><i class="bi bi-youtube"></i></a>
+                                <a target="_blank"
+                                    href="https://www.youtube.com/{{ '@' . getSetting()->site_social->youtube }}"
+                                    class="social-icons_link"><i class="bi bi-youtube"></i></a>
                             </p>
                         </div>
                     </div>
                     <div class="col-md-6 text-center">
-                        <a href="{{ route('client.home') }}"><img class="logo_vd_top" src="/logoTGNT-red.png" width="150"
+                        <a href="{{ route('client.home') }}"><img class="logo_vd_top"
+                                src="{{ asset(getSetting()->site_logo) }}" width="150"
                                 alt="logo_sieuthinoithat" /></a>
                     </div>
                     <div class="col-md-3">
-                        <div class="box_right_vd align-items-center justify-content-center">
+                        <div class="box_right_vd align-items-center justify-content-center gap-7">
                             <!-- wishlist -->
-                            <div class="list-inline-item me-7 text-center">
-                                <a href="{{ route('client.wishlist.index') }}" class="text-muted position-relative">
+                            <div class="list-inline-item text-center">
+                                <a href="{{ route('client.wishlist.index') }}" class="position-relative">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
@@ -39,20 +44,24 @@
                                             d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
                                         </path>
                                     </svg>
-                                    <span
-                                        class="wishlist_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
-                                        0
-                                        <span class="visually-hidden">unread messages</span>
-                                    </span>
+                                    @auth
+                                        <span
+                                            class="wishlist_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
+
+                                            {{ getWishlistCount() ?? 0 }}
+
+                                            <span class="visually-hidden">unread messages</span>
+                                        </span>
+                                    @endauth
                                     <div class="list_icon_text_vd">
-                                        <small>Wishlist</small>
+                                        <small>Yêu thích</small>
                                     </div>
                                 </a>
                             </div>
 
                             <!-- giỏ hàng -->
-                            <div class="list-inline-item me-7 text-center">
-                                <a class="text-muted position-relative" href="{{route('client.cart.index')}}">
+                            <div class="list-inline-item  text-center">
+                                <a class="position-relative" href="{{ route('client.cart.index') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
@@ -61,11 +70,15 @@
                                         <line x1="3" y1="6" x2="21" y2="6"></line>
                                         <path d="M16 10a4 4 0 0 1-8 0"></path>
                                     </svg>
-                                    <span
-                                        class="cart_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
-                                        0
-                                        <span class="visually-hidden">unread messages</span>
-                                    </span>
+                                    @auth
+                                        <span
+                                            class="cart_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
+
+                                            {{ getCartCount() }}
+
+                                            <span class="visually-hidden">unread messages</span>
+                                        </span>
+                                    @endauth
                                     <div class="list_icon_text_vd">
                                         <small>Giỏ hàng</small>
                                     </div>
@@ -73,10 +86,9 @@
                             </div>
 
                             <!-- tài khoản -->
-                            <div
-                                class="list-inline-item me-7   @if (!Auth::check()) me-lg-0 @endif text-center">
+                            <div class="list-inline-item  text-center">
                                 <a href="{{ Auth()->check() ? route('client.account.index') : route('client.auth.login') }}"
-                                    class="text-muted">
+                                    class="">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
@@ -84,30 +96,10 @@
                                         <circle cx="12" cy="7" r="4"></circle>
                                     </svg>
                                     <div class="list_icon_text_vd">
-                                        <small>Tài khoản</small>
+                                        {{ Auth()->check() ? 'Tài khoản' : 'Đăng nhập' }}
                                     </div>
                                 </a>
                             </div>
-
-                            <!-- đăng xuất -->
-                            @auth
-                                <div class="list-inline-item me-7 me-lg-0 text-center">
-                            <a href="{{ route('client.auth.logout') }}" class="text-muted">
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-log-out">
-                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                                            <polyline points="16 17 21 12 16 7"></polyline>
-                                            <line x1="21" y1="12" x2="9" y2="12"></line>
-                                        </svg>
-                                        <div class="list_icon_text_vd">
-                                            <small>Đăng xuất</small>
-                                        </div>
-                            </a>
-                                </div>
-                            @endauth
                         </div>
                     </div>
                 </div>
@@ -214,21 +206,25 @@
                         <div>
                             <ul class="navbar-nav align-items-center">
                                 <li class="nav-item w-100 w-lg-auto">
-                                    <a class="nav-link {{ request()->routeIs('client.home') ? 'active' : '' }}" href="{{ route('client.home') }}">Trang chủ</a>
+                                    <a class="nav-link {{ request()->routeIs('client.home') ? 'active' : '' }}"
+                                        href="{{ route('client.home') }}">Trang chủ</a>
                                 </li>
-                            
+
                                 <li class="nav-item w-100 w-lg-auto">
-                                    <a class="nav-link {{ request()->routeIs('client.about.index') ? 'active' : '' }}" href="{{ route('client.about.index') }}">Giới thiệu</a>
+                                    <a class="nav-link {{ request()->routeIs('client.about.index') ? 'active' : '' }}"
+                                        href="{{ route('client.about.index') }}">Giới thiệu</a>
                                 </li>
-                            
+
                                 <li class="nav-item dropdown w-100 w-lg-auto dropdown-fullwidth">
-                                    <a class="nav-link dropdown-toggle {{ request()->is('category/*') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sản phẩm</a>
+                                    <a class="nav-link dropdown-toggle {{ request()->is('category/*') ? 'active' : '' }}"
+                                        href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">Sản phẩm</a>
                                     <div class="dropdown-menu pb-0">
                                         <div class="row p-2 p-lg-4 menu_drop_vd">
                                             @foreach (getCategory('other') as $item)
                                                 <div class="col-lg-3 col-12 mb-4 mb-lg-0">
                                                     <a class="dropdown-item {{ request()->routeIs('client.category.index') && request('slug') === $item->slug ? 'active' : '' }}"
-                                                       href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
+                                                        href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -251,27 +247,31 @@
                                         </div>
                                     </div>
                                 </li>
-                            
+
                                 <li class="nav-item dropdown w-100 w-lg-auto menu_drop_vd">
-                                    <a class="nav-link dropdown-toggle {{ request()->is('room/*') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Phòng</a>
+                                    <a class="nav-link dropdown-toggle {{ request()->is('room/*') ? 'active' : '' }}"
+                                        href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">Phòng</a>
                                     <ul class="dropdown-menu">
                                         @foreach (getCategory('room') as $item)
                                             <li>
                                                 <a class="dropdown-item {{ request()->routeIs('client.category.index') && request('slug') === $item->slug ? 'active' : '' }}"
-                                                   href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
+                                                    href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a>
                                             </li>
                                         @endforeach
                                     </ul>
                                 </li>
-                            
+
                                 <li class="nav-item w-100 w-lg-auto">
-                                    <a class="nav-link {{ request()->routeIs('client.collection.index') ? 'active' : '' }}" href="{{ route('client.collection.index') }}">Bộ sưu tập</a>
+                                    <a class="nav-link {{ request()->routeIs('client.collection.index') ? 'active' : '' }}"
+                                        href="{{ route('client.collection.index') }}">Bộ sưu tập</a>
                                 </li>
                                 <li class="nav-item w-100 w-lg-auto">
-                                    <a class="nav-link {{ request()->routeIs('client.contact.index') ? 'active' : '' }}" href="{{ route('client.contact.index') }}">Liên hệ</a>
+                                    <a class="nav-link {{ request()->routeIs('client.contact.index') ? 'active' : '' }}"
+                                        href="{{ route('client.contact.index') }}">Liên hệ</a>
                                 </li>
                             </ul>
-                            
+
                         </div>
                         <!-- end menu -->
                     </div>

@@ -26,8 +26,7 @@ class LocationController extends Controller
 
     public function getLocation(Request $request)
     {
-
-        $get = $request->input();
+        $get = $request->input();//['target' => 'districts', 'data' => ['location_id' => 1]];
         $html = '';
         if ($get['target'] == 'districts') {
             $province = $this->provinceRepository->findById($get['data']['location_id'], ['districts'], ['code', 'name']);
@@ -37,7 +36,6 @@ class LocationController extends Controller
             $district = $this->districtRepository->findById($get['data']['location_id'],  ['wards'],['code', 'name']); 
             $html = $this->renderHtml($district->wards, '[Chọn Phường/Xã]'); 
            }
-
         }
         $response = [
             'html' => $html

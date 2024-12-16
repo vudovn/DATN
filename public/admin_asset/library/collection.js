@@ -191,6 +191,7 @@
                         sku: sku ? sku : "",
                     },
                     success: function (data) {
+                        let code = data.code.replace(/\s+/g, "")
                         $("#renderPoints").append(
                             `<div id="point${
                                 data.sku
@@ -210,7 +211,7 @@
                                         <p class="href m-0">
                                             <a href="/san-pham/${
                                                 data.slug
-                                            }">Xem chi tiết sản phẩm</a>
+                                            }?attr=${code}">Xem chi tiết sản phẩm</a>
                                         </p>
                                     </div>
                                 </div>'>
@@ -312,16 +313,17 @@
         });
     };
     TGNT.selectIcon = (category) => {
-        if (category) {
-            switch (category) {
-                case "ghế":
-                    return '<i class="fa-solid fa-chair"></i>';
-                case "giường":
-                    return '<i class="fa-sharp fa-solid fa-bed-front"></i>';
-            }
-        } else {
-            return '<i class="fa-brands fa-shopify"></i>';
-        }
+        // if (category) {
+        //     switch (category) {
+        //         case "ghế":
+        //             return '<i class="fa-solid fa-chair"></i>';
+        //         case "giường":
+        //             return '<i class="fa-sharp-duotone fa-regular fa-bed-front"></i>';
+        //     }
+        // } else {
+        //     return '<i class="fa-brands fa-shopify"></i>';
+        // }
+        return '<i class="fa-brands fa-shopify"></i>';
     };
     $(document).ready(function () {
         TGNT.searchForm();

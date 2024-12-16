@@ -116,12 +116,19 @@ body {
     .header_vd .box_left_vd {
         display: none;
     }
+    .box_action_vd {
+        width: 100% !important;
+    }
+    .scroll-up {
+        top: 85% !important;
+        left: 90% !important;
+    }
     .header_vd .box_right_vd {
-        display: grid;
-        gap: 20px;
+        display: flex !important;
+        gap: 10px !important;
         position: fixed;
-        right: 3%;
-        bottom: 10%;
+        width: 90%;
+        bottom: 2% !important;
         height: auto;
         border-radius: 40px !important;
         align-items: center;
@@ -129,6 +136,8 @@ body {
         padding: 15px;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 1px 2px 0px;
         z-index: 1000;
+        left: 50%;
+        transform: translateX(-50%);
     }
     .header_vd .box_right_vd div {
         text-align: center;

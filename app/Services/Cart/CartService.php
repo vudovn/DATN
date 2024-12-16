@@ -61,10 +61,9 @@ class CartService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $payload = $request->except(['_token', 'send']);
+            $payload = $request->except(['_token', 'send', 'price']);
             $payload['user_id'] = Auth::id();
             $payload['quantity'] = (int) $payload['quantity'];
-            $payload['price'] = (int) $payload['price'];
             $cart = $this->cartRepository->findByField('user_id', $payload['user_id'])->get();
             $found = false;
             foreach ($cart as $value) {
@@ -199,7 +198,7 @@ class CartService extends BaseService
             }
             $data->idCart = $item->id ?? '';
             $data->quantityCart = $item->quantity ?? '';
-            $data->quantity =  $data->product->quantity ?? $data->quantity;
+            $data->quantity = $data->product->quantity ?? $data->quantity;
         }
         return $data;
     }

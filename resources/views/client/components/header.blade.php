@@ -29,10 +29,10 @@
                     </div>
                     <div class="col-md-6 text-center">
                         <a href="{{ route('client.home') }}"><img class="logo_vd_top"
-                                src="{{ asset(getSetting()->site_logo) }}" width="150"
-                                alt="logo_sieuthinoithat" /></a>
+                                src="{{ asset(getSetting()->site_logo) }}" width="150" alt="logo_sieuthinoithat"
+                                id="logo_sieuthinoithat" /></a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 box_action_vd">
                         <div class="box_right_vd align-items-center justify-content-center gap-7">
                             <!-- wishlist -->
                             <div class="list-inline-item text-center">
@@ -133,7 +133,7 @@
                                     </button>
                                 </span>
                             </div>
-                            <div class="search_out card card-body p-0" id="search_out">
+                            <div class="search_out card card-body" id="search_out">
                                 <div class="search_header d-flex justify-content-between" id="search_header">
                                     <!-- render status từ api -->
                                 </div>

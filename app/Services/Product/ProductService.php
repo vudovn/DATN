@@ -27,14 +27,22 @@ class ProductService extends BaseService
         $defaultSort = ['id', 'asc'];
         $defaultPerPage = $isFilter ? 12 : 10;
 
+        $condition = [
+            'publish' => $isFilter ? 1 : (isset($request['publish']) ? (int) $request['publish'] : null),
+        ];
+        if (isset($request['is_featured'])) {
+            $condition['is_featured'] = (int) $request['is_featured'];
+        }
+        if (isset($request['has_attribute'])) {
+            $condition['has_attribute'] = (int) $request['has_attribute'];
+        }
+
         return [
             'keyword' => [
                 'search' => $request['keyword'] ?? '',
                 'field' => $isFilter ? ['name'] : ['name', 'sku', 'description', 'price'],
             ],
-            'condition' => [
-                'publish' => $isFilter ? 1 : (isset($request['publish']) ? (int) $request['publish'] : null),
-            ],
+            'condition' => $condition,
             'relation' => $isFilter ? [
                 'categories' => $request['categories'] ?? null,
             ] : [],
@@ -255,15 +263,18 @@ class ProductService extends BaseService
     {
         $defaultSort = ['id', 'asc'];
         $defaultPerPage = $isFilter ? 12 : 10;
-
+        $condition = [
+            'publish' => 1,
+        ];
+        if (isset($request['is_featured'])) {
+            $condition['is_featured'] = (int) $request['is_featured'];
+        }
         return [
             'keyword' => [
                 'search' => $request['keyword'] ?? '',
                 'field' => $isFilter ? ['name'] : ['name'],
             ],
-            'condition' => [
-                'publish' => 1,
-            ],
+            'condition' => $condition,
             'relation' => $isFilter ? [
                 'categories' => $request['categories'] ?? null,
             ] : [],

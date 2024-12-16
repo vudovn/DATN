@@ -74,6 +74,7 @@
             event.preventDefault();
             let page = $(this).attr("href").split("page=")[1];
             array.page = page;
+            $(window).scrollTop(0);
             TGNT.getData(array);
         });
     };

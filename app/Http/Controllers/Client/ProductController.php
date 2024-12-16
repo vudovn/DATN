@@ -11,6 +11,7 @@ use App\Repositories\Attribute\AttributeRepository;
 use App\Repositories\Product\ProductVariantRepository;
 use App\Repositories\Review\ReviewRepository;
 use Illuminate\Support\Facades\Session;
+use App\Jobs\SendTelegramNotification;
 class ProductController extends Controller
 {
     protected $productRepository;
@@ -131,6 +132,21 @@ class ProductController extends Controller
         $payload = $request->all();
         $payload['user_id'] = auth()->id();
         $create = $this->reviewRepository->create($payload);
+        if (!$create) {
+            return errorResponse('Đánh giá sản phẩm thất bại!');
+        }
+        $product = $this->productRepository->findById($request->product_id);
+        $linkReview = route('review.reply', $create->id);
+        $linkProduct = route('client.product.detail', $product->slug);
+        $message = "🛍️ *Có đánh giá mới cho sản phẩm!*\n\n";
+        $message .= "📦 *Thông tin chi tiết:*\n";
+        $message .= "📄 *Sản phẩm:* [{$product->name}]($linkProduct)\n";
+        $message .= "🔍 *Đánh giá:* {$request->rating} 🌟\n";
+        $message .= "👤 *Người đánh giá:* " . auth()->user()->name . "\n";
+        $message .= "🔒 *Nội dung:* {$request->content}\n\n";
+        $message .= "🔗 *Chi tiết xem đánh giá:* [Xem tại đây]($linkReview)\n";
+
+        SendTelegramNotification::dispatch($message);
         return successResponse(null, 'Đánh giá sản phẩm thành công!');
     }
 

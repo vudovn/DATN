@@ -63,4 +63,17 @@ class Product extends Model
     {
         return $this->hasMany(Review::class, 'product_id', 'id');
     }
+
+    public function getPriceAttrAttribute()
+    {
+        $minPrice = $this->productVariants->min('price');
+        $maxPrice = $this->productVariants->max('price');
+        return (object) [
+            'min' => $minPrice,
+            'max' => $maxPrice,
+        ];
+    }
+
+
+
 }

@@ -11,7 +11,7 @@ use App\Services\Setting\SettingService;
 use App\Repositories\Setting\SettingRepository;
 
 
-class settingController extends Controller
+class SettingController extends Controller
 {
     protected $sliderService;
     protected $sliderRepository;

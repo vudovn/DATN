@@ -47,6 +47,7 @@ class ProductRepository extends BaseRepository
         }
 
 
+
         return $query->paginate($params['perpage']);
     }
 

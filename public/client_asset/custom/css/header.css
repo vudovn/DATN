@@ -3,7 +3,6 @@ body {
     background-color: var(--body-bg) !important;
 }
 
-
 .header_vd .nav-link {
     position: relative;
     color: black !important;
@@ -413,8 +412,9 @@ body {
 }
 
 .listProduct .item .price {
-    letter-spacing: 4px;
+    letter-spacing: 1px;
     font-size: small;
+    font-weight: bold;
 }
 
 /* pagination */

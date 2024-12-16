@@ -6,15 +6,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use App\Services\Order\OrderService;
+use App\Repositories\Order\OrderRepository;
 
 
 class VnPayService extends BaseService
 {
     protected $orderService;
+    protected $orderRepository;
 
-    public function __construct(OrderService $orderService)
+    public function __construct(OrderService $orderService, OrderRepository $orderRepository)
     {
         $this->orderService = $orderService;
+        $this->orderRepository = $orderRepository;
     }
 
     public function createTransaction($request, $userId)
@@ -27,6 +30,19 @@ class VnPayService extends BaseService
             return $paymentUrl;
         } catch (\Exception $e) {
             DB::rollback();
+            \Log::error('Tạo giao dịch thất bại: ' . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function createAgainTransaction($request)
+    {
+        try {
+            $order = $this->orderRepository->findByField('code', $request->vnp_TxnRef);
+            dd($order);
+            $paymentUrl = $this->createPayment($request, $order);
+            return $paymentUrl;
+        } catch (\Exception $e) {
             \Log::error('Tạo giao dịch thất bại: ' . $e->getMessage());
             throw $e;
         }

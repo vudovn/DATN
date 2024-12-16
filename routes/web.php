@@ -15,7 +15,7 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
 use App\Http\Controllers\Admin\DiscountCodeController;
-use App\Http\Controllers\Admin\settingController;
+use App\Http\Controllers\Admin\SettingController;
 
 
 use App\Http\Controllers\Admin\CollectionController;
@@ -173,11 +173,11 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
 
     // setting route
     Route::prefix('admin/setting')->name('setting.')->group(function () {
-        Route::get('/index', [settingController::class, 'index'])->name('index');
-        Route::get('/slide', [settingController::class, 'slide'])->name('slide');
-        Route::put('/slider', [settingController::class, 'sliderUpdate'])->name('sliderUpdate');
-        Route::get('/general', [settingController::class, 'general'])->name('general');
-        Route::put('/general', [settingController::class, 'generalUpdate'])->name('generalUpdate');
+        Route::get('/index', [SettingController::class, 'index'])->name('index');
+        Route::get('/slide', [SettingController::class, 'slide'])->name('slide');
+        Route::put('/slider', [SettingController::class, 'sliderUpdate'])->name('sliderUpdate');
+        Route::get('/general', [SettingController::class, 'general'])->name('general');
+        Route::put('/general', [SettingController::class, 'generalUpdate'])->name('generalUpdate');
     });
 });
 

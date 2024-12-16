@@ -29,11 +29,28 @@ class VnPayController extends Controller
 
     public function return(Request $request)
     {
-        if ($request->has('vnp_SecureHash')) {
+        $vnp_HashSecret = config('vnp_HashSecret');
+        $inputData = $request->except('vnp_SecureHash');
+        ksort($inputData);
+        $hashData = '';
+        foreach ($inputData as $key => $value) {
+            $hashData .= $key . '=' . $value . '&';
+        }
+        $hashData = rtrim($hashData, '&');
+        $secureHash = hash_hmac('sha256', $hashData, $vnp_HashSecret);
+        if ($request->vnp_SecureHash === $secureHash) {
             $this->orderRepostitory->updateByWhereIn('code', [$request->vnp_TxnRef], ['payment_status' => 'completed']);
-            return view('client.pages.cart.components.checkout.result', ['message' => 'Thanh toán thành công, chúng tôi sẽ xử lý đơn hàng của bạn', 'status' => 'success']);
+            return view('client.pages.cart.components.checkout.result', [
+                'message' => 'Thanh toán thành công, chúng tôi sẽ xử lý đơn hàng của bạn',
+                'status' => 'success'
+            ]);
         } else {
-            return view('client.pages.cart.components.checkout.result', ['message' => 'Thanh toán thất bại', 'status' => 'error']);
+            // Hash không hợp lệ
+            return view('client.pages.cart.components.checkout.result', [
+                'message' => 'Thanh toán thất bại',
+                'status' => 'error'
+            ]);
         }
     }
+
 }

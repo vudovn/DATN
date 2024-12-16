@@ -26,7 +26,7 @@ class AjaxController extends Controller
     {
         $model = $request['model'];
         // $request = json_decode(base64_decode($request->get('encodedParams')), true); // mã hoá :v
-        $Controller = "\\App\\Http\\Controllers\\admin\\" . ucfirst($model) . "Controller";
+        $Controller = "\\App\\Http\\Controllers\\Admin\\" . ucfirst($model) . "Controller";
         $data = app($Controller)->getData($request);
         return $data;
     }
@@ -152,28 +152,29 @@ class AjaxController extends Controller
     }
 
     public function loadAttributeValue(Request $request)
-{
-    $attributeValues = json_decode(base64_decode($request->attributeValue), true);
-    $attributeId = $request->attributeCatalogueId;
-    $result = [];
-    foreach ($attributeValues as $value_ids) {
-        $result = array_merge($result, $value_ids);
+    {
+        $attributeValues = json_decode(base64_decode($request->attributeValue), true);
+        $attributeId = $request->attributeCatalogueId;
+        $result = [];
+        foreach ($attributeValues as $value_ids) {
+            $result = array_merge($result, $value_ids);
+        }
+
+        $attributeValueData = $this->attributeRepository
+            ->getByIds($result, $attributeId)
+            ->map(function ($attributeValue) {
+                return [
+                    'id' => $attributeValue->id,
+                    'text' => $attributeValue->value,
+                ];
+            })
+            ->all();
+
+        return successResponse($attributeValueData);
     }
 
-    $attributeValueData = $this->attributeRepository
-        ->getByIds($result, $attributeId)
-        ->map(function ($attributeValue) {
-            return [
-                'id' => $attributeValue->id,
-                'text' => $attributeValue->value,
-            ];
-        })
-        ->all();
-
-    return successResponse($attributeValueData);
-}
-
-    function test() {
+    function test()
+    {
         $users = \App\Models\User::paginate(10);
         $title = 'List User';
         return successResponse(

@@ -3,22 +3,30 @@
 namespace App\Services\Collection;
 use App\Services\BaseService;
 use App\Repositories\Collection\CollectionRepository;
+use App\Repositories\Collection\CollectionProductRepository;
+use App\Services\Product\ProductService;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductVariantRepository;
 use Illuminate\Support\Facades\DB;
 class CollectionService extends BaseService
 {
+    protected $productService;
     protected $collectionRepository;
     protected $productRepository;
     protected $productVariantRepository;
+    protected $collectionProductRepository;
     public function __construct(
+        productService $productService,
         ProductRepository $productRepository,
         ProductVariantRepository $productVariantRepository,
-        CollectionRepository $collectionRepository
+        CollectionRepository $collectionRepository,
+        CollectionProductRepository $collectionProductRepository,
     ) {
+        $this->productService = $productService;
         $this->productRepository = $productRepository;
         $this->productVariantRepository = $productVariantRepository;
         $this->collectionRepository = $collectionRepository;
+        $this->collectionProductRepository = $collectionProductRepository;
     }
     private function paginateAgrument($request)
     {
@@ -45,6 +53,27 @@ class CollectionService extends BaseService
         $data = $this->collectionRepository->pagination($agruments);
         return $data;
     }
+    private function paginateAgrumentClient($request)
+    {
+        return [
+            'keyword' => [
+                'search' => $request['keyword'] ?? '',
+                'field' => ['name']
+            ],
+            'condition' => [
+                'publish' => 1,
+            ],
+            'sort' => ['id', 'asc'],
+            'perpage' => 10,
+        ];
+    }
+    public function paginateClient($request)
+    {
+        $agruments = $this->paginateAgrumentClient($request);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $data = $this->collectionRepository->pagination($agruments);
+        return $data;
+    }
     public function getDetail($id_collections)
     {
         $products = [];
@@ -66,6 +95,37 @@ class CollectionService extends BaseService
             $products[] = $data;
         }
         return $products;
+    }
+    public function getDiscountByIdCollection($id)
+    {
+        $collection = $this->collectionRepository->findByField('id', $id)->first();
+        if (isset($collection['discount'])) {
+            $totalAmount = 0;
+            $collectionProduct = $this->collectionProductRepository->findByField('collection_id', $id)->get();
+            $filterCollection = $this->filterCollection($collectionProduct);
+            foreach ($filterCollection['sku'] as $sku) {
+                $product = $this->productService->getProductBySku($sku);
+                $price = $product->price - ($product->price * $product->discount) / 100;
+                $totalAmount += $price;
+            }
+            // dd($totalAmount);
+            $discountAmount = ($totalAmount * $collection['discount']) / 100;
+            return $discountAmount;
+        }
+        return 0;
+    }
+    public function filterCollection($collection)
+    {
+        $data = $collection->groupBy('collection_id')->map(function ($group) {
+            return [
+                'collection_id' => $group->first()->collection_id,
+                'sku' => array_filter(array_merge(
+                    $group->pluck('product_sku')->all(),
+                    $group->pluck('productVariant_sku')->all()
+                )),
+            ];
+        })->values()->first();
+        return $data;
     }
     public function create($request)
     {

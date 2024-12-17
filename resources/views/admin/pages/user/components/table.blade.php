@@ -34,12 +34,13 @@
             </td>
             <td class="text-center table-actions">
                 <ul class="list-inline me-auto mb-0">
-                    <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Chỉnh sửa">
-                        <a href="{{ route('user.edit', $user->id) }}"
+                    {{-- <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Chỉnh sửa">
+                       <a href="{{ route($config['model'].'.edit', $user->id) }}"
                             class="avtar avtar-xs btn-link-success btn-pc-default">
                             <i class="ti ti-edit-circle f-18"></i>
                         </a>
-                    </li>
+                    </li> --}}
+                    <x-edit :id="$user->id" :model="$config['model']" />
                     @if ($user->id != auth()->id())
                         <x-delete :id="$user->id" :model="ucfirst($config['model'])" />
                     @endif

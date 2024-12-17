@@ -27,7 +27,6 @@
                     <select name="perpage" id="perpage" class="form-select filter-option">
                         <option selected="" value="0">12 sản phẩm</option>
                         <option value="16">16 sản phẩm</option>
-                        <option value="2">2 sản phẩm</option>
                         <option value="20">20 sản phẩm</option>
                         <option value="24">24 sản phẩm</option>
                         <option value="28">28 sản phẩm</option>

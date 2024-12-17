@@ -44,34 +44,6 @@
             });
         });
     };
-    TGNT.cartCount = () => {
-        let url = "/gio-hang/count";
-        $.ajax({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            type: "GET",
-            url: url,
-            success: function (data) {
-                $(".cart_count").html(data);
-                if (data == 0) {
-                    $(".cart-container").html(`
-                        <div class="container cart-no-item text-center mb-4">
-                                <img src="https://live-mmb-public.s3.ap-south-1.amazonaws.com/assets/img/empty-cart.png"
-                                    alt="" width="35%">
-                                <p class="text-muted fw-bold mb-3">Giỏ hàng của bạn còn trống</p>
-                                <a class="btn btn-tgnt w-25" href="${homeUrl}">Mua ngay</a>
-                            </div>`);
-                    $(".checkout-cart").addClass("disabled-link");
-                } else {
-                    $(".checkout-cart").removeClass("disabled-link");
-                }
-            },
-            error: function (data) {
-                console.log("Lỗi");
-            },
-        });
-    };
     TGNT.showVariant = () => {
         $(document).on("click", ".open-box-variant", function (e) {
             e.stopPropagation();
@@ -199,10 +171,7 @@
         });
     };
     TGNT.updateTotalItem = (idCart, quantity, price) => {
-        console.log(price);
         const total_price = price * quantity;
-        console.log(total_price);
-        
         $(`#price-total-${idCart}`).html(TGNT.formatNumber(total_price));
         $(`.price-total`).val(total_price);
     };
@@ -215,10 +184,23 @@
             type: "POST",
             url: url,
             success: function (data) {
-                $("#cart-total").html(TGNT.formatNumber(data));
-                $("#cart-total-input").val(data);
-                $("#cart-total-discount").html(TGNT.formatNumber(data));
-                $("#cart-total-discount-input").val(data);
+                console.log(data);
+                if(data.totalCart == data.afterDiscount){
+                    $("#save-price").html(``);
+                    $(".cart-discount-collection").html(`<p class="text m-0">Không có giảm giá</p>`);
+                }else{
+                    $(".cart-discount-collection").html(``);
+                    data.nameCollection.forEach((name, index) => {
+                        $(".cart-discount-collection").append(`
+                            <p class="row-1">${index + 1}. ${name}</p>
+                        `);
+                    });
+                    $("#save-price").html(TGNT.formatNumber(data.totalCart-data.afterDiscount));
+                }
+                $("#cart-total").html(TGNT.formatNumber(data.totalCart));
+                $("#cart-total-input").val(data.totalCart);
+                $("#cart-total-discount-collection").html(TGNT.formatNumber(data.afterDiscount));
+                $("#cart-total-discount-collection-input").val(data.afterDiscount);
             },
             error: function () {
                 console.log("lỗi");
@@ -267,6 +249,34 @@
                 },
                 error: function (data) {},
             });
+        });
+    };
+    TGNT.cartCount = () => {
+        let url = "/gio-hang/count";
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            type: "GET",
+            url: url,
+            success: function (data) {
+                $(".cart_count").html(data);
+                if (data == 0) {
+                    $(".cart-container").html(`
+                        <div class="container cart-no-item text-center mb-4">
+                                <img src="https://live-mmb-public.s3.ap-south-1.amazonaws.com/assets/img/empty-cart.png"
+                                    alt="" width="35%">
+                                <p class="text-muted fw-bold mb-3">Giỏ hàng của bạn còn trống</p>
+                                <a class="btn btn-tgnt w-25" href="${homeUrl}">Mua ngay</a>
+                            </div>`);
+                    $(".checkout-cart").addClass("disabled-link");
+                } else {
+                    $(".checkout-cart").removeClass("disabled-link");
+                }
+            },
+            error: function (data) {
+                console.log("Lỗi");
+            },
         });
     };
     $("#slide-featured").slick({

@@ -22,11 +22,14 @@ class StoreRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => 'required|unique:roles,name',
         ];
     }
 
     public function messages():array {
         return [
+            'name.required' => "Không được để trống tên vai trò",
+            'name.unique' => "Tên vai trò đã tồn tại",
         ];
     }
 }

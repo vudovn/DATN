@@ -10,9 +10,16 @@ use App\Repositories\Category\CategoryRepository;
 use App\Services\Category\CategoryService;
 use App\Models\Category;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
 
-class CategoryController extends Controller
+class CategoryController extends Controller implements HasMiddleware
 {
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('Category'); 
+    }
     protected $categoryRepository;
     protected $categoryService;
     // protected $categoryCatalogueRepository;

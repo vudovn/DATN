@@ -8,8 +8,15 @@ use App\Repositories\Comment\ReviewRepository;
 use App\Services\Review\ReviewService;
 use App\Models\Review;
 
-class ReviewController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
+class ReviewController extends Controller implements HasMiddleware
 {
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('Review'); 
+    }
     protected $reviewRepository;
     protected $reviewService;
     function __construct(

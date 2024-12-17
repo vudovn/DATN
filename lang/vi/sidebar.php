@@ -2,7 +2,22 @@
 return [
     'function' => [
         [
-            'name' => 'Quản lý thành viên',
+            'name' => 'Quản lý nhân viên',
+            'icon' => '<svg class="pc-icon"><use xlink:href="#custom-user-add"></use></svg>',
+            'route' => ['staff'],
+            'module' => [
+                [
+                    'name' => 'Danh sách nhân viên',
+                    'path' => route('staff.index')
+                ],
+                [
+                    'name' => 'Thêm mới nhân viên',
+                    'path' => route('staff.create')
+                ],
+            ]
+        ],
+        [
+            'name' => 'Quản lý khách hàng',
             'icon' => '<svg class="pc-icon"><use xlink:href="#custom-user"></use></svg>',
             'route' => ['user'],
             'module' => [
@@ -11,20 +26,9 @@ return [
                     'path' => route('user.index')
                 ],
                 [
-                    'name' => 'Danh sách nhân viên',
-                    'path' => route('user.admin.index')
+                    'name' => 'Thêm mới khách hàng',
+                    'path' => route('user.create')
                 ],
-            ]
-        ],
-        [
-            'name' => 'Quản lý phân quyền',
-            'icon' => '<svg class="pc-icon"><use xlink:href="#custom-shield"></use></svg>',
-            'route' => ['permission'],
-            'module' => [
-                [
-                    'name' => 'Danh sách quyền',
-                    'path' => route('permission.index')
-                ]
             ]
         ],
         [
@@ -33,12 +37,27 @@ return [
             'route' => ['product'],
             'module' => [
                 [
-                    'name' => 'Sản phẩm',
+                    'name' => 'Quản lý sản phẩm',
                     'path' => route('product.index')
                 ],
                 [
-                    'name' => 'Thuộc tính',
+                    'name' => 'Thêm mới sản phẩm',
+                    'path' => route('product.create')
+                ]
+            ]
+        ],
+        [
+            'name' => 'Quản lý thuộc tính SP',
+            'icon' => '<svg class="pc-icon"><use xlink:href="#custom-data"></use></svg>',
+            'route' => ['attributeCategory'],
+            'module' => [
+                [
+                    'name' => 'Quản lý thuộc tính SP',
                     'path' => route('attributeCategory.index')
+                ],
+                [
+                    'name' => 'Thêm mới thuộc tính SP',
+                    'path' => route('attributeCategory.create')
                 ]
             ]
         ],
@@ -48,11 +67,11 @@ return [
             'route' => ['category'],
             'module' => [
                 [
-                    'name' => 'Danh sách danh mục',
+                    'name' => 'Danh mục riêng',
                     'path' => route('category.index')
                 ],
                 [
-                    'name' => 'Danh sách phòng',
+                    'name' => 'Danh mục phòng',
                     'path' => route('category.room.index')
                 ]
 
@@ -66,6 +85,10 @@ return [
                 [
                     'name' => 'Danh sách bộ sưu tập',
                     'path' => route('collection.index')
+                ],
+                [
+                    'name' => 'Thêm mới bộ sưu tập',
+                    'path' => route('collection.create')
                 ]
             ]
         ],
@@ -75,8 +98,12 @@ return [
             'route' => ['order'],
             'module' => [
                 [
-                    'name' => 'Quản lý tình trạng',
+                    'name' => 'Danh sách đơn hàng',
                     'path' => route('order.index')
+                ],
+                [
+                    'name' => 'Thêm mới đơn hàng',
+                    'path' => route('order.create')
                 ]
             ]
         ],
@@ -88,6 +115,10 @@ return [
                 [
                     'name' => 'Danh sách mã giảm giá',
                     'path' => route('discountCode.index')
+                ],
+                [
+                    'name' => 'Thêm mới mã giảm giá',
+                    'path' => route('discountCode.create')
                 ]
             ]
         ],
@@ -107,6 +138,21 @@ return [
                 [
                     'name' => 'Quản lý nội dung bình luận',
                     'path' => route('CommentForbiddenWord.index')
+                ]
+            ]
+        ],
+        [
+            'name' => 'Quản lý phân quyền',
+            'icon' => '<svg class="pc-icon"><use xlink:href="#custom-shield"></use></svg>',
+            'route' => ['permission'],
+            'module' => [
+                [
+                    'name' => 'Danh sách quyền',
+                    'path' => route('permission.index')
+                ],
+                [
+                    'name' => 'Thêm mới vai trò',
+                    'path' => route('role.create')
                 ]
             ]
         ],

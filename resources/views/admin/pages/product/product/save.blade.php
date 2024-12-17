@@ -16,7 +16,7 @@
                                 <div class="alert alert-primary" role="alert">
                                     <strong>Lưu ý:</strong> <span class="text-danger">(*)</span> là trường bắt buộc nhập
                                 </div>
-                                @if ($errors->any())
+                                {{-- @if ($errors->any())
                                     <div class="alert alert-danger">
                                         <ul>
                                             @foreach ($errors->all() as $error)
@@ -24,7 +24,7 @@
                                             @endforeach
                                         </ul>
                                     </div>
-                                @endif
+                                @endif --}}
                                 <div class="mb-3">
                                     <x-input :label="'Tên sản phẩm'" :name="'name'" :class="'name-product'" :value="$product->name ?? old('name')"
                                         :required="true" />
@@ -43,7 +43,7 @@
                                             <input class="form-control" type="text" name="sku" id="sku"
                                                 value="{{ $product->sku ?? old('sku') }}">
                                             @error('sku')
-                                                <small class="error text-danger">*{{ $message }}</small>
+                                                <small class="error text-danger">* {{ $message }}</small>
                                             @enderror
                                         </div>
                                     </div>
@@ -55,7 +55,7 @@
                                                 value="{{ old('quantity', $product->quantity ?? '') }}" type="text"
                                                 name="quantity" id="quantity" value="">
                                             @error('quantity')
-                                                <small class="error text-danger">*{{ $message }}</small>
+                                                <small class="error text-danger">* {{ $message }}</small>
                                             @enderror
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@
                                                 value="{{ old('price' , formatNumber($product->price ?? '')) }}" type="text"
                                                 name="price" id="price" value="">
                                             @error('price')
-                                                <small class="error text-danger">*{{ $message }}</small>
+                                                <small class="error text-danger">* {{ $message }}</small>
                                             @enderror
                                         </div>
 
@@ -79,7 +79,7 @@
                                                 value="{{ $product->discount ?? old('discount') }}" type="number"
                                                 name="discount" id="discount">
                                             @error('discount')
-                                                <small class="error text-danger">*{{ $message }}</small>
+                                                <small class="error text-danger">* {{ $message }}</small>
                                             @enderror
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@
 
 
                         @error('category')
-                            <small class="error text-danger">{{ $message }}</small>
+                            <small class="error text-danger">* {{ $message }}</small>
                         @enderror
                     </div>
                 </div>
@@ -150,7 +150,7 @@
 
 
                         @error('category_id')
-                            <small class="error text-danger">{{ $message }}</small>
+                            <small class="error text-danger">* {{ $message }}</small>
                         @enderror
                     </div>
                 </div>

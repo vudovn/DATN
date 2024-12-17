@@ -3,6 +3,10 @@ namespace App\Services\Product;
 use App\Services\BaseService;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductVariantAttributeRepository;
+use App\Repositories\Product\ProductVariantRepository;
+use App\Repositories\Collection\CollectionProductRepository;
+use App\Services\Collection\CollectionProductService;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
@@ -13,12 +17,21 @@ class ProductService extends BaseService
 
     protected $productRepository;
     protected $productVariantAttributeRepository;
+    protected $productVariantRepository;
+    protected $collectionProductRepository;
+    protected $collectionProductService;
     public function __construct(
         ProductRepository $productRepository,
-        ProductVariantAttributeRepository $productVariantAttributeRepository
+        ProductVariantAttributeRepository $productVariantAttributeRepository,
+        ProductVariantRepository $productVariantRepository,
+        CollectionProductRepository $collectionProductRepository,
+        CollectionProductService $collectionProductService
     ) {
         $this->productRepository = $productRepository;
         $this->productVariantAttributeRepository = $productVariantAttributeRepository;
+        $this->productVariantRepository = $productVariantRepository;
+        $this->collectionProductRepository = $collectionProductRepository;
+        $this->collectionProductService = $collectionProductService;
     }
 
 
@@ -59,6 +72,38 @@ class ProductService extends BaseService
         $data = $this->productRepository->filterProduct($agruments);
         return $data;
     }
+    public function getProductBySku($sku)
+    {
+        if (isset($sku)) {
+            $data = $this->productRepository->findByField('sku', $sku)->first();
+            if (empty($data)) {
+                $data = $this->productVariantRepository->findByField('sku', $sku)->first();
+                $data->discount = $data->product->discount ?? '';
+                $data->name = $data->product->name ?? '';
+                $data->slug = $data->product->slug ?? '';
+                $data->thumbnail = $data->product->thumbnail;
+                $category = $data->product->categories->where('is_room', 2)->first();
+                $data->category = $category ? strtolower($category->name) : '';
+            }
+            $data->idCart = $item->id ?? '';
+            $data->quantityCart = $item->quantity ?? '';
+            $data->quantity = $data->product->quantity ?? $data->quantity;
+        }
+        return $data;
+    }
+    public function getTotalCart($carts)
+    {
+        $total = 0;
+        foreach ($carts as $value) {
+            $data = $this->productRepository->findByField('sku', $value->sku)->first();
+            if (empty($data)) {
+                $data = $this->productVariantRepository->findByField('sku', $value->sku)->first();
+            }
+            $discount = $data->discount ?? $data->product->discount;
+            $total += ((int) $data->price - ((int) $data->price * $discount) / 100) * (int) $value->quantity;
+        }
+        return $total;
+    }
     public function create($request)
     {
         DB::beginTransaction();
@@ -89,17 +134,26 @@ class ProductService extends BaseService
             $product = $this->productRepository->findById($id);
             $this->updateProduct($product, $request);
             $this->updateCategory($product, $request);
-
-            $product->productVariants()->each(function ($variant) {
+            $collections = [];
+            $product->productVariants()->each(function ($variant) use (&$collections) {
                 $variant->attributes()->detach();
+                $data = $this->collectionProductRepository->findByField('productVariant_sku', $variant->sku)->first();
+                if (isset($data)) {
+                    $collections[] = $data;
+                }
                 $variant->delete();
             });
-
             if ($request->has('has_attribute') && $request->attributeValue) {
                 $this->createVariant($product, $request);
             }
-
             DB::commit();
+            foreach ($collections as $collection) {
+                DB::table('collection_product')->insert([
+                    'collection_id' => $collection->collection_id,
+                    'product_sku' => $collection->product_sku ?? null,
+                    'productVariant_sku' => $collection->productVariant_sku ?? null,
+                ]);
+            }
             return true;
         } catch (\Exception $e) {
             DB::rollback();

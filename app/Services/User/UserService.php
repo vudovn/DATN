@@ -167,5 +167,23 @@ class UserService extends BaseService
             // return false;
         }
     }
+    public function changePasswords($request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $payload = $request->except(['_token', 'send']);
+            $password_new = $request->password_new;
+            $payload['password'] = Hash::make($password_new);
+            $user = $this->userRepository->update($id, $payload);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+            die();
+            // $this->log($e);
+            // return false;
+        }
+    }
 
 }

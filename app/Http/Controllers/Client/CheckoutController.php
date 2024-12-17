@@ -56,6 +56,10 @@ class CheckoutController extends Controller
         $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
         $products = $this->cartService->fetchCartData($carts)['cart'];
         $total = $this->cartService->fetchCartData($carts)['total'];
+        $discountCollection = $this->cartService->getDiscountCollection($carts);
+        if (isset($discountCollection)) {
+            $total = $total - $discountCollection['totalDiscountAmount'];
+        }
         $provinces = $this->provinceRepository->getAllProvinces();
         $districts = $this->districtRepository->getAllDistricts();
         $wards = $this->wardRepository->getAllWards();

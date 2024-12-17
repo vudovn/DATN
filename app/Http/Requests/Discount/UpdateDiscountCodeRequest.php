@@ -22,7 +22,7 @@ class UpdateDiscountCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'required|unique:discount_codes,code',
+            'code' => 'required|unique:discount_codes,code,' .$this->id.'',
             'title' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',

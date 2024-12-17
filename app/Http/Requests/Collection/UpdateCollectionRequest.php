@@ -27,17 +27,18 @@ class UpdateCollectionRequest extends FormRequest
             ]);
         }
         return [
-            'name' => 'required',
-            'thumbnail' => 'required',
+            'name' => 'required|unique:collections,name,'.$this->id.'',
+            'short_description' => 'required',
+            'description_text' => 'required',
             'skus' => 'min:2',
-            // 'meta_title' => 'required',
-            // 'meta_description' => 'required',
         ];
     }
     public function messages(){
         return [
             'name.required' => 'Không được để trống tên bộ sưu tập',
-            'thumbnail.required' => 'Hãy chọn ảnh bìa cho bộ sưu tập',
+            'name.unique' => 'Tên bộ sưu tập đã tồn tại',
+            'short_description.required' => 'Mô tả ngắn không được để trống',
+            'description_text.required' => 'Nội dung không được để trống',
             'idProduct.min' => 'Hãy chọn ít nhất 3 sản phẩm cho bộ sửu tập',
         ];
     }

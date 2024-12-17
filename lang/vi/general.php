@@ -30,11 +30,11 @@ return [
     'sort' => [
         0 => [
             'id' => 'id,desc',
-            'name' => 'Từ cũ đến mới'
+            'name' => 'Từ mới đến cũ'
         ],
         1 => [
             'id' => 'id,asc',
-            'name' => 'Từ mới đến cũ'
+            'name' => 'Từ cũ đến mới'
         ],
         2 => [
             'id' => 'name,asc',

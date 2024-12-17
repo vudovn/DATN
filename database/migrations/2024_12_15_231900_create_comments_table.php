@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('collection_id')->nullable();
-            $table->unsignedBigInteger('product_id')->nullable(); //
             $table->text('content');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->timestamps();
@@ -24,7 +23,6 @@ return new class extends Migration {
                 ->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('collection_id')->references('id')->on('collections')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade'); //
         });
     }
 

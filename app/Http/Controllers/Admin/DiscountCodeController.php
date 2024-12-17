@@ -11,8 +11,15 @@ use App\Http\Requests\Discount\StoreDiscountCodeRequest;
 use App\Models\DiscountCode;
 use Illuminate\Support\Carbon;
 
-class DiscountCodeController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
+class DiscountCodeController extends Controller implements HasMiddleware
 {
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('DiscountCode'); 
+    }
     protected $discountCodeService;
     protected $discountCodeRepository;
 

@@ -10,8 +10,15 @@ use App\Repositories\Comment\CommentForbiddenWordRepository;
 use App\services\Comment\CommentForbiddenWordService;
 use App\Models\ForbiddenWord;
 
-class CommentForbiddenWordController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
+class CommentForbiddenWordController extends Controller implements HasMiddleware
 {
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('CommentForbiddenWord'); 
+    }
     protected $forbiddenwordService;
     protected $forbiddenwordRepository;
     function __construct(
@@ -29,7 +36,6 @@ class CommentForbiddenWordController extends Controller
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
         $config['method'] = 'index';
-
         return view('admin.pages.comment.forbiddenword.index', compact('config', 'forbiddenwords'));
     }
 
@@ -58,14 +64,14 @@ class CommentForbiddenWordController extends Controller
         $request->validate(
             [
                 'word' => 'required|string|unique:forbidden_words',
-                'actions' => 'required|array',
-                'actions.*' => 'in:delete,ban_user',
+                // 'actions' => 'required|array',
+                // 'actions.*' => 'in:delete,ban_user',
             ],
             [
                 'word.required' => 'Từ không được để trống',
                 'word.unique' => 'Từ cấm đã tồn tại',
-                'actions.required' => 'Phải chọn xử lý',
-                'actions.*.in' => 'Xử lý phải là xóa hoặc cấm người dùng',
+                // 'actions.required' => 'Phải chọn xử lý',
+                // 'actions.*.in' => 'Xử lý phải là xóa hoặc cấm người dùng',
             ]
         );
         if ($this->forbiddenwordService->create($request)) {

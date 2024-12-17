@@ -263,7 +263,7 @@
             const roleId = _this.attr("data-roleId");
             const isChecked = _this.is(":checked") ? "checked" : "nochecked";
             $.ajax({
-                url: "/permission/edit",
+                url: "/admin/permission/edit",
                 type: "PUT",
                 data: {
                     _token: $('meta[name="csrf-token"]').attr("content"),

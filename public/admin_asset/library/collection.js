@@ -69,21 +69,31 @@
             $(`#product-item${sku}`).css("background-color", "#cce6e6");
         });
         function countVariant() {
-            $('.product-main').each(function () {
-                if ($(this).find('.product-focus').length > 0) {
-                    let countVariant = $(this).find('.product-focus .checkInput:checked').length;
+            $(".product-main").each(function () {
+                if ($(this).find(".product-focus").length > 0) {
+                    let countVariant = $(this).find(
+                        ".product-focus .checkInput:checked"
+                    ).length;
                     if (countVariant > 0) {
-                        $(this).find('.countVariant').html(`<span class="text-muted">${countVariant}</span>`);
-                        $(this).find('.product-item').css('background-color', '#cce6e6'); 
+                        $(this)
+                            .find(".countVariant")
+                            .html(
+                                `<span class="text-muted">${countVariant}</span>`
+                            );
+                        $(this)
+                            .find(".product-item")
+                            .css("background-color", "#cce6e6");
                     } else {
-                        $(this).find('.countVariant').html('');
-                        $(this).find('.product-item').css('background-color', ''); 
+                        $(this).find(".countVariant").html("");
+                        $(this)
+                            .find(".product-item")
+                            .css("background-color", "");
                     }
-                } 
+                }
             });
         }
         countVariant();
-        $('.checkInput').on('change', countVariant);
+        $(".checkInput").on("change", countVariant);
     };
     TGNT.searchForm = () => {
         $("#keyword").on("input", function () {
@@ -117,20 +127,19 @@
         //     $(".add-product").css("display", "none");
         //     TGNT.fetchData(array);
         // } else {
-            if (skus && skus.length > 0) {
-                array["idArray"] = skus.split(",");
-                var point_value = $("#point_value").val();
-                $("#description_value").html(point_value);
-                console.log(array["idArray"]);
-                
-                array["idArray"].forEach((sku) => {
-                    TGNT.initializePopovers(sku);
-                });
-                if (productElement) productElement.classList.remove("hidden");
-                $(this).css("display", "none");
-                $(".add-product").css("display", "none");
-                TGNT.fetchData(array);
-            }
+        if (skus && skus.length > 0) {
+            array["idArray"] = skus.split(",");
+            var point_value = $("#point_value").val();
+            $("#description_value").html(point_value);
+
+            array["idArray"].forEach((sku) => {
+                TGNT.initializePopovers(sku);
+            });
+            if (productElement) productElement.classList.remove("hidden");
+            $(this).css("display", "none");
+            $(".add-product").css("display", "none");
+            TGNT.fetchData(array);
+        }
         // }
 
         $(".add-product").on("click", function () {
@@ -160,7 +169,7 @@
             if ($(this).prop("checked")) {
                 if (!array.idArray.includes(sku) && sku) {
                     array.idArray.push(sku);
-                    console.log(sku);
+                    console.log(array.idArray);
                     item.css("background-color", "#cce6e6");
                     // itemParent.css("background-color", "#cce6e6");
                 }
@@ -191,7 +200,7 @@
                         sku: sku ? sku : "",
                     },
                     success: function (data) {
-                        let code = data.code.replace(/\s+/g, "")
+                        let code = data.code.replace(/\s+/g, "");
                         $("#renderPoints").append(
                             `<div id="point${
                                 data.sku

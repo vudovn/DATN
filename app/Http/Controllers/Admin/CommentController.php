@@ -11,8 +11,16 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\ForbiddenWord;
 use App\Models\User;
 
-class CommentController extends Controller
+
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
+class CommentController extends Controller implements HasMiddleware
 {
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('Comment'); 
+    }
     protected $commentService;
     protected $commentRepository;
     function __construct(

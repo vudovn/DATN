@@ -79,7 +79,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <style>
                                 .payment-option-label {
                                     background-color: #f9f9f9;
@@ -113,9 +112,6 @@
                                 }
 
                             </style>
-
-
-
                         </div>
                     </div>
                     <div class="main-right col-xxl-4 col-md-12 col-12 border rounded h-100">
@@ -138,7 +134,7 @@
                         @endguest
                         <div class="d-flex justify-content-between">
                             <p class="fs-6">Tiết kiệm:</p>
-                            <p class="cart-total"><span class="save-price" id="save-price"></span>₫</p>
+                            <p class="cart-total" id="cart-total"><span class="save-price-checkout" id="save-price-checkout"></span>₫</p>
                         </div>
                         <div class="d-flex justify-content-between">
                             <p class="fs-6">Thành tiền:</p>

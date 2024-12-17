@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ProductController;
@@ -15,7 +16,7 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
 use App\Http\Controllers\Admin\DiscountCodeController;
-use App\Http\Controllers\Admin\settingController;
+use App\Http\Controllers\Admin\SettingController;
 
 
 use App\Http\Controllers\Admin\CollectionController;
@@ -51,8 +52,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     });
     /* USER ROUTE */
     Route::prefix('admin/user')->name('user.')->group(function () {
-        Route::get('/customer', [UserController::class, 'index'])->name('index');
-        Route::get('/admin', [UserController::class, 'index'])->name('admin.index');
+        Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('/create', [UserController::class, 'create'])->name('create');
         Route::post('/store', [UserController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
@@ -60,7 +60,14 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
         // Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
         // Route::get('/api/wards/{district_code}', [UserController::class, 'getWards'])->name('wards');
-
+    });
+    Route::prefix('admin/staff')->name('staff.')->group(function () {
+        Route::get('/', [StaffController::class, 'index'])->name('index');
+        Route::get('/create', [StaffController::class, 'create'])->name('create');
+        Route::post('/store', [StaffController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [StaffController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [StaffController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [StaffController::class, 'delete'])->name('delete');
     });
     /* PRODUCT ROUTE */
     Route::prefix('admin/product')->name('product.')->group(function () {
@@ -173,11 +180,15 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
 
     // setting route
     Route::prefix('admin/setting')->name('setting.')->group(function () {
-        Route::get('/index', [settingController::class, 'index'])->name('index');
-        Route::get('/slide', [settingController::class, 'slide'])->name('slide');
-        Route::put('/slider', [settingController::class, 'sliderUpdate'])->name('sliderUpdate');
-        Route::get('/general', [settingController::class, 'general'])->name('general');
-        Route::put('/general', [settingController::class, 'generalUpdate'])->name('generalUpdate');
+        Route::get('/index', [SettingController::class, 'index'])->name('index');
+        Route::get('/slide', [SettingController::class, 'slide'])->name('slide');
+        Route::put('/slider', [SettingController::class, 'sliderUpdate'])->name('sliderUpdate');
+        Route::get('/general', [SettingController::class, 'general'])->name('general');
+        Route::put('/general', [SettingController::class, 'generalUpdate'])->name('generalUpdate');
+    });
+    Route::prefix('setting/account')->name('setting.account.')->group(function () {
+        Route::get('/{type}', [UserController::class, 'getInformation'])->name('index');
+        Route::put('/update-{type}', [UserController::class, 'updateInformation'])->name('update');
     });
 });
 
@@ -302,11 +313,11 @@ route::middleware('preventBackHistory')->group(function () {
         Route::prefix('bo-suu-tap')->name('collection.')->group(function () {
             Route::get('/', [ClientCollectionController::class, 'index'])->name('index');
             Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
-            Route::get('/ajax/get-comments/{slug}', action: [ClientCollectionController::class, 'getComments'])->name('get-comment');
-            Route::get('/ajax/get-replies/{comment_id}/{limit}', [ClientCollectionController::class, 'getReplies'])->name('get-reply');
-            Route::post('/ajax/comment/store', [ClientCollectionController::class, 'store'])->name('store');
-            Route::post('/ajax/comment/update', [ClientCollectionController::class, 'update'])->name('update');
-            Route::post('/ajax/comment/remove', [ClientCollectionController::class, 'remove'])->name('remove');
+            Route::get('/ajax/get-comments/{slug}', [ClientCommentController::class, 'getComments'])->name('get-comment');
+            Route::get('/ajax/get-replies/{comment_id}/{limit}', [ClientCommentController::class, 'getReplies'])->name('get-reply');
+            Route::post('/ajax/comment/store', [ClientCommentController::class, 'store'])->name('store');
+            Route::post('/ajax/comment/update', [ClientCommentController::class, 'update'])->name('update');
+            Route::post('/ajax/comment/remove', [ClientCommentController::class, 'remove'])->name('remove');
         });
 
         // about route

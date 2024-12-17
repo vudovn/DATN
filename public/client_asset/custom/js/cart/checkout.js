@@ -159,8 +159,8 @@
             url: url,
             success: function (data) {
                 let price = $("#cart-total-input").val();
-                $("#cart-total-discount").html(TGNT.formatNumber(data));
-                $("#total-cart-input").val(TGNT.formatNumber(data));
+                $("#cart-total-discount").html(TGNT.formatNumber(data.afterDiscount));
+                $("#total-cart-input").val(TGNT.formatNumber(data.afterDiscount));
                 // $("#total-cart-input").val(data);
                 let allDiscount = $(".list-discount").find(".discount");
                 if (allDiscount.length > 0) {

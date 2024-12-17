@@ -280,3 +280,11 @@ if (!function_exists('getHistoryProduct')) {
         return $data;
     }
 }
+// lấy tên bộ sưu tập theo tên
+if (!function_exists('getNamebyIdCollection')) {
+    function getNamebyIdCollection($id)
+    {
+        $collectionRepository = loadClass('Collection', 'Repository');
+        return $collectionRepository->findByField('id',$id)->first()->name;
+    }
+}

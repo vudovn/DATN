@@ -18,7 +18,7 @@ class CommentRepository extends BaseRepository
     public function paginationComment(array $params = [])
     {
         return $this->model
-            ->whereNull('deleted_at')
+            // ->whereNull('deleted_at')
             ->condition($params['condition'] ?? [])
             ->keyword($params['keyword'] ?? [])
             ->orderBy($params['sort'][0], $params['sort'][1])

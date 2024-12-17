@@ -13,7 +13,7 @@
                             <strong>Lưu ý:</strong> <span class="text-danger">(*)</span> là trường bắt buộc nhập
                         </div>
                         <x-input :label="'Từ cấm'" :name="'word'" :value="$forbiddenword->word ?? ''" :required="true" />
-                            <div class="alert alert-secondary" role="alert">
+                            {{-- <div class="alert alert-secondary" role="alert">
                                 <h5 class="alert-heading">Chọn hành động <span class="text-danger">*</span></h5>
                                 <div class="form-check mb-2">
                                     <input type="checkbox" class="form-check-input" id="deleteComment" name="actions[]" value="delete">
@@ -26,7 +26,7 @@
                                 @error('actions')
                                     <small class="error text-danger">*{{ $message }}</small>
                                 @enderror
-                            </div>
+                            </div> --}}
                     </div>
                 </div>
             </div>

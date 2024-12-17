@@ -22,7 +22,7 @@
     </div>
 @endif
 @foreach ($comments as $comment)
-    <div class="comment-item animate__animated animate__fadeIn border-bottom mb-4 w-100 position-relative" 
+    <div class="comment-item animate__animated animate__fadeIn border-bottom mb-4 w-100 position-relative"
         user-id="{{ $comment->user->id }}" id="comment-item-{{ $comment->id }}">
         <div class="d-flex w-100">
             <img src="{{ $comment->user->avatar }}" alt="" class="rounded-circle" width="40" height="40">
@@ -60,15 +60,17 @@
                 <div class="reply" id="reply-{{ $comment->id }}" data-id="{{ $comment->id }}">
                     {{-- RENDER JS --}}
                 </div>
-                @if ($comment->children->count() > 0)
-                    <button class="btn-load-replies btn btn-link text-decoration-none fw-bold text-tgnt p-0"
-                        data-id="{{ $comment->id }}" data-current-limit="4" style="font-size:12px">
-                        <i class="fa-solid fa-caret-down"></i>
-                        <span>{{ $comment->children->count() }}<span> </span>phản hồi</span>
-                    </button>
-                @endif
+                <div class="load-replies">
+                    @if ($comment->children->count() > 0)
+                        <button class="btn-load-replies btn btn-link text-decoration-none fw-bold text-tgnt p-0"
+                            data-id="{{ $comment->id }}" data-current-limit="4" style="font-size:12px">
+                            <i class="fa-solid fa-caret-down"></i>
+                            <span>{{ $comment->children->count() }}<span> </span>phản hồi</span>
+                        </button>
+                    @endif
+                </div>
                 <div class="list-reply pt-3" id="list-reply-{{ $comment->id }}" data-limit="">
-                    {{-- RENDER JS --}} 
+                    {{-- RENDER JS --}}
                 </div>
             </div>
         </div>

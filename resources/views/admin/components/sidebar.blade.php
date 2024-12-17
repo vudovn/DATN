@@ -10,8 +10,8 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0">
-                            <img src="https://ui-avatars.com/api/?background=random&name={{ auth()->user()->name }}"
-                                alt="user-image" class="user-avtar wid-45 rounded-circle" />
+                            <img src="{{ Auth::user()->avatar ?? 'https://ui-avatars.com/api/?background=random&name=' . urlencode(auth()->user()->name) }}" 
+                            alt="user-image" class="user-avatar wid-45 rounded-circle" width="60" height="50"/>
                         </div>
                         <div class="flex-grow-1 ms-3 me-2">
                             <h6 class="mb-0">{{ auth()->user()->name }}</h6>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="collapse pc-user-links" id="pc_sidebar_userlink">
                         <div class="pt-3">
-                            <a href="">
+                            <a href="{{ route('setting.account.index',['type' => 'your-information']) }}">
                                 <i class="ti ti-user"></i>
                                 <span>Tài khoản</span>
                             </a>
@@ -53,37 +53,39 @@
                     </a>
                 </li>
                 @foreach (__('sidebar.function') as $key => $val)
-                    @if ($val['module'])
-                        <li class="pc-item pc-hasmenu">
-                            <a href="#!" class="pc-link">
-                                <span class="pc-micon">
-                                    {!! $val['icon'] !!}
-                                </span>
-                                <span class="pc-mtext">{{ $val['name'] }}</span>
-                                <span class="pc-arrow">
-                                    <i data-feather="chevron-right"></i>
-                                </span>
-                            </a>
-                            <ul class="pc-submenu">
-                                @foreach ($val['module'] as $module)
-                                    <li class="pc-item">
-                                        <a class="pc-link" href="{{ $module['path'] }}">{{ $module['name'] }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    @else
-                        <li class="pc-item">
-                            <a href="{{ $val['route'] }}" class="pc-link">
-                                <span class="pc-micon">
-                                    {!! $val['icon'] !!}
-                                </span>
-                                <span class="pc-mtext">{{ $val['name'] }}</span>
-                            </a>
-                        </li>
+                    @can(ucfirst($val['route'][0]) . ' index')
+                        @if ($val['module'])
+                            <li class="pc-item pc-hasmenu">
+                                <a href="#!" class="pc-link">
+                                    <span class="pc-micon">
+                                        {!! $val['icon'] !!}
+                                    </span>
+                                    <span class="pc-mtext">{{ $val['name'] }}</span>
+                                    <span class="pc-arrow">
+                                        <i data-feather="chevron-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="pc-submenu">
+                                    @foreach ($val['module'] as $module)
+                                        <li class="pc-item">
+                                            <a class="pc-link" href="{{ $module['path'] }}">{{ $module['name'] }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @else
+                            <li class="pc-item">
+                                <a href="{{ $val['route'] }}" class="pc-link">
+                                    <span class="pc-micon">
+                                        {!! $val['icon'] !!}
+                                    </span>
+                                    <span class="pc-mtext">{{ $val['name'] }}</span>
+                                </a>
+                            </li>
                     @endif
-                @endforeach
-            </ul>
-        </div>
+                @endcan
+            @endforeach
+        </ul>
     </div>
+</div>
 </nav>

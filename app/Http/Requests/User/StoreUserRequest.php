@@ -24,6 +24,7 @@ class StoreUserRequest extends FormRequest
         return [
             'email' => 'required|email|unique:users,email',
             'name' => 'required',
+            'phone' => 'required|regex:/^[0-9]+$/|min:10|max:11|unique:users,phone',
             'password' => 'required|min:6',
             're_password' => 'required|same:password',
         ];
@@ -37,7 +38,10 @@ class StoreUserRequest extends FormRequest
             'email.unique' => 'Email đã tồn tại',
             'name.required' => 'Không được để trống tên',
             'phone.required' => 'Không được để trống số điện thoại',
+            'phone.regex' => 'Số điện thoại không được nhập chữ',
             'phone.unique' => 'Số điện thoại đã tồn tại',
+            'phone.min' => 'Số điện thoại phải 10 hoặc 11 số',
+            'phone.max' => 'Số điện thoại phải 10 hoặc 11 số',
             'password.required' => 'Không được để trống mật khẩu',
             'password.min' => 'Mật khẩu phải có ít nhất 6 kí tự',
             're_password.required' => 'Không được để trống mật khẩu xác nhận',

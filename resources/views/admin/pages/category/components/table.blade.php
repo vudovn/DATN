@@ -36,12 +36,7 @@
 
                 <td class="text-center table-actions">
                     <ul class="list-inline me-auto mb-0">
-                        <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Chỉnh sửa">
-                            <a href="{{ route('category.edit', ['id' => $category->id, 'page' => request()->get('page', 1)]) }}"
-                                class="avtar avtar-xs btn-link-success btn-pc-default">
-                                <i class="ti ti-edit-circle f-18"></i>
-                            </a>
-                        </li>
+                        <x-edit :id="$category->id" :model="$config['model']" />
                         <x-delete :id="$category->id" :model="ucfirst($config['model'])" />
                     </ul>
                 </td>

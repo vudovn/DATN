@@ -16,9 +16,7 @@ class Comment extends Model
         'collection_id',
         'content',
         'parent_id',
-        'deleted_at'
     ];
-    protected $dates = ['deleted_at'];
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -42,7 +40,7 @@ class Comment extends Model
     // Mối quan hệ con (các bình luận trả lời)
     public function replies()
     {
-        return $this->hasMany(Comment::class, 'parent_id')->whereNull('deleted_at');
+        return $this->hasMany(Comment::class, 'parent_id');
     }
     // public function countReplies()
     // {

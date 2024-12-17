@@ -14,7 +14,7 @@ use App\Http\Requests\Collection\UpdateCollectionRequest;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Traits\HasDynamicMiddleware;
 use App\Models\Category;
-use App\Models\CollectionProduct;
+use Illuminate\Support\Facades\DB;
 
 class CollectionController extends Controller implements HasMiddleware
 {
@@ -61,7 +61,7 @@ class CollectionController extends Controller implements HasMiddleware
     public function getProductPoint(Request $request)
     {
         $data = $this->productRepository->findByField('sku', $request->sku)->first();
-        if($data){
+        if ($data) {
             $category = $data->categories->where('is_room', 2)->first();
             $data->category = $category ? strtolower($category->name) : '';
         }
@@ -70,7 +70,7 @@ class CollectionController extends Controller implements HasMiddleware
             if ($data && $data->product) {
                 $data->name = $data->product->name ?? '';
                 $data->slug = $data->product->slug ?? '';
-                $data->thumbnail = explode(',', json_decode($data->albums))[0] ?? '';
+                $data->thumbnail =  $data->product->thumbnail;
                 $category = $data->product->categories->where('is_room', 2)->first();
                 $data->category = $category ? strtolower($category->name) : '';
             }
@@ -84,7 +84,7 @@ class CollectionController extends Controller implements HasMiddleware
         $config['method'] = 'create';
         $categories = Category::where('is_room', 2)->pluck('name', 'id')->prepend('Danh mục', 0)->toArray();
         $categoryRoom = Category::where('is_room', 1)->pluck('name', 'id')->prepend('Phòng', 0)->toArray();
-        return view('admin.pages.collection.save_demo', compact(
+        return view('admin.pages.collection.save', compact(
             'config',
             'categoryRoom',
             'categories',
@@ -104,11 +104,11 @@ class CollectionController extends Controller implements HasMiddleware
         $categories = $this->getCategories(2, 'Danh mục');
         $categoryRoom = $this->getCategories(1, 'Phòng');
         $skus = $this->getSkus($id);
-        $config = array_merge($this->config(), [
+        $config = array_merge($this->config(), [ 
             'breadcrumb' => $this->breadcrumb('update'),
             'method' => 'edit',
         ]);
-        return view('admin.pages.collection.save_demo', compact(
+        return view('admin.pages.collection.save', compact(
             'config',
             'collection',
             'categories',
@@ -125,7 +125,7 @@ class CollectionController extends Controller implements HasMiddleware
         }
         return redirect()->route('collection.index')->with('error', 'Cập nhật người dùng thất bại');
     }
-    
+
     private function getCategories($isRoom, $defaultLabel)
     {
         return Category::where('is_room', $isRoom)

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('forbidden_words', function (Blueprint $table) {
             $table->id();
             $table->string('word')->unique();
-            $table->json('actions');
+            $table->json('actions')->unique();
             $table->timestamps();
         });
     }

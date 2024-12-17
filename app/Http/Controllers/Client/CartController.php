@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Cart\CartRepository;
 use App\Services\Cart\CartService;
 use App\Repositories\Product\ProductRepository;
 use App\Services\Product\ProductService;
 use App\Repositories\Product\ProductVariantRepository;
+
 
 class CartController extends Controller
 {
@@ -20,18 +20,21 @@ class CartController extends Controller
     protected $productService;
     protected $productVariantRepository;
 
+
     public function __construct(
         CartRepository $cartRepository,
         CartService $cartService,
         ProductRepository $productRepository,
         ProductService $productService,
         ProductVariantRepository $productVariantRepository,
+
     ) {
         $this->cartRepository = $cartRepository;
         $this->cartService = $cartService;
         $this->productRepository = $productRepository;
         $this->productService = $productService;
         $this->productVariantRepository = $productVariantRepository;
+
     }
     public function index(Request $request)
     {
@@ -43,12 +46,14 @@ class CartController extends Controller
             $listCart .= $this->getProductFull($cart);
         }
         $product_featureds = $this->productRepository->getFeatured();
+        $discountCollection = $this->cartService->getDiscountCollection($carts);
         return view('client.pages.cart.index', compact(
             'config',
             'product_featureds',
             'carts',
             'listCart',
             'title',
+            'discountCollection'
         ));
     }
 
@@ -62,7 +67,6 @@ class CartController extends Controller
     {
         $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
         $zIndex = 1000 - $data->id;
-        // $cart = $this->cartRepository->findById($data->id);
         $product = $this->cartService->getProduct($data);
         return view('client.pages.cart.components.item', compact('product', 'carts', 'zIndex'))->render();
     }
@@ -112,7 +116,7 @@ class CartController extends Controller
     }
     public function updateQuantity(Request $request)
     {
-        $id = $request->idCart; 
+        $id = $request->idCart;
         $data = $this->cartService->update($request, $id);
         if ($data) {
             return successResponse('', 'Cập nhật số lượng');
@@ -120,12 +124,23 @@ class CartController extends Controller
         return errorResponse('Cập nhật số lượng thất bại');
     }
 
-
     public function totalCart(Request $request)
     {
         $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
-        $total = $this->cartService->getTotalCart($carts);
-        return $total;
+        $discountCollection = $this->cartService->getDiscountCollection($carts);
+        $data = [];
+        $data['totalCart'] = $this->cartService->getTotalCart($carts);
+        if (isset($discountCollection)) {
+            $data['afterDiscount'] = $data['totalCart'] - $discountCollection['totalDiscountAmount'];
+        }
+        $data['nameCollection'] = [];
+        foreach ($discountCollection as $discount) {
+            if (is_array($discount)) {
+                $nameCollection = getNamebyIDCollection($discount['collection_id']);
+                $data['nameCollection'][] = $nameCollection;
+            }
+        }
+        return $data;
     }
     private function config()
     {

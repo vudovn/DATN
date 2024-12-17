@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group mb-3">
-                            <h5>Tìm khách hàng theo số điện thoại</h5>
+                            <h5>Tìm khách hàng cũ theo số điện thoại</h5>
                             <div class="btn-search-customer">
                                 <input type="text" class="form-control search-customer" placeholder="Nhập số điện thoại">
                             </div>

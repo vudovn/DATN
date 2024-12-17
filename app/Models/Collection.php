@@ -8,7 +8,9 @@ use App\Traits\QueryScope;
 
 class Collection extends Model
 {
-    use HasFactory,QueryScope;
+    use HasFactory, QueryScope;
+    
+    // protected $table = 'collections';
     protected $fillable = [
         'name',
         'slug',
@@ -22,6 +24,7 @@ class Collection extends Model
         'meta_description',
         'created_at'
     ];
+    protected $table = 'collections';
     public function comments()
     {
         return $this->hasMany(Comment::class);

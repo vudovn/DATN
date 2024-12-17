@@ -19,6 +19,7 @@
                 $("#search_on").val("");
                 $("#search_out").hide();
                 $("#search_result").empty();
+                $("#search_category").empty();
                 $("#search_header").empty();
             });
     };
@@ -40,6 +41,7 @@
         const $searchOn = $("#search_on");
         const $searchOut = $("#search_out");
         const $searchResult = $("#search_result");
+        const $searchCategory = $("#search_category");
         const $searchHeader = $("#search_header");
         const $searchHeading = $("#search_heading");
         const $searchClose = $("#search_close");
@@ -56,8 +58,8 @@
                 </div>
             `);
             $searchResult.empty();
+            $searchCategory.empty();
             if (!searchValue) return;
-
             $.ajax({
                 url: `/san-pham/ajax/search-product?q=${searchValue}`,
                 method: "GET",
@@ -67,9 +69,8 @@
                     const { products, categories } = response.data;
                     const productItems = products;
                     const categoryItems = categories;
-                    console.log(productItems);
-                    console.log(categoryItems);
-
+                    // console.log(productItems);
+                    // console.log(categoryItems);
                     const resultsFound =
                         productItems.length > 0 || categoryItems.length > 0;
                     $searchHeader.html(`
@@ -132,24 +133,17 @@
                         if (categoryItems.length > 0) {
                             $.each(categoryItems, function (_, item) {
                                 if (item.parent_id === 0) {
-                                    $searchResult.append(`
-                                        <a class="text-dark row align-items-center pt-3 pb-3" href="/danh-muc/${item.slug}">
-                                            <div class="col-3">
-                                                <img class="img-fluid w-100 rounded" loading="lazy" src="${item.thumbnail}" alt="undefined">
-                                            </div>
-                                            <div class="col-9">
-                                                <p>Danh mục</p>
-                                                <h4 class="text-dark title_news">${item.name}</h4>
-                                                <div id="list_child_${item.id}" class="d-flex flex-wrap justify-content-end">
-                                                </div>
-                                            </div>
-                                        </a>
+                                    $searchCategory.append(`
+                                        <div class="col-2 px-1 py-2">
+                                            <a class="text-dark align-items-center py-1" href="/danh-muc/${item.slug}">
+                                                <span class="text-dark title_news">${item.name}</span>
+                                            </a>
+                                        </div>
                                     `);
                                 }
                             });
                             $.each(categoryItems, function (_, child) {
                                 if (child.parent_id != 0) {
-                                    console.log(child); // Log khi parent_id != 0
                                     if (
                                         $(`#list_child_${child.parent_id}`)
                                             .length !== 0
@@ -214,6 +208,7 @@
             $searchOut.hide();
             $searchHeader.empty();
             $searchResult.empty();
+            $searchCategory.empty();
         });
     });
 })(jQuery);

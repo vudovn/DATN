@@ -7,6 +7,7 @@ use App\Repositories\Order\OrderDetailsRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\Cart\CartRepository;
 use App\Jobs\SendOrderMail;
 use App\Jobs\SendTelegramNotification;
@@ -58,12 +59,35 @@ class OrderService extends BaseService
     public function paginate($request)
     {
         $agruments = $this->paginateAgrument($request);
-        // dd($agruments);
         $cacheKey = 'pagination: ' . md5(json_encode($agruments));
         $users = $this->orderRepository->pagination($agruments);
         return $users;
     }
+    private function paginateAgrumentClient($request)
+    {
+        return [
+            'keyword' => [
+                'search' => $request['keyword'] ?? '',
+                'field' => ['created_at', 'code', 'total'],
+            ],
+            'condition' => [
+                'status' => $request->input('publish') == 0 ? 0 : $request->input('publish'),
+                'user_id' => Auth::id(),
+            ],
+            'sort' => isset($request['sort']) && $request['sort'] != 0
+                ? explode(',', $request['sort'])
+                : ['id', 'asc'],
+            'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
+        ];
+    }
 
+    public function paginateClient($request)
+    {
+        $agruments = $this->paginateAgrumentClient($request);
+        $cacheKey = 'pagination: ' . md5(json_encode($agruments));
+        $users = $this->orderRepository->pagination($agruments);
+        return $users;
+    }
 
     public function create($request)
     {

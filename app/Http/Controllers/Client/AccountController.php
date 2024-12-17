@@ -101,7 +101,7 @@ class AccountController extends Controller
 
     public function getOrderAll(Request $request)
     {
-        $orders = $this->orderService->paginate($request);
+        $orders = $this->orderService->paginateClient($request);
         $paginate = true;
         return successResponse(view('client.pages.account.components.api.orderItem', compact('orders', 'paginate'))->render());
     }

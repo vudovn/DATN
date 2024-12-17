@@ -10,9 +10,15 @@ use App\Repositories\Collection\CollectionRepository;
 use App\Services\Setting\SettingService;
 use App\Repositories\Setting\SettingRepository;
 
-
-class settingController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
+class SettingController extends Controller implements HasMiddleware
 {
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('Setting'); 
+    }
     protected $sliderService;
     protected $sliderRepository;
     protected $collectionRepository;

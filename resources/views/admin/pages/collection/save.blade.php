@@ -46,15 +46,16 @@
                                 <x-editor :label="''" :name="'description_text'" :value="$collection->description_text ?? old('description_text')" class="form-control" />
                             </div>
                         </div>
+                        <input type="hidden" name="skus" id="skus" value="{{ $skus ?? '' }}">
+                        <script>
+                            var skus = @json($skus ?? []);
+                        </script>
                         <div class="filterProduct col-lg-12">
                             <div class="card shadow-sm">
                                 <div class="card-header">
                                     Bố cục phòng <span class="text-danger">*</span>
                                 </div>
-                                <input type="hidden" name="skus" id="skus" value="{{ $skus ?? '' }}">
-                                <script>
-                                    var skus = @json($skus ?? []);
-                                </script>
+                             
                                 <div class="card-header pb-0">
                                     <div class="title alert alert-danger align-items-center"
                                         style="transition: background-color 0.3s ease;" role="alert">
@@ -150,8 +151,6 @@
                 } else if (floatValue < 0) {
                     floatValue = 0;
                 }
-
-                // Update the input field value
                 $(this).val(floatValue);
             });
         });

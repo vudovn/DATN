@@ -88,6 +88,7 @@ class CollectionService extends BaseService
                 if ($data && $data->product) {
                     $data->name = $data->product->name ?? '';
                     $data->slug = $data->product->slug ?? '';
+                    $data->thumbnail = $data->product->thumbnail ?? '';
                     $category = $data->product->categories->where('is_room', 2)->first();
                     $data->category = $category ? strtolower($category->name) : '';
                 }

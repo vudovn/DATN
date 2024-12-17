@@ -24,4 +24,18 @@ class CartRepository extends BaseRepository
     {
         return $this->model->where('user_id', $id)->count();
     }
+    public function getAll()
+    {
+        return $this->model->all();
+    }
+    // public function getCartCount($sku)
+    // {
+    //     foreach ($product->productVariants as $variant) {
+    //         $cartItem = $this->cartRepository->findByField('sku', $variant->sku)->first();
+    //         if(isset($cartItem)){
+    //             $this->cartRepository->delete($cartItem->id);
+    //         }
+    //     }
+    // }
+    
 }

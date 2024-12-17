@@ -5,6 +5,7 @@ use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductVariantAttributeRepository;
 use App\Repositories\Product\ProductVariantRepository;
 use App\Repositories\Collection\CollectionProductRepository;
+use App\Repositories\Cart\CartRepository;
 use App\Services\Collection\CollectionProductService;
 
 use Illuminate\Support\Facades\DB;
@@ -15,18 +16,21 @@ use Illuminate\Support\Facades\Hash;
 class ProductService extends BaseService
 {
 
+    protected $cartRepository;
     protected $productRepository;
     protected $productVariantAttributeRepository;
     protected $productVariantRepository;
     protected $collectionProductRepository;
     protected $collectionProductService;
     public function __construct(
+        CartRepository $cartRepository,
         ProductRepository $productRepository,
         ProductVariantAttributeRepository $productVariantAttributeRepository,
         ProductVariantRepository $productVariantRepository,
         CollectionProductRepository $collectionProductRepository,
         CollectionProductService $collectionProductService
     ) {
+        $this->cartRepository = $cartRepository;
         $this->productRepository = $productRepository;
         $this->productVariantAttributeRepository = $productVariantAttributeRepository;
         $this->productVariantRepository = $productVariantRepository;
@@ -140,6 +144,7 @@ class ProductService extends BaseService
         DB::beginTransaction();
         try {
             $product = $this->productRepository->findById($id);
+            $productOld = $product->productVariants;
             $this->updateProduct($product, $request);
             $this->updateCategory($product, $request);
             $collections = [];
@@ -154,7 +159,22 @@ class ProductService extends BaseService
             if ($request->has('has_attribute') && $request->attributeValue) {
                 $this->createVariant($product, $request);
             }
+            $productNew = $this->productRepository->findById($id)->productVariants;
+            $missing = collect($productOld->pluck('sku'))->diff($productNew->pluck('sku'));
+            $results = [
+                'status' => $missing->isEmpty(),
+                'missing_data' => $missing->values()->all(),
+            ];
+            if ($results['status'] == false) {
+                foreach ($results['missing_data'] as $sku) {
+                    $cartItem = $this->cartRepository->findByField('sku', $sku)->first();
+                    if (isset($cartItem)) {
+                        $this->cartRepository->delete($cartItem->id);
+                    }
+                }
+            }
             DB::commit();
+
             foreach ($collections as $collection) {
                 DB::table('collection_product')->insert([
                     'collection_id' => $collection->collection_id,
@@ -302,11 +322,18 @@ class ProductService extends BaseService
         DB::beginTransaction();
         try {
             $this->productRepository->delete($id);
+            $product = $this->productRepository->findById($id);
+            foreach ($product->productVariants as $variant) {
+                $cartItem = $this->cartRepository->findByField('sku', $variant->sku)->first();
+                if (isset($cartItem)) {
+                    $this->cartRepository->delete($cartItem->id);
+                }
+            }
+            // $this->cartRepository->deleteBySku($product->sku);
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            // echo $e->getMessage();die();
             $this->log($e);
             return false;
         }

@@ -1,5 +1,5 @@
 @if (isset($comments) && count($comments))
-@foreach ($comments as $comment)
+@foreach ($comments as $key => $comment)
     @if($comment->parent_id == null)
         <tr class="animate__animated animate__fadeInDown animate__faster">
             <td class="">
@@ -9,7 +9,7 @@
                     <label class="form-check-label" for="ustomCheckbox{{ $comment->id }}"></label>
                 </div>
             </td>
-            <td>{{ $comment->id }}</td>
+            <td>{{ $key + 1 }}</td>
             <td>
                 <a href="{{ $comment->user->avatar }}" data-fancybox="gallery">
                     <img loading="lazy" width="50" class="rounded" src="{{ $comment->user->avatar }}" alt="{{ $comment->user->name }}">

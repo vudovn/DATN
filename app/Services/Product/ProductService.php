@@ -262,7 +262,7 @@ class ProductService extends BaseService
     private function paginateAgrumentClient($request, $isFilter = false)
     {
         $defaultSort = ['id', 'asc'];
-        $defaultPerPage = $isFilter ? 12 : 10;
+        $defaultPerPage = $isFilter ? 12 : 12;
         $condition = [
             'publish' => 1,
         ];

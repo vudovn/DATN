@@ -18,7 +18,7 @@
                 <h3>Loại sản phẩm</h3>
                 <ul>
                     @foreach (getCategory('other')->take(4) as $item)
-                        <li><a href="{{ route('client.category.index', $item->id) }}">{{ $item->name }}</a></li>
+                        <li><a href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -27,7 +27,7 @@
                 <h3>Loại phòng</h3>
                 <ul>
                     @foreach (getCategory('room')->take(4) as $item)
-                        <li><a href="{{ route('client.category.index', $item->id) }}">{{ $item->name }}</a></li>
+                        <li><a href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a></li>
                     @endforeach
                 </ul>
             </div>

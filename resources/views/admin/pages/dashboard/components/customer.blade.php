@@ -56,11 +56,11 @@
                                                                 src="https://ui-avatars.com/api/?background=random&name={{ $item->name }}"
                                                                 alt="{{ $item->name }}">
                                                         </td>
-                                                        <td class="text-center"><a
+                                                        <td class=""><a
                                                                 href="#{{ $item->name }}">{{ $item->name }}</a>
                                                         </td>
-                                                        <td class="text-center">{{ $item->email }}</td>
-                                                        <td class="text-center">{{ $item->total_quantity }}</td>
+                                                        <td class="">{{ $item->email }}</td>
+                                                        <td class="">{{ $item->total_quantity }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>

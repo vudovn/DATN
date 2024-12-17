@@ -1,4 +1,4 @@
-@props(['value_meta_title', 'value_meta_description', 'value_meta_keywords'])
+@props(['value_meta_title', 'value_meta_description', 'value_slug'])
 
 <div class="card">
     <div class="card-header">
@@ -11,25 +11,25 @@
                     <div class="box_seo">
                         <div class="top_box_seo d-flex algin-items-center">
                             <div class="top_box_seo_icon d-flex align-items-center">
-                                <img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png"
-                                    alt="">
+                                <img width="30" src="{{ asset('logo_tgnt.ico') }}" alt="">
                             </div>
                             <div class="top_box_seo_content">
                                 <span>Thế Giới Nội Thất</span>
                                 <small>{{ url('/') }}/san-pham/<span
-                                        class="value_seo_slug">bo-ban-an-go-4-ghe-kai-dep-moc-mac</span>
+                                        class="value_seo_slug">{{ $value_slug ?? 'bo-ban-an-go-4-ghe-kai-dep-moc-mac' }}</span>
                                     &nbsp; <i class="fa-regular fa-ellipsis-vertical"></i></small>
                             </div>
                         </div>
                         <div class="bottom_box_seo">
                             <div>
-                                <span class="value_seo_title">Bộ bàn ăn gỗ 4 ghế KAI đẹp mộc mạc giá rẻ nhất tại Thế
-                                    Giới Nội Thất</span>
+                                <span
+                                    class="value_seo_title">{{ $value_meta_title ?? 'Bộ bàn ăn gỗ 4 ghế KAI đẹp mộc mạc giá rẻ nhất tại Thế Giới Nội Thất' }}</span>
                             </div>
                             <div>
-                                <span class="value_seo_description">Bộ bàn ăn gỗ 4 ghế Kai đẹp tinh tế với những thông
-                                    số vàng nâng niu trải nghiệm của khách hàng cùng thiết kế mãn nhãn. Lựa chọn số 1
-                                    cho bạn ...</span>
+                                <span
+                                    class="value_seo_description">{{ $value_meta_description ??
+                                        'Bộ bàn ăn gỗ 4 ghế Kai đẹp tinh tế với những thông số vàng nâng niu trải nghiệm của khách hàng cùng thiết kế mãn nhãn. Lựa chọn số 1
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            cho bạn ... ' }}</span>
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,8 @@
         <div class="form-group mt-3 mb-3">
             <label for="meta_title" class="d-flex justify-content-between">
                 <div>Tiêu đề SEO</div>
-                <small> (<span class="count_meta_title">0</span>/60)</small>
+                <small> (<span
+                        class="count_meta_title">{{ $value_meta_title ? strlen($value_meta_title) : 0 }}</span>/60)</small>
             </label>
             <input value="{{ old('meta_title', $value_meta_title) ?? '' }}" type="text" class="form-control"
                 id="meta_title" name="meta_title">
@@ -48,7 +49,8 @@
         <div class="form-group mb-3">
             <label for="meta_description" class="d-flex justify-content-between">
                 <div>Mô tả SEO</div>
-                <small> (<span class="count_meta_description">0</span>/160)</small>
+                <small> (<span class="count_meta_description">
+                        {{ $value_meta_description ? strlen($value_meta_description) : 0 }}</span>/160)</small>
             </label>
             <textarea rows="3" class="form-control" id="meta_description" name="meta_description">{{ old('meta_description', $value_meta_description) ?? '' }}</textarea>
         </div>
@@ -58,9 +60,8 @@
             <div class="mb-3">
                 <label class="form-label" for="meta_description">Đường dẫn</label>
                 <div class="input-group mb-3">
-                    <span class="input-group-text"
-                        id="sieu-thi-noi-that">{{ url('/url') }}/</span> 
-                    <input type="text" name="slug" class="form-control"
+                    <span class="input-group-text" id="sieu-thi-noi-that">{{ url('/url') }}/</span>
+                    <input value="{{ $value_slug ?? '' }}" type="text" name="slug" class="form-control"
                         id="meta_description" aria-describedby="sieu-thi-noi-that">
                 </div>
             </div>

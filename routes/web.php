@@ -189,6 +189,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::prefix('setting/account')->name('setting.account.')->group(function () {
         Route::get('/{type}', [UserController::class, 'getInformation'])->name('index');
         Route::put('/update-{type}', [UserController::class, 'updateInformation'])->name('update');
+
     });
 });
 
@@ -307,6 +308,7 @@ route::middleware('preventBackHistory')->group(function () {
             Route::post('/applyDiscount', [ClientCheckoutController::class, 'applyDiscount'])->name('applyDiscount');
             Route::post('/store', [ClientCheckoutController::class, 'store'])->name('store');
             Route::post('/vnpay/pay', [VnPayController::class, 'pay'])->name('vnpay.pay');
+            Route::post('/vnpay/pay-again', [VnPayController::class, 'payAgain'])->name('vnpay.pay-again');
             Route::get('/vnpay/return', [VnPayController::class, 'return'])->name('vnpay.return');
         });
         // collection route

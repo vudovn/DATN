@@ -64,8 +64,8 @@
                                             <label class="form-label" for="price">Giá tiền <span
                                                     class="text-danger">*</span></label>
                                             <input class="form-control int"
-                                                value="{{ old('price' , formatNumber($product->price ?? '')) }}" type="text"
-                                                name="price" id="price" value="">
+                                                value="{{ old('price', formatNumber($product->price ?? '')) }}"
+                                                type="text" name="price" id="price" value="">
                                             @error('price')
                                                 <small class="error text-danger">* {{ $message }}</small>
                                             @enderror
@@ -98,7 +98,7 @@
                     @include('admin.pages.product.product.components.variant')
 
                     <div class="col-lg-12">
-                        <x-seo :value_meta_title="$product->meta_title ?? old('meta_title')" :value_meta_description="$product->meta_description ?? old('meta_description')" />
+                        <x-seo :value_meta_title="$product->meta_title ?? old('meta_title')" :value_meta_description="$product->meta_description ?? old('meta_description')" :value_slug="$product->slug ?? old('slug')" />
                     </div>
                 </div>
             </div>

@@ -80,6 +80,26 @@ return [
             'id' => 5,
             'name' => '5 sao'
         ]
-    ]
+    ],
+    'is_featured' => [
+        0 => [
+            'id' => 1,
+            'name' => 'Nổi bật'
+        ],
+        1 => [
+            'id' => 2,
+            'name' => 'Không nổi bật'
+        ]
+    ],
+    'has_attribute' => [
+        0 => [
+            'id' => 1,
+            'name' => 'Có'
+        ],
+        1 => [
+            'id' => 2,
+            'name' => 'Không'
+        ]
+    ],
 
 ];

@@ -100,10 +100,12 @@
                 </div>
                 <div class="category-content">
                     @foreach (getCategory('orther')->take(9) as $item)
-                    <div class="item">
-                        <img src="{{ $item->thumbnail ?? 'https://placehold.co/600x600?text=The%20Gioi%20Noi%20That'}}" alt="Item Image" />
-                        <p class="text-dark fw-semibold"><a class="text-light" href="{{route('client.category.index',$item->slug)}}">{{$item->name}}</a></p>
-                    </div>
+                        <div class="item">
+                            <img src="{{ $item->thumbnail ?? 'https://placehold.co/600x600?text=The%20Gioi%20Noi%20That' }}"
+                                alt="Item Image" />
+                            <p class="text-dark fw-semibold"><a class="text-light"
+                                    href="{{ route('client.category.index', $item->slug) }}">{{ $item->name }}</a></p>
+                        </div>
                     @endforeach
                 </div>
             </div>

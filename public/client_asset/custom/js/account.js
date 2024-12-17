@@ -172,6 +172,8 @@
     };
 
     TGNT.loadOrderStatus = (status, url) => {
+        console.log(status);
+        
         $.ajax({
             url: url,
             type: "GET",

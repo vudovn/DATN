@@ -145,11 +145,11 @@
             const item = $("#product-item" + sku);
             if ($(this).prop("checked")) {
                 if (!array.idArray.includes(sku) && sku) {
-                    console.log(array.idArray);        
+                    console.log(array.idArray);
                     array.idArray.push(sku);
                     item.css("background-color", "#cce6e6");
                 }
-                
+
                 TGNT.addPoint(sku);
             } else {
                 array.idArray = array.idArray.filter((i) => i !== sku);
@@ -179,7 +179,7 @@
                     data: {
                         sku: sku ? sku : "",
                     },
-                    success: function (data) {                        
+                    success: function (data) {
                         TGNT.renderRow(data.data);
                         TGNT.calculateTotalAmount();
                     },
@@ -285,7 +285,7 @@
             totalAmount = totalAmount + price;
         });
         $("#total_amount").val(TGNT.formatNumber(totalAmount));
-        $(".total_amount").text(TGNT.formatNumber(totalAmount)); 
+        $(".total_amount").text(TGNT.formatNumber(totalAmount));
     };
 
     TGNT.updateQuantity = () => {
@@ -294,7 +294,7 @@
             let price = $(this).data("price");
             let totalPrice = quantity * price;
 
-            $(this).closest("tr").find(".product_quantity_input").val(quantity); 
+            $(this).closest("tr").find(".product_quantity_input").val(quantity);
             $(this)
                 .closest("tr")
                 .find(".total-price")

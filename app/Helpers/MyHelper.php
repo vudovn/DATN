@@ -212,10 +212,10 @@ if (!function_exists('growthRateHtml')) {
     {
         if ($value > 0) {
             return '<span class="text-success fw-medium" data-bs-toggle="tooltip" data-bs-title="Tăng trưởng so với tháng trước"><i class="ti ti-arrow-up-right"></i>' . $value . '%</span>';
-        } elseif ($value < 0) {
+        } else if ($value < 0) {
             return '<span class="text-danger fw-medium" data-bs-toggle="tooltip" data-bs-title="Giảm so với tháng trước">' . $value . '%</span>';
         } else {
-            return '<span class="text-dark fw-medium" data-bs-toggle="tooltip" data-bs-title="Không thay đổi so với tháng trước"><i class="ti ti-arrow-down-left"></i>' . $value . '%</span>';
+            return '<span class="text-dark fw-medium" data-bs-toggle="tooltip" data-bs-title="Không thay đổi so với tháng trước">' . $value . '%</span>';
         }
     }
 }

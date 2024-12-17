@@ -55,9 +55,6 @@
         <div class="content">
             <p><strong>Tên:</strong> {{ $name }}</p>
             <p><strong>Email:</strong> {{ $email }}</p>
-            {!! $company ? "<p><strong>Công ty:</strong> $company</p>" : "" !!}
-            {!! $phone ? "<p><strong>Số điện thoại:</strong> $phone</p>" : "" !!}
-
             <p><strong>Lời nhắn:</strong></p>
             <p>{{ $contact_message }}</p>
         </div>

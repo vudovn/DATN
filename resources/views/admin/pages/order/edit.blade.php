@@ -46,9 +46,13 @@
                     <div class="col-6">
                         <!-- Phương Thức Thanh Toán -->
                         <div class="form-group mb-3">
-                            <label for="payment_method">Phương Thức Thanh Toán:</label>
-                            <input type="text" id="payment_method" name="payment_method" class="form-control"
-                                value="{{ $order->payment_method ?? 'Đợi có dữ liệu bảng phương thức thanh toán' }}">
+                            <label for="payment_method_id" class="form-label">Phương Thức Thanh Toán:</label>
+                            <select class="form-select" name="payment_method_id" id="payment_method_id">
+                                @foreach ($paymentMethods as $item)
+                                    <option {{ $item->id == $order->payment_method_id }} value="{{ $item->id }}">
+                                        {{ $item->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-6">
@@ -88,7 +92,7 @@
                 @include('admin.pages.order.components.location')
                 <div class="form-group mb-3">
                     <x-input :label="'Địa chỉ chi tiết'" name="address" :value="$address" :required="false" />
-                </div>                
+                </div>
 
                 {{-- Thêm sản phẩm --}}
                 @include('admin.pages.order.components.add_product')
@@ -96,8 +100,6 @@
         </div>
 
     </div>
-    <script>
-        
-    </script>
+    <script></script>
 
 @endsection

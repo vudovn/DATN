@@ -44,6 +44,35 @@
             });
         });
     };
+
+    TGNT.cartCount = () => {
+        let url = "/gio-hang/count";
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            type: "GET",
+            url: url,
+            success: function (data) {
+                $(".cart_count").html(data);
+                if (data == 0) {
+                    $(".cart-container").html(`
+                        <div class="container cart-no-item text-center pt-15">
+                                <img src="/uploads/image/system/no_product.webp"
+                                    alt="" width="100">
+                                <p class="text-muted fw-bold mb-3">Giỏ hàng của bạn còn trống</p>
+                                <a class="btn btn-tgnt w-25" href="${homeUrl}">Mua ngay</a>
+                            </div>`);
+                    $(".checkout-cart").addClass("disabled-link");
+                } else {
+                    $(".checkout-cart").removeClass("disabled-link");
+                }
+            },
+            error: function (data) {
+                console.log("Lỗi");
+            },
+        });
+    };
     TGNT.showVariant = () => {
         $(document).on("click", ".open-box-variant", function (e) {
             e.stopPropagation();

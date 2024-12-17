@@ -25,14 +25,28 @@
                 {!! $product->has_attribute == 1 ? '<span class="badge bg-light-danger">Có biến thể</span>' : '' !!}
 
             </td>
-            <td class="text-center">{{ number_format($product->price) }}</td>
+            <td class="text-center">
+                @php
+                    $product->has_attribute == 1
+                        ? ($product->priceAttr->min == $product->priceAttr->max
+                            ? ($price = number_format($product->priceAttr->min))
+                            : ($price =
+                                number_format($product->priceAttr->min) .
+                                ' - ' .
+                                number_format($product->priceAttr->max)))
+                        : ($price = number_format($product->price));
+                    echo $price;
+                @endphp
+                {{-- @dd($product->priceAttr)
+                {{ number_format($product->price) }} đ --}}
+            </td>
             <td class="text-center">{{ number_format($product->quantity) }}</td>
             <td class="text-center">{{ $product->sku }}</td>
-            <td>{{ changeDateFormat($product->created_at) }}</td>
             <td class="text-start text-wrap">
                 @if ($product->categories->count())
                     @foreach ($product->categories as $category)
-                        <a href="{{ route('client.category.index', $category->slug) }}"><span class="badge bg-light-danger">{{ $category->name }}</span></a>
+                        <a href="{{ route('client.category.index', $category->slug) }}"><span
+                                class="badge bg-light-danger">{{ $category->name }}</span></a>
                     @endforeach
                 @else
                     <span class="badge bg-light-danger">Không có danh mục</span>

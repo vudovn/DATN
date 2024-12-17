@@ -1,11 +1,22 @@
 @props(['data', 'dataType', 'class'])
+{{-- @dd($data) --}}
 <div class="product_item col-md-6 col-lg-4 col-xl-3 text-center mb-3">
     <a href="{{ route('client.product.detail', $data->slug) }}" class="item position-relative">
         <img class="Sirv image-main" src="{{ $data->thumbnail }}" data-src="{{ $data->thumbnail }}" alt="">
         <img class="Sirv image-hover" src="{{ $data->thumbnail_sub ?? json_decode($data->albums)[0] }}" alt="">
         <div class="p-3">
             <h2 style="">{{ $data->name }}</h2>
-            <div class="price text-tgnt">{{ formatMoney($data->price - ($data->price * $data->discount) / 100) }}đ
+            <div class="price text-tgnt">
+                @if (isset($data->has_attribute) && $data->has_attribute == 1)
+                    @if ($data->priceAttr->min == $data->priceAttr->max)
+                        {{ formatMoney($data->price - ($data->price * $data->discount) / 100) }}
+                    @else
+                        {{ formatMoney($data->priceAttr->min - ($data->priceAttr->min * $data->discount) / 100) }} -
+                        {{ formatMoney($data->priceAttr->max - ($data->priceAttr->max * $data->discount) / 100) }}
+                    @endif
+                @else
+                    {{ formatMoney($data->price - ($data->price * $data->discount) / 100) }}
+                @endif
             </div>
         </div>
         {{-- sản phẩm nổi bật --}}

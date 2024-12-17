@@ -64,7 +64,9 @@
                                         @foreach ($user->wishlists as $key => $wishlist)
                                             <tr>
                                                 <th scope="row">{{ $key + 1 }}</th>
-                                                <td><a href="{{ route('client.product.detail',$wishlist->product->slug) }}">{{ $wishlist->product->name }}</a></td>
+                                                <td><a
+                                                        href="{{ route('client.product.detail', $wishlist->product->slug) }}">{{ $wishlist->product->name }}</a>
+                                                </td>
                                                 <td>{{ $wishlist->created_at ? $wishlist->created_at->format('d/m/Y') : 'Không có ngày tạo' }}
                                                 </td>
                                             </tr>
@@ -104,7 +106,7 @@
                                                     </td>
                                                     <td>{{ number_format($order->total, 0, ',', '.') }} VND</td>
                                                     <td>{{ statusOrder($order->status) }}</td>
-                                                    <td>{{ $order->payment ? $order->payment->method_name : 'Chưa có phương thức thanh toán' }}
+                                                    <td>{{ $order->paymentMethod->name }}
                                                     </td>
                                                 </tr>
                                             @endforeach

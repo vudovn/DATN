@@ -117,6 +117,7 @@ class ProductRepository extends BaseRepository
     {
         return $this->model
             ->where('id', '!=', $product_id)
+            ->where('publish', 1)
             ->whereHas('categories', function ($q) use ($category_id) {
                 $q->where('category_id', $category_id);
             })

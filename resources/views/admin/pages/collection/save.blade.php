@@ -41,7 +41,7 @@
 
                             <div class="">
                                 <textarea class="hidden" name="description" cols="30" rows="10" id="point_value">
-                                    {{ $collection->description ?? old('description', '') }}
+                                    {{ $collection->description ?? old('description') }}
                                 </textarea>
                                 <x-editor :label="''" :name="'description_text'" :value="$collection->description_text ?? old('description_text')" class="form-control" />
                             </div>
@@ -55,7 +55,7 @@
                                 <div class="card-header">
                                     Bố cục phòng <span class="text-danger">*</span>
                                 </div>
-                             
+
                                 <div class="card-header pb-0">
                                     <div class="title alert alert-danger align-items-center"
                                         style="transition: background-color 0.3s ease;" role="alert">
@@ -85,9 +85,9 @@
                                     <div id="renderPoints">
                                         {{-- Render mấy dấu chấm ở đây --}}
                                     </div>
-                                   
+
                                 </div>
-                             
+
                                 @error('description')
                                     <small class="error text-danger">*{{ $message }}</small>
                                 @enderror
@@ -95,7 +95,7 @@
                         </div>
                     </div>
                     <div class="col-lg-12">
-                        <x-seo :value_meta_title="$collection->meta_title ?? ''" :value_meta_description="$collection->meta_description ?? ''" :value_meta_keywords="$collection->meta_keywords ?? ''" />
+                        <x-seo :value_meta_title="$product->meta_title ?? old('meta_title','Bộ Sưu Tập Sang Trọng')" :value_meta_description="$product->meta_description ?? old('meta_description','Bộ Sưu Tập Nội Thất Sang Trọng - Biểu Tượng Của Đẳng Cấp Và Tinh Tế')" :value_slug="$product->slug ?? old('slug','bo-suu-tap-sang-trong')" />
                     </div>
                 </div>
             </div>

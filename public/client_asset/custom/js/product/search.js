@@ -134,9 +134,9 @@
                             $.each(categoryItems, function (_, item) {
                                 if (item.parent_id === 0) {
                                     $searchCategory.append(`
-                                        <div class="col-2 px-1 py-2">
-                                            <a class="text-dark align-items-center py-1" href="/danh-muc/${item.slug}">
-                                                <span class="text-dark title_news">${item.name}</span>
+                                        <div class="col-3 pt-2">
+                                            <a class="mb-1 badge bg-light-warning text-dark-warning" href="/danh-muc/${item.slug}">
+                                                <span class="text-dark">${item.name}</span>
                                             </a>
                                         </div>
                                     `);

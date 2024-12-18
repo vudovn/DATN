@@ -76,7 +76,8 @@
                     </div>
                     <div class="mb-xxl-7 mb-2 status_spct">
                         <strong>Tình trạng: </strong>
-                        <span class="badge bg-light-{{ $product->quantity > 0 ? 'success' : 'danger' }} text-dark-warning product_ct_badge">
+                        <span
+                            class="badge bg-light-{{ $product->quantity > 0 ? 'success' : 'danger' }} text-dark-warning product_ct_badge">
                             {{ $product->quantity > 0 ? 'Còn hàng' : 'Hết hàng' }}
                         </span>
                     </div>
@@ -88,12 +89,13 @@
                     <div class="quantity_spct mb-xxl-0 mb-3">
                         <div class="input-group input-spinner">
                             <input type="button" value="-" class="button-minus btn btn-sm" data-field="quantity">
-                            <input type="number" step="1" min="1" max="{{ $product->quantity }}" value="1"
-                                name="quantity" id="quantity" class="quantity-field form-control-sm form-input">
+                            <input type="number" step="1" min="1" max="{{ $product->quantity }}"
+                                value="1" name="quantity" id="quantity"
+                                class="quantity-field form-control-sm form-input">
                             <input type="button" value="+" class="button-plus btn btn-sm" data-field="quantity">
                         </div>
                     </div>
-                    <div class="btn_spct ">
+                    <div class="btn_spct">
                         <button class="btn btn-stnt buyNow" data-id="{{ $product->id }}"
                             data-sku="{{ $product->sku }}">Mua ngay</button>
                         <button class="btn btn-outline-stnt ms-4 addToCart" data-id="{{ $product->id }}"
@@ -139,9 +141,9 @@
 
             </div>
             <div class="col-xxl-12 col-sm-12 mt-5 mb-5">
-                <h3 class="fw-bold pb-4">Sản phẩm đã xem gần đây</h3>
+                <h3 class="fw-bold pb-4">Sản phẩm liên quan</h3>
                 <div class="row animate__animated animate__fadeIn listProduct mb-4" id="slide-featured">
-                    @foreach (getHistoryProduct() as $product_featured)
+                    @foreach ($productRelated as $product_featured)
                         <x-product_card :data="$product_featured" />
                     @endforeach
                 </div>

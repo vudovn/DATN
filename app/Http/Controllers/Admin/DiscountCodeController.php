@@ -121,13 +121,12 @@ class DiscountCodeController extends Controller implements HasMiddleware
 
     public function trash()
     {
-        $discounts = $this->discountCodeRepository->getOnlyTrashed();
-        dd($discounts);
+        $discountCodes = $this->discountCodeRepository->getOnlyTrashed();
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('trash');
-        return view('admin.pages.category.trash', compact(
+        return view('admin.pages.discount.trash', compact(
             'config',
-            'discounts'
+            'discountCodes'
         ));
     }
 

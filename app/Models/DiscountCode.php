@@ -9,7 +9,7 @@ use App\Traits\QueryScope;
 
 class DiscountCode extends Model
 {
-    use HasFactory,QueryScope;
+    use HasFactory, QueryScope;
 
     protected $fillable = [
         'code',
@@ -20,6 +20,7 @@ class DiscountCode extends Model
         'start_date',
         'end_date',
         'publish',
+        'deleted_at',
     ];
 
     public function users()

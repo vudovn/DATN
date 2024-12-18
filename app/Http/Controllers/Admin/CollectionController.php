@@ -129,7 +129,6 @@ class CollectionController extends Controller implements HasMiddleware
     public function trash()
     {
         $collections = $this->collectionRepository->getOnlyTrashed();
-        dd($collections);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('trash');
         return view('admin.pages.collection.trash', compact(

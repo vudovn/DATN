@@ -35,6 +35,7 @@ class AttributeCategoryService extends BaseService
                 'publish' => isset($request['publish'])
                     ? (int) $request['publish']
                     : null,
+                'deleted_at' => null,
             ],
             'sort' => isset($request['sort']) && $request['sort'] != 0
                 ? explode(',', $request['sort'])
@@ -141,7 +142,8 @@ class AttributeCategoryService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $this->attributeCategoryRepository->delete($id);
+            // $this->attributeCategoryRepository->delete($id);
+            $this->attributeCategoryRepository->update($id, ['deleted_at' => now()]);
             DB::commit();
             return true;
         } catch (\Exception $e) {

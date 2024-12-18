@@ -1,4 +1,4 @@
-<?php  
+<?php
 namespace App\Services\Discount;
 
 use App\Services\BaseService;
@@ -6,18 +6,21 @@ use App\Repositories\Discount\DiscountCodeRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
-class DiscountCodeService extends BaseService {
+class DiscountCodeService extends BaseService
+{
 
     protected $discountCodeRepository;
 
-    public function __construct(DiscountCodeRepository $discountCodeRepository) {
+    public function __construct(DiscountCodeRepository $discountCodeRepository)
+    {
         $this->discountCodeRepository = $discountCodeRepository;
     }
 
     /**
      * Chuẩn bị các tham số phân trang cho mã giảm giá
      */
-    private function paginateArguments($request) {
+    private function paginateArguments($request)
+    {
         return [
             'keyword' => [
                 'search' => $request->input('keyword'),
@@ -26,9 +29,10 @@ class DiscountCodeService extends BaseService {
             'condition' => [
                 'publish' => $request->integer('publish'),
                 'discount_type' => $request->integer('discount_type'),
+                'deleted_at' => null,
             ],
-            'sort' => $request->input('sort') 
-                ? array_map('trim', explode(',', $request->input('sort'))) 
+            'sort' => $request->input('sort')
+                ? array_map('trim', explode(',', $request->input('sort')))
                 : ['id', 'desc'],
             'perpage' => $request->integer('perpage') ?? 20,
         ];
@@ -37,7 +41,8 @@ class DiscountCodeService extends BaseService {
     /**
      * Phân trang mã giảm giá dựa trên các tham số yêu cầu
      */
-    public function paginate($request) {
+    public function paginate($request)
+    {
         $arguments = $this->paginateArguments($request);
         $cacheKey = 'pagination: ' . md5(json_encode($arguments));
         $users = $this->discountCodeRepository->pagination($arguments);
@@ -47,10 +52,11 @@ class DiscountCodeService extends BaseService {
     /**
      * Tạo mã giảm giá mới
      */
-    public function create($request) {
+    public function create($request)
+    {
         DB::beginTransaction();
         try {
-            $payload = $request->except('_token','send','page');
+            $payload = $request->except('_token', 'send', 'page');
             $payload['discount_value'] = convertNumber($payload['discount_value']);
             $payload['min_order_amount'] = convertNumber($payload['min_order_amount']);
             // dd($payload);
@@ -69,10 +75,11 @@ class DiscountCodeService extends BaseService {
     /**
      * Cập nhật mã giảm giá
      */
-    public function update($request, $id) {
+    public function update($request, $id)
+    {
         DB::beginTransaction();
         try {
-            $payload = $request->except('_token','send','page', '_method');
+            $payload = $request->except('_token', 'send', 'page', '_method');
             $payload['discount_value'] = convertNumber($payload['discount_value']);
             $payload['min_order_amount'] = convertNumber($payload['min_order_amount']);
             // dd($payload);
@@ -89,15 +96,45 @@ class DiscountCodeService extends BaseService {
     /**
      * Xóa mã giảm giá
      */
-    public function delete($id) {
+    public function delete($id)
+    {
         DB::beginTransaction();
         try {
-            $discountCode = $this->discountCodeRepository->delete($id);
+            // $discountCode = $this->discountCodeRepository->delete($id);
+            $this->discountCodeRepository->update($id, ['deleted_at' => now()]);
             DB::commit();
-            return $discountCode;
+            return true;
         } catch (\Exception $e) {
             DB::rollback();
             $this->log($e); // Ghi log lỗi nếu có
+            return false;
+        }
+    }
+
+    public function restore($id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->discountCodeRepository->restore($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
+            return false;
+        }
+    }
+
+    public function destroy($id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->discountCodeRepository->destroy($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
             return false;
         }
     }

@@ -28,7 +28,10 @@ class Order extends Model
         'payment_method_id',
         'status',
         'fee_ship',
-        'user_id'
+        'user_id',
+        'deleted_at',
+        'created_at',
+        'updated_at',
     ];
     public function getWithPaginateBy($perPage = 10)
     {

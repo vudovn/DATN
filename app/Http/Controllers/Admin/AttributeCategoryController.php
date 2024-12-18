@@ -95,6 +95,7 @@ class AttributeCategoryController extends Controller implements HasMiddleware
     public function trash()
     {
         $attributes = $this->attributeCategoryRepository->getOnlyTrashed();
+        // dd($attributes);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('trash');
         return view('admin.pages.product.attribute.trash', compact(

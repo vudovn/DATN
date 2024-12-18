@@ -48,6 +48,7 @@ class OrderService extends BaseService
             ],
             'condition' => [
                 'status' => $request->input('publish') == 0 ? 0 : $request->input('publish'),
+                'deleted_at' => null,
             ],
             'sort' => isset($request['sort']) && $request['sort'] != 0
                 ? explode(',', $request['sort'])
@@ -243,12 +244,41 @@ class OrderService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $this->orderRepository->delete($id);
+            // $this->orderRepository->delete($id);
+            $this->orderRepository->update($id, ['deleted_at' => now()]);
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
             // echo $e->getMessage();die();
+            $this->log($e);
+            return false;
+        }
+    }
+
+    public function restore($id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->orderRepository->restore($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
+            return false;
+        }
+    }
+
+    public function destroy($id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->orderRepository->destroy($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
             $this->log($e);
             return false;
         }

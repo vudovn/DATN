@@ -227,4 +227,34 @@ class CollectionService extends BaseService
             return false;
         }
     }
+
+    public function restore($id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->collectionRepository->restore($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
+            return false;
+        }
+    }
+
+    public function destroy($id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->collectionRepository->destroy($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
+            return false;
+        }
+    }
+
+
 }

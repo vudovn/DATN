@@ -8,7 +8,7 @@
                     <label class="form-check-label" for="customCheckbox{{ $discount->id }}"></label>
                 </div>
             </td>
-            <td>{{ $key+1 }}</td>
+            <td>{{ $key + 1 }}</td>
             <td>
                 <div class="discount mb-0 alert {{ checkExpiredDate($discount->end_date) ? 'alert-secondary' : 'alert-primary' }} d-flex justify-content-between align-items-center"
                     role="alert">
@@ -60,55 +60,6 @@
     </tr>
 @endif
 <style>
-    /* .discount {
-        border-radius: 8px;
-        padding: 12px 16px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        border: 1px dashed #004d4d;
-    }
-
-    .discount-inner {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .discount-code {
-        font-weight: bold;
-        font-size: 1.1rem;
-        margin-bottom: 5px;
-    }
-
-    .discount-desc {
-        font-size: 0.9rem;
-        color: #6c757d;
-    }
-
-    .copy-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #ffffff;
-        padding: 8px;
-        border-radius: 50%;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: background-color 0.3s ease;
-    }
-
-    .copy-icon:hover {
-        background-color: #f1f9ff;
-    }
-
-    .discount-expired {
-        font-size: 0.9rem;
-        color: #dc3545;
-        margin-top: 10px;
-        font-style: italic
-    } */
-
-
     .discount {
         border-radius: 12px;
         padding: 16px 20px;

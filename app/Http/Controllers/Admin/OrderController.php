@@ -264,13 +264,12 @@ class OrderController extends Controller implements HasMiddleware
 
     public function trash()
     {
-        $discounts = $this->orderRepository->getOnlyTrashed();
-        dd($discounts);
+        $orders = $this->orderRepository->getOnlyTrashed();
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('trash');
-        return view('admin.pages.category.trash', compact(
+        return view('admin.pages.order.trash', compact(
             'config',
-            'discounts'
+            'orders'
         ));
     }
 
@@ -293,6 +292,10 @@ class OrderController extends Controller implements HasMiddleware
                 'name' => 'Thông tin hóa đơn',
                 'list' => ['Chi tiết đơn hàng', 'Thông tin hóa đơn']
             ],
+            'trash' => [
+                'name' => 'Thùng rác',
+                'list' => ['Thùng rác']
+            ]
         ];
 
         return $breadcrumb[$key];

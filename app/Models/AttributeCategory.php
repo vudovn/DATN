@@ -7,7 +7,7 @@ use App\Traits\QueryScope;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class AttributeCategory extends Model
 {
-    use HasFactory, QueryScope, SoftDeletes;
+    use HasFactory, QueryScope;
 
     protected $fillable = [
         'name',

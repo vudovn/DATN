@@ -78,9 +78,12 @@ class ProductController extends Controller
         $product->albums = view('client.pages.product_detail.components.api.albums', compact('variant', 'product'))->render();
         // Session::flush();
         // dd($product);
+        $idCategory = $product->categories->where('is_room', 2)->first()->id;
+        $productRelated = $this->productRepository->getRelatedProduct($product->id, $idCategory );
         return view('client.pages.product_detail.index', compact(
             'config',
             'product',
+            'productRelated'
         ));
     }
 

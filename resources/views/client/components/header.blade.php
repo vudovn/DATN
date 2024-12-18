@@ -143,7 +143,7 @@
                                 <div class="search_result" id="search_result">
                                     <!-- render bài viết từ api -->
                                 </div>
-                                <div class="search_category row" id="search_category">
+                                <div class="search_category row border-top" id="search_category">
                                     <!-- render bài viết từ api -->
                                 </div>
                             </div>

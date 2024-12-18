@@ -3,14 +3,18 @@
 @section('content')
     <div class="home">
         <!-- 1. SECTION 1 -->
-        <section class="notice container-fluid text-center py-3">
-            <p class="d-inline text-light">
-                GIẢM GIÁ 20% cho đơn hàng đầu tiên của bạn. Đăng ký để nhận thống
-                báo của chúng tôi!
-            </p>
-            <a href="#" class="d-inline text-light text-decoration-underline">Đăng ký <span><i
-                        class="bi bi-arrow-right"></i></span></a>
-        </section>
+        @if (!Auth::check())
+            <section class="notice container-fluid text-center py-3">
+
+                <p class="d-inline text-light">
+                    GIẢM GIÁ 20% cho đơn hàng đầu tiên của bạn. Đăng ký để nhận thống
+                    báo của chúng tôi!
+                </p>
+                <a href="{{ route('client.auth.register') }}" class="d-inline text-light text-decoration-underline">Đăng ký
+                    <span><i class="bi bi-arrow-right"></i></span></a>
+
+            </section>
+        @endif
         <!-- 2. SECTION 2 -->
         <div class="demo home-slick-arrow">
             {{-- <button class="slick-prev slick-arrow" aria-label="Previous" type="button" style="">Previous</button>

@@ -3,7 +3,9 @@
 <div class="product_item col-md-6 col-lg-4 col-xl-3 text-center mb-3">
     <a href="{{ route('client.product.detail', $data->slug) }}" class="item position-relative">
         <img class="Sirv image-main" src="{{ $data->thumbnail }}" data-src="{{ $data->thumbnail }}" alt="">
-        <img class="Sirv image-hover" src="{{ $data->thumbnail_sub ?? json_decode($data->albums)[0] }}" alt="">
+        <img class="Sirv image-hover"
+            src="{{ $data->thumbnail_sub ?? (json_decode($data->albums)[0] ?? 'https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That') }}"
+            alt="">
         <div class="p-3">
             <h2 style="">{{ $data->name }}</h2>
             <div class="price text-tgnt">

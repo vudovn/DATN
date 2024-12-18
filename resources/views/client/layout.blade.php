@@ -13,7 +13,7 @@
 <body>
     {{-- @include('client.components.loading') --}}
     @include('client.components.header')
-    <main class="m-0 pt-2">
+    <main class="m-0">
         @yield('content')
     </main>
 

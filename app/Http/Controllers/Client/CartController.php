@@ -116,12 +116,22 @@ class CartController extends Controller
     }
     public function updateQuantity(Request $request)
     {
+        $quantity = (int) $request->quantity;
+        $cart_item = $this->cartRepository->findById($request->idCart);
+        $inventory = $this->productService->getProductBySku($cart_item->sku)->quantity;
         $id = $request->idCart;
-        $data = $this->cartService->update($request, $id);
-        if ($data) {
-            return successResponse('', 'Cập nhật số lượng');
+        $data = [];
+        if ($quantity <= $inventory) {
+            $this->cartService->update($request, $id);
+            return successResponse(
+                $inventory,
+                'Cập nhật số lượng'
+            );
+        } else {
+            $data['inventory'] = $inventory;
+            $data['quantity'] = $cart_item->quantity;
+            return $data;
         }
-        return errorResponse('Cập nhật số lượng thất bại');
     }
 
     public function totalCart(Request $request)

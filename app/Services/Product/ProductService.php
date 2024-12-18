@@ -99,7 +99,7 @@ class ProductService extends BaseService
             }
             $data->idCart = $item->id ?? '';
             $data->quantityCart = $item->quantity ?? '';
-            $data->quantity = $data->product->quantity ?? $data->quantity;
+            $data->quantity =$data->quantity  ?? $data->product->quantity;
         }
         return $data;
     }

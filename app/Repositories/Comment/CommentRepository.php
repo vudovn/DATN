@@ -51,4 +51,10 @@ class CommentRepository extends BaseRepository
 
         return $query->get();
     }
+    public function getChilds($id)
+    {
+        $query = $this->model->where('parent_id', $id);
+        \Log::info($query->toSql());
+        return $query;
+    }
 }

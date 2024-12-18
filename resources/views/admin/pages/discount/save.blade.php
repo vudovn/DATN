@@ -73,7 +73,6 @@
     </x-form>
     <script>
         $('#discount_type').on('change', function() {
-            console.log($(this).val());
             if ($(this).val() == 1) {
                 $('.type_discount_money').attr('max', 100).removeClass('int').attr('type', 'number');
             } else {
@@ -83,9 +82,11 @@
 
         $(document).ready(function() {
             if ($('#discount_type').val() == 1) {
-                $('.type_discount_money').attr('max', 100);
+                $('.type_discount_money').attr('max', 50);
+                $('.type_discount_money').attr('min', 1);
             } else {
-                $('.type_discount_money').attr('max', 1000000000).addClass('int').attr('type', 'number');
+                $('.type_discount_money').attr('max', 1000000000);
+                $('.type_discount_money').attr('min', 1).addClass('int').attr('type', 'number');
 
             }
         })

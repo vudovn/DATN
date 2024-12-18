@@ -6,7 +6,7 @@
                     <select name="is_featured" id="is_featured" class="form-select filter-option">
                         <option selected="" value="0">Sản phẩm</option>
                         <option value="1">Sản phẩm nổi bật</option>
-                        <option value="2">Sản phẩm không nổi bật</option>
+                        {{-- <option value="2">Sản phẩm không nổi bật</option> --}}
                     </select>
                 </div>
                 <div class="mb-sm-2">

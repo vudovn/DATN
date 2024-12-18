@@ -45,6 +45,16 @@ return [
             'name' => 'Tên Z - A'
         ]
     ],
+    'commemt_sort' => [
+        0 => [
+            'id' => 'id,desc',
+            'name' => 'Từ mới đến cũ'
+        ],
+        1 => [
+            'id' => 'id,asc',
+            'name' => 'Từ cũ đến mới'
+        ],
+    ],
     'actions' => [
         0 => [
             'id' => 'delete',
@@ -52,11 +62,21 @@ return [
         ],
         1 => [
             'id' => 'publish-1',
-            'name' => 'Xuất bản'
+            'name' => 'Hoạt động'
         ],
         2 => [
             'id' => 'publish-2',
-            'name' => 'Không xuất bản'
+            'name' => 'Vô hiệu hoá'
+        ],
+    ],
+    'user_actions' => [
+        0 => [
+            'id' => 'publish-1',
+            'name' => 'Hoạt động'
+        ],
+        1 => [
+            'id' => 'publish-2',
+            'name' => 'Vô hiệu hoá'
         ],
     ],
     'rating' => [

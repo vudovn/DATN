@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\Product\ProductService;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Attribute\AttributeCategoryRepository;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Session;
 use App\Jobs\SendTelegramNotification;
 class ProductController extends Controller
 {
+    protected $productService;
     protected $productRepository;
     protected $categoryRepository;
     protected $attributeCategoryRepository;
@@ -21,6 +23,7 @@ class ProductController extends Controller
     protected $productVariantRepository;
     protected $reviewRepository;
     public function __construct(
+        ProductService $productService,
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository,
         AttributeCategoryRepository $attributeCategoryRepository,
@@ -28,6 +31,7 @@ class ProductController extends Controller
         ProductVariantRepository $productVariantRepository,
         ReviewRepository $reviewRepository
     ) {
+        $this->productService = $productService;
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
         $this->attributeCategoryRepository = $attributeCategoryRepository;
@@ -79,7 +83,7 @@ class ProductController extends Controller
         // Session::flush();
         // dd($product);
         $idCategory = $product->categories->where('is_room', 2)->first()->id;
-        $productRelated = $this->productRepository->getRelatedProduct($product->id, $idCategory );
+        $productRelated = $this->productRepository->getRelatedProduct($product->id, $idCategory);
         return view('client.pages.product_detail.index', compact(
             'config',
             'product',
@@ -108,6 +112,21 @@ class ProductController extends Controller
         return $product;
     }
 
+    public function changeQuantity(Request $request)
+    {
+   
+        $quantity = (int) $request->quantity;
+        $inventory = $this->productService->getProductBySku($request->sku)->quantity;
+        $data = [];
+        if ($quantity <= $inventory) {
+            return successResponse(
+                $inventory,
+                'Cập nhật số lượng'
+            );
+        } else {
+            return $inventory;
+        }
+    }
     public function getVariant(Request $request)
     {
         $attribute_id = $request->attribute_id;

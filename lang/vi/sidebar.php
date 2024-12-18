@@ -125,7 +125,7 @@ return [
         [
             'name' => 'Quản lý phản hồi',
             'icon' => '<svg class="pc-icon"> <use xlink:href="#custom-message-2"></use> </svg>',
-            'route' => ['order'],
+            'route' => ['comment'],
             'module' => [
                 [
                     'name' => 'Quản lý bình luận',

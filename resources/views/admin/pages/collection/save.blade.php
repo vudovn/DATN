@@ -105,7 +105,7 @@
                 <x-thumbnail :label="'Ảnh bìa'" :name="'thumbnail'" :value="$collection->thumbnail ?? 'https://placehold.co/600x600?text=The Gioi \nNoi That'" />
                 <div class="card">
                     <div class="card-header">
-                        Giảm giá
+                        Giảm giá (1-50%)
                     </div>
 
                     <div class="card-body position-relative">
@@ -122,37 +122,5 @@
 
         </div>
     </x-form>
-    <script>
-        $(document).ready(function() {
-            $("#discount").on("input", function() {
-                var value = $(this).val();
-                // Remove all non-numeric and non-decimal characters
-                var numericValue = value.replace(/[^0-9.]/g, "");
 
-                // Prevent more than one decimal point
-                if ((numericValue.match(/\./g) || []).length > 1) {
-                    numericValue = numericValue.substring(0, numericValue.lastIndexOf("."));
-                }
-
-                // Limit to two decimal places
-                if (numericValue.includes(".")) {
-                    var parts = numericValue.split(".");
-                    numericValue = parts[0] + "." + parts[1].substring(0, 2);
-                }
-
-                // Parse the numeric value
-                var floatValue = parseFloat(numericValue);
-
-                // Validate the range
-                if (isNaN(floatValue)) {
-                    floatValue = "";
-                } else if (floatValue > 50) {
-                    floatValue = 50;
-                } else if (floatValue < 0) {
-                    floatValue = 0;
-                }
-                $(this).val(floatValue);
-            });
-        });
-    </script>
 @endsection

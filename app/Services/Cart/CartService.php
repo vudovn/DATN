@@ -12,12 +12,14 @@ use App\Repositories\Discount\DiscountCodeRepository;
 use App\Repositories\Collection\CollectionRepository;
 use App\Repositories\Collection\CollectionProductRepository;
 use App\Services\Collection\CollectionService;
+use App\Services\Product\ProductService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
 class CartService extends BaseService
 {
+    protected $productService;
     protected $collectionService;
     protected $cartRepository;
     protected $userRepository;
@@ -29,6 +31,7 @@ class CartService extends BaseService
     protected $collectionProductRepository;
 
     public function __construct(
+        ProductService $productService,
         CollectionService $collectionService,
         CartRepository $cartRepository,
         UserRepository $userRepository,
@@ -39,6 +42,7 @@ class CartService extends BaseService
         CollectionRepository $collectionRepository,
         CollectionProductRepository $collectionProductRepository,
     ) {
+        $this->productService = $productService;
         $this->collectionService = $collectionService;
         $this->cartRepository = $cartRepository;
         $this->userRepository = $userRepository;
@@ -71,6 +75,8 @@ class CartService extends BaseService
         DB::beginTransaction();
         try {
             $payload = $request->except(['_token', 'send', 'price']);
+            // $cart_item = $this->cartRepository->findById($request->idCart);
+            $inventory = $this->productService->getProductBySku($payload['sku'])->quantity;
             $payload['user_id'] = Auth::id();
             $payload['quantity'] = (int) $payload['quantity'];
             $cart = $this->cartRepository->findByField('user_id', $payload['user_id'])->get();
@@ -78,6 +84,9 @@ class CartService extends BaseService
             foreach ($cart as $value) {
                 if ($value->sku === $payload['sku']) {
                     $value->quantity += $payload['quantity'];
+                    if ($value->quantity > $inventory) {
+                        $value->quantity = $inventory;
+                    }
                     $value->save();
                     $found = true;
                     break;

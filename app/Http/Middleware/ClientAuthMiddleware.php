@@ -17,7 +17,7 @@ class ClientAuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check()){
+        if(Auth::check() && Auth::user()->publish == 1){
             return $next($request);
         }else{
             return redirect()->route('client.auth.login');

@@ -32,6 +32,10 @@ class AuthController extends Controller
             'email' => $request->input('email'),
             'password' => $request->input('password'),
         ];
+        $user = User::where('email', $request->input('email'))->first();
+        if ($user->publish !== 1) {
+            return back()->withErrors(['email' => 'Tài khoản của bạn đã bị vô hiệu hoá.'])->onlyInput('email');
+        }
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->route('dashboard.index')->with('success', 'Đăng nhập thành công');

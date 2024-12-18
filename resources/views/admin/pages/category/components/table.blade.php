@@ -20,7 +20,7 @@
                     <span class="row-name">{{ $category->name }}</span>
                 </td>
 
-                @if ($category->is_room == 1)
+                {{-- @if ($category->is_room == 1)
                     <td>
                         <span class="badge bg-light-primary">Phòng</span>
                     </td>
@@ -28,7 +28,7 @@
                     <td>
                         <span class="badge bg-light-danger">Danh mục khác</span>
                     </td>
-                @endif
+                @endif --}}
                 <td>{{ changeDateFormat($category->created_at) }}</td>
                 <td class="text-center">
                     <x-switchvip :value="$category" :model="ucfirst($config['model'])" />

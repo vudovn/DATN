@@ -66,3 +66,27 @@
        
    });
 </script>
+<script>
+    $(document).ready(function() {
+        $("#discount").on("input", function() {
+            var value = $(this).val();
+            var numericValue = value.replace(/[^0-9.]/g, "");
+            if ((numericValue.match(/\./g) || []).length > 1) {
+                numericValue = numericValue.substring(0, numericValue.lastIndexOf("."));
+            }
+            if (numericValue.includes(".")) {
+                var parts = numericValue.split(".");
+                numericValue = parts[0] + "." + parts[1].substring(0, 2);
+            }
+            var floatValue = parseFloat(numericValue);
+            if (isNaN(floatValue)) {
+                floatValue = "";
+            } else if (floatValue > 50) {
+                floatValue = 50;
+            } else if (floatValue < 0) {
+                floatValue = 0;
+            }
+            $(this).val(floatValue);
+        });
+    });
+</script>

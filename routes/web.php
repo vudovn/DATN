@@ -239,7 +239,7 @@ Route::get('/test', [AjaxDashboardController::class, 'test']);
 
 // =======================================================CLIENT================================================================
 // client route
-route::middleware('preventBackHistory')->group(function () {
+route::middleware(['preventBackHistory'])->group(function () {
     Route::prefix('/')->name('client.')->group(function () {
         // auth route
         Route::prefix('')->middleware('clientLogin')->name('auth.')->group(function () {
@@ -280,6 +280,7 @@ route::middleware('preventBackHistory')->group(function () {
             Route::get('/', [ClientProductController::class, 'index'])->name('index');
             Route::get('/{slug}', [ClientProductController::class, 'detail'])->name('detail');
             Route::post('/so-sanh', [ClientProductController::class, 'compare'])->name('compare');
+            Route::post('/ajax/change-quantity', [ClientProductController::class, 'changeQuantity'])->name('change-quantity');
             Route::get('/ajax/get-variant', [ClientProductController::class, 'getVariant'])->name('get-variant');
             Route::get('/ajax/search-product', [ClientProductController::class, 'searchProduct'])->name('get-variant');
             Route::get('/ajax/get-review', [ClientProductController::class, 'getReview'])->name('get-review');

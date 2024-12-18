@@ -41,7 +41,7 @@ class StaffController extends Controller implements HasMiddleware
         $previousUrl = class_basename(url()->current());
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('admin');
-        return view('admin.pages.user.index', compact(
+        return view('admin.pages.staff.index', compact(
             'config',
         ));
     }
@@ -51,7 +51,7 @@ class StaffController extends Controller implements HasMiddleware
         $users = $this->userService->paginationAdmin($request);
         $config = $this->config();
 
-        return view('admin.pages.user.components.table', compact('users', 'config'));
+        return view('admin.pages.staff.components.table', compact('users', 'config'));
     }
 
     public function create()

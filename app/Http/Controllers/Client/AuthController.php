@@ -56,7 +56,9 @@ class AuthController extends Controller
         if ($user && is_null($user->email_verified_at)) {
             return back()->withErrors(['email' => 'Tài khoản của bạn chưa được kích hoạt.'])->onlyInput('email');
         }
-
+        if ($user->publish !== 1) {
+            return back()->withErrors(['email' => 'Tài khoản của bạn đã bị vô hiệu hoá.'])->onlyInput('email');
+        }
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();

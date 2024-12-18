@@ -123,13 +123,14 @@ class CommentService extends BaseService
             return false;
         }
     }
-
-
-
     public function delete($id)
     {
         DB::beginTransaction();
         try {
+            $childs = $this->commentRepository->getChilds($id)->get();
+            foreach ($childs as $child) {
+                $this->commentRepository->delete($child->id);
+            }
             $this->commentRepository->delete($id);
             DB::commit();
             return true;

@@ -40,7 +40,9 @@
                                         <div class="mb-3 form-group">
                                             <label class="form-label" for="sku">SKU <span
                                                     class="text-danger">*</span></label>
-                                            <input disabled class="form-control" type="text" name="sku" id="sku"
+                                            <input disabled class="form-control" type="text" id="sku"
+                                                value="{{ $product->sku ?? old('sku', $sku) }}">
+                                            <input class="form-control" type="hidden" name="sku" id="sku"
                                                 value="{{ $product->sku ?? old('sku', $sku) }}">
                                             @error('sku')
                                                 <small class="error text-danger">* {{ $message }}</small>
@@ -74,9 +76,9 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="mb-3 form-group">
-                                            <label class="form-label" for="discount">Giảm giá (%) </label>
-                                            <input class="form-control int" max="100"
-                                                value="{{ $product->discount ?? old('discount') }}" type="number"
+                                            <label class="form-label" for="discount">Giảm giá (1-50%) </label>
+                                            <input class="form-control int"
+                                                value="{{ $product->discount ?? old('discount') }}" type="text"
                                                 name="discount" id="discount">
                                             @error('discount')
                                                 <small class="error text-danger">* {{ $message }}</small>
@@ -165,12 +167,12 @@
                                 {{ old('is_featured', $product->is_featured ?? 0) == 1 ? 'checked' : '' }}>
                             <label class="form-check-label" for="is_featured2">Sản phẩm nổi bật</label>
                         </div>
-                        <div class="form-check mb-2">
+                        {{-- <div class="form-check mb-2">
                             <input class="form-check-input" type="radio" name="is_featured" value="2"
                                 id="is_featured1"
                                 {{ old('is_featured', $product->is_featured ?? 0) == 2 ? 'checked' : '' }}>
                             <label class="form-check-label" for="is_featured1">Sản phẩm không nổi bật</label>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 

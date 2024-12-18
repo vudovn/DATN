@@ -7,7 +7,7 @@
                 'label' => '',
                 'route' => $config['model'] . '.create',
             ]" :options="[
-                'actions' => generateSelect('Hành động', __('general.actions')),
+                'actions' => generateSelect('Hành động', __('general.user_actions')),
                 'perpage' => generateSelect('10 hàng', __('general.perpage')),
                 // 'roles' => generateSelect('Vai trò', $roles),
                 'publish' => generateSelect('Trạng thái', __('general.publish')),
@@ -32,7 +32,7 @@
                             <th>Ngày tạo</th>
                             <th class="text-center">Vai trò</th>
                             <th class="text-center">Trạng thái</th>
-                            <th class="text-center">Hành động</th>
+                            {{-- <th class="text-center">Hành động</th> --}}
                         </tr>
                     </thead>
                     <tbody id="tbody">

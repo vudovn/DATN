@@ -145,7 +145,7 @@
             o = t.closest("div").querySelector('input[name="' + n + '"]'),
             a = parseInt(o.value, 10) || 0;
         if (t.classList.contains("btn-plus")) {
-            if (a < 10) {
+            if (a < 1000) {
                 o.value = a + 1;
                 return true;
             } else {
@@ -170,7 +170,7 @@
             const idCart = _this.attr("data-idCart");
             const quantity = _this.val();
             const price = $(`#origin-price-${idCart}-input`).val();
-            let url = "gio-hang/updateQuantity";
+            let url = "/gio-hang/updateQuantity";
             if (checkQuantity) {
                 clearTimeout(timeUpdate);
                 timeUpdate = setTimeout(function () {
@@ -187,9 +187,19 @@
                             idCart,
                         },
                         success: function (data) {
-                            TGNT.updateTotalItem(idCart, quantity, price);
-                            TGNT.updateTotalCart();
-                            VDmessage.show("success", "Cập nhật số lượng");
+                            if (data.status) {
+                                TGNT.updateTotalItem(idCart, quantity, price);
+                                TGNT.updateTotalCart();
+                                VDmessage.show("success", "Cập nhật số lượng");
+                            } else {
+                                const inventory = data.inventory;
+                                const quantity = data.quantity;
+                                $(".quantity-field").val(quantity);
+                                VDmessage.show(
+                                    "warning",
+                                    `Chúng tôi chỉ còn ${inventory} sản phẩm`
+                                );
+                            }
                         },
                         error: function (data) {
                             console.log("lỗi");
@@ -213,7 +223,6 @@
             type: "POST",
             url: url,
             success: function (data) {
-                console.log(data);
                 if (data.totalCart == data.afterDiscount) {
                     $("#save-price").html(``);
                     $(".cart-discount-collection").html(

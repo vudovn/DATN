@@ -11,7 +11,7 @@
             :options="[
                 'actions' => generateSelect('Hành động', __('general.actions')),
                 'perpage' => generateSelect('10 hàng', __('general.perpage')),
-                'sort' => generateSelect('Sắp xếp', __('general.sort')),
+                'sort' => generateSelect('Sắp xếp', __('general.commemt_sort')),
             ]" />
         </div>
         <div class="card-body p-0">
@@ -25,7 +25,7 @@
                                     <label class="form-check-label" for="checkAll"></label>
                                 </div>
                             </th>
-                            <th>ID</th>
+                            <th>STT</th>
                         <th>Ảnh đại diện</th>
                         <th>Tên người dùng</th>
                         <th>Nội dung bình luận</th>

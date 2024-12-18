@@ -3,7 +3,30 @@
     height: auto;
     object-fit: cover;
 }
+.input-spinner .btn-plus {
+    transition: 0.3s ease-in-out;
+    border-color: var(--base-color) !important;
+    border-radius: 0 20px 20px 0 !important;
+}
+.input-spinner .btn-minus {
+    transition: 0.3s ease-in-out;
+    border-color: var(--base-color) !important;
+    border-radius: 20px 0 0 20px !important;
+}
 
+.input-spinner .btn-minus,
+.input-spinner .btn-plus {
+    background-color: transparent;
+    border-color: var(--fc-gray-200);
+    height: 2rem;
+    width: 1.8rem;
+}
+
+.input-spinner .btn-minus:hover,
+.input-spinner .btn-plus:hover {
+    background-color: var(--base-color) !important;
+    color: #fff !important;
+}
 .product_ct .choose-attribute.active[disabled="disabled"] {
     border-color: var(--base-color) !important;
     color: var(--base-color) !important;

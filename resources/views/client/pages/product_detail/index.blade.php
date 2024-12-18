@@ -87,14 +87,15 @@
                 <!-- action sản phẩm -->
                 <div class="action_spct d-xxl-flex align-items-center gap-5">
                     <div class="quantity_spct mb-xxl-0 mb-3">
-                        <div class="input-group input-spinner">
-                            <input type="button" value="-" class="button-minus btn btn-sm" data-field="quantity">
-                            <input type="number" step="1" min="1" max="{{ $product->quantity }}"
-                                value="1" name="quantity" id="quantity"
-                                class="quantity-field form-control-sm form-input">
-                            <input type="button" value="+" class="button-plus btn btn-sm" data-field="quantity">
+                        <div class="input-group input-spinner d-flex">
+                            <input type="button" value="-" class="btn-minus btn btn-sm" data-field="quantity">
+                            <input type="number" step="1" max="3" data-idCart="{{ $product->idCart }}"
+                                data-sku="{{ $product->sku }}" value="1" name="quantity"
+                                class="quantity-field form-control-sm form-input" id="quantity">
+                            <input type="button" value="+" class="btn-plus btn btn-sm" data-field="quantity">
                         </div>
                     </div>
+
                     <div class="btn_spct">
                         <button class="btn btn-stnt buyNow" data-id="{{ $product->id }}"
                             data-sku="{{ $product->sku }}">Mua ngay</button>

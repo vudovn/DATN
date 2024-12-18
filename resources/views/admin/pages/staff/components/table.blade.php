@@ -13,7 +13,8 @@
             <td>{{ $key + 1 }}</td>
             <td>
                 <a href="https://ui-avatars.com/api/?background=random&name={{ $user->name }}" data-fancybox="gallery">
-                    <img loading="lazy" width="50" class="rounded" src="https://ui-avatars.com/api/?background=random&name={{ $user->name }}"
+                    <img loading="lazy" width="50" class="rounded"
+                        src="https://ui-avatars.com/api/?background=random&name={{ $user->name }}"
                         alt="{{ $user->name }}">
                 </a>
             </td>
@@ -23,22 +24,27 @@
             <td>{{ $user->email }}</td>
             <td>{{ changeDateFormat($user->created_at) }}</td>
             <td class="text-center">
-                {{ $user->getRoleNames()->isempty() ? 'Khách' : $user->getRoleNames()->join(', ')}}
+                {{ $user->getRoleNames()->isempty() ? 'Khách' : $user->getRoleNames()->join(', ') }}
             </td>
             <td class="text-center">
-                @if ($user->id != auth()->id())
-                    <x-switchvip :value="$user" :model="ucfirst($config['model'])" />
-                @else
-                    <span class="badge badge-success">-</span>
-                @endif
+                <div class="{{ $user->hasRole('Super Admin') ? 'hidden' : '' }}">
+                    @if ($user->id != auth()->id())
+                        <x-switchvip :value="$user" :model="ucfirst($config['model'])" />
+                    @else
+                        <span class="badge badge-success">-</span>
+                    @endif
+                </div>
             </td>
             <td class="text-center table-actions">
-                <ul class="list-inline me-auto mb-0">
-                    <x-edit :id="$user->id" :model="$config['model']" />
-                    @if ($user->id != auth()->id())
-                        <x-delete :id="$user->id" :model="ucfirst($config['model'])" />
-                    @endif
-                </ul>
+                {{-- @dd() --}}
+                <div class="{{ $user->hasRole('Super Admin') ? 'hidden' : '' }}">
+                    <ul class="list-inline me-auto mb-0">
+                        <x-edit :id="$user->id" :model="$config['model']" />
+                        @if ($user->id != auth()->id())
+                            <x-delete :id="$user->id" :model="ucfirst($config['model'])" />
+                        @endif
+                    </ul>
+                </div>
             </td>
         </tr>
     @endforeach

@@ -4,28 +4,28 @@
 
     <x-breadcrumb :breadcrumb="$config['breadcrumb']" />
 
-    <div class="card">
+    {{-- <div class="card">
         <div class="card-header">
-            {{-- <x-filter :model="$config['model']" :createButton="[
+            <x-filter :model="$config['model']" :createButton="[
                 'label' => '',
                 'route' => $config['model'] . '.create',
             ]" :options="[
                 'actions' => generateSelect('Hành động', __('general.actions')),
                 'perpage' => generateSelect('10 hàng', __('general.perpage')),
                 'sort' => generateSelect('Sắp xếp', __('general.sort')),
-            ]" /> --}}
-        </div>
+            ]" />
+        </div> --}}
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>
+                            {{-- <th>
                                 <div class="form-check">
                                     <input class="form-check-input input-primary" type="checkbox" id="checkAll">
                                     <label class="form-check-label" for="checkAll"></label>
                                 </div>
-                            </th>
+                            </th> --}}
                             <th>STT</th>
                             <th>Ảnh đại diện</th>
                             <th>Tên người dùng</th>
@@ -39,14 +39,14 @@
                         @if (isset($replies) && count($replies))
                             @foreach ($replies as $key => $reply)
                                 <tr class="animate__animated animate__fadeInDown animate__faster">
-                                    <td class="">
+                                    {{-- <td class="">
                                         <div class="form-check">
                                             <input class="form-check-input input-primary input-checkbox checkbox-item"
                                                 type="checkbox" id="customCheckbox{{ $reply->id }}"
                                                 value="{{ $reply->id }}">
                                             <label class="form-check-label" for="ustomCheckbox{{ $reply->id }}"></label>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                     <td>{{  $key + 1}}</td>
                                     <td>
                                         <a href="{{ $reply->user->avatar }}" data-fancybox="gallery">

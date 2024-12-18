@@ -39,6 +39,7 @@ class ProductController extends Controller implements HasMiddleware
     }
     public function index(Request $request)
     {
+        // dd($this->productRepository->findByField('id',93)->first());
         $products = $this->productService->paginate($request);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');

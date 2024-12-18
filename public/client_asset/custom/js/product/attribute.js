@@ -2,7 +2,73 @@
     "use strict";
     var TGNT = {};
     const VDmessage = new VdMessage();
-
+    TGNT.changeQuantity = function (e) {
+        e.preventDefault();
+        var t = e.target,
+            n = t.getAttribute("data-field"),
+            o = t.closest("div").querySelector('input[name="' + n + '"]'),
+            a = parseInt(o.value, 10) || 0;
+        if (t.classList.contains("btn-plus")) {
+            if (a < 1000) {
+                o.value = a + 1;
+                return true;
+            } else {
+                return false;
+            }
+        } else if (t.classList.contains("btn-minus")) {
+            if (a > 1) {
+                o.value = a - 1;
+                return true;
+            } else {
+                return false;
+            }
+        }
+    };
+    TGNT.updateQuantity = () => {
+        let timeUpdate = {};
+        $(document).on("click", ".btn-plus, .btn-minus", function (e) {
+            let checkQuantity = TGNT.changeQuantity(e);
+            const _this = $(this)
+                .closest(".input-group")
+                .find(".quantity-field");
+            let sku = _this.data("sku");
+            const quantity = _this.val();
+            let url = "/san-pham/ajax/change-quantity";
+            if (checkQuantity) {
+                clearTimeout(timeUpdate);
+                timeUpdate = setTimeout(function () {
+                    $.ajax({
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
+                        },
+                        type: "POST",
+                        url: url,
+                        data: {
+                            sku,
+                            quantity,
+                        },
+                        success: function (data) {
+                            if (data.status) {
+                                VDmessage.show("success", "Cập nhật số lượng");
+                            } else {
+                                const inventory = data;
+                                $(".quantity-field").val(inventory);
+                                VDmessage.show(
+                                    "warning",
+                                    `Chúng tôi chỉ còn ${inventory} sản phẩm`
+                                );
+                            }
+                        },
+                        error: function (data) {
+                            console.log("lỗi");
+                        },
+                    });
+                }, 500);
+            }
+        });
+    };
     TGNT.selectVariantProduct = () => {
         $(".choose-attribute").on("click", function (e) {
             e.preventDefault();
@@ -143,6 +209,7 @@
     };
 
     $(document).ready(function () {
+        TGNT.updateQuantity();
         TGNT.selectVariantProduct();
         TGNT.formatMoney();
         // TGNT.checkChange();

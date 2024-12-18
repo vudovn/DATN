@@ -1,7 +1,7 @@
 @extends('client.layout')
 
 @section('content')
-    <section class="container">
+    <section class="container mt-3">
         <div class="d-none d-xxl-block mp-5">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">

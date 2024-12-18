@@ -24,8 +24,8 @@
     <script>
         const product_id = {{ $product->id ?? 0 }};
     </script>
-    <section class="product_ct container animate__animated animate__fadeIn">
-        <div class="col-xxl-12 d-none d-xxl-block">
+    <section class="mt-3 product_ct container animate__animated animate__fadeIn">
+        <div class="col-xxl-12 d-none d-xxl-block ">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('client.home') }}" class="text-stnt">Trang chủ</a>

@@ -18,7 +18,7 @@ class DiscountCodeController extends Controller implements HasMiddleware
     use HasDynamicMiddleware;
     public static function middleware(): array
     {
-        return self::getMiddleware('DiscountCode'); 
+        return self::getMiddleware('DiscountCode');
     }
     protected $discountCodeService;
     protected $discountCodeRepository;
@@ -119,6 +119,18 @@ class DiscountCodeController extends Controller implements HasMiddleware
         return redirect()->route('discountCode.index')->with('error', 'Xóa mã giảm giá thất bại!');
     }
 
+    public function trash()
+    {
+        $discounts = $this->discountCodeRepository->getOnlyTrashed();
+        dd($discounts);
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('trash');
+        return view('admin.pages.category.trash', compact(
+            'config',
+            'discounts'
+        ));
+    }
+
     /**
      * Xây dựng breadcrumb cho các hành động trong controller
      */
@@ -140,6 +152,10 @@ class DiscountCodeController extends Controller implements HasMiddleware
             'delete' => [
                 'name' => 'Xóa mã giảm giá',
                 'list' => ['QL mã giảm giá', 'Xóa mã giảm giá']
+            ],
+            'trash' => [
+                'name' => 'Mã giảm giá đã xóa',
+                'list' => ['QL mã giảm giá', 'Mã giảm giá đã xóa']
             ]
         ];
         return $breadcrumb[$key];

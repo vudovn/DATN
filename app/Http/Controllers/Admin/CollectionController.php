@@ -70,7 +70,7 @@ class CollectionController extends Controller implements HasMiddleware
             if ($data && $data->product) {
                 $data->name = $data->product->name ?? '';
                 $data->slug = $data->product->slug ?? '';
-                $data->thumbnail =  $data->product->thumbnail;
+                $data->thumbnail = $data->product->thumbnail;
                 $category = $data->product->categories->where('is_room', 2)->first();
                 $data->category = $category ? strtolower($category->name) : '';
             }
@@ -104,7 +104,7 @@ class CollectionController extends Controller implements HasMiddleware
         $categories = $this->getCategories(2, 'Danh mục');
         $categoryRoom = $this->getCategories(1, 'Phòng');
         $skus = $this->getSkus($id);
-        $config = array_merge($this->config(), [ 
+        $config = array_merge($this->config(), [
             'breadcrumb' => $this->breadcrumb('update'),
             'method' => 'edit',
         ]);
@@ -124,6 +124,17 @@ class CollectionController extends Controller implements HasMiddleware
             return redirect()->route('collection.index', ['page' => $request->page])->with('success', 'Cập nhật người dùng thành công.');
         }
         return redirect()->route('collection.index')->with('error', 'Cập nhật người dùng thất bại');
+    }
+
+    public function trash()
+    {
+        $collections = $this->collectionRepository->getOnlyTrashed();
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('trash');
+        return view('admin.pages.collection.trash', compact(
+            'config',
+            'collections'
+        ));
     }
 
     private function getCategories($isRoom, $defaultLabel)

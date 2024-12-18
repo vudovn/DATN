@@ -18,7 +18,7 @@ class CategoryController extends Controller implements HasMiddleware
     use HasDynamicMiddleware;
     public static function middleware(): array
     {
-        return self::getMiddleware('Category'); 
+        return self::getMiddleware('Category');
     }
     protected $categoryRepository;
     protected $categoryService;
@@ -86,7 +86,7 @@ class CategoryController extends Controller implements HasMiddleware
         if ($this->categoryService->create($request)) {
             return redirect()->route('category.index')->with('success', 'Tạo danh mục mới thành công');
         }
-        return  redirect()->route('category.index')->with('error', 'Tạo danh mục mới thất bại');
+        return redirect()->route('category.index')->with('error', 'Tạo danh mục mới thất bại');
     }
 
     public function update(Request $request, $id)
@@ -104,14 +104,14 @@ class CategoryController extends Controller implements HasMiddleware
         if ($this->categoryService->update($request, $id)) {
             return redirect()->route('category.index')->with('success', 'Cập nhật danh mục thành công.');
         }
-        return  redirect()->route('category.index')->with('error', 'Cập nhật danh mục thất bại');
+        return redirect()->route('category.index')->with('error', 'Cập nhật danh mục thất bại');
     }
 
 
     public function edit($id)
     {
         $categories = Category::all();
-        $category  = $this->categoryRepository->findById($id);
+        $category = $this->categoryRepository->findById($id);
         $categoriesChild = Category::with('children')->where('parent_id', 0)->where('id', '!=', $id)->get();
         $categoryOptions = $this->categoryService->renderCategoryOptions($categoriesChild, $category);
         $config = $this->config();
@@ -129,7 +129,6 @@ class CategoryController extends Controller implements HasMiddleware
     {
 
         $category = $this->categoryRepository->findById($id);
-
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('delete');
         $config['method'] = 'delete';
@@ -146,6 +145,17 @@ class CategoryController extends Controller implements HasMiddleware
         if ($category->children()->count() > 0) {
             return redirect()->route('categories.index')->with('error', 'Không thể xóa danh mục này vì nó vẫn còn danh mục con.');
         }
+    }
+
+    public function trash()
+    {
+        $categories = $this->categoryRepository->getOnlyTrashed();
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('trash');
+        return view('admin.pages.category.trash', compact(
+            'config',
+            'categories'
+        ));
     }
 
     private function breadcrumb($key)
@@ -170,8 +180,11 @@ class CategoryController extends Controller implements HasMiddleware
             'delete' => [
                 'name' => 'Xóa danh mục',
                 'list' => ['Danh mục', 'Xóa danh mục']
+            ],
+            'trash' => [
+                'name' => 'Danh mục đã xóa',
+                'list' => ['Danh mục', 'Danh sách đã xóa']
             ]
-
         ];
         return isset($breadcrumb[$key]) ? $breadcrumb[$key] : 'Trang chủ';
     }

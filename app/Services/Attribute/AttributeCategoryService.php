@@ -1,4 +1,4 @@
-<?php  
+<?php
 namespace App\Services\Attribute;
 use App\Services\BaseService;
 use App\Repositories\Attribute\AttributeCategoryRepository;
@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Attribute;
 
 
-class AttributeCategoryService extends BaseService {
+class AttributeCategoryService extends BaseService
+{
 
     protected $attributeCategoryRepository;
     protected $attributeRepository;
@@ -17,13 +18,14 @@ class AttributeCategoryService extends BaseService {
     public function __construct(
         AttributeCategoryRepository $attributeCategoryRepository,
         AttributeRepository $attributeRepository
-    ){
+    ) {
         $this->attributeCategoryRepository = $attributeCategoryRepository;
         $this->attributeRepository = $attributeRepository;
     }
 
 
-    private function paginateAgrument($request){
+    private function paginateAgrument($request)
+    {
         return [
             'keyword' => [
                 'search' => $request['keyword'] ?? '',
@@ -37,11 +39,12 @@ class AttributeCategoryService extends BaseService {
             'sort' => isset($request['sort']) && $request['sort'] != 0
                 ? explode(',', $request['sort'])
                 : ['id', 'asc'],
-                'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
-            ];
+            'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
+        ];
     }
 
-    public function paginate($request){
+    public function paginate($request)
+    {
         $agruments = $this->paginateAgrument($request);
         $cacheKey = 'pagination: ' . md5(json_encode($agruments));
         $users = $this->attributeCategoryRepository->pagination($agruments);
@@ -49,15 +52,16 @@ class AttributeCategoryService extends BaseService {
     }
 
 
-    public function create($request){
+    public function create($request)
+    {
         DB::beginTransaction();
         try {
-            $payload = $request->except(['_token','send']);
+            $payload = $request->except(['_token', 'send']);
             $id_attribute = $this->attributeCategoryRepository->create([
                 'name' => $payload['name'],
                 'publish' => $payload['publish'],
             ])->id;
-            if($request->has('attribute_value')){
+            if ($request->has('attribute_value')) {
                 $newDataEdit = [];
                 foreach ($request->input('attribute_value') as $key => $values) {
                     $newDataEdit[$key] = $values[0];
@@ -81,7 +85,8 @@ class AttributeCategoryService extends BaseService {
         }
     }
 
-    public function update($request, $id) {
+    public function update($request, $id)
+    {
         DB::beginTransaction();
         try {
             $payload = $request->except(['_token', 'send', '_method']);
@@ -110,7 +115,7 @@ class AttributeCategoryService extends BaseService {
                         $this->attributeRepository->delete($id);
                     }
                 }
-    
+
                 foreach ($newDataEdit as $key => $value) {
                     if (!in_array($value, $oldData)) {
                         $this->attributeRepository->create([
@@ -120,7 +125,7 @@ class AttributeCategoryService extends BaseService {
                     }
                 }
             }
-    
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -130,17 +135,46 @@ class AttributeCategoryService extends BaseService {
             // return false;
         }
     }
-    
 
-    public function delete($id){
+
+    public function delete($id)
+    {
         DB::beginTransaction();
         try {
             $this->attributeCategoryRepository->delete($id);
             DB::commit();
             return true;
         } catch (\Exception $e) {
-           DB::rollback();
+            DB::rollback();
             // echo $e->getMessage();die();
+            $this->log($e);
+            return false;
+        }
+    }
+
+    public function restore($id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->attributeCategoryRepository->restore($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
+            return false;
+        }
+    }
+
+    public function destroy($id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->attributeCategoryRepository->destroy($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
             $this->log($e);
             return false;
         }

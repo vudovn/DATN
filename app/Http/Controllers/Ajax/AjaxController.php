@@ -108,6 +108,26 @@ class AjaxController extends Controller
         return errorResponse();
 
     }
+
+    public function restoreItem(Request $request)
+    {
+        $data = $request->all();
+        $serviceClass = loadClass($data['model'], 'Service');
+        if ($serviceClass->restore($data['id'])) {
+            return successResponse();
+        }
+        return errorResponse();
+    }
+
+    public function destroyItem(Request $request)
+    {
+        $data = $request->all();
+        $serviceClass = loadClass($data['model'], 'Service');
+        if ($serviceClass->destroy($data['id'])) {
+            return successResponse();
+        }
+        return errorResponse();
+    }
     public function updateQuick(Request $request)
     {
         $data = $request->all();

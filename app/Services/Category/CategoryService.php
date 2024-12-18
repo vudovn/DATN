@@ -117,6 +117,38 @@ class CategoryService extends BaseService
             return false;
         }
     }
+
+
+    public function restore($id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->categoryRepository->restore($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
+            return false;
+        }
+    }
+
+    public function destroy($id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->categoryRepository->destroy($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
+            return false;
+        }
+    }
+
+
+
     public function renderCategoryOptions($categories, $category = null, $level = 0)
     {
         $html = '';
@@ -126,7 +158,7 @@ class CategoryService extends BaseService
             if ($category->children->isNotEmpty()) {
                 $html .= $this->renderCategoryOptions($category->children, $level + 1);
 
-//         foreach ($categories as $childCategory) {
+                //         foreach ($categories as $childCategory) {
 //             if ($category === null || $childCategory->id !== $category->id) {
 //                 $indent = str_repeat('&nbsp;', $level * 4);
 //                 $html .= '<option value="' . $childCategory->id . '">' . $indent . $childCategory->name . '</option>';

@@ -30,9 +30,10 @@
                                         </div>
                                     </div> --}}
                                     <div class="input-group animate__animated animate__fadeInDown animate__faster mb-3">
-                                        <input type="text" class="form-control attribute_input"
-                                            placeholder="Right Button" name="attribute_value[{{ $item->id }}][]" value="{{ $item->value }}"> 
-                                            <button class="btn btn-outline-danger remove_attribute_value" type="button"><i class="ti ti-trash"></i></button>
+                                        <input type="text" class="form-control attribute_input" placeholder="Right Button"
+                                            name="attribute_value[{{ $item->id }}][]" value="{{ $item->value }}">
+                                        <button class="btn btn-outline-danger remove_attribute_value" type="button"><i
+                                                class="ti ti-trash"></i></button>
                                     </div>
                                 @endforeach
                             @endisset
@@ -47,7 +48,9 @@
 
             <div class="col-xl-3">
                 <x-save_back :model="$config['model']" />
-                <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.publish')" :value="$attribute->publish ?? old('publish')" />
+                <div class="hidden">
+                    <x-publish :label="'Trạng thái'" :name="'publish'" :option="__('general.publish')" :value="$attribute->publish ?? old('publish')" />
+                </div>
             </div>
         </div>
     </x-form>

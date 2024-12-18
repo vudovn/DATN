@@ -210,19 +210,101 @@
             const id = _this.data("id");
             const model = _this.data("model");
             const deleteAxis = _this.data("axis");
+            const destroy = _this.data("destroy");
+            if (destroy) {
+                Swal.fire({
+                    title: "Bạn có chắc không?",
+                    text: "Khi xóa sẽ không thể hoàn tác được!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: "Hủy",
+                    confirmButtonText: "Xóa",
+                    reverseButtons: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/${model}/destroyItem`,
+                            type: "DELETE",
+                            data: {
+                                _token: $('meta[name="csrf-token"]').attr(
+                                    "content"
+                                ),
+                                model,
+                                id,
+                            },
+                            dataType: "JSON",
+                            success: function () {
+                                deleteAxis === "column"
+                                    ? $(
+                                          `th[data-axis="${id}"], td[data-axis="${id}"]`
+                                      ).remove()
+                                    : _this.closest("tr").remove();
+                                VDmessage.show("success", "Xóa thành công!");
+                            },
+                            error: function () {
+                                VDmessage.show("error", "Xóa thất bại!");
+                            },
+                        });
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: "Bạn có chắc không?",
+                    text: "Bạn có chắn chắn không!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: "Hủy",
+                    confirmButtonText: "Xóa",
+                    reverseButtons: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/${model}/deleteItem`,
+                            type: "DELETE",
+                            data: {
+                                _token: $('meta[name="csrf-token"]').attr(
+                                    "content"
+                                ),
+                                model,
+                                id,
+                            },
+                            dataType: "JSON",
+                            success: function () {
+                                deleteAxis === "column"
+                                    ? $(
+                                          `th[data-axis="${id}"], td[data-axis="${id}"]`
+                                      ).remove()
+                                    : _this.closest("tr").remove();
+                                VDmessage.show("success", "Xóa thành công!");
+                            },
+                            error: function () {
+                                VDmessage.show("error", "Xóa thất bại!");
+                            },
+                        });
+                    }
+                });
+            }
+        });
+    };
+
+    TGNT.restore_item = () => {
+        $(document).on("click", "#restore_tgnt", function () {
+            const _this = $(this);
+            const id = _this.data("id");
+            const model = _this.data("model");
             Swal.fire({
                 title: "Bạn có chắc không?",
-                text: "Khi xóa sẽ không thể hoàn tác được!",
+                text: "Bạn có chắc chắn muốn khôi phục sản phẩm không!",
                 icon: "warning",
                 showCancelButton: true,
                 cancelButtonText: "Hủy",
-                confirmButtonText: "Xóa",
+                confirmButtonText: "Khôi phục",
                 reverseButtons: true,
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: `/${model}/deleteItem`,
-                        type: "DELETE",
+                        url: `/${model}/restoreItem`,
+                        type: "PUT",
                         data: {
                             _token: $('meta[name="csrf-token"]').attr(
                                 "content"
@@ -232,15 +314,11 @@
                         },
                         dataType: "JSON",
                         success: function () {
-                            deleteAxis === "column"
-                                ? $(
-                                      `th[data-axis="${id}"], td[data-axis="${id}"]`
-                                  ).remove()
-                                : _this.closest("tr").remove();
-                            VDmessage.show("success", "Xóa thành công!");
+                            _this.closest("tr").remove();
+                            VDmessage.show("success", "Khôi phục thành công!");
                         },
                         error: function () {
-                            VDmessage.show("error", "Xóa thất bại!");
+                            VDmessage.show("error", "Khôi phục thất bại!");
                         },
                     });
                 }
@@ -455,5 +533,6 @@
         TGNT.int();
         TGNT.select_status();
         TGNT.clipboard();
+        TGNT.restore_item();
     });
 })(jQuery);

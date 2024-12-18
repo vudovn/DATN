@@ -17,7 +17,7 @@ class AttributeCategoryController extends Controller implements HasMiddleware
     use HasDynamicMiddleware;
     public static function middleware(): array
     {
-        return self::getMiddleware('AttributeCategory'); 
+        return self::getMiddleware('AttributeCategory');
     }
     protected $attributeCategoryService;
     protected $attributeCategoryRepository;
@@ -43,7 +43,7 @@ class AttributeCategoryController extends Controller implements HasMiddleware
     {
         $attributes = $this->attributeCategoryService->paginate($request);
         $config = $this->config();
-        return view('admin.pages.product.attribute.components.table',compact('attributes','config'));
+        return view('admin.pages.product.attribute.components.table', compact('attributes', 'config'));
     }
     public function create()
     {
@@ -56,8 +56,8 @@ class AttributeCategoryController extends Controller implements HasMiddleware
     }
 
     public function store(StoreAttributeRequest $request)
-    {   
-      
+    {
+
         if ($this->attributeCategoryService->create($request)) {
             return redirect()->route('attributeCategory.index')->with('success', 'Tạo mới thuộc tính thành công');
         }
@@ -92,6 +92,17 @@ class AttributeCategoryController extends Controller implements HasMiddleware
         }
     }
 
+    public function trash()
+    {
+        $attributes = $this->attributeCategoryRepository->getOnlyTrashed();
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('trash');
+        return view('admin.pages.product.attribute.trash', compact(
+            'config',
+            'attributes'
+        ));
+    }
+
     private function breadcrumb($key)
     {
         $breadcrumb = [
@@ -110,6 +121,10 @@ class AttributeCategoryController extends Controller implements HasMiddleware
             'delete' => [
                 'name' => 'Xóa thuộc tính',
                 'list' => ['QL thuộc tính', 'Xóa thuộc tính']
+            ],
+            'trash' => [
+                'name' => 'Danh sách thuộc tính đã xóa',
+                'list' => ['QL thuộc tính', 'Danh sách đã xóa']
             ]
         ];
         return $breadcrumb[$key];

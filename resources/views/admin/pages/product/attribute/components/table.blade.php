@@ -35,7 +35,6 @@
             {!! $attributes->links('pagination::bootstrap-4') !!}
         </td>
     </tr>
-
 @else
     <tr>
         <td colspan="100" class="text-center">Không có dữ liệu</td>

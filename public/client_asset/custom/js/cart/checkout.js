@@ -112,7 +112,7 @@
                             )}đ`
                         );
                     }
-                    $("#save-price").html(TGNT.formatNumber(savePriceT));
+                    $("#save-price-checkout").html(TGNT.formatNumber(savePriceT));
                     $("#cart-total-discount").html(
                         TGNT.formatNumber(afterDiscount)
                     );

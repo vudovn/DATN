@@ -321,7 +321,6 @@ class ProductService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $this->productRepository->delete($id);
             $product = $this->productRepository->findById($id);
             foreach ($product->productVariants as $variant) {
                 $cartItem = $this->cartRepository->findByField('sku', $variant->sku)->first();
@@ -329,6 +328,8 @@ class ProductService extends BaseService
                     $this->cartRepository->delete($cartItem->id);
                 }
             }
+            $this->productRepository->delete($id);
+
             // $this->cartRepository->deleteBySku($product->sku);
             DB::commit();
             return true;

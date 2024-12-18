@@ -29,7 +29,7 @@
                             <h3 class="mb-0">
                                 <b>Quên mật khẩu</b>
                             </h3>
-                            <a href="{{ route('user.admin.index') }}" class="link-primary">Quay về đăng nhập</a>
+                            <a href="{{ route('auth.login') }}" class="link-primary">Quay về đăng nhập</a>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Địa chỉ email</label>

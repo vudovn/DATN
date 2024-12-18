@@ -50,7 +50,7 @@
                                 @enderror
                             </div>
                             <div class="col-lg-6">
-                                <x-input :type="'number'" :class="'type_discount_money'" :label="'Giá tiền'" :name="'discount_value'"
+                                <x-input :type="'number'" :class="'type_discount_money'" :label="'Giảm bao nhiêu'" :name="'discount_value'"
                                     :value="$discountCode->discount_value ?? old('discount_value')" :required="true" />
                             </div>
                         </div>

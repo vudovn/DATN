@@ -109,10 +109,10 @@ class OrderRepository extends BaseRepository
     {
         return $this->model->where('code', $code)->with('orderDetails', 'user')->first();
     }
-    
-    public function getOrderPaymentPending($userId) {
-        // lấy có trạng thái thanh toán là pending và user_id = $userId và có mối quan hệ với bảng paymentMethob có type = online
-        return $this->model->where('payment_status', 'pending')->where('user_id', $userId)->whereHas('paymentMethod', function($query) {
+
+    public function getOrderPaymentPending($userId)
+    {
+        return $this->model->where('payment_status', 'pending')->where('user_id', $userId)->whereHas('paymentMethod', function ($query) {
             $query->where('type', 'online');
         })->get();
     }

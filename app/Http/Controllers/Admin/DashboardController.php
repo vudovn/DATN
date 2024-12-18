@@ -66,11 +66,11 @@ class DashboardController extends Controller
         $products = DB::table('products')
             ->leftJoin('product_variants', function ($join) {
                 $join->on('products.id', '=', 'product_variants.product_id')
-                     ->where('products.has_attribute', '=', 1);
+                    ->where('products.has_attribute', '=', 1);
             })
             ->leftJoin('order_details', function ($join) {
                 $join->on('products.sku', '=', 'order_details.sku')
-                     ->orOn('product_variants.sku', '=', 'order_details.sku');
+                    ->orOn('product_variants.sku', '=', 'order_details.sku');
             })
             ->leftJoin('orders', 'order_details.order_id', '=', 'orders.id')
             ->select(
@@ -86,22 +86,22 @@ class DashboardController extends Controller
                 DB::raw('COALESCE(SUM(CASE WHEN orders.status = "delivered" THEN order_details.quantity * order_details.price ELSE 0 END), 0) as total_revenue')
             )
             ->groupBy(
-                'products.id', 
-                'products.name', 
-                'products.thumbnail', 
-                'products.slug', 
+                'products.id',
+                'products.name',
+                'products.thumbnail',
+                'products.slug',
                 'products.sku',
-                'product_variants.title', 
-                'product_variants.sku', 
+                'product_variants.title',
+                'product_variants.sku',
                 'product_variants.code'
             )
             ->orderBy('total_quantity', 'asc')
             ->take(10)
             ->get();
-    
+
         return $products;
     }
-    
+
 
 
     public function lowStockProducts()
@@ -109,7 +109,7 @@ class DashboardController extends Controller
         $products = DB::table('products')
             ->leftJoin('product_variants', function ($join) {
                 $join->on('products.id', '=', 'product_variants.product_id')
-                     ->where('products.has_attribute', '=', 1);
+                    ->where('products.has_attribute', '=', 1);
             })
             ->select(
                 'products.id',
@@ -125,16 +125,16 @@ class DashboardController extends Controller
             )
             ->where(function ($query) {
                 $query->where('products.quantity', '<=', 10)
-                      ->orWhere('product_variants.quantity', '<=', 10);
+                    ->orWhere('product_variants.quantity', '<=', 10);
             })
             ->orderBy('quantity', 'asc')
             ->take(10)
             ->get();
-    
+
         return $products;
     }
-    
-    
+
+
 
     public function newCustomersByMonth()
     {

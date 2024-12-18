@@ -22,7 +22,9 @@ class Collection extends Model
         'publish',
         'meta_title',
         'meta_description',
-        'created_at'
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
     protected $table = 'collections';
     public function comments()

@@ -99,17 +99,21 @@ class BaseRepository
 
     public function getOnlyTrashed()
     {
-        return $this->model->onlyTrashed()->get();
+        // return $this->model->onlyTrashed()->get();
+        return $this->model->whereNotNull('deleted_at')->get();
     }
 
     public function restore(int $id)
     {
-        return $this->getOnlyTrashed()->find($id)->restore();
+        // return $this->getOnlyTrashed()->find($id)->restore();
+        return $this->update($id, ['deleted_at' => null]);
+
     }
 
     public function destroy(int $id)
     {
-        return $this->getOnlyTrashed()->find($id)->forceDelete();
+        // return $this->getOnlyTrashed()->find($id)->forceDelete();
+        return $this->delete($id);
     }
 
 

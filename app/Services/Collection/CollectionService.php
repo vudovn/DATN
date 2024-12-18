@@ -39,6 +39,7 @@ class CollectionService extends BaseService
                 'publish' => isset($request['publish'])
                     ? (int) $request['publish']
                     : null,
+                'deleted_at' => null,
             ],
             'sort' => isset($request['sort']) && $request['sort'] != 0
                 ? explode(',', $request['sort'])
@@ -215,7 +216,8 @@ class CollectionService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $this->collectionRepository->delete($id);
+            // $this->collectionRepository->delete($id);
+            $this->collectionRepository->update($id, ['deleted_at' => now()]);
             DB::commit();
             return true;
         } catch (\Exception $e) {

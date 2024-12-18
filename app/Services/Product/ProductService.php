@@ -100,7 +100,7 @@ class ProductService extends BaseService
             }
             $data->idCart = $item->id ?? '';
             $data->quantityCart = $item->quantity ?? '';
-            $data->quantity =$data->quantity  ?? $data->product->quantity;
+            $data->quantity = $data->quantity ?? $data->product->quantity;
         }
         return $data;
     }
@@ -329,9 +329,9 @@ class ProductService extends BaseService
                     $this->cartRepository->delete($cartItem->id);
                 }
             }
-            $this->productRepository->delete($id);
-
+            // $this->productRepository->delete($id);
             // $this->cartRepository->deleteBySku($product->sku);
+            $this->productRepository->update($id, ['deleted_at' => now()]);
             DB::commit();
             return true;
         } catch (\Exception $e) {

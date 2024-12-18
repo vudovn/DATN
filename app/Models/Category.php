@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory, QueryScope, SoftDeletes;
+    use HasFactory, QueryScope;
     protected $fillable = [
         'name',
         'slug',
@@ -21,8 +21,8 @@ class Category extends Model
         'meta_description',
         'meta_keyword',
         'created_at',
-        'created_at',
-        'updated_at'
+        'updated_at',
+        'deleted_at'
     ];
 
     public function parent()

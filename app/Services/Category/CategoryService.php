@@ -33,6 +33,7 @@ class CategoryService extends BaseService
                 'publish' => isset($request['publish'])
                     ? (int) $request['publish']
                     : null,
+                'deleted_at' => null
             ],
             'sort' => isset($request['sort']) && $request['sort'] != 0
                 ? explode(',', $request['sort'])
@@ -105,11 +106,12 @@ class CategoryService extends BaseService
         DB::beginTransaction();
         try {
             $category = $this->categoryRepository->findById($id);
-            if ($category->children()->count() == 0) {
-                $this->categoryRepository->delete($id);
-                DB::commit();
-                return true;
-            }
+            $this->categoryRepository->update($id, ['deleted_at' => now()]);
+            // if ($category->children()->count() == 0) {
+            //     $this->categoryRepository->delete($id);
+            DB::commit();
+            return true;
+            // }
         } catch (\Exception $e) {
             DB::rollback();
             // echo $e->getMessage();die();

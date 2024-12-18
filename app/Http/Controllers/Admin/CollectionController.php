@@ -129,6 +129,7 @@ class CollectionController extends Controller implements HasMiddleware
     public function trash()
     {
         $collections = $this->collectionRepository->getOnlyTrashed();
+        dd($collections);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('trash');
         return view('admin.pages.collection.trash', compact(
@@ -177,6 +178,10 @@ class CollectionController extends Controller implements HasMiddleware
             'delete' => [
                 'name' => 'Xóa bộ sưu tập',
                 'list' => ['QL bộ sưu tập', 'Xóa bộ sưu tập']
+            ],
+            'trash' => [
+                'name' => 'Bộ sưu tập đã xóa',
+                'list' => ['Bộ sưu tập đã xóa']
             ]
         ];
         return $breadcrumb[$key];

@@ -102,10 +102,10 @@ return [
                     'name' => 'Thêm mới bộ sưu tập',
                     'path' => route('collection.create')
                 ],
-                // [
-                //     'name' => 'Bộ sưu tập đã xóa',
-                //     'path' => route('collection.trash')
-                // ]
+                [
+                    'name' => 'Bộ sưu tập đã xóa',
+                    'path' => route('collection.trash')
+                ]
             ]
         ],
         [
@@ -121,10 +121,10 @@ return [
                     'name' => 'Thêm mới đơn hàng',
                     'path' => route('order.create')
                 ],
-                // [
-                //     'name' => 'Đơn hàng đã xóa',
-                //     'path' => route('order.trash')
-                // ]
+                [
+                    'name' => 'Đơn hàng đã xóa',
+                    'path' => route('order.trash')
+                ]
             ]
         ],
         [
@@ -140,10 +140,10 @@ return [
                     'name' => 'Thêm mới mã giảm giá',
                     'path' => route('discountCode.create')
                 ],
-                // [
-                //     'name' => 'Mã giảm giá đã xóa',
-                //     'path' => route('discountCode.trash')
-                // ]
+                [
+                    'name' => 'Mã giảm giá đã xóa',
+                    'path' => route('discountCode.trash')
+                ]
             ]
         ],
         [

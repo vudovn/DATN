@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\QueryScope;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\QueryScope;
 class Product extends Model
 {
     use HasFactory, QueryScope;

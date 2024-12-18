@@ -33,7 +33,7 @@ class AuthController extends Controller
             'password' => $request->input('password'),
         ];
         $user = User::where('email', $request->input('email'))->first();
-        if ($user->publish !== 1) {
+        if (isset($user) && $user->publish !== 1) {
             return back()->withErrors(['email' => 'Tài khoản của bạn đã bị vô hiệu hoá.'])->onlyInput('email');
         }
         if (Auth::attempt($credentials)) {

@@ -27,6 +27,7 @@ class CheckPermissionVN
             'store' => 'create',
             'update' => 'edit',
             'show', 'get' => 'index',
+            'restore', 'destroy' => 'delete',
             default => $method[0],
         };
         $model = ucfirst($model);

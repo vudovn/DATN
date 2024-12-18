@@ -12,7 +12,7 @@ if (!function_exists('loadClass')) {
 
         $modelParts = preg_split('/(?=[A-Z])/', $modelName);
         $baseModel = $modelParts[1];
-        if($baseModel == 'Staff'){
+        if ($baseModel == 'Staff') {
             $baseModel = 'User';
         }
         $classWithSubFolder = 'App\\' . $type[$classType] . '\\' . $baseModel . '\\' . $baseModel . $classType;
@@ -123,33 +123,34 @@ if (!function_exists('paymentStatusOrder')) {
 
 if (!function_exists('getActionRoute')) {
     function getActionRoute()
-{
-    $allRoutes = Route::getRoutes();
-    $permissionAll = [];
-    $allowedActions = ['index', 'create', 'delete']; 
-
-    foreach ($allRoutes as $route) {
-        if (in_array('GET', $route->methods())) {
-            if (in_array('authenticated', $route->middleware())) {
-                $actionName = $route->getActionName();
-                if (strpos($actionName, '@') !== false) {
-                    list($controller, $action) = explode('@', $actionName);
-                    $controller = class_basename($controller);
-                    $controller = str_replace('Controller', '', $controller);
-                    if (in_array($action, $allowedActions)) {
-                        $permission = "$controller $action";
-                        if (!in_array($permission, $permissionAll)) {
-                            $permissionAll[] = $permission; 
+    {
+        $allRoutes = Route::getRoutes();
+        $permissionAll = [];
+        $allowedActions = ['index', 'create', 'edit', 'delete'];
+        $excludedControllers = ['Dashboard','Permission', 'Staff'];
+        foreach ($allRoutes as $route) {
+            if (in_array('GET', $route->methods())) {
+                if (in_array('authenticated', $route->middleware())) {
+                    $actionName = $route->getActionName();
+                    if (strpos($actionName, '@') !== false) {
+                        list($controller, $action) = explode('@', $actionName);
+                        $controller = class_basename($controller);
+                        $controller = str_replace('Controller', '', $controller);
+                        if (in_array($controller, $excludedControllers)) {
+                            continue;
+                        }
+                        if (in_array($action, $allowedActions)) {
+                            $permission = "$controller $action";
+                            if (!in_array($permission, $permissionAll)) {
+                                $permissionAll[] = $permission;
+                            }
                         }
                     }
-                } else {
                 }
             }
         }
+        return $permissionAll;
     }
-    return $permissionAll;
-}
-
 
 }
 
@@ -294,6 +295,6 @@ if (!function_exists('getNamebyIdCollection')) {
     function getNamebyIdCollection($id)
     {
         $collectionRepository = loadClass('Collection', 'Repository');
-        return $collectionRepository->findByField('id',$id)->first()->name;
+        return $collectionRepository->findByField('id', $id)->first()->name;
     }
 }

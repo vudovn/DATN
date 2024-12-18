@@ -9,6 +9,10 @@ class UpdateUserCurrentRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
+    // function __construct(Request $request)
+    // {
+    //     dd($request->all());
+    // }
     public function authorize(): bool
     {
         return true;
@@ -24,7 +28,7 @@ class UpdateUserCurrentRequest extends FormRequest
         return [
             'email' => 'required|email|unique:users,email,' . auth()->user()->id,
             'name' => 'required',
-            'phone' => 'required|unique:users,phone,' . auth()->user()->id,
+            'phone' => 'required|regex:/^[0-9]+$/|min:10|max:11|unique:users,phone,' . auth()->user()->id . '',
         ];
     }
 
@@ -37,6 +41,9 @@ class UpdateUserCurrentRequest extends FormRequest
             'name.required' => 'Không được để trống tên',
             'phone.required' => 'Không được để trống số điện thoại',
             'phone.unique' => 'Số điện thoại đã tồn tại ',
+            'phone.regex' => 'Số điện thoại không được nhập chữ',
+            'phone.min' => 'Số điện thoại phải 10 hoặc 11 số',
+            'phone.max' => 'Số điện thoại phải 10 hoặc 11 số',
         ];
     }
 }

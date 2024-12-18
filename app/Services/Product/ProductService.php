@@ -46,6 +46,7 @@ class ProductService extends BaseService
 
         $condition = [
             'publish' => $isFilter ? 1 : (isset($request['publish']) ? (int) $request['publish'] : null),
+            'deleted_at' => null,
         ];
         if (isset($request['is_featured'])) {
             $condition['is_featured'] = (int) $request['is_featured'];
@@ -321,7 +322,6 @@ class ProductService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $this->productRepository->delete($id);
             $product = $this->productRepository->findById($id);
             foreach ($product->productVariants as $variant) {
                 $cartItem = $this->cartRepository->findByField('sku', $variant->sku)->first();
@@ -329,7 +329,35 @@ class ProductService extends BaseService
                     $this->cartRepository->delete($cartItem->id);
                 }
             }
-            // $this->cartRepository->deleteBySku($product->sku);
+            $this->productRepository->delete($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
+            return false;
+        }
+    }
+
+    public function restore($id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->productRepository->restore($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
+            return false;
+        }
+    }
+
+    public function destroy(int $id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->productRepository->destroy($id);
             DB::commit();
             return true;
         } catch (\Exception $e) {

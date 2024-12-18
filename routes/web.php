@@ -58,8 +58,6 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
-        // Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
-        // Route::get('/api/wards/{district_code}', [UserController::class, 'getWards'])->name('wards');
     });
     Route::prefix('admin/staff')->name('staff.')->group(function () {
         Route::get('/', [StaffController::class, 'index'])->name('index');
@@ -77,6 +75,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [ProductController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('delete');
+        Route::get('/trash', [ProductController::class, 'trash'])->name('trash');
     });
 
     /* ATTRIBUTE ROUTE */
@@ -87,6 +86,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [AttributeCategoryController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [AttributeCategoryController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [AttributeCategoryController::class, 'delete'])->name('delete');
+        Route::get('/trash', [AttributeCategoryController::class, 'trash'])->name('trash');
     });
     /* PERMISSION ROUTE */
     Route::prefix('admin/permission')->name('permission.')->group(function () {
@@ -121,7 +121,9 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('search_customer', [OrderController::class, 'searchCustomer'])->name('searchCustomer');
         Route::put('payment-status/{id}', [OrderController::class, 'updatePaymentStatus'])->name('updatepayment');
         Route::get('dataVariantsProduct/{id}', [OrderController::class, 'dataVariantsProduct'])->name('dataVariantsProduct');
+        Route::get('/trash', [OrderController::class, 'trash'])->name('trash');
     });
+
     /* CATEGORY ROUTE */
     Route::prefix('admin/category')->name('category.')->group(function () {
         Route::get('/index', [CategoryController::class, 'index'])->name('index');
@@ -131,8 +133,10 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
+        Route::get('/trash', [CategoryController::class, 'trash'])->name('trash');
     });
 
+    /* DISCOUNT CODE ROUTE */
     Route::prefix('admin/discount')->name('discountCode.')->group(function () {
         Route::get('/index', [DiscountCodeController::class, 'index'])->name('index');
         Route::get('/create', [DiscountCodeController::class, 'create'])->name('create');
@@ -140,6 +144,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [DiscountCodeController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [DiscountCodeController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [DiscountCodeController::class, 'delete'])->name('delete');
+        Route::get('/trash', [DiscountCodeController::class, 'trash'])->name('trash');
     });
 
     /* COMMENT ROUTE */
@@ -170,7 +175,10 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [CollectionController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [CollectionController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CollectionController::class, 'delete'])->name('delete');
-    });    /* FORBIDDEN WORD ROUTE */
+        Route::get('/trash', [CollectionController::class, 'trash'])->name('trash');
+    });
+
+    /* FORBIDDEN WORD ROUTE */
     Route::prefix('admin/forbiddenword')->name('CommentForbiddenWord.')->group(function () {
         Route::get('/index', [CommentForbiddenWordController::class, 'index'])->name('index');
         Route::get('/create', [CommentForbiddenWordController::class, 'create'])->name('create');
@@ -201,6 +209,8 @@ Route::middleware(['checkPermission'])->group(function () {
         Route::delete('/deleteItem', [AjaxDashboardController::class, 'deleteItem'])->name('ajax.dashboard.deleteItem');
         Route::put('/quickUpdate', [AjaxDashboardController::class, 'updateQuick'])->name('ajax.dashboard.quickUpdate');
         Route::put('/change/status', [AjaxDashboardController::class, 'updateStatus'])->name('ajax.dashboard.updateStatus');
+        Route::put('/restoreItem', [AjaxDashboardController::class, 'restoreItem'])->name('ajax.dashboard.restoreItem');
+        Route::delete('/destroyItem', [AjaxDashboardController::class, 'destroyItem'])->name('ajax.dashboard.destroyItem');
     });
 });
 

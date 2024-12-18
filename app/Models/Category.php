@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\QueryScope;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory, QueryScope;
+    use HasFactory, QueryScope, SoftDeletes;
     protected $fillable = [
         'name',
         'slug',
@@ -20,15 +21,10 @@ class Category extends Model
         'meta_description',
         'meta_keyword',
         'created_at',
+        'created_at',
         'updated_at'
     ];
-    // protected $table = 'categories';
-    // public function posts(){
-    //     return $this->belongsToMany(Post::class);
-    // }
-    // public function categories(){
-    //     return $this->belongsToMany(Category::class,'category_id');
-    // }
+
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');

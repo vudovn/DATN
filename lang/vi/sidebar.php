@@ -43,6 +43,10 @@ return [
                 [
                     'name' => 'Thêm mới sản phẩm',
                     'path' => route('product.create')
+                ],
+                [
+                    'name' => 'Sản phẩm đã xóa',
+                    'path' => route('product.trash')
                 ]
             ]
         ],
@@ -58,6 +62,10 @@ return [
                 [
                     'name' => 'Thêm mới thuộc tính SP',
                     'path' => route('attributeCategory.create')
+                ],
+                [
+                    'name' => 'Thuộc tính SP đã xóa',
+                    'path' => route('attributeCategory.trash')
                 ]
             ]
         ],
@@ -73,6 +81,10 @@ return [
                 [
                     'name' => 'Danh mục phòng',
                     'path' => route('category.room.index')
+                ],
+                [
+                    'name' => 'Danh mục đã xóa',
+                    'path' => route('category.trash')
                 ]
 
             ]
@@ -89,7 +101,11 @@ return [
                 [
                     'name' => 'Thêm mới bộ sưu tập',
                     'path' => route('collection.create')
-                ]
+                ],
+                // [
+                //     'name' => 'Bộ sưu tập đã xóa',
+                //     'path' => route('collection.trash')
+                // ]
             ]
         ],
         [
@@ -104,7 +120,11 @@ return [
                 [
                     'name' => 'Thêm mới đơn hàng',
                     'path' => route('order.create')
-                ]
+                ],
+                // [
+                //     'name' => 'Đơn hàng đã xóa',
+                //     'path' => route('order.trash')
+                // ]
             ]
         ],
         [
@@ -119,7 +139,11 @@ return [
                 [
                     'name' => 'Thêm mới mã giảm giá',
                     'path' => route('discountCode.create')
-                ]
+                ],
+                // [
+                //     'name' => 'Mã giảm giá đã xóa',
+                //     'path' => route('discountCode.trash')
+                // ]
             ]
         ],
         [

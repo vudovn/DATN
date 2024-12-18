@@ -141,6 +141,17 @@ class ProductController extends Controller implements HasMiddleware
         ];
     }
 
+    public function trash()
+    {
+        $products = $this->productRepository->getOnlyTrashed();
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('trash');
+        return view('admin.pages.product.product.trash', compact(
+            'config',
+            'products'
+        ));
+    }
+
     private function breadcrumb($key)
     {
         $breadcrumb = [
@@ -159,6 +170,10 @@ class ProductController extends Controller implements HasMiddleware
             'delete' => [
                 'name' => 'Xóa sản phẩm',
                 'list' => ['QL sản phẩm', 'Xóa sản phẩm']
+            ],
+            'trash' => [
+                'name' => 'Thùng rác',
+                'list' => ['QL sản phẩm', 'Thùng rác']
             ]
         ];
         return $breadcrumb[$key];

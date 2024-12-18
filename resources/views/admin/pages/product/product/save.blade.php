@@ -40,7 +40,9 @@
                                         <div class="mb-3 form-group">
                                             <label class="form-label" for="sku">SKU <span
                                                     class="text-danger">*</span></label>
-                                            <input disabled class="form-control" type="text" name="sku" id="sku"
+                                            <input disabled class="form-control" type="text" id="sku"
+                                                value="{{ $product->sku ?? old('sku', $sku) }}">
+                                            <input class="form-control" type="hidden" name="sku" id="sku"
                                                 value="{{ $product->sku ?? old('sku', $sku) }}">
                                             @error('sku')
                                                 <small class="error text-danger">* {{ $message }}</small>

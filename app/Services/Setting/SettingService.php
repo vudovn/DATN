@@ -18,26 +18,6 @@ class SettingService extends BaseService
     }
 
 
-    private function paginateAgrument($request)
-    {
-        // dd($request);
-        return [
-            'keyword' => [
-                'search' => $request['keyword'] ?? '',
-                'field' => ['name', 'email', 'phone', 'address', 'created_at']
-            ],
-            'condition' => [
-                'publish' => isset($request['publish'])
-                    ? (int) $request['publish']
-                    : null,
-            ],
-            'sort' => isset($request['sort']) && $request['sort'] != 0
-                ? explode(',', $request['sort'])
-                : ['id', 'asc'],
-            'perpage' => (int) (isset($request['perpage']) && $request['perpage'] != 0 ? $request['perpage'] : 10),
-        ];
-    }
-
     public function update($request)
     {
         DB::beginTransaction();

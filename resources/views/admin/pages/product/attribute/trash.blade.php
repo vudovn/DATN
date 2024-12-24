@@ -39,7 +39,7 @@
                                         <ul class="list-inline me-auto mb-0">
                                             <x-edit :id="$attribute->id" :model="$config['model']" />
                                             <x-restore :id="$attribute->id" :model="ucfirst($config['model'])" />
-                                            <x-delete :id="$attribute->id" :model="ucfirst($config['model'])" :destroy="true" />
+                                            {{-- <x-delete :id="$attribute->id" :model="ucfirst($config['model'])" :destroy="true" /> --}}
                                         </ul>
                                     </td>
                                 </tr>

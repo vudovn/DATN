@@ -75,11 +75,11 @@
                                                 </a>
                                             </li>
                                             <x-restore :id="$order->id" :model="ucfirst($config['model'])" />
-                                            <x-delete :id="$order->id" :model="ucfirst($config['model'])" :destroy="true"
+                                            {{-- <x-delete :id="$order->id" :model="ucfirst($config['model'])" :destroy="true"
                                                 :class="$order->status == 'delivered' &&
                                                 $order->payment_status == 'completed'
                                                     ? 'disabled_row btn_delete'
-                                                    : 'btn_delete'" />
+                                                    : 'btn_delete'" /> --}}
                                         </ul>
                                     </td>
                                 </tr>

@@ -11,7 +11,8 @@ return [
 
     'payment_status' => [
         'pending' => 'Chưa thanh toán',
-        'completed' => 'Đã thanh toán'
+        'completed' => 'Đã thanh toán',
+        'return' => 'Hoàn tiền',
     ],
 
     'payment_status_select' => [

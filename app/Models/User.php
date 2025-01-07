@@ -83,6 +83,11 @@ class User extends Authenticatable
         return $this->belongsTo(Ward::class, 'ward_id', 'code');
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
 
 
     // public function sendPasswordResetNotification($token)

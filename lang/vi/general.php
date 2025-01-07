@@ -56,15 +56,15 @@ return [
         ],
     ],
     'actions' => [
+        // 0 => [
+        //     'id' => 'delete',
+        //     'name' => 'Xóa'
+        // ],
         0 => [
-            'id' => 'delete',
-            'name' => 'Xóa'
-        ],
-        1 => [
             'id' => 'publish-1',
             'name' => 'Hoạt động'
         ],
-        2 => [
+        1 => [
             'id' => 'publish-2',
             'name' => 'Vô hiệu hoá'
         ],

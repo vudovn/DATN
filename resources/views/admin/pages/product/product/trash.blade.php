@@ -76,7 +76,7 @@
                                         <ul class="list-inline me-auto mb-0">
                                             <x-edit :id="$product->id" :model="$config['model']" />
                                             <x-restore :id="$product->id" :model="ucfirst($config['model'])" />
-                                            <x-delete :id="$product->id" :model="ucfirst($config['model'])" :destroy="true" />
+                                            {{-- <x-delete :id="$product->id" :model="ucfirst($config['model'])" :destroy="true" /> --}}
                                         </ul>
                                     </td>
                                 </tr>

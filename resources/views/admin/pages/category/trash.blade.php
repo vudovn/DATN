@@ -14,6 +14,7 @@
                             <th>STT</th>
                             <th>Hình ảnh</th>
                             <th>Tên danh mục</th>
+                            <th>Loại danh mục</th>
                             <th>Ngày tạo</th>
                             <th class="text-center">Trạng thái</th>
                             <th class="text-center">Hành động</th>
@@ -51,7 +52,7 @@
                                         <ul class="list-inline me-auto mb-0">
                                             <x-edit :id="$category->id" :model="$config['model']" />
                                             <x-restore :id="$category->id" :model="ucfirst($config['model'])" />
-                                            <x-delete :id="$category->id" :model="ucfirst($config['model'])" :destroy="true" />
+                                            {{-- <x-delete :id="$category->id" :model="ucfirst($config['model'])" :destroy="true" /> --}}
                                         </ul>
                                     </td>
                                 </tr>

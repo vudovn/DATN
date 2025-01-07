@@ -68,7 +68,7 @@ class ProductRepository extends BaseRepository
     }
     public function getFeatured()
     {
-        return $this->model->where('is_featured', 1)->where('publish', 1)->get();
+        return $this->model->where('is_featured', 1)->where('publish', 1)->where('deleted_at', null)->get();
     }
     public function getBestsellers()
     {
@@ -88,6 +88,7 @@ class ProductRepository extends BaseRepository
                 DB::raw('SUM(CASE WHEN orders.status = "delivered" THEN order_details.quantity ELSE 0 END) as total_quantity'),
                 DB::raw('SUM(CASE WHEN orders.status = "delivered" THEN order_details.quantity * order_details.price ELSE 0 END) as total_revenue')
             )
+            ->whereNull('products.deleted_at') // Kiểm tra giá trị null rõ ràng
             ->groupBy(
                 'products.id',
                 'products.name',
@@ -99,12 +100,13 @@ class ProductRepository extends BaseRepository
                 'products.discount',
                 'products.albums'
             )
-            ->orderByDesc('total_quantity')
-            ->take(10)
+            ->orderByDesc('total_quantity') // Đặt thứ tự sắp xếp sau
+            ->take(10) // Lấy 10 sản phẩm hàng đầu
             ->get();
 
         return $products;
     }
+
 
     public function updateQuantity($product_id, $quantity)
     {

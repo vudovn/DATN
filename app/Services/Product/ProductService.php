@@ -376,6 +376,7 @@ class ProductService extends BaseService
         $defaultPerPage = $isFilter ? 12 : 12;
         $condition = [
             'publish' => 1,
+            'deleted_at' => null,
         ];
         if (isset($request['is_featured'])) {
             $condition['is_featured'] = (int) $request['is_featured'];

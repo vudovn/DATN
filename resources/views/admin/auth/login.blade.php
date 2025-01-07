@@ -62,9 +62,9 @@
                         </div>
                         <div class="d-flex mt-1 justify-content-between align-items-center">
                             <div class="form-check">
-                                <input class="form-check-input input-primary" type="checkbox" id="customCheckc1"
+                                {{-- <input class="form-check-input input-primary" type="checkbox" id="customCheckc1"
                                     checked="" />
-                                <label class="form-check-label text-muted" for="customCheckc1">Nhớ tôi?</label>
+                                <label class="form-check-label text-muted" for="customCheckc1">Nhớ tôi?</label> --}}
                             </div>
                             <h6 class="text-secondary f-w-400 mb-0">
                                 <a href="{{ route('auth.admin.forget') }}">Quên mật khẩu?</a>

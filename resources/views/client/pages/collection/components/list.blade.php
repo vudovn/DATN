@@ -14,3 +14,6 @@
             </div>
         </div>
     @endforeach
+    <div class="pagination_tgnt d-flex justify-content-center">
+        {!! $collections->links('pagination::bootstrap-4') !!}
+    </div>

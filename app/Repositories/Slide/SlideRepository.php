@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories\Slide;
 use App\Repositories\BaseRepository;
-use App\Models\slide;
+use App\Models\Slide;
 use Spatie\Permission\Traits\HasRoles;
 
 class SlideRepository extends BaseRepository

@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <input type="hidden" name="url_getProduct" value="{{ route('client.category.get-product') }}">
-    <section class="container">
+    <section class="container mt-2">
         <div class="col-xxl-12 d-none d-xxl-block">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -19,7 +19,7 @@
             <div class="mt-4">
                 @include('client.pages.category.components.filter')
                 <input type="hidden" name="category_id" value="{{ $category->id }}">
-                <div class="product_container">
+                <div class="product_container show">
                     @include('client.pages.category.components.product')
                 </div>
             </div>

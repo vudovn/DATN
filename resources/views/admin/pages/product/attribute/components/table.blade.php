@@ -24,12 +24,7 @@
                                 </td> --}}
             <td class="text-center table-actions">
                 <ul class="list-inline me-auto mb-0">
-                    <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Chỉnh sửa">
-                        <a href="{{ route('attributeCategory.edit', $attribute->id) }}"
-                            class="avtar avtar-xs btn-link-success btn-pc-default">
-                            <i class="ti ti-edit-circle f-18"></i>
-                        </a>
-                    </li>
+                    <x-edit :id="$attribute->id" :model="$config['model']" />
                     <x-delete :id="$attribute->id" :model="ucfirst($config['model'])" />
                 </ul>
             </td>
@@ -40,7 +35,6 @@
             {!! $attributes->links('pagination::bootstrap-4') !!}
         </td>
     </tr>
-
 @else
     <tr>
         <td colspan="100" class="text-center">Không có dữ liệu</td>

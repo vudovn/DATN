@@ -27,13 +27,31 @@ class VnPayController extends Controller
         return redirect($paymentUrl);
     }
 
+    public function payAgain(Request $request)
+    {
+        $userId = auth()->id();
+        $paymentUrl = $this->vnpayService->createAgainTransaction($request, $userId);
+        return redirect($paymentUrl);
+    }
+
     public function return(Request $request)
     {
-        if ($request->has('vnp_SecureHash')) {
+        // dd($request->vnp_TxnRef);
+        $code = $request->vnp_TxnRef;
+        if ($request->vnp_ResponseCode == "00" && $request->vnp_TransactionNo != null && $request->vnp_ResponseCode == "00") {
             $this->orderRepostitory->updateByWhereIn('code', [$request->vnp_TxnRef], ['payment_status' => 'completed']);
-            return view('client.pages.cart.components.checkout.result', ['message' => 'Thanh toán thành công, chúng tôi sẽ xử lý đơn hàng của bạn', 'status' => 'success']);
+            return view('client.pages.cart.components.checkout.result', [
+                'message' => 'Thanh toán thành công, chúng tôi sẽ xử lý đơn hàng của bạn',
+                'status' => 'success'
+            ]);
         } else {
-            return view('client.pages.cart.components.checkout.result', ['message' => 'Thanh toán thất bại', 'status' => 'error']);
+            // Hash không hợp lệ
+            return view('client.pages.cart.components.checkout.result', [
+                'message' => 'Thanh toán thất bại',
+                'status' => 'error',
+                'code' => $code
+            ]);
         }
     }
+
 }

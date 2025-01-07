@@ -20,8 +20,9 @@
                         code,
                     },
                     success: function (e) {
+                        console.log(e);
                         if (e.data) {
-                            $(".list-discount").append(`
+                            $(".list-discount").html(`
                                 <div class="discount mb-2 alert alert-success position-relative" id="discount-${e.data.code}" data-code="${e.data.code}"
                                     role="alert">
                                     <div class="discount-inner">
@@ -41,7 +42,7 @@
                         } else {
                             VDmessage.show(
                                 "error",
-                                "Mã giảm giá đã sử dụng hoặc không tồn tại"
+                                "Mã giảm giá không khả dụng"
                             );
                         }
                     },
@@ -50,7 +51,7 @@
                         //     "error",
                         //     "Mã giảm giá không khả dụng"
                         // );
-                        console.log("Lỗi ối dồi ôi");
+                        VDmessage.show("error", "Mã giảm giá không khả dụng");
                     },
                 });
             } else {
@@ -77,45 +78,41 @@
                 data: {
                     code: codeExists,
                 },
-                success: function (data) {
+                success: function (e) {
                     let afterDiscount = 0;
                     let savePrice = 0;
                     let savePriceT = 0;
                     let price = $("#cart-total-input").val();
-                    data.forEach((e) => {
-                        if (e.min_order_amount < $("#cart-total-input").val()) {
-                            if (e.discount_type == 1) {
-                                savePrice = (price * e.discount_value) / 100;
-                                afterDiscount =
-                                    price - (price * e.discount_value) / 100;
-                            } else {
-                                savePrice = e.discount_value;
-                                afterDiscount = price - e.discount_value;
-                            }
-                            price = afterDiscount;
-                            savePriceT += parseFloat(savePrice);
-                            VDmessage.show("success", "Đã dùng mã giảm giá");
-                            let currentArray = $(`.discount-code`).val()
-                                ? JSON.parse($(`.discount-code`).val())
-                                : [];
-                            if (!currentArray.includes(e.id)) {
-                                currentArray.push(e.id);
-                            }
-                            $(`.discount-code`).val(
-                                JSON.stringify(currentArray)
-                            );
+                    if (e.min_order_amount < $("#cart-total-input").val()) {
+                        if (e.discount_type == 1) {
+                            savePrice = (price * e.discount_value) / 100;
+                            afterDiscount =
+                                price - (price * e.discount_value) / 100;
                         } else {
-                            $(`#discount-${e.code}`).remove();
-                            TGNT.updateTotalCart();
-                            VDmessage.show(
-                                "error",
-                                `Đơn hàng phải tối thiểu ${TGNT.formatNumber(
-                                    e.min_order_amount
-                                )}đ`
-                            );
+                            savePrice = e.discount_value;
+                            afterDiscount = price - e.discount_value;
                         }
-                    });
-                    $("#save-price").html(TGNT.formatNumber(savePriceT));
+                        price = afterDiscount;
+                        savePriceT += parseFloat(savePrice);
+                        VDmessage.show("success", "Đã dùng mã giảm giá");
+                        let currentArray = $(`.discount-code`).val()
+                            ? JSON.parse($(`.discount-code`).val())
+                            : [];
+                        if (!currentArray.includes(e.id)) {
+                            currentArray.push(e.id);
+                        }
+                        $(`.discount-code`).val(JSON.stringify(currentArray));
+                    } else {
+                        $(`#discount-${e.code}`).remove();
+                        TGNT.updateTotalCart();
+                        VDmessage.show(
+                            "error",
+                            `Đơn hàng phải tối thiểu ${TGNT.formatNumber(
+                                e.min_order_amount
+                            )}đ`
+                        );
+                    }
+                    $("#save-price-checkout").html(TGNT.formatNumber(savePriceT));
                     $("#cart-total-discount").html(
                         TGNT.formatNumber(afterDiscount)
                     );
@@ -162,8 +159,8 @@
             url: url,
             success: function (data) {
                 let price = $("#cart-total-input").val();
-                $("#cart-total-discount").html(TGNT.formatNumber(data));
-                $("#total-cart-input").val(TGNT.formatNumber(data));
+                $("#cart-total-discount").html(TGNT.formatNumber(data.afterDiscount));
+                $("#total-cart-input").val(TGNT.formatNumber(data.afterDiscount));
                 // $("#total-cart-input").val(data);
                 let allDiscount = $(".list-discount").find(".discount");
                 if (allDiscount.length > 0) {
@@ -182,9 +179,9 @@
 
     TGNT.form_payment = () => {
         $(".radio_input_tgnt").on("change", function () {
-            $(".form_payment").attr("action", $(this).data('url'));
+            $(".form_payment").attr("action", $(this).data("url"));
         });
-    }
+    };
     $(document).ready(function () {
         TGNT.updateTotalCart();
         TGNT.addDiscount();

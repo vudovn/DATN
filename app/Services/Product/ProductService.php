@@ -3,6 +3,11 @@ namespace App\Services\Product;
 use App\Services\BaseService;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductVariantAttributeRepository;
+use App\Repositories\Product\ProductVariantRepository;
+use App\Repositories\Collection\CollectionProductRepository;
+use App\Repositories\Cart\CartRepository;
+use App\Services\Collection\CollectionProductService;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
@@ -11,14 +16,26 @@ use Illuminate\Support\Facades\Hash;
 class ProductService extends BaseService
 {
 
+    protected $cartRepository;
     protected $productRepository;
     protected $productVariantAttributeRepository;
+    protected $productVariantRepository;
+    protected $collectionProductRepository;
+    protected $collectionProductService;
     public function __construct(
+        CartRepository $cartRepository,
         ProductRepository $productRepository,
-        ProductVariantAttributeRepository $productVariantAttributeRepository
+        ProductVariantAttributeRepository $productVariantAttributeRepository,
+        ProductVariantRepository $productVariantRepository,
+        CollectionProductRepository $collectionProductRepository,
+        CollectionProductService $collectionProductService
     ) {
+        $this->cartRepository = $cartRepository;
         $this->productRepository = $productRepository;
         $this->productVariantAttributeRepository = $productVariantAttributeRepository;
+        $this->productVariantRepository = $productVariantRepository;
+        $this->collectionProductRepository = $collectionProductRepository;
+        $this->collectionProductService = $collectionProductService;
     }
 
 
@@ -27,14 +44,23 @@ class ProductService extends BaseService
         $defaultSort = ['id', 'asc'];
         $defaultPerPage = $isFilter ? 12 : 10;
 
+        $condition = [
+            'publish' => $isFilter ? 1 : (isset($request['publish']) ? (int) $request['publish'] : null),
+            'deleted_at' => null,
+        ];
+        if (isset($request['is_featured'])) {
+            $condition['is_featured'] = (int) $request['is_featured'];
+        }
+        if (isset($request['has_attribute'])) {
+            $condition['has_attribute'] = (int) $request['has_attribute'];
+        }
+
         return [
             'keyword' => [
                 'search' => $request['keyword'] ?? '',
                 'field' => $isFilter ? ['name'] : ['name', 'sku', 'description', 'price'],
             ],
-            'condition' => [
-                'publish' => $isFilter ? 1 : (isset($request['publish']) ? (int) $request['publish'] : null),
-            ],
+            'condition' => $condition,
             'relation' => $isFilter ? [
                 'categories' => $request['categories'] ?? null,
             ] : [],
@@ -58,6 +84,38 @@ class ProductService extends BaseService
         $cacheKey = 'pagination: ' . md5(json_encode($agruments));
         $data = $this->productRepository->filterProduct($agruments);
         return $data;
+    }
+    public function getProductBySku($sku)
+    {
+        if (isset($sku)) {
+            $data = $this->productRepository->findByField('sku', $sku)->first();
+            if (empty($data)) {
+                $data = $this->productVariantRepository->findByField('sku', $sku)->first();
+                $data->discount = $data->product->discount ?? '';
+                $data->name = $data->product->name ?? '';
+                $data->slug = $data->product->slug ?? '';
+                $data->thumbnail = $data->product->thumbnail;
+                $category = $data->product->categories->where('is_room', 2)->first();
+                $data->category = $category ? strtolower($category->name) : '';
+            }
+            $data->idCart = $item->id ?? '';
+            $data->quantityCart = $item->quantity ?? '';
+            $data->quantity = $data->quantity ?? $data->product->quantity;
+        }
+        return $data;
+    }
+    public function getTotalCart($carts)
+    {
+        $total = 0;
+        foreach ($carts as $value) {
+            $data = $this->productRepository->findByField('sku', $value->sku)->first();
+            if (empty($data)) {
+                $data = $this->productVariantRepository->findByField('sku', $value->sku)->first();
+            }
+            $discount = $data->discount ?? $data->product->discount;
+            $total += ((int) $data->price - ((int) $data->price * $discount) / 100) * (int) $value->quantity;
+        }
+        return $total;
     }
     public function create($request)
     {
@@ -87,19 +145,44 @@ class ProductService extends BaseService
         DB::beginTransaction();
         try {
             $product = $this->productRepository->findById($id);
+            $productOld = $product->productVariants;
             $this->updateProduct($product, $request);
             $this->updateCategory($product, $request);
-
-            $product->productVariants()->each(function ($variant) {
+            $collections = [];
+            $product->productVariants()->each(function ($variant) use (&$collections) {
                 $variant->attributes()->detach();
+                $data = $this->collectionProductRepository->findByField('productVariant_sku', $variant->sku)->first();
+                if (isset($data)) {
+                    $collections[] = $data;
+                }
                 $variant->delete();
             });
-
             if ($request->has('has_attribute') && $request->attributeValue) {
                 $this->createVariant($product, $request);
             }
-
+            $productNew = $this->productRepository->findById($id)->productVariants;
+            $missing = collect($productOld->pluck('sku'))->diff($productNew->pluck('sku'));
+            $results = [
+                'status' => $missing->isEmpty(),
+                'missing_data' => $missing->values()->all(),
+            ];
+            if ($results['status'] == false) {
+                foreach ($results['missing_data'] as $sku) {
+                    $cartItem = $this->cartRepository->findByField('sku', $sku)->first();
+                    if (isset($cartItem)) {
+                        $this->cartRepository->delete($cartItem->id);
+                    }
+                }
+            }
             DB::commit();
+
+            foreach ($collections as $collection) {
+                DB::table('collection_product')->insert([
+                    'collection_id' => $collection->collection_id,
+                    'product_sku' => $collection->product_sku ?? null,
+                    'productVariant_sku' => $collection->productVariant_sku ?? null,
+                ]);
+            }
             return true;
         } catch (\Exception $e) {
             DB::rollback();
@@ -149,9 +232,11 @@ class ProductService extends BaseService
 
     private function sortVariantId($variantId)
     {
-        $extract = explode(',', $variantId);
+        $extract = explode(', ', $variantId);
         sort($extract, SORT_NUMERIC);
-        return implode(',', $extract);
+        $extract = implode(', ', $extract);
+        $extract = trim($extract);
+        return $extract;
     }
     private function createVariantArray(array $payload)
     {
@@ -237,12 +322,48 @@ class ProductService extends BaseService
     {
         DB::beginTransaction();
         try {
-            $this->productRepository->delete($id);
+            $product = $this->productRepository->findById($id);
+            foreach ($product->productVariants as $variant) {
+                $cartItem = $this->cartRepository->findByField('sku', $variant->sku)->first();
+                if (isset($cartItem)) {
+                    $this->cartRepository->delete($cartItem->id);
+                }
+            }
+            // $this->productRepository->delete($id);
+            // $this->cartRepository->deleteBySku($product->sku);
+            $this->productRepository->update($id, ['deleted_at' => now()]);
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
-            // echo $e->getMessage();die();
+            $this->log($e);
+            return false;
+        }
+    }
+
+    public function restore($id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->productRepository->restore($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            $this->log($e);
+            return false;
+        }
+    }
+
+    public function destroy(int $id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->productRepository->destroy($id);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
             $this->log($e);
             return false;
         }
@@ -252,16 +373,20 @@ class ProductService extends BaseService
     private function paginateAgrumentClient($request, $isFilter = false)
     {
         $defaultSort = ['id', 'asc'];
-        $defaultPerPage = $isFilter ? 12 : 10;
-
+        $defaultPerPage = $isFilter ? 12 : 12;
+        $condition = [
+            'publish' => 1,
+            'deleted_at' => null,
+        ];
+        if (isset($request['is_featured'])) {
+            $condition['is_featured'] = (int) $request['is_featured'];
+        }
         return [
             'keyword' => [
                 'search' => $request['keyword'] ?? '',
                 'field' => $isFilter ? ['name'] : ['name'],
             ],
-            'condition' => [
-                'publish' => 1,
-            ],
+            'condition' => $condition,
             'relation' => $isFilter ? [
                 'categories' => $request['categories'] ?? null,
             ] : [],

@@ -1,4 +1,8 @@
     <!-- header -->
+    <script>
+        window.isLoggedIn = {{ auth()->check() ? 'true' : 'false' }};
+    </script>
+
     <header class="header_vd border-bottom" style="box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;">
         <!-- header top -->
         <div class="py-1 pt-xxl-6">
@@ -25,14 +29,14 @@
                     </div>
                     <div class="col-md-6 text-center">
                         <a href="{{ route('client.home') }}"><img class="logo_vd_top"
-                                src="{{ asset(getSetting()->site_logo) }}" width="150"
-                                alt="logo_sieuthinoithat" /></a>
+                                src="{{ asset(getSetting()->site_logo) }}" width="150" alt="logo_sieuthinoithat"
+                                id="logo_sieuthinoithat" /></a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 box_action_vd">
                         <div class="box_right_vd align-items-center justify-content-center gap-7">
                             <!-- wishlist -->
-                            <div class="list-inline-item  text-center">
-                                <a href="{{ route('client.wishlist.index') }}" class="text-muted position-relative">
+                            <div class="list-inline-item text-center">
+                                <a href="{{ route('client.wishlist.index') }}" class="position-relative">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
@@ -40,20 +44,24 @@
                                             d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
                                         </path>
                                     </svg>
-                                    <span
-                                        class="wishlist_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
-                                        0
-                                        <span class="visually-hidden">unread messages</span>
-                                    </span>
+                                    @auth
+                                        <span
+                                            class="wishlist_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
+
+                                            {{ getWishlistCount() ?? 0 }}
+
+                                            <span class="visually-hidden">unread messages</span>
+                                        </span>
+                                    @endauth
                                     <div class="list_icon_text_vd">
-                                        <small>Wishlist</small>
+                                        <small>Yêu thích</small>
                                     </div>
                                 </a>
                             </div>
 
                             <!-- giỏ hàng -->
                             <div class="list-inline-item  text-center">
-                                <a class="text-muted position-relative" href="{{ route('client.cart.index') }}">
+                                <a class="position-relative" href="{{ route('client.cart.index') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
@@ -62,11 +70,15 @@
                                         <line x1="3" y1="6" x2="21" y2="6"></line>
                                         <path d="M16 10a4 4 0 0 1-8 0"></path>
                                     </svg>
-                                    <span
-                                        class="cart_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
-                                        0
-                                        <span class="visually-hidden">unread messages</span>
-                                    </span>
+                                    @auth
+                                        <span
+                                            class="cart_count position-absolute top-0 start-100 translate-middle badge rounded-pill bg-stnt">
+
+                                            {{ getCartCount() }}
+
+                                            <span class="visually-hidden">unread messages</span>
+                                        </span>
+                                    @endauth
                                     <div class="list_icon_text_vd">
                                         <small>Giỏ hàng</small>
                                     </div>
@@ -76,7 +88,7 @@
                             <!-- tài khoản -->
                             <div class="list-inline-item  text-center">
                                 <a href="{{ Auth()->check() ? route('client.account.index') : route('client.auth.login') }}"
-                                    class="text-muted">
+                                    class="">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
@@ -121,7 +133,7 @@
                                     </button>
                                 </span>
                             </div>
-                            <div class="search_out card card-body p-0" id="search_out">
+                            <div class="search_out card card-body" id="search_out">
                                 <div class="search_header d-flex justify-content-between" id="search_header">
                                     <!-- render status từ api -->
                                 </div>
@@ -129,6 +141,9 @@
                                     <!--  -->
                                 </div>
                                 <div class="search_result" id="search_result">
+                                    <!-- render bài viết từ api -->
+                                </div>
+                                <div class="search_category row border-top" id="search_category">
                                     <!-- render bài viết từ api -->
                                 </div>
                             </div>

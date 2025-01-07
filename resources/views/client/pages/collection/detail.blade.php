@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <main>
-        <section class="container collection_tgnt">
+        <section class="container collection_tgnt" data-slug="{{ $collection->slug }}">
             <div class="d-none d-xxl-block mp-5">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -27,43 +27,33 @@
                 <div class="product-of-collection">
                     <p class="title">Sản phẩm thuộc bộ sưu tập</p>
                     {!! $collection->description !!}
-                    {{-- <div class="row">
-                        @foreach ($products as $product)
-                            <div class="col-md-4 col-lg-3 col-xl-3 col-6 d-flex justify-content-center">
-                                <div class="card custom-card border-0">
-                                    <a href="{{ route('client.product.detail', $product->slug) }}">
-                                        <div class="position-relative" style="background-color: #EBEBEB;">
-                                            <img src="{{ $product->thumbnail }}" class="card-img-top" alt="...">
-                                            <i class="bi bi-heart position-absolute top-0 end-0 mt-2 me-2"
-                                                style="cursor: pointer;"></i>
-                                        </div>
-                                    </a>
-                                    <div class="card-body position-relative">
-                                        <a href="{{ route('client.product.detail', $product->slug) }}"
-                                            class="card-text fw-bold">
-                                            {{ $product->name }}
-                                        </a>
-                                        <p class="card-text">{{ formatNumber($product->price) }} đ</p>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div> --}}
                     <div class="text-center my-3">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-tgnt" data-bs-toggle="modal" data-bs-target="#exampleModal">
+
+                        <button type="button" class="btn btn-tgnt getCollection" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
                             Thêm bộ sưu tập vào giỏ hàng
                         </button>
                     </div>
-                    {{-- bình luận --}}
-                    <div class="mb-5">
-                        <h3>Bình luận</h3>
-                        <div>
-                            <div class="fb-comments" data-href="{{ url()->current() }}" data-numposts="5" data-width="100%">
+                </div>
+                @include('client.pages.collection.components.modal_product')
+                <div class="row">
+                        <div class="comment-collection col-12 col-md-9">
+                            {{-- RENDER JS --}}
+                        </div>
+                    <div class="col-md-3 col-12">
+                        <div class="bg-light p-5 rounded mb-5">
+                            <h5 class="mt-1 fw-bold">Xem các bộ sưu tập khác</h5>
+                            <hr class="border-top border-3 w-25 my-2">
+                            <div class="row">
+                                @foreach ($collections as $collection)
+                                    <div class="col-6 col-md-12 mb-2">
+                                        <a href="">{{ $collection->name }}</a>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
-                    @include('client.pages.collection.components.modal_product')
+    
                 </div>
             </div>
         </section>

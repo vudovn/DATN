@@ -25,14 +25,28 @@
                 {!! $product->has_attribute == 1 ? '<span class="badge bg-light-danger">Có biến thể</span>' : '' !!}
 
             </td>
-            <td class="text-center">{{ number_format($product->price) }}</td>
+            <td class="text-center">
+                @php
+                    $product->has_attribute == 1
+                        ? ($product->priceAttr->min == $product->priceAttr->max
+                            ? ($price = number_format($product->priceAttr->min))
+                            : ($price =
+                                number_format($product->priceAttr->min) .
+                                ' - ' .
+                                number_format($product->priceAttr->max)))
+                        : ($price = number_format($product->price));
+                    echo $price;
+                @endphp
+                {{-- @dd($product->priceAttr)
+                {{ number_format($product->price) }} đ --}}
+            </td>
             <td class="text-center">{{ number_format($product->quantity) }}</td>
             <td class="text-center">{{ $product->sku }}</td>
-            <td>{{ changeDateFormat($product->created_at) }}</td>
             <td class="text-start text-wrap">
                 @if ($product->categories->count())
                     @foreach ($product->categories as $category)
-                        <a href="{{ route('client.category.index', $category->slug) }}"><span class="badge bg-light-danger">{{ $category->name }}</span></a>
+                        <a href="{{ route('client.category.index', $category->slug) }}"><span
+                                class="badge bg-light-danger">{{ $category->name }}</span></a>
                     @endforeach
                 @else
                     <span class="badge bg-light-danger">Không có danh mục</span>
@@ -44,12 +58,7 @@
             </td>
             <td class="text-center table-actions">
                 <ul class="list-inline me-auto mb-0">
-                    <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Chỉnh sửa">
-                        <a href="{{ route('product.edit', ['id' => $product->id, 'page' => request()->get('page', 1)]) }}"
-                            class="avtar avtar-xs btn-link-success btn-pc-default">
-                            <i class="ti ti-edit-circle f-18"></i>
-                        </a>
-                    </li>
+                    <x-edit :id="$product->id" :model="$config['model']" />
                     <x-delete :id="$product->id" :model="ucfirst($config['model'])" />
                 </ul>
             </td>

@@ -64,6 +64,7 @@
             success: function (res) {
                 console.log(res);
                 $(".product_container").html(res.data);
+                $(".product_container").html(res.data).addClass("show");
             },
         });
     };
@@ -73,6 +74,7 @@
             event.preventDefault();
             let page = $(this).attr("href").split("page=")[1];
             array.page = page;
+            $(window).scrollTop(0);
             TGNT.getData(array);
         });
     };

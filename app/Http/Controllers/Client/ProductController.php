@@ -4,14 +4,18 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\Product\ProductService;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Attribute\AttributeCategoryRepository;
 use App\Repositories\Attribute\AttributeRepository;
 use App\Repositories\Product\ProductVariantRepository;
 use App\Repositories\Review\ReviewRepository;
+use Illuminate\Support\Facades\Session;
+use App\Jobs\SendTelegramNotification;
 class ProductController extends Controller
 {
+    protected $productService;
     protected $productRepository;
     protected $categoryRepository;
     protected $attributeCategoryRepository;
@@ -19,6 +23,7 @@ class ProductController extends Controller
     protected $productVariantRepository;
     protected $reviewRepository;
     public function __construct(
+        ProductService $productService,
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository,
         AttributeCategoryRepository $attributeCategoryRepository,
@@ -26,6 +31,7 @@ class ProductController extends Controller
         ProductVariantRepository $productVariantRepository,
         ReviewRepository $reviewRepository
     ) {
+        $this->productService = $productService;
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
         $this->attributeCategoryRepository = $attributeCategoryRepository;
@@ -38,16 +44,50 @@ class ProductController extends Controller
         return view('client.pages.product.index');
     }
 
-    public function detail($slug)
+    public function detail(Request $request, $slug)
     {
         $config = $this->config();
         $product = $this->productRepository->findByWhereIn('slug', [$slug], ['categories', 'productVariants'], )->first();
+        $NewAlbums = json_decode($product->albums);
+        $product->thumbnail_sub = $NewAlbums[0] ?? $product->thumbnail;
+        $historyProduct = Session::get('historyProduct', []);
+        if (!collect($historyProduct)->contains('id', $product->id)) {
+            $historyProduct[] = $product;
+            Session::put('historyProduct', $historyProduct);
+        }
+        $variant = (object) [];
         if ($product->has_attribute == 1) {
             $product = $this->getAttribute($product);
+            $product->productVariants->map(function ($item) {
+                $item->attributes = explode(',', $item->attributes);
+                return $item;
+            });
+            $variantCurrent = $product->productVariants->first();
+
+            if ($request->has('attr')) {
+                $attr = $request->attr;
+                $attr = explode(',', $attr);
+                $attr = implode(', ', $attr);
+                $variantCurrent = $this->productVariantRepository->findVariant($product->id, $attr);
+            }
+
+            $product->sku = $variantCurrent->sku;
+            $product->title = $variantCurrent->title;
+            $product->price = $variantCurrent->price;
+            $product->code = explode(',', $variantCurrent->code);
+            $product->quantity = $variantCurrent->quantity;
+            $variant->albums = $variantCurrent->albums;
+            // dd($variant);
         }
+        $product->albums = view('client.pages.product_detail.components.api.albums', compact('variant', 'product'))->render();
+        // Session::flush();
+        // dd($product);
+        $idCategory = $product->categories->where('is_room', 2)->first()->id;
+        $productRelated = $this->productRepository->getRelatedProduct($product->id, $idCategory);
         return view('client.pages.product_detail.index', compact(
             'config',
-            'product'
+            'product',
+            'productRelated'
         ));
     }
 
@@ -72,6 +112,21 @@ class ProductController extends Controller
         return $product;
     }
 
+    public function changeQuantity(Request $request)
+    {
+   
+        $quantity = (int) $request->quantity;
+        $inventory = $this->productService->getProductBySku($request->sku)->quantity;
+        $data = [];
+        if ($quantity <= $inventory) {
+            return successResponse(
+                $inventory,
+                'Cập nhật số lượng'
+            );
+        } else {
+            return $inventory;
+        }
+    }
     public function getVariant(Request $request)
     {
         $attribute_id = $request->attribute_id;
@@ -99,6 +154,21 @@ class ProductController extends Controller
         $payload = $request->all();
         $payload['user_id'] = auth()->id();
         $create = $this->reviewRepository->create($payload);
+        if (!$create) {
+            return errorResponse('Đánh giá sản phẩm thất bại!');
+        }
+        $product = $this->productRepository->findById($request->product_id);
+        $linkReview = route('review.reply', $create->id);
+        $linkProduct = route('client.product.detail', $product->slug);
+        $message = "🛍️ *Có đánh giá mới cho sản phẩm!*\n\n";
+        $message .= "📦 *Thông tin chi tiết:*\n";
+        $message .= "📄 *Sản phẩm:* [{$product->name}]($linkProduct)\n";
+        $message .= "🔍 *Đánh giá:* {$request->rating} 🌟\n";
+        $message .= "👤 *Người đánh giá:* " . auth()->user()->name . "\n";
+        $message .= "🔒 *Nội dung:* {$request->content}\n\n";
+        $message .= "🔗 *Chi tiết xem đánh giá:* [Xem tại đây]($linkReview)\n";
+
+        SendTelegramNotification::dispatch($message);
         return successResponse(null, 'Đánh giá sản phẩm thành công!');
     }
 
@@ -122,7 +192,22 @@ class ProductController extends Controller
         }
         return $data;
     }
-
+    public function compare(Request $request)
+    {
+        $skus = $request->except('_token');
+        $products = [];
+        foreach ($skus as $sku) {
+            $data = $this->productRepository->findByField('sku', $sku)->first();
+            if (empty($data)) {
+                $data = $this->productVariantRepository->findByField('sku', $sku)->first();
+                $data->name = $data->product->name;
+                $data->thumbnail = $data->product->thumbnail;
+            }
+            $products[] = $data;
+        }
+        return view('client.pages.product.compare', compact('products'))->render();
+        ;
+    }
     private function config()
     {
         return [

@@ -28,6 +28,13 @@
                         aria-label="View Order Details">
                         Xem Chi Tiết Đơn Hàng
                     </button>
+                    @if ($item->payment_status == 'pending' && $item->paymentMethod->type == 'online')
+                        <form action="{{ route('client.checkout.vnpay.pay-again') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="code" value="{{ $item->code }}">
+                            <button type="submit" class="btn btn-warning btn-sm">Thanh toán lại</button>
+                        </form>
+                    @endif
                     @if ($item->status == 'pending')
                         <button data-order-id="{{ $item->id }}" data-order-id="{{ $item->id }}"
                             data-order-url="{{ route('client.account.cancel-order') }}" data-bs-toggle="modal"
@@ -47,9 +54,7 @@
     @endif
 @else
     <div class="pt-8 d-flex align-items-center" style="flex-direction: column">
-        <img width="60"
-            src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/orderlist/5fafbb923393b712b964.png"
-            alt="">
+        <img width="60" src="{{ asset('uploads/image/system/no_product.webp') }}" alt="">
         <p class="text-center">Chưa có đơn hàng</p>
     </div>
 @endif

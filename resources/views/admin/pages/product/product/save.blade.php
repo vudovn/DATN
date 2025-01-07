@@ -16,7 +16,7 @@
                                 <div class="alert alert-primary" role="alert">
                                     <strong>Lưu ý:</strong> <span class="text-danger">(*)</span> là trường bắt buộc nhập
                                 </div>
-                                @if ($errors->any())
+                                {{-- @if ($errors->any())
                                     <div class="alert alert-danger">
                                         <ul>
                                             @foreach ($errors->all() as $error)
@@ -24,7 +24,7 @@
                                             @endforeach
                                         </ul>
                                     </div>
-                                @endif
+                                @endif --}}
                                 <div class="mb-3">
                                     <x-input :label="'Tên sản phẩm'" :name="'name'" :class="'name-product'" :value="$product->name ?? old('name')"
                                         :required="true" />
@@ -40,10 +40,12 @@
                                         <div class="mb-3 form-group">
                                             <label class="form-label" for="sku">SKU <span
                                                     class="text-danger">*</span></label>
-                                            <input class="form-control" type="text" name="sku" id="sku"
-                                                value="{{ $product->sku ?? old('sku') }}">
+                                            <input disabled class="form-control" type="text" id="sku"
+                                                value="{{ $product->sku ?? old('sku', $sku) }}">
+                                            <input class="form-control" type="hidden" name="sku" id="sku"
+                                                value="{{ $product->sku ?? old('sku', $sku) }}">
                                             @error('sku')
-                                                <small class="error text-danger">*{{ $message }}</small>
+                                                <small class="error text-danger">* {{ $message }}</small>
                                             @enderror
                                         </div>
                                     </div>
@@ -55,7 +57,7 @@
                                                 value="{{ old('quantity', $product->quantity ?? '') }}" type="text"
                                                 name="quantity" id="quantity" value="">
                                             @error('quantity')
-                                                <small class="error text-danger">*{{ $message }}</small>
+                                                <small class="error text-danger">* {{ $message }}</small>
                                             @enderror
                                         </div>
                                     </div>
@@ -64,22 +66,22 @@
                                             <label class="form-label" for="price">Giá tiền <span
                                                     class="text-danger">*</span></label>
                                             <input class="form-control int"
-                                                value="{{ old('price' , formatNumber($product->price ?? '')) }}" type="text"
-                                                name="price" id="price" value="">
+                                                value="{{ old('price', formatNumber($product->price ?? '')) }}"
+                                                type="text" name="price" id="price" value="">
                                             @error('price')
-                                                <small class="error text-danger">*{{ $message }}</small>
+                                                <small class="error text-danger">* {{ $message }}</small>
                                             @enderror
                                         </div>
 
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="mb-3 form-group">
-                                            <label class="form-label" for="discount">Giảm giá (%) </label>
-                                            <input class="form-control int" max="100"
-                                                value="{{ $product->discount ?? old('discount') }}" type="number"
+                                            <label class="form-label" for="discount">Giảm giá (1-50%) </label>
+                                            <input class="form-control int"
+                                                value="{{ $product->discount ?? old('discount') }}" type="text"
                                                 name="discount" id="discount">
                                             @error('discount')
-                                                <small class="error text-danger">*{{ $message }}</small>
+                                                <small class="error text-danger">* {{ $message }}</small>
                                             @enderror
                                         </div>
                                     </div>
@@ -98,7 +100,7 @@
                     @include('admin.pages.product.product.components.variant')
 
                     <div class="col-lg-12">
-                        <x-seo :value_meta_title="$product->meta_title ?? old('meta_title')" :value_meta_description="$product->meta_description ?? old('meta_description')" />
+                        <x-seo :value_meta_title="$product->meta_title ?? old('meta_title')" :value_meta_description="$product->meta_description ?? old('meta_description')" :value_slug="$product->slug ?? old('slug')" />
                     </div>
                 </div>
             </div>
@@ -126,7 +128,7 @@
 
 
                         @error('category')
-                            <small class="error text-danger">{{ $message }}</small>
+                            <small class="error text-danger">* {{ $message }}</small>
                         @enderror
                     </div>
                 </div>
@@ -150,7 +152,7 @@
 
 
                         @error('category_id')
-                            <small class="error text-danger">{{ $message }}</small>
+                            <small class="error text-danger">* {{ $message }}</small>
                         @enderror
                     </div>
                 </div>
@@ -165,12 +167,12 @@
                                 {{ old('is_featured', $product->is_featured ?? 0) == 1 ? 'checked' : '' }}>
                             <label class="form-check-label" for="is_featured2">Sản phẩm nổi bật</label>
                         </div>
-                        <div class="form-check mb-2">
+                        {{-- <div class="form-check mb-2">
                             <input class="form-check-input" type="radio" name="is_featured" value="2"
                                 id="is_featured1"
                                 {{ old('is_featured', $product->is_featured ?? 0) == 2 ? 'checked' : '' }}>
                             <label class="form-check-label" for="is_featured1">Sản phẩm không nổi bật</label>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 

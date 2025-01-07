@@ -1,5 +1,6 @@
 <?php
 namespace App\Services\User;
+
 use App\Services\BaseService;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\DB;
@@ -94,6 +95,7 @@ class UserService extends BaseService
             $user = $this->userRepository->update($id, $payload);
             $findUser = $this->userRepository->findById($id);
             $findUser->syncRoles($request->input('roles')); // Đồng bộ vai trò
+
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -119,6 +121,7 @@ class UserService extends BaseService
             return false;
         }
     }
+
 
     public function editAccount($request, $id)
     {
@@ -153,6 +156,24 @@ class UserService extends BaseService
         try {
             $payload = $request->except(['_token', 'send']);
             $payload['password'] = Hash::make($request->password);
+            $user = $this->userRepository->update($id, $payload);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+            die();
+            // $this->log($e);
+            // return false;
+        }
+    }
+    public function changePasswords($request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $payload = $request->except(['_token', 'send']);
+            $password_new = $request->password_new;
+            $payload['password'] = Hash::make($password_new);
             $user = $this->userRepository->update($id, $payload);
             DB::commit();
             return true;

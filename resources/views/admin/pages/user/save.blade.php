@@ -22,22 +22,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-lg-6">
-                                <label for="roles[]">Chọn vai trò <span class="text-danger">*</span></label>
-                                <select class="form-control js-choice-multiple" name="roles[]" multiple="multiple">
-                                    @foreach ($roles as $key => $role)
-                                        <option value="{{ $role->name }}"
-                                            {{ isset($user) && $user->roles->contains('name', $role->name) ? 'selected' : '' }}
-                                            {{ in_array($role->name, old('roles') ?? []) ? 'selected' : '' }}>
-                                            {{ $role->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('roles')
-                                    <small class="error text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <x-input :label="'Số điện thoại'" :name="'phone'" :value="$user->phone ?? ''" :required="true" />
                             </div>
                         </div>
@@ -79,7 +64,9 @@
                                         @foreach ($user->wishlists as $key => $wishlist)
                                             <tr>
                                                 <th scope="row">{{ $key + 1 }}</th>
-                                                <td><a href="{{ route('client.product.detail',$wishlist->product->slug) }}">{{ $wishlist->product->name }}</a></td>
+                                                <td><a
+                                                        href="{{ route('client.product.detail', $wishlist->product->slug) }}">{{ $wishlist->product->name }}</a>
+                                                </td>
                                                 <td>{{ $wishlist->created_at ? $wishlist->created_at->format('d/m/Y') : 'Không có ngày tạo' }}
                                                 </td>
                                             </tr>
@@ -119,7 +106,7 @@
                                                     </td>
                                                     <td>{{ number_format($order->total, 0, ',', '.') }} VND</td>
                                                     <td>{{ statusOrder($order->status) }}</td>
-                                                    <td>{{ $order->payment ? $order->payment->method_name : 'Chưa có phương thức thanh toán' }}
+                                                    <td>{{ $order->paymentMethod->name }}
                                                     </td>
                                                 </tr>
                                             @endforeach

@@ -10,8 +10,8 @@
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/able_pro/plugins/select2/js/select2.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library/client_asset/library/bootstrap5.3/dist/js/theme.min.js">
 </script>
-<script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library//client_asset/library/smoothscroll/SmoothScroll.js">
-</script>
+{{-- <script src="https://cdn.jsdelivr.net/gh/vudevweb/my-library//client_asset/library/smoothscroll/SmoothScroll.js">
+</script> --}}
 <script type="https://cdn.jsdelivr.net/gh/vudevweb/my-library/text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script
     src="https://cdn.jsdelivr.net/gh/vudevweb/my-library//client_asset/library/bootstrap5.3/dist/umd/owl.carousel.min.js">
@@ -32,20 +32,36 @@
         $(".loading_tgnt").fadeOut("slow");
     });
 </script>
-@if (Auth::check())
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: "/yeu-thich/ajax/count-wishlist",
-                type: "GET",
-                dataType: "json",
-                success: function(res) {
-                    $(".wishlist_count").text(res.data);
+<script>
+    $("#slide-featured").slick({
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 2,
+        responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    infinite: true,
                 },
-            });
-        });
-    </script>
-@endif
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                },
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
+            },
+        ],
+    });
+</script>
 <script>
     window.onscroll = function() {
         var scrollLink = document.getElementById("scroll-up");

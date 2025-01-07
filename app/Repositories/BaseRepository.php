@@ -52,6 +52,7 @@ class BaseRepository
         return $this->model->select($select)->with($relation)->find($id);
     }
 
+
     public function findByField(string $field, $value, array $select = ['*'], $relation = [])
     {
         return $this->model->select($select)->where($field, $value)->with($relation);
@@ -61,9 +62,10 @@ class BaseRepository
     {
         return $this->model->select($select)->whereIn($column, $values)->with($relation)->get();
     }
-    
 
-    public function delete(int $id){
+
+    public function delete(int $id)
+    {
         return $this->findById($id)->delete();
     }
 
@@ -78,18 +80,41 @@ class BaseRepository
     }
 
 
-    public function getAll() {
+    public function getAll()
+    {
         return $this->model->all();
     }
 
 
-    public function deleteManyWhere($field1, $valField1, $field2, $valField2) {
+    public function deleteManyWhere($field1, $valField1, $field2, $valField2)
+    {
         return $this->model->where($field1, $valField1)->where($field2, $valField2)->delete();
     }
 
 
-    public function createMany(array $payload = []){
+    public function createMany(array $payload = [])
+    {
         return $this->model->insert($payload);
     }
+
+    public function getOnlyTrashed()
+    {
+        // return $this->model->onlyTrashed()->get();
+        return $this->model->whereNotNull('deleted_at')->get();
+    }
+
+    public function restore(int $id)
+    {
+        // return $this->getOnlyTrashed()->find($id)->restore();
+        return $this->update($id, ['deleted_at' => null]);
+
+    }
+
+    public function destroy(int $id)
+    {
+        // return $this->getOnlyTrashed()->find($id)->forceDelete();
+        return $this->delete($id);
+    }
+
 
 }

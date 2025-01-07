@@ -27,9 +27,11 @@ class CheckPermissionVN
             'store' => 'create',
             'update' => 'edit',
             'show', 'get' => 'index',
-            default => $method[0], 
+            'restore', 'destroy' => 'delete',
+            default => $method[0],
         };
-        $permission = $model != null ? $permission = $model . ' ' . $action : $permission = $currentAction[0] . ' ' . $action;
+        $model = ucfirst($model);
+        $permission = $model != null ? $permission = $model . ' ' .  $action : $permission = $currentAction[0] . ' ' . $action;
         if (Auth::user()->hasRole('Super Admin')) {
             return $next($request);
         }

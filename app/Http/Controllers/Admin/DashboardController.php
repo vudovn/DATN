@@ -56,39 +56,45 @@ class DashboardController extends Controller
 
     public function topSellingProducts()
     {
-        $products = DB::table('products')
-            ->join('order_details', 'products.id', '=', 'order_details.product_id')
-            ->join('orders', 'order_details.order_id', '=', 'orders.id') // Join bảng orders
-            ->select(
-                'products.name',
-                'products.thumbnail',
-                'products.slug',
-                'products.sku',
-                DB::raw('SUM(CASE WHEN orders.status = "delivered" THEN order_details.quantity ELSE 0 END) as total_quantity'),
-                DB::raw('SUM(CASE WHEN orders.status = "delivered" THEN order_details.quantity * order_details.price ELSE 0 END) as total_revenue')
-            )
-            ->groupBy('products.id', 'products.name', 'products.thumbnail', 'products.slug', 'products.sku')
-            ->orderByDesc('total_quantity')
-            ->take(10)
-            ->get();
-
-        return $products;
+        return $this->productRepository->getTopSellingProducts();
     }
+
+
 
     public function topLeastSellingProducts()
     {
         $products = DB::table('products')
-            ->leftJoin('order_details', 'products.id', '=', 'order_details.product_id')
+            ->leftJoin('product_variants', function ($join) {
+                $join->on('products.id', '=', 'product_variants.product_id')
+                    ->where('products.has_attribute', '=', 1);
+            })
+            ->leftJoin('order_details', function ($join) {
+                $join->on('products.sku', '=', 'order_details.sku')
+                    ->orOn('product_variants.sku', '=', 'order_details.sku');
+            })
             ->leftJoin('orders', 'order_details.order_id', '=', 'orders.id')
             ->select(
+                DB::raw('CASE 
+                            WHEN product_variants.title IS NOT NULL THEN CONCAT(products.name, " - ", product_variants.title) 
+                            ELSE products.name 
+                        END AS product_name'),
+                'products.thumbnail',
+                'products.slug',
+                DB::raw('COALESCE(product_variants.sku, products.sku) AS sku'),
+                DB::raw('COALESCE(product_variants.code, NULL) AS variant_code'), // Thêm cột variant_code
+                DB::raw('COALESCE(SUM(CASE WHEN orders.status = "delivered" THEN order_details.quantity ELSE 0 END), 0) as total_quantity'),
+                DB::raw('COALESCE(SUM(CASE WHEN orders.status = "delivered" THEN order_details.quantity * order_details.price ELSE 0 END), 0) as total_revenue')
+            )
+            ->groupBy(
+                'products.id',
                 'products.name',
                 'products.thumbnail',
                 'products.slug',
                 'products.sku',
-                DB::raw('COALESCE(SUM(CASE WHEN orders.status = "delivered" THEN order_details.quantity ELSE 0 END), 0) as total_quantity'),
-                DB::raw('COALESCE(SUM(CASE WHEN orders.status = "delivered" THEN order_details.quantity * order_details.price ELSE 0 END), 0) as total_revenue')
+                'product_variants.title',
+                'product_variants.sku',
+                'product_variants.code'
             )
-            ->groupBy('products.id', 'products.name', 'products.thumbnail', 'products.slug', 'products.sku')
             ->orderBy('total_quantity', 'asc')
             ->take(10)
             ->get();
@@ -96,24 +102,39 @@ class DashboardController extends Controller
         return $products;
     }
 
+
+
     public function lowStockProducts()
     {
         $products = DB::table('products')
+            ->leftJoin('product_variants', function ($join) {
+                $join->on('products.id', '=', 'product_variants.product_id')
+                    ->where('products.has_attribute', '=', 1);
+            })
             ->select(
                 'products.id',
-                'products.name',
+                DB::raw('CASE 
+                            WHEN product_variants.title IS NOT NULL THEN CONCAT(products.name, " - ", product_variants.title) 
+                            ELSE products.name 
+                        END AS product_name'),
                 'products.thumbnail',
                 'products.slug',
-                'products.sku',
-                'products.quantity'
+                DB::raw('COALESCE(product_variants.sku, products.sku) AS sku'),
+                DB::raw('COALESCE(product_variants.quantity, products.quantity) AS quantity'),
+                'product_variants.code AS variant_code' // Thêm cột variant_code
             )
-            ->where('products.quantity', '<=', 10)
-            ->orderBy('products.quantity', 'asc')
+            ->where(function ($query) {
+                $query->where('products.quantity', '<=', 10)
+                    ->orWhere('product_variants.quantity', '<=', 10);
+            })
+            ->orderBy('quantity', 'asc')
             ->take(10)
             ->get();
 
         return $products;
     }
+
+
 
     public function newCustomersByMonth()
     {

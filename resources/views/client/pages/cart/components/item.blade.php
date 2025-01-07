@@ -2,14 +2,14 @@
     <div class="cart-item" id="cart-item-{{ $product->idCart }}"
         data-productSku="{{ $product->product->sku ?? $product->sku }}" data-id="{{ $product->idCart }}"
         style="z-index: {{ $zIndex }};">
-        <div class="cart-item-check">
+        {{-- <div class="cart-item-check">
             <div class="checkbox-wrapper-27">
                 <label class="checkbox">
                     <input type="checkbox" checked disabled>
                     <span class="checkbox__icon"></span>
                 </label>
             </div>
-        </div>
+        </div> --}}
         <img id="thumbnail-{{ $product->idCart }}" alt="Black and white striped ceramic plate" height="100"
             src="{{ $product->thumbnail }}" width="100" />
         <div class="cart-item-details">
@@ -57,7 +57,7 @@
                             class="changeVariant btn fw-normal {{ $variant->sku == $product->sku ? 'btn-tgnt' : 'btn-outline-tgnt' }}"
                             id="changeVariant-{{ $variant->sku }}" data-id="{{ $product->idCart }}"
                             data-sku="{{ $variant->sku }}" data-productSku="{{ $product->product->sku }}"
-                            data-quantity="{{ $product->quantity }}" {{ $isDisabled ? ' disabled' : '' }}>
+                            data-quantity="{{ $product->quantity }}" {{ $isDisabled ? ' disabled' : '' }} {{ $variant->quantity == 0 ?' disabled' : ''}}>
                             {!! $isDisabled ? '<i class="fa-solid fa-check"></i>' : '' !!}
                             {{ $variant->title }}
                             ({{ $variant->quantity }})

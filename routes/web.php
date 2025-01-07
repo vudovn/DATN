@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ProductController;
@@ -15,7 +16,7 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\AttributeCategoryController;
 use App\Http\Controllers\Admin\DiscountCodeController;
-use App\Http\Controllers\Admin\settingController;
+use App\Http\Controllers\Admin\SettingController;
 
 
 use App\Http\Controllers\Admin\CollectionController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\Client\CommentController as ClientCommentController;
 use App\Http\Controllers\Client\CartController as ClientCartController;
 use App\Http\Controllers\Client\CheckoutController as ClientCheckoutController;
 use App\Http\Controllers\Client\IndexController;
+use App\Http\Controllers\Client\ContactController as ClientContactController;
 use App\Http\Controllers\Client\CategoryController as ClientCategoryController;
 use App\Http\Controllers\Ajax\AjaxController as AjaxDashboardController;
 use App\Http\Controllers\Ajax\LocationController;
@@ -42,7 +44,6 @@ use App\Http\Controllers\Client\VnPayController;
 Route::get('/account', function () {
     return view('admin.pages.account.application.index');
 })->name('home');
-
 Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     Route::prefix('admin/dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');
@@ -51,15 +52,20 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
     });
     /* USER ROUTE */
     Route::prefix('admin/user')->name('user.')->group(function () {
-        Route::get('/customer', [UserController::class, 'index'])->name('index');
-        Route::get('/admin', [UserController::class, 'index'])->name('admin.index');
+        Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('/create', [UserController::class, 'create'])->name('create');
         Route::post('/store', [UserController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
-        // Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
-        // Route::get('/api/wards/{district_code}', [UserController::class, 'getWards'])->name('wards');
+    });
+    Route::prefix('admin/staff')->name('staff.')->group(function () {
+        Route::get('/', [StaffController::class, 'index'])->name('index');
+        Route::get('/create', [StaffController::class, 'create'])->name('create');
+        Route::post('/store', [StaffController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [StaffController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [StaffController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [StaffController::class, 'delete'])->name('delete');
     });
     /* PRODUCT ROUTE */
     Route::prefix('admin/product')->name('product.')->group(function () {
@@ -69,6 +75,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [ProductController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('delete');
+        Route::get('/trash', [ProductController::class, 'trash'])->name('trash');
     });
 
     /* ATTRIBUTE ROUTE */
@@ -79,6 +86,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [AttributeCategoryController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [AttributeCategoryController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [AttributeCategoryController::class, 'delete'])->name('delete');
+        Route::get('/trash', [AttributeCategoryController::class, 'trash'])->name('trash');
     });
     /* PERMISSION ROUTE */
     Route::prefix('admin/permission')->name('permission.')->group(function () {
@@ -113,17 +121,22 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('search_customer', [OrderController::class, 'searchCustomer'])->name('searchCustomer');
         Route::put('payment-status/{id}', [OrderController::class, 'updatePaymentStatus'])->name('updatepayment');
         Route::get('dataVariantsProduct/{id}', [OrderController::class, 'dataVariantsProduct'])->name('dataVariantsProduct');
+        Route::get('/trash', [OrderController::class, 'trash'])->name('trash');
     });
+
     /* CATEGORY ROUTE */
     Route::prefix('admin/category')->name('category.')->group(function () {
         Route::get('/index', [CategoryController::class, 'index'])->name('index');
+        Route::get('/room', [CategoryController::class, 'index'])->name('room.index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
         Route::post('/store', [CategoryController::class, 'store'])->name('store');
         Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CategoryController::class, 'delete'])->name('delete');
+        Route::get('/trash', [CategoryController::class, 'trash'])->name('trash');
     });
 
+    /* DISCOUNT CODE ROUTE */
     Route::prefix('admin/discount')->name('discountCode.')->group(function () {
         Route::get('/index', [DiscountCodeController::class, 'index'])->name('index');
         Route::get('/create', [DiscountCodeController::class, 'create'])->name('create');
@@ -131,6 +144,7 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [DiscountCodeController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [DiscountCodeController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [DiscountCodeController::class, 'delete'])->name('delete');
+        Route::get('/trash', [DiscountCodeController::class, 'trash'])->name('trash');
     });
 
     /* COMMENT ROUTE */
@@ -161,22 +175,29 @@ Route::middleware(['authenticated', 'preventBackHistory'])->group(function () {
         Route::get('/edit/{id}', [CollectionController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [CollectionController::class, 'update'])->name('update');
         Route::get('/delete/{id}', [CollectionController::class, 'delete'])->name('delete');
-    });    /* FORBIDDEN WORD ROUTE */
+        Route::get('/trash', [CollectionController::class, 'trash'])->name('trash');
+    });
+
+    /* FORBIDDEN WORD ROUTE */
     Route::prefix('admin/forbiddenword')->name('CommentForbiddenWord.')->group(function () {
         Route::get('/index', [CommentForbiddenWordController::class, 'index'])->name('index');
         Route::get('/create', [CommentForbiddenWordController::class, 'create'])->name('create');
         Route::post('/store', [CommentForbiddenWordController::class, 'store'])->name('store');
         Route::get('/delete/{id}', [CommentForbiddenWordController::class, 'delete'])->name('delete');
-
     });
 
     // setting route
     Route::prefix('admin/setting')->name('setting.')->group(function () {
-        Route::get('/index', [settingController::class, 'index'])->name('index');
-        Route::get('/slide', [settingController::class, 'slide'])->name('slide');
-        Route::put('/slider', [settingController::class, 'sliderUpdate'])->name('sliderUpdate');
-        Route::get('/general', [settingController::class, 'general'])->name('general');
-        Route::put('/general', [settingController::class, 'generalUpdate'])->name('generalUpdate');
+        Route::get('/index', [SettingController::class, 'index'])->name('index');
+        Route::get('/slide', [SettingController::class, 'slide'])->name('slide');
+        Route::put('/slider', [SettingController::class, 'sliderUpdate'])->name('sliderUpdate');
+        Route::get('/general', [SettingController::class, 'general'])->name('general');
+        Route::put('/general', [SettingController::class, 'generalUpdate'])->name('generalUpdate');
+    });
+    Route::prefix('setting/account')->name('setting.account.')->group(function () {
+        Route::get('/{type}', [UserController::class, 'getInformation'])->name('index');
+        Route::put('/update-{type}', [UserController::class, 'updateInformation'])->name('update');
+
     });
 });
 
@@ -188,6 +209,8 @@ Route::middleware(['checkPermission'])->group(function () {
         Route::delete('/deleteItem', [AjaxDashboardController::class, 'deleteItem'])->name('ajax.dashboard.deleteItem');
         Route::put('/quickUpdate', [AjaxDashboardController::class, 'updateQuick'])->name('ajax.dashboard.quickUpdate');
         Route::put('/change/status', [AjaxDashboardController::class, 'updateStatus'])->name('ajax.dashboard.updateStatus');
+        Route::put('/restoreItem', [AjaxDashboardController::class, 'restoreItem'])->name('ajax.dashboard.restoreItem');
+        Route::delete('/destroyItem', [AjaxDashboardController::class, 'destroyItem'])->name('ajax.dashboard.destroyItem');
     });
 });
 
@@ -221,11 +244,12 @@ Route::get('/order-code', function () {
 });
 
 
+
 Route::get('/test', [AjaxDashboardController::class, 'test']);
 
 // =======================================================CLIENT================================================================
 // client route
-route::middleware('preventBackHistory')->group(function () {
+route::middleware(['preventBackHistory'])->group(function () {
     Route::prefix('/')->name('client.')->group(function () {
         // auth route
         Route::prefix('')->middleware('clientLogin')->name('auth.')->group(function () {
@@ -265,6 +289,8 @@ route::middleware('preventBackHistory')->group(function () {
         Route::prefix('san-pham')->name('product.')->group(function () {
             Route::get('/', [ClientProductController::class, 'index'])->name('index');
             Route::get('/{slug}', [ClientProductController::class, 'detail'])->name('detail');
+            Route::post('/so-sanh', [ClientProductController::class, 'compare'])->name('compare');
+            Route::post('/ajax/change-quantity', [ClientProductController::class, 'changeQuantity'])->name('change-quantity');
             Route::get('/ajax/get-variant', [ClientProductController::class, 'getVariant'])->name('get-variant');
             Route::get('/ajax/search-product', [ClientProductController::class, 'searchProduct'])->name('get-variant');
             Route::get('/ajax/get-review', [ClientProductController::class, 'getReview'])->name('get-review');
@@ -293,12 +319,18 @@ route::middleware('preventBackHistory')->group(function () {
             Route::post('/applyDiscount', [ClientCheckoutController::class, 'applyDiscount'])->name('applyDiscount');
             Route::post('/store', [ClientCheckoutController::class, 'store'])->name('store');
             Route::post('/vnpay/pay', [VnPayController::class, 'pay'])->name('vnpay.pay');
+            Route::post('/vnpay/pay-again', [VnPayController::class, 'payAgain'])->name('vnpay.pay-again');
             Route::get('/vnpay/return', [VnPayController::class, 'return'])->name('vnpay.return');
         });
         // collection route
         Route::prefix('bo-suu-tap')->name('collection.')->group(function () {
             Route::get('/', [ClientCollectionController::class, 'index'])->name('index');
             Route::get('{slug}', [ClientCollectionController::class, 'detail'])->name('detail');
+            Route::get('/ajax/get-comments/{slug}', [ClientCommentController::class, 'getComments'])->name('get-comment');
+            Route::get('/ajax/get-replies/{comment_id}/{limit}', [ClientCommentController::class, 'getReplies'])->name('get-reply');
+            Route::post('/ajax/comment/store', [ClientCommentController::class, 'store'])->name('store');
+            Route::post('/ajax/comment/update', [ClientCommentController::class, 'update'])->name('update');
+            Route::post('/ajax/comment/remove', [ClientCommentController::class, 'remove'])->name('remove');
         });
 
         // about route
@@ -308,8 +340,10 @@ route::middleware('preventBackHistory')->group(function () {
 
         // about route
         Route::prefix('lien-he')->name('contact.')->group(function () {
-            Route::get('/', [IndexController::class, 'contact'])->name('index');
+            Route::get('/', [ClientContactController::class, 'contact'])->name('index');
+            Route::post('/', [ClientContactController::class, 'send'])->name('send');
         });
+
 
         /* WISHLIST */
         Route::prefix('yeu-thich')->name('wishlist.')->group(function () {
@@ -317,6 +351,5 @@ route::middleware('preventBackHistory')->group(function () {
             Route::get('/ajax/action-wishlist', [WishlistController::class, 'action']);
             Route::get('/ajax/count-wishlist', [WishlistController::class, 'count']);
         });
-
     });
 });

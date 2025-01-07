@@ -12,6 +12,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Traits\HasDynamicMiddleware;
+
 class RoleController extends Controller implements HasMiddleware
 {
     use HasDynamicMiddleware;
@@ -46,7 +47,8 @@ class RoleController extends Controller implements HasMiddleware
     {
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');
-        $permissions = Permission::all();
+        $permissions = Permission::all()->sortBy('name');
+
         $config['method'] = 'create';
         $config['model'] = 'role';
         return view('admin.pages.permission.role.save', compact(
@@ -66,7 +68,8 @@ class RoleController extends Controller implements HasMiddleware
     {
         $config = $this->config();
         $role = $this->roleRepository->findById($id);
-        $permissions = Permission::all();
+        $permissions = Permission::all()->sortBy('name');
+
         $config['breadcrumb'] = $this->breadcrumb('update');
         $config['method'] = 'edit';
         return view('admin.pages.permission.role.save', compact(

@@ -1,14 +1,21 @@
+/* :root {
+    --base-color: #0C1844;
+    --base-color-hover: #C80036;
+    --base-bg: #C80036;
+    --text-base: #C80036;
+} */
 :root {
-    --base-color: #a84448;
-    --base-color-hover: #a74f50d2;
-    --base-bg: #d9c3aa;
+    --base-color: #543a14;
+    --base-color-hover: #543a14b6;
+    --base-bg: #f0bb78;
+    --text-color: #543a14;
 }
 
 .text-stnt {
-    color: var(--base-color) !important;
+    color: var(--text-base) !important;
 }
 .text-tgnt {
-    color: var(--base-color) !important;
+    color: var(--text-base) !important;
 }
 .input-tgnt {
     border-radius: 20px;
@@ -19,6 +26,7 @@
     background-color: var(--base-color);
     border-color: var(--base-color);
 }
+
 .form-check-input[type="checkbox"] {
     border-radius: 0.25em;
 }
@@ -43,14 +51,17 @@
 
 .form-control:focus,
 .form-check-input:focus {
-    border-color: #a84448 !important;
-    box-shadow: 0 0 0 0.25rem rgba(168, 68, 72, 0.25) !important;
-    color: #21313c;
+    border-color: #543a14 !important;
+    box-shadow: unset !important;
+    color: #543a14;
     outline: 0;
 }
 
 .nav-link:focus,
 .nav-link:hover {
+    color: var(--base-color) !important;
+}
+a {
     color: var(--base-color) !important;
 }
 a.active {
@@ -245,7 +256,7 @@ a:hover {
 
 .form-select:focus {
     border-color: var(--base-color) !important;
-    box-shadow: 0 0 0 0.25rem rgba(168, 68, 72, 0.25) !important;
+    box-shadow: unset !important;
     outline: 0;
 }
 
@@ -341,7 +352,7 @@ a:hover {
 
 .form-select:focus {
     border-color: var(--base-color) !important;
-    box-shadow: 0 0 0 0.25rem rgba(168, 68, 72, 0.25) !important;
+    box-shadow: unset !important;
     outline: 0;
 }
 
@@ -356,7 +367,7 @@ a:hover {
 
 /* heart */
 .con-like {
-    --red: var(--base-color);
+    --red: red;
     position: relative;
     width: 20px;
     height: 20px;

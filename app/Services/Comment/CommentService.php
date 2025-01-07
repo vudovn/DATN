@@ -52,10 +52,8 @@ class CommentService extends BaseService
     public function handleForbiddenWords($id)
     {
         $comment = $this->commentRepository->findById($id);
-
         if ($comment) {
             $forbiddenWords = ForbiddenWord::all();
-
             foreach ($forbiddenWords as $word) {
                 if (preg_match("/\b{$word->word}\b/i", $comment->content)) {
                     $actions = $word->actions;
@@ -98,11 +96,11 @@ class CommentService extends BaseService
         DB::beginTransaction();
         try {
             $request['user_id'] = Auth::user()->id;
-            $request['product_id'] = (int) $request['product_id'];
+            $request['collection'] = (int) $request['collection'];
             $request['parent_id'] = (int) $request['parent_id'] == 0 ? null :  (int) $request['parent_id'];
             $payload = $request->except(['_token', 'send']);
             $comment = $this->commentRepository->create($payload);
-            $this->handleForbiddenWords($comment->id);
+            // $this->handleForbiddenWords($comment->id);
             DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -125,18 +123,20 @@ class CommentService extends BaseService
             return false;
         }
     }
-
-
-
     public function delete($id)
     {
         DB::beginTransaction();
         try {
+            $childs = $this->commentRepository->getChilds($id)->get();
+            foreach ($childs as $child) {
+                $this->commentRepository->delete($child->id);
+            }
             $this->commentRepository->delete($id);
             DB::commit();
             return true;
         } catch (\Exception $e) {
             DB::rollback();
+            echo $e->getMessage();
             $this->log($e);
             return false;
         }

@@ -25,6 +25,7 @@ class CategoryController extends Controller
             'category_id' => $category->id,
         ];
         $products = $this->productService->paginateClient($request);
+        // dd($products);
         $config = $this->config();
         return view('client.pages.category.index', compact(
             'category',

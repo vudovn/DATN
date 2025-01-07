@@ -7,11 +7,11 @@
                     <span class="badge bg-light-warning text-dark-warning ms-2">{{ statusOrder($order->status) }}</span>
                 </div>
                 <!-- button -->
-                @if ($order->status == 'delivered')
+                {{-- @if ($order->status == 'delivered')
                     <div class="ms-md-3">
                         <button href="#" class="btn btn-secondary">Tải hóa đơn</button>
                     </div>
-                @endif
+                @endif --}}
             </div>
         </div>
         <div class="mt-8">
@@ -126,11 +126,15 @@
     <div class="p-6">
         <div class="row">
             <div class="col-md-6 mb-4 mb-lg-0">
-                <h6>Thông tin thanh toán</h6>
-                <span>{{ $order->payment_method }}</span>
+                <h6>Thông tin thanh toán: </h6>
+                <span>{{ $order->paymentMethod->name }}</span>
+                <div class="mt-3">
+                    <h6>Trạng thái thanh toán: </h6>
+                    <span>{{ paymentStatusOrder($order->payment_status) }}</span>
+                </div>
             </div>
             <div class="col-md-6">
-                <h5>Ghi chú đơn hàng</h5>
+                <h5>Ghi chú đơn hàng:</h5>
                 <textarea disabled class="form-control mb-3" rows="3" placeholder="">{{ $order->note }}</textarea>
             </div>
         </div>

@@ -30,11 +30,11 @@ return [
     'sort' => [
         0 => [
             'id' => 'id,desc',
-            'name' => 'Từ cũ đến mới'
+            'name' => 'Từ mới đến cũ'
         ],
         1 => [
             'id' => 'id,asc',
-            'name' => 'Từ mới đến cũ'
+            'name' => 'Từ cũ đến mới'
         ],
         2 => [
             'id' => 'name,asc',
@@ -45,18 +45,38 @@ return [
             'name' => 'Tên Z - A'
         ]
     ],
-    'actions' => [
+    'commemt_sort' => [
         0 => [
-            'id' => 'delete',
-            'name' => 'Xóa'
+            'id' => 'id,desc',
+            'name' => 'Từ mới đến cũ'
         ],
         1 => [
-            'id' => 'publish-1',
-            'name' => 'Xuất bản'
+            'id' => 'id,asc',
+            'name' => 'Từ cũ đến mới'
         ],
-        2 => [
+    ],
+    'actions' => [
+        // 0 => [
+        //     'id' => 'delete',
+        //     'name' => 'Xóa'
+        // ],
+        0 => [
+            'id' => 'publish-1',
+            'name' => 'Hoạt động'
+        ],
+        1 => [
             'id' => 'publish-2',
-            'name' => 'Không xuất bản'
+            'name' => 'Vô hiệu hoá'
+        ],
+    ],
+    'user_actions' => [
+        0 => [
+            'id' => 'publish-1',
+            'name' => 'Hoạt động'
+        ],
+        1 => [
+            'id' => 'publish-2',
+            'name' => 'Vô hiệu hoá'
         ],
     ],
     'rating' => [
@@ -80,6 +100,26 @@ return [
             'id' => 5,
             'name' => '5 sao'
         ]
-    ]
+    ],
+    'is_featured' => [
+        0 => [
+            'id' => 1,
+            'name' => 'Nổi bật'
+        ],
+        1 => [
+            'id' => 2,
+            'name' => 'Không nổi bật'
+        ]
+    ],
+    'has_attribute' => [
+        0 => [
+            'id' => 1,
+            'name' => 'Có'
+        ],
+        1 => [
+            'id' => 2,
+            'name' => 'Không'
+        ]
+    ],
 
 ];

@@ -42,13 +42,6 @@
                             </div>
                         @endforeach
                     </div>
-                    {{-- @if (Auth()->check())
-                    <div class="d-grid">
-                        <h4>Đánh giá sản phẩm này </h4>
-                        <p class="mb-0">Chia sẻ trải nghiệm mua hàng của bạn tới những khách hàng khác</p>
-                        
-                    </div>
-                @endif --}}
                 </div>
             </div>
             <div class="col-12 col-xxl-8">
@@ -142,12 +135,11 @@
         </div>
     </div>
 @else
-<div class="col-12">
-    <div class="text-center">
-        <img class="mb-3 mb-3" width="100"
-            src="https://cdn-icons-png.flaticon.com/512/2065/2065224.png"
-            alt="">
-        <p>Chưa có đánh giá nào cho sản phẩm này!</p>
+    <div class="col-12">
+        <div class="text-center pt-10">
+            <img class="mb-3 mb-3" width="100" src="{{ asset('uploads/image/system/no_product.webp') }}"
+                alt="">
+            <p>Chưa có đánh giá nào cho sản phẩm này!</p>
+        </div>
     </div>
-</div>
 @endif

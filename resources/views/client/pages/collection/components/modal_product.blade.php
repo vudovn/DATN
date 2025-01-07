@@ -10,16 +10,13 @@
                     <div class="main-left">
                         <div class="cart-container">
                             @foreach ($products as $product)
-                                <div class="cart-item">
+                                <div class="cart-item" id="cart-item-{{ $product->sku }}">
                                     <img alt="Black and white striped ceramic plate" height="100"
                                         src="{{ $product->thumbnail }}" width="100" />
                                     <div class="cart-item-details">
                                         <div class="cart-item-title">
                                             {{ $product->name }}
                                         </div>
-                                        {{-- <div class="cart-item-subtitle">
-                                            {{ $product->name }}
-                                        </div> --}}
                                         <div class="d-xxl-flex">
                                             <div class="cart-item-price">
                                                 {{ formatNumber($product->price) }}
@@ -36,32 +33,27 @@
                                             </button>
                                         @endif
                                     </div>
-                                    {{-- <div class="pe-xxl-5">
-                                        <div class="cart-item-total text-center">
-                                            {{ formatNumber($product->price) }}
+                                    <div class="cart-item-check">
+                                        <div class="checkbox-wrapper-27">
+                                            <label class="checkbox check-collection" data-sku="{{ $product->sku }}"
+                                                data-inventory="{{ $product->quantity }}"
+                                                data-price="{{ $product->price }}"
+                                                data-name="{{ $product->name }}"
+                                                >
+                                                <input type="checkbox" class="checkboxsku"
+                                                    id="checkboxsku-{{ $product->sku }}" >
+                                                <span class="checkbox__icon"></span>
+                                            </label>
                                         </div>
-                                        <div class="input-group input-spinner d-flex">
-                                            <input type="button" value="-" class="button-minus btn btn-sm"
-                                                data-field="quantity">
-                                            <input type="number" step="1" max="3" value="1"
-                                                name="quantity[]" class="quantity-field form-control-sm form-input">
-                                            <input type="button" value="+" class="button-plus btn btn-sm"
-                                                data-field="quantity">
-                                        </div>
-                                    </div> --}}
-                                    <div class="cart-item-remove">
-                                        <button type="button" data-sku="{{ $product->sku }}"
-                                            class="removeItem btn btn-link p-0 text-danger" id="removeItem"
-                                            style="text-decoration: none;" href="">x</button>
                                     </div>
                                 </div>
-                                <div class="hidden">
-                                    <input type="text" name="product_id[]" value="{{ $product->id }}">
-                                    <input type="text" name="sku[]" value="{{ $product->sku }}">
-                                    <input type="text" name="name[]" value="{{ $product->name }}">
-                                    <input type="text" name="price[]" value="{{ $product->price }}">
-                                    <input type="text" name="inventory[]" value="{{ $product->quantity }}">
-                                </div>
+                                {{-- <div class="hidden">
+                                    <input type="hidden" name="product_id[]" value="{{ $product->id }}">
+                                    <input type="hidden" name="sku[]" value="{{ $product->sku }}">
+                                    <input type="hidden" name="name[]" value="{{ $product->name }}">
+                                    <input type="hidden" name="price[]" value="{{ $product->price }}">
+                                    <input type="hidden" name="inventory[]" value="{{ $product->quantity }}">
+                                </div> --}}
                             @endforeach
                         </div>
                     </div>
@@ -69,7 +61,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-tgnt" data-bs-dismiss="modal">Huỷ</button>
-                <button type="button" class="btn btn-tgnt addMultiToCart" data-bs-dismiss="modal">Thêm vào giỏ hàng</button>
+                <button type="button" class="btn btn-tgnt addMultiToCart" data-bs-dismiss="modal">Thêm vào giỏ
+                    hàng</button>
             </div>
         </div>
     </div>

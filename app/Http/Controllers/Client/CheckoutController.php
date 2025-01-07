@@ -54,8 +54,15 @@ class CheckoutController extends Controller
             $user = $this->userRepository->findById(Auth::id());
         }
         $carts = $this->cartRepository->findByField('user_id', Auth::id())->get();
+        if ($carts->isEmpty()) {
+            return redirect()->route('client.cart.index');
+        }
         $products = $this->cartService->fetchCartData($carts)['cart'];
         $total = $this->cartService->fetchCartData($carts)['total'];
+        $discountCollection = $this->cartService->getDiscountCollection($carts);
+        if (isset($discountCollection)) {
+            $total = $total - $discountCollection['totalDiscountAmount'];
+        }
         $provinces = $this->provinceRepository->getAllProvinces();
         $districts = $this->districtRepository->getAllDistricts();
         $wards = $this->wardRepository->getAllWards();
@@ -78,25 +85,18 @@ class CheckoutController extends Controller
     {
         $discountCode = $this->discountCodeRepository->findByField('code', $request->code)->first();
         $existCode = $this->cartService->checkDiscount(Auth::id(), $request->code);
-        if (!$existCode) {
+        if (!$existCode && !checkExpiredDate($discountCode->end_date)) {
             return successResponse($discountCode, '');
         }
-        // if($discountCode){
-        // }else{
-        // return errorResponse( 'thành công cóc');
-        // }
     }
 
     public function applyDiscount(Request $request)
     {
-        $data = [];
-        foreach ($request->code as $code) {
-            $discountCode = $this->discountCodeRepository->findByField('code', $code)->first();
-            if ($discountCode && !checkExpiredDate($discountCode->end_date)) {
-                $data[] = $discountCode;
-            }
+        $discountCode = $this->discountCodeRepository->findByField('code', $request->code)->first();
+        if (!checkExpiredDate($discountCode->end_date)) {
+            return $discountCode;
         }
-        return $data;
+        return false;
     }
     public function store(Request $request)
     {

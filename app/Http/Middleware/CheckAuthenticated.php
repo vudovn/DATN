@@ -19,7 +19,7 @@ class CheckAuthenticated
 
         // kiểm ra xem có quyền với đã đăng nhập hay không
 
-        if(Auth::check() && count(Auth::user()->getRoleNames()) > 0){
+        if(Auth::check() && Auth::user()->publish == 1 && count(Auth::user()->getRoleNames()) > 0){
             return $next($request);
         }
         Auth::logout();

@@ -101,14 +101,18 @@ class AccountController extends Controller
 
     public function getOrderAll(Request $request)
     {
-        $orders = $this->orderService->paginate($request);
+        $orders = $this->orderService->paginateClient($request);
         $paginate = true;
         return successResponse(view('client.pages.account.components.api.orderItem', compact('orders', 'paginate'))->render());
     }
 
     public function getOrderByStatus(Request $request, $status)
     {
-        $orders = $this->orderRepository->getOrdersByStatus(auth()->id(), $status, 4);
+        if ($status == 'payment-pending') {
+            $orders = $this->orderRepository->getOrderPaymentPending(auth()->id());
+        } else {
+            $orders = $this->orderRepository->getOrdersByStatus(auth()->id(), $status, 4);
+        }
         $paginate = false;
         return successResponse(view('client.pages.account.components.api.orderItem', compact('orders', 'paginate'))->render());
     }

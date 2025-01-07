@@ -68,7 +68,7 @@
     <div class="card-footer">
         <div class="text-end">
             <a href="{{ route('order.index') }}" class="btn btn-danger">Quay lại</a>
-            <button type="submit" class="btn btn-primary">Lưu</button>
+            <button type="submit" class="submit-form btn btn-primary">Lưu</button>
         </div>
     </div>
 </div>

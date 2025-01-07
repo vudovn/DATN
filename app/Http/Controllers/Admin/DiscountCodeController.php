@@ -11,8 +11,15 @@ use App\Http\Requests\Discount\StoreDiscountCodeRequest;
 use App\Models\DiscountCode;
 use Illuminate\Support\Carbon;
 
-class DiscountCodeController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
+class DiscountCodeController extends Controller implements HasMiddleware
 {
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('DiscountCode');
+    }
     protected $discountCodeService;
     protected $discountCodeRepository;
 
@@ -112,6 +119,17 @@ class DiscountCodeController extends Controller
         return redirect()->route('discountCode.index')->with('error', 'Xóa mã giảm giá thất bại!');
     }
 
+    public function trash()
+    {
+        $discountCodes = $this->discountCodeRepository->getOnlyTrashed();
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('trash');
+        return view('admin.pages.discount.trash', compact(
+            'config',
+            'discountCodes'
+        ));
+    }
+
     /**
      * Xây dựng breadcrumb cho các hành động trong controller
      */
@@ -133,6 +151,10 @@ class DiscountCodeController extends Controller
             'delete' => [
                 'name' => 'Xóa mã giảm giá',
                 'list' => ['QL mã giảm giá', 'Xóa mã giảm giá']
+            ],
+            'trash' => [
+                'name' => 'Mã giảm giá đã xóa',
+                'list' => ['QL mã giảm giá', 'Mã giảm giá đã xóa']
             ]
         ];
         return $breadcrumb[$key];

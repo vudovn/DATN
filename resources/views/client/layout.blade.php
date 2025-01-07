@@ -11,9 +11,9 @@
 </head>
 
 <body>
-    @include('client.components.loading')
+    {{-- @include('client.components.loading') --}}
     @include('client.components.header')
-    <main class="m-0 pt-2">
+    <main class="m-0">
         @yield('content')
     </main>
 
@@ -24,6 +24,8 @@
     @include('client.components.modal')
     @include('client.components.alert')
     @include('client.components.script')
-    <a href="#" class="scroll-up" id="scroll-up" style="opacity: 0"><i class="fa-solid fa-arrow-up"></i></a>
+    <a href="#" class="scroll-up text-white" id="scroll-up" style="opacity: 0"><i
+            class="fa-solid fa-arrow-up"></i></a>
 </body>
+
 </html>

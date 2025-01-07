@@ -31,7 +31,7 @@
                 <form action="{{route('client.auth.post-login')}}" method="POST">
                     @csrf
                     <div class="form-group mb-3">
-                        <input type="text" name="email" class="form-control input-tgnt"
+                        <input type="text" name="email" class="form-control input-tgnt" value="{{old('email')}}"
                             placeholder="Địa chỉ Email">
                         @error('email')
                             <small class="text-danger">*{{ $message }}</small>

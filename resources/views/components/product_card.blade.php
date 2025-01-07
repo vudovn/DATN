@@ -1,19 +1,39 @@
 @props(['data', 'dataType', 'class'])
+{{-- @dd($data) --}}
 <div class="product_item col-md-6 col-lg-4 col-xl-3 text-center mb-3">
     <a href="{{ route('client.product.detail', $data->slug) }}" class="item position-relative">
         <img class="Sirv image-main" src="{{ $data->thumbnail }}" data-src="{{ $data->thumbnail }}" alt="">
-        <img class="Sirv image-hover" src="{{ $data->albums != [] ? json_decode($data->albums)[0] : '' }}" alt="">
+        <img class="Sirv image-hover"
+            src="{{ $data->thumbnail_sub ?? (json_decode($data->albums)[0] ?? 'https://placehold.co/600x600?text=The%20Gioi%20\nNoi%20That') }}"
+            alt="">
         <div class="p-3">
             <h2 style="">{{ $data->name }}</h2>
-            <div class="price text-tgnt">{{ formatMoney($data->price - ($data->price * $data->discount) / 100 ) }}</div>
+            <div class="price text-tgnt">
+                @if (isset($data->has_attribute) && $data->has_attribute == 1)
+                    @if ($data->priceAttr->min == $data->priceAttr->max)
+                        {{ formatMoney($data->price - ($data->price * $data->discount) / 100) }}
+                    @else
+                        {{ formatMoney($data->priceAttr->min - ($data->priceAttr->min * $data->discount) / 100) }} -
+                        {{ formatMoney($data->priceAttr->max - ($data->priceAttr->max * $data->discount) / 100) }}
+                    @endif
+                @else
+                    {{ formatMoney($data->price - ($data->price * $data->discount) / 100) }}
+                @endif
+            </div>
         </div>
-
+        {{-- sản phẩm nổi bật --}}
+        {{-- @if ($data->is_featured == 1)
+            <div class="position-absolute top-0 start-0 mt-10 ms-4" style="z-index: 10">
+                <h5><span class="badge bg-light-danger text-dark-danger">Nổi bật</span></h5>
+            </div>
+        @endif --}}
         {{-- discount --}}
         @if ($data->discount > 0)
             <div class="position-absolute top-0 start-0 mt-4 ms-4" style="z-index: 10">
                 <h5><span class="badge bg-light-warning text-dark-warning">- {{ $data->discount }}%</span></h5>
             </div>
         @endif
+
         {{-- tym --}}
         <label for="like{{ $data->id }}" style="cursor: pointer; z-index:10;"
             title="Thêm sản phẩm vào mục yêu thích"

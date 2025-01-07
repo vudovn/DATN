@@ -39,6 +39,7 @@ class ProductController extends Controller implements HasMiddleware
     }
     public function index(Request $request)
     {
+        // dd($this->productRepository->findByField('id',93)->first());
         $products = $this->productService->paginate($request);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('index');
@@ -58,18 +59,21 @@ class ProductController extends Controller implements HasMiddleware
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('create');
         $config['method'] = 'create';
+        // random sku
+        $sku = 'SP' . time();
         $attributes = $this->attributeCategoryRepository->getAll();
         $categories = $this->categoryRepository->getAllPublish();
         return view('admin.pages.product.product.save', compact(
             'config',
             'attributes',
-            'categories'
+            'categories',
+            'sku'
         ));
     }
 
     public function store(StoreProductRequest $request)
     {
-        if($this->productService->create($request)) {
+        if ($this->productService->create($request)) {
             return redirect()->route('product.index')->with('success', 'Tạo sản phẩm thành công');
         } else {
             return redirect()->back()->with('error', 'Tạo sản phẩm thất bại');
@@ -94,7 +98,7 @@ class ProductController extends Controller implements HasMiddleware
 
     public function update(UpdateProductRequest $request, $id)
     {
-        if($this->productService->update($request, $id)) {
+        if ($this->productService->update($request, $id)) {
             return redirect()->route('product.index')->with('success', 'Cập nhật sản phẩm thành công');
         } else {
             return redirect()->back()->with('error', 'Cập nhật sản phẩm thất bại');
@@ -138,6 +142,17 @@ class ProductController extends Controller implements HasMiddleware
         ];
     }
 
+    public function trash()
+    {
+        $products = $this->productRepository->getOnlyTrashed();
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('trash');
+        return view('admin.pages.product.product.trash', compact(
+            'config',
+            'products'
+        ));
+    }
+
     private function breadcrumb($key)
     {
         $breadcrumb = [
@@ -156,6 +171,10 @@ class ProductController extends Controller implements HasMiddleware
             'delete' => [
                 'name' => 'Xóa sản phẩm',
                 'list' => ['QL sản phẩm', 'Xóa sản phẩm']
+            ],
+            'trash' => [
+                'name' => 'Thùng rác',
+                'list' => ['QL sản phẩm', 'Thùng rác']
             ]
         ];
         return $breadcrumb[$key];
@@ -178,5 +197,5 @@ class ProductController extends Controller implements HasMiddleware
         ];
     }
 
-    
+
 }

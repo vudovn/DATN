@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\QueryScope;
 class Product extends Model
 {
@@ -63,4 +64,17 @@ class Product extends Model
     {
         return $this->hasMany(Review::class, 'product_id', 'id');
     }
+
+    public function getPriceAttrAttribute()
+    {
+        $minPrice = $this->productVariants->min('price');
+        $maxPrice = $this->productVariants->max('price');
+        return (object) [
+            'min' => $minPrice,
+            'max' => $maxPrice,
+        ];
+    }
+
+
+
 }

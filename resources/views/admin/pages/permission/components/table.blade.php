@@ -10,13 +10,11 @@
             @foreach ($roles as $role)
                 <td class="text-center " data-axis="{{ $role->id }}">
                     <div class="form-check d-flex justify-content-center">
-                        
                         <input class="permission_to_role form-check-input input-primary input-checkbox checkbox-item"
                             type="checkbox" data-roleId="{{ $role->id }}" data-permissionName="{{ $permission->name }}"
                             id="permission_role{{ $permission->id }}{{ $role->id }}"
                             {{ $role->hasPermissionTo($permission->name) ? 'checked' : '' }}
                             {{ $role->name == 'Super Admin' ? 'checked disabled' : '' }}>
-
                         <label
                             class="form-check-label"for="permission_role{{ $permission->id }}{{ $role->id }}"></label>
                     </div>

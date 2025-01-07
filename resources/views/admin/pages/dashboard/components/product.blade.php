@@ -50,11 +50,12 @@
                                                 <td>
                                                     <a data-fancybox="gallery" href="{{ $product->thumbnail }}">
                                                         <img loading="lazy" width="40" class="rounded"
-                                                            src="{{ $product->thumbnail }}" alt="{{ $product->name }}">
+                                                            src="{{ $product->thumbnail }}"
+                                                            alt="{{ $product->product_name }}">
                                                     </a>
                                                 </td>
                                                 <td><a
-                                                        href="{{ route('client.product.detail', $product->slug) }}">{{ $product->name }}</a>
+                                                        href="{{ route('client.product.detail', $product->slug) }}{{ $product->variant_code ? '?attr=' . rawurlencode(str_replace(' ', '', $product->variant_code)) : '' }}">{{ $product->product_name }}</a>
                                                 </td>
                                                 <td>{{ $product->sku }}</td>
                                                 <td>{{ $product->total_quantity }}</td>
@@ -88,11 +89,11 @@
                                                     <a data-fancybox="gallery" href="{{ $product->thumbnail }}">
                                                         <img loading="lazy" width="40" class="rounded"
                                                             src="{{ $product->thumbnail }}"
-                                                            alt="{{ $product->name }}">
+                                                            alt="{{ $product->product_name }}">
                                                     </a>
                                                 </td>
                                                 <td><a
-                                                        href="{{ route('client.product.detail', $product->slug) }}">{{ $product->name }}</a>
+                                                        href="{{ route('client.product.detail', $product->slug) }}{{ $product->variant_code ? '?attr=' . rawurlencode(str_replace(' ', '', $product->variant_code)) : '' }}">{{ $product->product_name }}</a>
                                                 </td>
                                                 <td>{{ $product->sku }}</td>
                                                 <td>{{ $product->total_quantity }}</td>
@@ -127,11 +128,11 @@
                                                         <a data-fancybox="gallery" href="{{ $product->thumbnail }}">
                                                             <img loading="lazy" width="40" class="rounded"
                                                                 src="{{ $product->thumbnail }}"
-                                                                alt="{{ $product->name }}">
+                                                                alt="{{ $product->product_name }}">
                                                         </a>
                                                     </td>
                                                     <td><a
-                                                            href="{{ route('client.product.detail', $product->slug) }}">{{ $product->name }}</a>
+                                                            href="{{ route('client.product.detail', $product->slug) }}{{ $product->variant_code ? '?attr=' . rawurlencode(str_replace(' ', '', $product->variant_code)) : '' }}">{{ $product->product_name }}</a>
                                                     </td>
                                                     <td>{{ $product->sku }}</td>
                                                     <td>{{ $product->quantity }}</td>

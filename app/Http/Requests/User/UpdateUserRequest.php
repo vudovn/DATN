@@ -22,8 +22,9 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|unique:users,email, ' . $this->id . '',
+            'email' => 'required|email|unique:users,email',
             'name' => 'required',
+            'phone' => 'required|regex:/^[0-9]+$/|min:10|max:11|unique:users,phone',
         ];
     }
 
@@ -31,14 +32,14 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'email.required' => 'Không được để trống email',
-            'email.email' => 'Email không đúng định dạng',
+            'emmail.email' => 'Email phải đúng định dạng',
             'email.unique' => 'Email đã tồn tại',
             'name.required' => 'Không được để trống tên',
             'phone.required' => 'Không được để trống số điện thoại',
-            'phone.unique' => 'Số điện thoại đã tồn tại ',
-            // 'roles.required' => 'Không được để trống vai trò',
-            // 'roles.array' => 'Vai trò phải là một mảng',
-            // 'roles.*.exists' => 'Vai trò không hợp lệ',
+            'phone.regex' => 'Số điện thoại không được nhập chữ',
+            'phone.unique' => 'Số điện thoại đã tồn tại',
+            'phone.min' => 'Số điện thoại phải 10 hoặc 11 số',
+            'phone.max' => 'Số điện thoại phải 10 hoặc 11 số',
         ];
     }
 }

@@ -12,7 +12,9 @@ if (!function_exists('loadClass')) {
 
         $modelParts = preg_split('/(?=[A-Z])/', $modelName);
         $baseModel = $modelParts[1];
-
+        if ($baseModel == 'Staff') {
+            $baseModel = 'User';
+        }
         $classWithSubFolder = 'App\\' . $type[$classType] . '\\' . $baseModel . '\\' . $baseModel . $classType;
         $classFullWithoutSubFolder = 'App\\' . $type[$classType] . '\\' . $modelName . $classType;
         $classFullWithSubFolder = 'App\\' . $type[$classType] . '\\' . $baseModel . '\\' . $modelName . $classType;
@@ -124,6 +126,8 @@ if (!function_exists('getActionRoute')) {
     {
         $allRoutes = Route::getRoutes();
         $permissionAll = [];
+        $allowedActions = ['index', 'create', 'edit', 'delete'];
+        $excludedControllers = ['Dashboard','Permission', 'Staff'];
         foreach ($allRoutes as $route) {
             if (in_array('GET', $route->methods())) {
                 if (in_array('authenticated', $route->middleware())) {
@@ -132,9 +136,15 @@ if (!function_exists('getActionRoute')) {
                         list($controller, $action) = explode('@', $actionName);
                         $controller = class_basename($controller);
                         $controller = str_replace('Controller', '', $controller);
-                        $permissionAll[] = "$controller $action";
-                    } else {
-                        $permissionAll[] = $actionName;
+                        if (in_array($controller, $excludedControllers)) {
+                            continue;
+                        }
+                        if (in_array($action, $allowedActions)) {
+                            $permission = "$controller $action";
+                            if (!in_array($permission, $permissionAll)) {
+                                $permissionAll[] = $permission;
+                            }
+                        }
                     }
                 }
             }
@@ -212,10 +222,10 @@ if (!function_exists('growthRateHtml')) {
     {
         if ($value > 0) {
             return '<span class="text-success fw-medium" data-bs-toggle="tooltip" data-bs-title="Tăng trưởng so với tháng trước"><i class="ti ti-arrow-up-right"></i>' . $value . '%</span>';
-        } elseif ($value < 0) {
+        } else if ($value < 0) {
             return '<span class="text-danger fw-medium" data-bs-toggle="tooltip" data-bs-title="Giảm so với tháng trước">' . $value . '%</span>';
         } else {
-            return '<span class="text-dark fw-medium" data-bs-toggle="tooltip" data-bs-title="Không thay đổi so với tháng trước"><i class="ti ti-arrow-down-left"></i>' . $value . '%</span>';
+            return '<span class="text-dark fw-medium" data-bs-toggle="tooltip" data-bs-title="Không thay đổi so với tháng trước">' . $value . '%</span>';
         }
     }
 }
@@ -247,5 +257,44 @@ if (!function_exists('getSetting')) {
         $newData = $data->getAll()->first();
         $newData->site_social = json_decode($newData->site_social);
         return $newData;
+    }
+}
+
+// lấy số lượng sản phẩm trong giỏ hàng
+if (!function_exists('getCartCount')) {
+    function getCartCount()
+    {
+        $data = loadClass('Cart', 'Repository');
+        $user_id = Auth::user()->id;
+        // dd($data->getCartCount($user));
+        return $data->getCartCount($user_id);
+    }
+}
+
+// lấy số lượng sản phẩm yêu thích
+if (!function_exists('getWishlistCount')) {
+    function getWishlistCount()
+    {
+        $data = loadClass('Wishlist', 'Repository');
+        $user_id = Auth::user()->id;
+        return $data->getWishlistCount($user_id);
+    }
+}
+
+// lấy sản phẩm vừa xem gần đây
+if (!function_exists('getHistoryProduct')) {
+    function getHistoryProduct()
+    {
+        $data = Illuminate\Support\Facades\Session::get('historyProduct');
+        $data = collect($data)->take(8);
+        return $data;
+    }
+}
+// lấy tên bộ sưu tập theo tên
+if (!function_exists('getNamebyIdCollection')) {
+    function getNamebyIdCollection($id)
+    {
+        $collectionRepository = loadClass('Collection', 'Repository');
+        return $collectionRepository->findByField('id', $id)->first()->name;
     }
 }

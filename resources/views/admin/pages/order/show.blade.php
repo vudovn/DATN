@@ -10,14 +10,14 @@
             <div class="card-body">
                 <div class="text-center mb-4">
                     <p class="font-weight-bold text-uppercase mb-0">Công Ty TNHH Thế Giới Nội Thất</p>
-                    <p class="mb-0 text-secondary">Mã số thuế (Tax code): 0312157574</p>
                     <p class="mb-0 text-secondary">Địa chỉ: 72 Nguyễn Thị Thập, Liên Chiểu, Đà Nẽng, Việt Nam</p>
                     <p class="mb-0 text-secondary">Điện thoại: +(84) 878 006 779</p>
                 </div>
 
                 <div class="d-flex justify-content-end text-primary mb-4">
                     <div>
-                        <p>Ngày: <span class="font-weight-bold">23 tháng 06 năm 2022</span></p>
+                        <p>Ngày: <span class="font-weight-bold">{{ now()->day }} tháng {{ now()->month }} năm
+                                {{ now()->year }}</span></p>
                     </div>
                 </div>
 
@@ -28,11 +28,13 @@
                         <p class="mb-1"><strong>Số điện thoại:</strong> {{ $order->phone }}</p>
                         <p class="mb-1"><strong>Địa chỉ:</strong> {{ $order->address }}, {{ $order->ward->name }},
                             {{ $order->district->name }}, {{ $order->province->name }}</p>
-                        <p class="mb-1"><strong>Hình thức thanh toán:</strong> {{ $order->payment_method }}</p>
+
                     </div>
                     <div class="col-6 text-right">
                         <h6 class="text-primary">Thông tin thanh toán</h6>
-                        <p class="mb-1"><strong>Tài khoản ngân hàng:</strong> Ngân Hàng TMCP Ngoại Thương Việt Nam</p>
+                        <p class="mb-1"><strong>Hình thức thanh toán:</strong> {{ $order->paymentMethod->name }}</p>
+                        <p class="mb-1"><strong>Trạng thái thanh toán:</strong>
+                            {{ paymentStatusOrder($order->payment_status) }}</p>
                     </div>
                 </div>
 
@@ -50,13 +52,13 @@
                     <tbody>
                         @foreach ($order_details as $index => $detail)
                             @php
-                                $lineTotal = $detail->product->price * $detail->quantity;
+                                $lineTotal = $detail->price * $detail->quantity;
                             @endphp
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $detail->name }}</td>
                                 <td>{{ $detail->quantity }}</td>
-                                <td>{{ formatMoney($detail->product->price) }}</td>
+                                <td>{{ formatMoney($detail->price) }}</td>
                                 <td>{{ formatMoney($lineTotal) }}</td>
                             </tr>
                         @endforeach
@@ -68,11 +70,8 @@
                         {{-- <p class="text-primary"><strong>Tỷ giá quy đổi:</strong> 1 USD = 23,080 VND</p> --}}
                     </div>
                     <div class="col-6 text-right">
-                        <p><strong>Tổng tiền hàng:</strong> {{ formatMoney($order->total) }}</p>
-                        <p><strong>% thuế GTGT:</strong> 2%</p>
-                        <p><strong>Tiền thuế GTGT:</strong> {{ formatMoney(($order->total * 2) / 100) }}</p>
                         <p class="font-weight-bold text-primary"><strong>Tổng tiền thanh toán :
-                                {{ formatMoney($order->total - ($order->total * 2) / 100) }}</strong></p>
+                                {{ formatMoney($order->total) }}</strong></p>
                         <p class="font-italic text-secondary">Số tiền viết bằng chữ: .....</p>
                     </div>
                 </div>

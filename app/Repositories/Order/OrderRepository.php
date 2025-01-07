@@ -109,8 +109,13 @@ class OrderRepository extends BaseRepository
     {
         return $this->model->where('code', $code)->with('orderDetails', 'user')->first();
     }
-    
-    
+
+    public function getOrderPaymentPending($userId)
+    {
+        return $this->model->where('payment_status', 'pending')->where('user_id', $userId)->whereHas('paymentMethod', function ($query) {
+            $query->where('type', 'online');
+        })->get();
+    }
 
 
 

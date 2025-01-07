@@ -10,9 +10,16 @@ use App\Repositories\Category\CategoryRepository;
 use App\Services\Category\CategoryService;
 use App\Models\Category;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Traits\HasDynamicMiddleware;
 
-class CategoryController extends Controller
+class CategoryController extends Controller implements HasMiddleware
 {
+    use HasDynamicMiddleware;
+    public static function middleware(): array
+    {
+        return self::getMiddleware('Category');
+    }
     protected $categoryRepository;
     protected $categoryService;
     // protected $categoryCatalogueRepository;
@@ -25,17 +32,26 @@ class CategoryController extends Controller
     }
     public function index(Request $request)
     {
-        $categories = $this->categoryService->paginate($request);
+        $previousUrl = class_basename(url()->current());
         $config = $this->config();
-        $config['breadcrumb'] = $this->breadcrumb('index');
+        if ($previousUrl === 'index') {
+            $config['breadcrumb'] = $this->breadcrumb('category');
+        } else {
+            $config['breadcrumb'] = $this->breadcrumb('room');
+        }
         return view('admin.pages.category.index', compact(
-            'config',
-            'categories'
+            'config'
         ));
     }
     public function getData($request)
     {
-        $categories = $this->categoryService->paginate($request);
+        $previousUrl = class_basename(url()->previous());
+
+        if ($previousUrl === 'index') {
+            $categories = $this->categoryService->paginationCategory($request);
+        } else {
+            $categories = $this->categoryService->paginationRoom($request);
+        }
         $config = $this->config();
         return view('admin.pages.category.components.table', compact('categories', 'config'));
     }
@@ -70,7 +86,7 @@ class CategoryController extends Controller
         if ($this->categoryService->create($request)) {
             return redirect()->route('category.index')->with('success', 'Tạo danh mục mới thành công');
         }
-        return  redirect()->route('category.index')->with('error', 'Tạo danh mục mới thất bại');
+        return redirect()->route('category.index')->with('error', 'Tạo danh mục mới thất bại');
     }
 
     public function update(Request $request, $id)
@@ -88,16 +104,16 @@ class CategoryController extends Controller
         if ($this->categoryService->update($request, $id)) {
             return redirect()->route('category.index')->with('success', 'Cập nhật danh mục thành công.');
         }
-        return  redirect()->route('category.index')->with('error', 'Cập nhật danh mục thất bại');
+        return redirect()->route('category.index')->with('error', 'Cập nhật danh mục thất bại');
     }
 
 
     public function edit($id)
     {
         $categories = Category::all();
-        $category  = $this->categoryRepository->findById($id);
-        $categoriesChild = Category::with('children')->where('parent_id', 0)->get();
-        $categoryOptions = $this->categoryService->renderCategoryOptions($categoriesChild);
+        $category = $this->categoryRepository->findById($id);
+        $categoriesChild = Category::with('children')->where('parent_id', 0)->where('id', '!=', $id)->get();
+        $categoryOptions = $this->categoryService->renderCategoryOptions($categoriesChild, $category);
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('update');
         $config['method'] = 'edit';
@@ -113,7 +129,6 @@ class CategoryController extends Controller
     {
 
         $category = $this->categoryRepository->findById($id);
-
         $config = $this->config();
         $config['breadcrumb'] = $this->breadcrumb('delete');
         $config['method'] = 'delete';
@@ -132,11 +147,26 @@ class CategoryController extends Controller
         }
     }
 
+    public function trash()
+    {
+        $categories = $this->categoryRepository->getOnlyTrashed();
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('trash');
+        return view('admin.pages.category.trash', compact(
+            'config',
+            'categories'
+        ));
+    }
+
     private function breadcrumb($key)
     {
         $breadcrumb = [
-            'index' => [
+            'category' => [
                 'name' => 'Quản lý danh mục',
+                'list' => ['Danh mục', 'Danh sách']
+            ],
+            'room' => [
+                'name' => 'Quản lý danh mục phòng',
                 'list' => ['Danh mục', 'Danh sách']
             ],
             'create' => [
@@ -150,8 +180,11 @@ class CategoryController extends Controller
             'delete' => [
                 'name' => 'Xóa danh mục',
                 'list' => ['Danh mục', 'Xóa danh mục']
+            ],
+            'trash' => [
+                'name' => 'Danh mục đã xóa',
+                'list' => ['Danh mục', 'Danh sách đã xóa']
             ]
-
         ];
         return isset($breadcrumb[$key]) ? $breadcrumb[$key] : 'Trang chủ';
     }

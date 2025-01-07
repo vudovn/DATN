@@ -3,16 +3,21 @@
 namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Requests\User\UpdateUserCurrentRequest;
+use App\Http\Requests\User\ChangePasswordRequest;
 use App\Services\User\UserService;
 use App\Repositories\User\UserRepository;
 use App\Repositories\Location\ProvinceRepository;
 use Spatie\Permission\Models\Role;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Traits\HasDynamicMiddleware;
+
 
 class UserController extends Controller implements HasMiddleware
 {
@@ -40,27 +45,16 @@ class UserController extends Controller implements HasMiddleware
     {
         $previousUrl = class_basename(url()->current());
         $config = $this->config();
-        if ($previousUrl === 'admin') {
-            $config['breadcrumb'] = $this->breadcrumb('admin');
-        } else {
-            $config['breadcrumb'] = $this->breadcrumb('customer');
-        }
-        $users = $this->userService->paginationAdmin($request);
+        $config['breadcrumb'] = $this->breadcrumb('customer');
         return view('admin.pages.user.index', compact(
             'config',
-            'users'
         ));
     }
     public function getData($request)
     {
         $previousUrl = class_basename(url()->previous());
-        if ($previousUrl === 'admin') {
-            $users = $this->userService->paginationAdmin($request);
-        } else {
-            $users = $this->userService->paginationCustomer($request);
-        }
+        $users = $this->userService->paginationCustomer($request);
         $config = $this->config();
-
         return view('admin.pages.user.components.table', compact('users', 'config'));
     }
 
@@ -154,16 +148,61 @@ class UserController extends Controller implements HasMiddleware
         return response()->json($wards);
     }
 
+    public function getInformation($type)
+    {
+        $user = $this->userRepository->findById(Auth::id());
+        $provinces = $this->provinceRepository->getAllProvinces();
+        $config = $this->config();
+        $config['breadcrumb'] = $this->breadcrumb('information');
+        $roles = Role::all();
+        $views = [
+            'change-password' => 'admin.pages.account.components.changePassword',
+            'your-information' => 'admin.pages.account.components.information',
+            'address' => 'admin.pages.account.components.address',
+        ];
+        $view = $views[$type] ?? null;
+        if (!$view) {
+            return to_route('NotFound');
+        }
+        return view($view, compact('user', 'config', 'provinces', 'roles'));
+    }
+    public function updateInformation(Request $request, $type)
+    {
+        $user = false;
+        $password = false;
+        $address = false;
+        switch ($type) {
+            case 'information':
+                $validatedRequest = app(UpdateUserCurrentRequest::class);
+                $user = $this->userService->update($validatedRequest, Auth::id());
+                $message = $user ? 'Cập nhật người dùng thành công' : 'Cập nhật người dùng thất bại';
+                break;
+            case 'password':
+                $validatedRequest = app(ChangePasswordRequest::class);
+                $password = $this->userService->changePasswords($validatedRequest, Auth::id());
+                $message = $password ? 'Thay đổi mật khẩu thành công' : 'Thay đổi mật khẩu thất bại';
+                break;
+            case 'address':
+                $address = $this->userService->update($request, Auth::id());
+                $message = $address ? 'Thay đổi mật khẩu thành công' : 'Thay đổi mật khẩu thất bại';
+                break;
+            default:
+                return redirect()->back()->with('error', 'Hành động không hợp lệ');
+        }
+        $key = $user || $password || $address;
+        return redirect()->back()->with($key ? 'success' : 'error', $message);
+    }
+
     private function breadcrumb($key)
     {
         $breadcrumb = [
+            'information' => [
+                'name' => 'Cài đặt tài khoản',
+                'list' => ['Cài đặt tài khoản']
+            ],
             'customer' => [
                 'name' => 'Danh sách khách hàng',
                 'list' => ['Danh sách khách hàng']
-            ],
-            'admin' => [
-                'name' => 'Danh sách nhân viên',
-                'list' => ['Danh sách nhân viên']
             ],
             'create' => [
                 'name' => 'Tạo người dùng',

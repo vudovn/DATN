@@ -21,9 +21,12 @@
                             <span class="quantity btn btn-tgnt">{{ formatNumber($product->quantityCart) }}</span>
                         </td>
                         <td class="hidden">
-                            <input type="hidden" name="product_id[]" value="{{ $product->product_id ?? $product->id }}">
-                            <input type="hidden" class="product_quantity_input" name="quantity[]" value="{{ $product->quantityCart }}">
-                            <input type="hidden" name="price[]" value="{{ $product->price - ($product->price * $product->discount)/100 }}">
+                            <input type="hidden" name="product_id[]"
+                                value="{{ $product->product_id ?? $product->id }}">
+                            <input type="hidden" class="product_quantity_input" name="quantity[]"
+                                value="{{ $product->quantityCart }}">
+                            <input type="hidden" name="price[]"
+                                value="{{ $product->price - ($product->price * $product->discount) / 100 }}">
                             <input type="hidden" name="name_orderDetail[]" value="{{ $product->name }}">
                             <input type="hidden" name="sku[]" value="{{ $product->sku }}">
                         </td>
@@ -33,15 +36,16 @@
         </tbody>
     </table>
     <p class="cart-total">Tổng tiền: <span id="cart-total">{{ formatNumber($total) }}</span>đ</p>
-    <input type="hidden" id="cart-total-input"  value="{{ $total }}"></input>
-    
+    <input type="hidden" id="cart-total-input" value="{{ $total }}"></input>
+
     <style>
         th,
         td {
             text-align: center;
             padding: 10px 0 !important;
         }
-        .name{
+
+        .name {
             padding-right: 40px !important;
         }
 
@@ -60,7 +64,7 @@
         let quantity = {!! json_encode(old('quantity', [])) !!};
         let total = {!! json_encode(old('total', [])) !!};
         let thumbnail = {!! json_encode(old('thumbnail', [])) !!};
-    
+
         // let productVariants = [];
         // for (let i = 0; i < id.length; i++) {
         //     productVariants.push({
